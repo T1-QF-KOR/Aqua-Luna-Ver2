@@ -1,0 +1,5 @@
+qa/chrome*/
+qa/*.log
+qa/*-results.html
+qa/*-dom.html
+*.tmp
