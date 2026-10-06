@@ -1,0 +1,43 @@
+(async () => {
+  const frame=document.getElementById('app'); await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
+  const w=frame.contentWindow,d=frame.contentDocument,E=w.LunaEngine,D=w.LunaData,results=[],errors=[];
+  w.addEventListener('error',e=>errors.push(e.message));
+  const assert=(ok,msg)=>{if(!ok)throw Error(msg);},$=id=>d.getElementById(id),click=id=>$(id).click();
+  const button=text=>{const b=[...$('modal-body').querySelectorAll('button')].find(b=>b.textContent.includes(text));assert(b&&!b.disabled,text);b.click();};
+  const read=()=>E.storage.load(0);
+  try {
+    click('new-game');if($('modal').open)button('새로 시작');click('work-button');button('+120,000');button('일 시작하기');
+    click('shop-button');button('160,000');button('구매하기');
+    assert(read().owned.includes('skirt')&&read().outfit==='casual','purchase does not dress');
+    button('새 의상');button('18,000');button('구매하기');button('새 의상');button('16,000');button('구매하기');
+    assert(read().money===6000&&read().legwear==='none','separate accessory spending');results.push('PASS separate shop purchases and no automatic equip');
+    d.querySelector('[data-outfit-id="skirt"]').click();d.querySelector('[data-accessory-id="black"]').click();
+    assert($('character').getAttribute('src').endsWith('skirt-black.png'),'main portrait changes');
+    assert($('modal-body').querySelector('img').getAttribute('src').endsWith('skirt-black.png'),'wardrobe preview changes');
+    assert(read().money===6000&&read().ap===1,'dressing costs no resources');results.push('PASS free manual dressing and real black tights image');
+    button('이 차림으로');button('무료');
+    $('date-accessory').value='nude';$('date-accessory').dispatchEvent(new w.Event('change'));
+    assert($('modal-body').querySelector('img').src.endsWith('skirt-nude.png'),'beige preview');click('close-modal');
+    assert(read().legwear==='black'&&read().memories.length===0,'cancel is atomic');results.push('PASS cancelled date preparation preserves state');
+    click('date-button');button('무료');$('date-accessory').value='nude';$('date-accessory').dispatchEvent(new w.Event('change'));button('데이트 진행'); for(let i=0;i<3;i++) d.querySelector('[data-story-choice]').click(); click('close-modal');
+    assert(read().memories[0].legwear==='nude'&&read().ap===0&&read().money===6000,'departure snapshot');
+    assert(d.querySelector('.scenery').style.backgroundImage.includes('moonlit-pier'),'date place updates');
+    click('wardrobe-button');d.querySelector('[data-accessory-id="black"]').click();click('close-modal');click('album-button');
+    assert($('modal-body').querySelector('img').src.endsWith('skirt-nude.png'),'memory keeps old clothing');results.push('PASS date scene and persistent outfit memory');
+    assert(read().memories[0].time==='evening' && $('modal-body').querySelector('.art-scene').style.backgroundImage.includes('pier-evening'),'album freezes departure time');
+    button('일러스트');const change=(id,value)=>{$(id).value=value;$(id).dispatchEvent(new w.Event('change'));};change('gallery-place','cafe');change('gallery-expression','smile');
+    assert($('modal-body').querySelector('img').src.endsWith('smile.png'),'expression illustration');assert(read().legwear==='black','gallery does not dress');results.push('PASS expression and location gallery without state mutation');
+    change('gallery-time','afternoon');assert($('modal-body').querySelector('.art-scene').style.backgroundImage.includes('cafe-day'),'day cafe');
+    change('gallery-outfit','skirt');change('gallery-accessory','black');assert($('modal-body').querySelector('img').src.endsWith('skirt-black-smile.png'),'expression keeps tights');
+    change('gallery-outfit','shirt');assert($('gallery-accessory').disabled && $('gallery-expression').value==='neutral' && $('modal-body').querySelector('img').src.endsWith('shirt.png'),'unsupported selections reset');
+    results.push('PASS time gallery, clothing-safe expressions, and frozen album lighting');
+    const paths=D.assetPaths;
+    await Promise.all(paths.map(path=>new Promise((resolve,reject)=>{const img=new w.Image();img.onload=()=>img.naturalWidth>0?resolve():reject(Error(path));img.onerror=()=>reject(Error('Missing '+path));img.src=new URL(path,w.location.href).href;})));
+    results.push(`PASS all ${paths.length} local illustrations decode`);
+    const scene=new URLSearchParams(location.search).get('scene');click('close-modal');
+    if(scene==='shop')click('shop-button');else if(scene==='album')click('album-button');else if(scene==='date'){click('next-day');click('date-button');button('무료');}else if(scene==='gallery'){click('album-button');button('일러스트');change('gallery-time','afternoon');change('gallery-outfit','shirt');}else if(scene==='day'){click('next-day');}else click('wardrobe-button');
+    const modal=$('modal');assert(modal.scrollWidth<=modal.clientWidth+1,'modal horizontal overflow');assert(d.documentElement.scrollWidth<=w.innerWidth+1,'page horizontal overflow');assert(errors.length===0,errors.join('\n'));results.push(`PASS ${w.innerWidth}px wardrobe layout and runtime`);
+    document.body.dataset.status='passed';
+  }catch(e){results.push('FAIL '+e.stack);document.body.dataset.status='failed';}
+  document.getElementById('results').textContent=results.join('\n');
+})();

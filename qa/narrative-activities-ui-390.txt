@@ -1,0 +1,7 @@
+PASS date-integrated map, progressive unlocks, hint and undo
+PASS map input saved, reload and modal resume without additional charge
+PASS music cross puzzle, visible board response, undo and completion
+PASS memory mismatch stays visible, reload freezes both cards and pairs complete
+PASS three activities leave economy and dialogue step unchanged
+PASS explicit abandonment preserves finished activities and restores conversation
+PASS 390px map layout, focus, fonts and runtime

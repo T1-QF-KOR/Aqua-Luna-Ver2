@@ -1,0 +1,155 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aqua Luna · 연애 시뮬레이션 시스템 조사 보고서</title><style>
+:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#edf2f3;color:#20343d;font-family:"Malgun Gothic",system-ui,sans-serif;font-size:15px;line-height:1.9}.shell{max-width:1180px;margin:auto;display:grid;grid-template-columns:225px minmax(0,1fr);gap:32px;padding:40px 24px}aside{position:sticky;top:30px;align-self:start;font-size:12px}aside strong{letter-spacing:3px;color:#247b7a}aside a{display:block;margin:14px 0;text-decoration:none}article{min-width:0;background:white;padding:38px 42px;border-top:5px solid #327f7a;box-shadow:0 8px 35px #1537380a}h1{font-size:29px;line-height:1.5;letter-spacing:-1px}h2{font-size:23px;margin-top:48px;border-top:1px solid #d7e2e3;padding-top:26px;scroll-margin-top:20px}h3{font-size:18px;margin-top:30px}p{margin:18px 0}a{color:#166e74;text-underline-offset:3px;overflow-wrap:anywhere}strong{color:#193f47}code{background:#eef4f4;border-radius:3px;padding:2px 5px;font-size:13px;overflow-wrap:anywhere}.table-wrap{overflow:auto;margin:24px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8}th,td{padding:13px 11px;border:1px solid #d6e0e0;text-align:left;vertical-align:top;min-width:115px}th{background:#e7f0ef;color:#235d60}td:first-child{font-weight:600}li{margin:10px 0}button{padding:10px 16px;border:1px solid #6c9c9c;background:white;color:#235d60;cursor:pointer;font:inherit}aside small{display:block;color:#687f83;margin:16px 0}.toplink{font-size:12px}a:focus-visible,button:focus-visible{outline:3px solid #327f7a;outline-offset:3px}@media(max-width:780px){.shell{display:block;padding:16px}aside{position:static;margin:12px 0 25px}aside nav{display:none}article{padding:24px 20px}h1{font-size:25px}h2{font-size:21px}table{min-width:650px}}@media print{@page{size:A4;margin:16mm}.shell{display:block;padding:0;max-width:none}aside{display:none}article{padding:0;border:0;box-shadow:none}body{background:white;font-size:10pt}h1{font-size:22pt}h2{font-size:15pt;break-after:avoid}h3{break-after:avoid}.table-wrap{overflow:visible}table{font-size:8pt}th,td{min-width:0;padding:6px}tr{break-inside:avoid}a{color:inherit}button{display:none}}</style></head><body><div class="shell"><aside><strong>AQUA LUNA</strong><small>시스템 리서치 · 2026.10.05<br>조사 결과와 개발 제안</small><button onclick="window.print()">인쇄 / PDF로 저장</button><nav aria-label="보고서 목차"><a href="#section-2">1. 핵심 결론</a><a href="#section-3">2. 조사 범위와 근거</a><a href="#section-5">3. 시스템 분류와 역할</a><a href="#section-6">4. 현재 Aqua Luna의 구현과 빈 부분</a><a href="#section-8">5. Aqua Luna 권장 설계</a><a href="#section-17">6. 개발 우선순위</a><a href="#section-18">7. 첫 개발 단위와 검증</a><a href="#section-19">8. 함께 정할 결정 사항</a><a href="#section-20">9. 근거와 후속 문서</a></nav><a href="DATING_SIM_RESEARCH.md">Markdown 원문</a><a href="SYSTEM_DEVELOPMENT_BACKLOG.md">개발 작업 목록</a></aside><article><h1 id="section-1">연애 시뮬레이션 시스템 조사와 Aqua Luna 적용 보고서</h1>
+<p>작성·자료 확인: 2026-10-05  <br>대상 프로젝트: Aqua-Luna-Ver2 · 수련 단독 텍스트형 연애 시뮬레이션  <br>문서 상태: <strong>조사 결과 + 개발 제안</strong>. 아래 제안은 아직 게임에 구현하거나 스토리로 확정한 내용이 아닙니다.</p>
+<p><strong>후속 구현 안내:</strong> 아래 구현 현황은 이미지 확장 전 조사 시점의 기록입니다. 이후 낮 배경·의상별 표정·신규 의상 등 21장을 추가하고 시간대를 연결했습니다. 최신 구현은 <a href="../README.md">README</a>, 검토할 이야기는 <a href="STORY_SCENARIO_REVIEW_v0.1.html">스토리·시나리오 보고서</a>를 참고하세요. 대화·관계 시스템은 승인 후 개발 대상입니다.</p>
+<h2 id="section-2">1. 핵심 결론</h2>
+<p>Aqua Luna의 다음 개발 목표는 <strong>돈을 벌고 옷을 사는 현재 순환에 ‘상대를 이해하는 선택’과 ‘선택을 기억하는 관계’를 연결하는 것</strong>입니다.</p>
+<p>추천 조합은 일정·경제·코디, 상태에 따른 대화, 함께 보낸 시간의 기억, 연애 성립 이후의 일상입니다. 수련 한 명에 집중하므로 여러 공략 대상이나 질투 경쟁을 먼저 늘릴 필요는 없습니다. 현재의 구매·착용·데이트·앨범을 유지하면서 그 사이의 상호작용을 깊게 만드는 방향을 권합니다.</p>
+<p><strong>우선 개발:</strong> 데이트 진행 단계 → 대화 주제와 반응 → 취향 기록 → 일정·약속 → 관계 단계·이벤트 연결.  <br><strong>스토리 공동 결정:</strong> 첫 관계, 수련의 실제 대사, 고백, 갈등, 연애 성립 조건, 엔딩. 시스템용 데이터 구조와 테스트는 대본 확정 전에도 준비할 수 있습니다.</p>
+<h2 id="section-3">2. 조사 범위와 근거</h2>
+<p>7개 작품, 6개 계열을 비교했습니다. 판매량 순위나 ‘가장 인기 있는 게임’ 순위가 아니라 <strong>서로 다른 시스템 설계를 대표하는 사례</strong>를 선정했습니다.</p>
+<p>개발사·퍼블리셔 공식 소개, 공식 시스템 페이지, 제작자가 작성한 판매 페이지를 확인했습니다. 직접 모든 작품을 플레이한 리뷰는 아닙니다. 숨겨진 계산식·정확한 호감도 임계값·공략 효율은 검증하지 않았으며 추정치를 사실처럼 제시하지 않습니다. 작품별 사실과 아래의 자체 설계 제안을 구분합니다.</p>
+<p>GS4 공식 설명서 PDF는 웹 도구의 파일 크기 제한으로 열지 못했습니다. 해당 작품은 읽을 수 있었던 공식 시스템 페이지 범위만 사용합니다. 커뮤니티 댓글·사용자 태그는 시스템 근거에서 제외했습니다.</p>
+<h3 id="section-4">작품별 비교</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">작품·확인 버전</th><th scope="col">공식 자료에서 확인한 시스템</th><th scope="col">Aqua Luna에 참고할 점</th><th scope="col">그대로 옮기지 않을 점</th></tr></thead><tbody>
+<tr><td>도키메키 메모리얼 Girl’s Side 초대작</td><td>아르바이트로 자금 확보, 휴일 의상·액세서리 쇼핑, 코디에 따른 상대 반응. <a href="https://www.konami.com/games/girls_side/first/system/sys_4.html">공식 쇼핑 설명</a></td><td>수입을 외출 준비와 연결</td><td>원작에서 옷을 입는 쪽은 주인공. 수련에게 입히는 현재 방식은 우리의 별도 설계</td></tr>
+<tr><td>도키메키 메모리얼 Girl’s Side 4th Heart</td><td>공부·동아리·아르바이트 일정, 관계 시각화, 그룹 데이트, 계절 장소, 이벤트 앨범, 이름 부르기·Live2D. <a href="https://www.konami.com/games/girls_side/4th_Heart/system.html">공식 시스템</a></td><td>오늘 할 일, 관계 변화, 해금된 활동을 이해하기 쉽게 표시</td><td>학교 생활·다인 공략·단체 데이트를 성인 수련 단독 루트에 그대로 적용하지 않음</td></tr>
+<tr><td>아마가미</td><td>행동 지도에서 이벤트를 선택하고 결과로 새 행동 해금. 대화는 최대 5턴, 주제·텐션·호감도와 이전 대화 기록이 연결. <a href="https://www.amagami.info/intro04.html">행동 지도</a>, <a href="https://www.amagami.info/intro05.html">대화 모드</a></td><td>‘누르면 수치만 증가’하는 데이트를 실제 선택 과정으로 확장</td><td>원작의 시간표·주제 목록·실패 이벤트를 복사하지 않음</td></tr>
+<tr><td>러브플러스 · Nintendo DS 원작</td><td>연인이 된 뒤에도 교류 지속. 현실 시간·계절과 연동하며 대화가 외모 취향 변화에 영향을 줌. <a href="https://www.nintendo.co.jp/ds/software/cxtj/index.html">Nintendo 게재 제조사 소개</a></td><td>고백 이후에도 함께할 활동과 외형 변화가 의미를 갖도록 설계</td><td>현실 시계에 접속을 맞추는 방식은 현재 오프라인 게임에 우선 도입하지 않음</td></tr>
+<tr><td>Our Life: Beginnings &amp; Always · 기본 작품 중심</td><td>주인공의 성격·취향 선택을 인물이 기억. 관계 발전 속도와 형태 선택, 성장 과정, 글자 설정. <a href="https://gbpatch.itch.io/our-life">제작사 공식 배포 페이지</a></td><td>과거의 선택을 기억하는 관계, 친밀감 표현의 속도 조절</td><td>원작의 성장 연대기나 관계 설정 방식을 수련의 확정 설정으로 삼지 않음</td></tr>
+<tr><td>Love Esquire · PC Steam 설명 기준</td><td>힘·매력·지능 성장, 선물·대화에 의한 관계 형성, 복수 결말, 턴제 전투 결합. <a href="https://store.steampowered.com/app/849740/Love_Esquire__RPGDating_SimVisual_Novel/">개발사 Steam 소개</a></td><td>자기계발과 만남의 선택지를 연결할 수 있음</td><td>전투와 해당 작품의 서사는 도입 대상이 아님. 모바일판 경제와 동일하다고 가정하지 않음</td></tr>
+<tr><td>Date Everything!</td><td>탐색과 대화 분기, 인물별 Love/Friend/Hate 관계 결말. <a href="https://www.team17.com/news/announcing-sandbox-dating-sim-date-everything">퍼블리셔 공식 소개</a></td><td>관계를 단일 점수 외에 ‘상태와 선택의 결과’로 표현</td><td>다수 인물·3D 탐색 규모를 따라가지 않음. 데모의 제한을 정식판 규칙으로 일반화하지 않음</td></tr>
+</tbody></table></div>
+<p>위 사례들을 함께 보면 경제·육성 중심, 대화·분기 중심, 장기 교류 중심은 서로 다른 설계 축입니다. <strong>모든 연애 시뮬레이션에 모든 시스템이 존재한다는 뜻은 아닙니다.</strong> 아래 분류와 우선순위는 Aqua Luna를 위한 분석입니다.</p>
+<h2 id="section-5">3. 시스템 분류와 역할</h2>
+<p>표의 참고 작품은 해당 설계 요소를 확인한 사례입니다. ‘추천’은 원작의 규칙이 아니라 이번 프로젝트에 대한 판단입니다.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">시스템</th><th scope="col">플레이어가 하는 일</th><th scope="col">만드는 재미</th><th scope="col">참고 근거·적용 방향</th></tr></thead><tbody>
+<tr><td>일일 행동·일정</td><td>일, 외출, 휴식 중 선택</td><td>제한된 시간의 배분</td><td>GS4 일정. 현재 3칸을 유지하고 의미를 분명히 하기</td></tr>
+<tr><td>수입·지출</td><td>돈을 벌고 사용처 결정</td><td>다음 외출과 의상을 위한 목표</td><td>GS 초대작 쇼핑. 현재 구현 확장</td></tr>
+<tr><td>자기계발</td><td>공부·연습 등으로 능력 성장</td><td>다른 행동·접근법 개방</td><td>GS4·Love Esquire. 능력치 종류는 최소화</td></tr>
+<tr><td>장기 관계 수치</td><td>교류와 선택 누적</td><td>변화와 신뢰의 축적</td><td>현재 호감·신뢰를 서로 다른 용도로 설계</td></tr>
+<tr><td>단기 기분·분위기</td><td>오늘의 상태를 읽고 행동 조절</td><td>같은 선택의 맥락 변화</td><td>아마가미 텐션에서 착안. 장기 호감과 분리 제안</td></tr>
+<tr><td>관계 단계</td><td>지인·친밀한 사이·연인 등 변화</td><td>질적으로 달라지는 만남</td><td>Our Life·Date Everything의 관계 표현 참고. 단계명은 공동 결정</td></tr>
+<tr><td>대화 주제</td><td>지금 나누기 좋은 화제 선택</td><td>상대를 알아가는 판단</td><td>아마가미 주제·기록</td></tr>
+<tr><td>선택 기억</td><td>예전 선택과 취향을 다시 활용</td><td>나만의 관계라는 느낌</td><td>Our Life의 인물 기억</td></tr>
+<tr><td>만남·초대</td><td>가능한 시간과 장소 확인</td><td>함께할 계획 세우기</td><td>일정·시간대 접근을 현재 초대 메뉴에 적용하는 자체 제안</td></tr>
+<tr><td>약속 관리</td><td>일정 예약·변경·취소</td><td>신뢰와 생활의 연결</td><td>원본 Aqua Luna GDD의 약속·컨디션 개념과 결합 제안</td></tr>
+<tr><td>장소별 데이트</td><td>장소에 맞는 활동 선택</td><td>방문마다 다른 경험</td><td>GS4 계절 장소, 아마가미 행동 장소</td></tr>
+<tr><td>코디</td><td>의상·소품 구매·착용</td><td>표현·수집·외출 준비</td><td>GS 초대작을 참고하되 수련 착용 방식 유지</td></tr>
+<tr><td>선물</td><td>상대 취향을 알고 물건 전달</td><td>관찰한 정보를 행동으로 사용</td><td>Love Esquire 선물. 가격 외 의미를 주는 방식은 자체 제안</td></tr>
+<tr><td>취향 노트</td><td>확인한 관심사·반응 기록</td><td>기억 부담 감소, 이해의 진전</td><td>대화 기록과 취향 기억을 결합한 자체 설계</td></tr>
+<tr><td>이벤트 해금</td><td>선행 활동·관계 조건 충족</td><td>행동이 다음 장면으로 연결</td><td>아마가미 행동 지도</td></tr>
+<tr><td>관계 회복</td><td>엇갈린 선택 뒤 다른 기회 찾기</td><td>실패 뒤에도 이어지는 플레이</td><td>Aqua Luna용 제안. 벌점 강도·실제 사건은 공동 결정</td></tr>
+<tr><td>연인 이후 일상</td><td>반복 교류와 새로운 목표</td><td>고백 이후에도 계속할 이유</td><td>러브플러스</td></tr>
+<tr><td>기념일·계절</td><td>특별한 날의 계획</td><td>일상의 변주</td><td>러브플러스 계절, 원본 GDD의 기념일 참고</td></tr>
+<tr><td>앨범·회상</td><td>지난 만남과 장면 열람</td><td>관계의 축적을 눈으로 확인</td><td>GS4 앨범. 현재 코디 앨범에서 확장</td></tr>
+<tr><td>읽기·저장 편의</td><td>글자 조절, 저장, 이미 읽은 내용 관리</td><td>긴 플레이의 피로 감소</td><td>Our Life 글자 설정, GS4 편의 기능</td></tr>
+</tbody></table></div>
+<p>코디 선호, 반복 보상 감소, 일정 변경 규칙 등의 <strong>구체적 계산법은 자체 설계가 필요</strong>합니다. 위 자료에서 원작의 숨겨진 공식을 확보한 것은 아닙니다.</p>
+<h2 id="section-6">4. 현재 Aqua Luna의 구현과 빈 부분</h2>
+<p>2026-10-05의 실제 <code>src/data.js</code>, <code>src/engine.js</code>, <code>src/app.js</code> 및 설계 문서를 읽어 대조했습니다. 이 절은 코드 상태 확인이며 이번 조사에서 게임 전체를 다시 플레이테스트했다는 뜻은 아닙니다.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">영역</th><th scope="col">현재 구현</th><th scope="col">다음에 필요한 것</th></tr></thead><tbody>
+<tr><td>생활·경제</td><td>시간 3칸, 일거리 3개, 기력·휴식, 예산 목표</td><td>일만 반복하지 않아도 진행이 즐거운 만남 구조</td></tr>
+<tr><td>데이트</td><td>산책·카페·공연, 하루 1회, 비용·신뢰 조건</td><td>장소 안에서의 선택, 중간 저장, 마무리 평가</td></tr>
+<tr><td>관계</td><td>호감·신뢰 0~100, 활동별 고정 증가</td><td>두 수치의 차별화, 단기 분위기, 관계 단계</td></tr>
+<tr><td>쇼핑·옷장</td><td>의상 4종, 스타킹 2종, 별도 구매·직접 착용</td><td>코디 즐겨찾기, 장소 적합성, 취향과 연결되는 반응</td></tr>
+<tr><td>그림</td><td>캐릭터 8장, 배경 5곳</td><td>의상별 표정 확장, 반응과 이미지 연결</td></tr>
+<tr><td>기록</td><td>최근 활동 200건, 데이트 코디 60건</td><td>중요한 기억의 영구 보관, 이벤트 회상</td></tr>
+<tr><td>저장·읽기</td><td>자동·수동 저장, 파일 이동, 글자 크기</td><td>진행 중 데이트·선택 기억 저장</td></tr>
+<tr><td>이야기</td><td>공동 기획 대기</td><td>합의된 대본을 시스템에 넣는 콘텐츠 제작</td></tr>
+</tbody></table></div>
+<h3 id="section-7">가장 큰 문제 세 가지</h3>
+<ul>
+<li><strong>데이트가 즉시 정산됩니다.</strong> 비용을 내면 수치와 앨범이 한 번에 바뀌므로, 그 안에서 수련을 알아가는 판단이 아직 없습니다.</li>
+<li><strong>같은 행동의 고정 보상이 누적됩니다.</strong> 무료 산책만 반복해도 호감·신뢰가 상승합니다. 지금은 경제·저장 검증에 적합한 구조이지만 장기적인 연애 플레이에는 다양성을 선택할 이유가 약합니다.</li>
+<li><strong>코디가 아직 관계 반응에 연결되지 않습니다.</strong> 실제 그림 변경과 소유의 즐거움은 있으나, 장소·날씨·수련의 취향에 따른 의미는 없습니다. 다만 취향을 임의로 만들어 공식 캐릭터 설정처럼 넣으면 안 됩니다.</li>
+</ul>
+<p>현재의 안정적인 경제·착용·저장 구조를 바탕으로 이 세 부분부터 확장하는 것이 효과적입니다.</p>
+<h2 id="section-8">5. Aqua Luna 권장 설계</h2>
+<p>이 절 전체는 <strong>자체 제안</strong>입니다. 수치·일정·관계 단계는 미확정이며 타 게임의 공식 규칙이 아닙니다.</p>
+<h3 id="section-9">5.1 기본 플레이 순환</h3>
+<p><code>오늘의 상태 확인 → 일·휴식·만남 계획 → 구매와 코디 → 외출 준비 → 데이트 안의 선택 → 반응과 취향 기록 → 관계·추억 갱신 → 다음 활동 발견</code></p>
+<p>예산을 준비하는 단계와 실제 교류하는 단계가 모두 있어야 합니다. 텍스트·버튼 중심의 현재 조작을 유지하며 자유 이동이나 실시간 조작을 필수로 추가하지 않습니다.</p>
+<h3 id="section-10">5.2 관계: 장기 두 수치와 단기 한 상태</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">항목</th><th scope="col">의미</th><th scope="col">주로 영향을 주는 행동</th><th scope="col">화면 표현 제안</th></tr></thead><tbody>
+<tr><td>호감</td><td>함께 시간을 보내고 싶은 정도</td><td>즐거운 경험, 마음에 맞는 대화</td><td>누적 게이지</td></tr>
+<tr><td>신뢰</td><td>이 사람이 자신의 말을 존중하고 약속을 지킨다는 기대</td><td>약속 이행, 선택 기억, 배려</td><td>누적 게이지와 변화 이유</td></tr>
+<tr><td>분위기</td><td>이번 만남의 편안함·집중도</td><td>지금의 대화 흐름, 장소, 피로</td><td>만남 안의 짧은 상태 표시</td></tr>
+</tbody></table></div>
+<p>관계 단계는 위 수치와 주요 사건 이력을 조합합니다. ‘호감 100이면 자동 연인’으로 고정하지 않고, 고백·수락 장면의 결정은 공동 시나리오에 맡깁니다. 연애 감정·친밀감·설렘 등 비슷한 누적 수치를 여러 개 추가하기보다 세 개의 역할을 먼저 검증합니다.</p>
+<p>원본 GDD는 약속 위반과 컨디션 무시를 신뢰 하락 요인으로 제시합니다. 다만 원작의 매니지먼트 단계명·50점 사건·아이돌 엔딩 조건을 새 연애 게임의 확정 규칙으로 복사하지 않습니다. <a href="../../Aqua-Luna/GDD/11_호감도_및_신뢰도_시스템.md">원본 관계 GDD</a></p>
+<h3 id="section-11">5.3 데이트: 3단계 선택 구조</h3>
+<ul>
+<li><strong>준비:</strong> 장소·일정·비용·보유 코디를 확인.</li>
+<li><strong>교류:</strong> 도착 → 함께할 활동 → 마무리의 3단계. 각 단계에 선택 2~3개를 기본 예산으로 제안.</li>
+<li><strong>정산:</strong> 적용된 변화, 발견한 관심사, 함께한 코디를 기록하고 다음 행동을 안내.</li>
+</ul>
+<p>단계 수는 원작 복제가 아닌 첫 버전용 제안입니다. 실제 대사는 아직 쓰지 않습니다. ‘음악 관련 화제 선택’, ‘조용히 쉬기’ 같은 설계용 행동 이름만으로 시험 데이터를 만들 수 있습니다.</p>
+<p>장소마다 다른 판단을 제공합니다. 카페는 휴식과 대화, 부두는 산책과 시간의 여유, 공연장은 관람 준비와 감상 공유처럼 구성하되 구체적 사건은 공동 기획합니다. 비싼 장소가 항상 더 좋은 결과를 주도록 만들지 않는 것을 권합니다.</p>
+<p><strong>정산 규칙:</strong> 준비 취소는 무료. 출발 때 비용과 시간을 한 번만 차감. 각 선택 결과는 한 번만 적용. 진행 중 저장 가능. 중단 시 출발 비용 환불 여부를 화면에 명시하고, 재접속으로 비용이나 보상이 중복되지 않게 합니다.</p>
+<h3 id="section-12">5.4 대화와 취향 노트</h3>
+<p>후보 화제는 음악·일상·음식·휴식·옷차림 등입니다. 각 선택의 결과는 ‘화제 + 현재 분위기 + 이전 대화 + 관계 단계’의 조합으로 판단합니다.</p>
+<p>수련의 클래식·첼로·조용한 카페 취향은 기존 GDD에서 확인할 수 있습니다. 음료 종류, 좋아하는 색, 스타킹 취향 등은 아직 정하지 않았으므로 새 사실처럼 입력하지 않습니다. <a href="../../Aqua-Luna/GDD/03_캐릭터_설정.md">원본 캐릭터 GDD</a></p>
+<p>취향 노트는 <strong>알려진 정보 / 이번 플레이에서 알게 된 정보 / 아직 모르는 정보</strong>를 구분합니다. 선택 직후에는 결과가 달라진 이유를 이해할 수 있게 피드백합니다. 같은 정답 버튼을 누르는 방식이 되지 않도록, 같은 화제도 맥락과 목적이 달라질 수 있게 설계합니다.</p>
+<h3 id="section-13">5.5 일정과 약속</h3>
+<p>현재 하루 3칸을 유지합니다. 먼저 당일의 가능한 활동을 표시하고, 예약은 이후 단계에서 추가하는 편이 안전합니다. 예약을 넣을 때는 일·휴식이 데이트에 필요한 남은 시간과 충돌하는지 미리 보여줍니다.</p>
+<p>수련의 연습·공연 일정과 컨디션을 독립적으로 관리하는 후보를 제안합니다. 정확한 스케줄과 초대 수락 조건은 기획 대상입니다. 불가능한 시간에는 이유와 다른 선택지를 제시하고, 알 수 없는 확률로 돈만 잃는 구조는 피합니다.</p>
+<p>게임 안의 날짜로 진행하고, 브라우저를 며칠 열지 않았다는 이유만으로 관계가 떨어지는 기능은 우선 제외할 것을 권합니다.</p>
+<h3 id="section-14">5.6 의상·스타킹·소품</h3>
+<p>이미 합의한 <strong>상점 구매 → 플레이어가 수련에게 직접 착용 → 같은 차림으로 데이트</strong>를 유지합니다.</p>
+<p>첫 확장은 코디 즐겨찾기와 소품 슬롯 정리입니다. 지금의 ‘의상 세트 + 스타킹’을 안정화하고, 이후 머리 장식·가방·신발 등을 이미지 준비 상황에 맞춰 추가합니다. 자유 조합을 제공하면서 그림은 바뀌지 않는 상태를 만들지 않아야 합니다.</p>
+<p>후보 메타데이터는 계절, 보온성, 분위기, 착용 가능 조합입니다. 외출 적합성을 보여주되 검은 스타킹·살색 스타킹의 가격 차이를 호감도의 우열로 연결하지 않습니다. 선호에 따른 반응은 수련의 취향을 함께 정한 후 추가합니다.</p>
+<p><strong>이미지 제작량:</strong> 현재 의상 모습은 후드·니트·코트·치마 3변형의 총 6가지입니다. 각 모습에 표정 3종을 모두 제공하려면 6×3=18장이 필요합니다. 현재 캐릭터 8장을 유지하면 부족한 조합은 10장입니다. 배경 5곳은 별도 합성하므로 18×5개의 완성 그림을 모두 생성할 필요는 없습니다. 이는 현재 파일 구조 기준 계산입니다.</p>
+<h3 id="section-15">5.7 선물·자기계발·경제</h3>
+<p>선물은 구매와 전달을 분리하고, 사용 시 보유 수량을 차감합니다. 같은 물건을 연속으로 주는 행동과 처음 취향에 맞춰 고른 선물의 반응을 구분하는 것을 제안합니다. 반복 제한·반응 감소의 정도는 밸런스 시험으로 결정합니다.</p>
+<p>자기계발은 수입 증가만을 위한 지표보다 새로운 접근법을 여는 용도가 좋습니다. 예를 들어 음악 이해가 공연 관련 선택을 돕는 방식입니다. 주인공의 직업과 역할을 함께 정한 다음 실제 능력치와 활동명을 결정해야 합니다.</p>
+<p>초기 밸런스 목표 후보는 일 1회로 평범한 데이트를 준비할 수 있게 하고, 의상은 여러 번의 수입으로 모으는 목표가 되게 하는 것입니다. 강제 생활비·부채·파산은 현재 게임의 분위기와 장기 진행 방향을 정한 뒤 검토합니다.</p>
+<h3 id="section-16">5.8 사건·관계 단계·연애 이후</h3>
+<p>이벤트는 관계 수치만 아니라 ‘함께 한 활동’, ‘알게 된 정보’, ‘지킨 약속’, ‘선행 사건’을 조건으로 받을 수 있게 설계합니다. 조건을 만족하면 가능한 만남 목록에 추가하고, 겹치는 사건은 순서를 관리합니다.</p>
+<p>일회성 사건, 반복 일상, 기념일을 구분합니다. 세부 사건이 확정되지 않았어도 조건 평가·중복 방지·기록 보관 기능은 테스트할 수 있습니다.</p>
+<p>연애 성립 이후의 데이트 변화, 공동 목표, 기념일은 장기 콘텐츠 후보입니다. 이별·배드 엔딩·질투·경쟁 상대를 당연한 필수 기능으로 추가하지 않습니다. 실제 포함 여부와 표현은 사용자가 참여하는 스토리 기획에서 결정합니다.</p>
+<h2 id="section-17">6. 개발 우선순위</h2>
+<p>우선순위는 플레이 경험, 현재 코드와의 연결, 콘텐츠 제작 부담을 함께 고려한 <strong>상대 평가</strong>입니다. 공수는 일정 약속이 아니라 소/중/대 규모입니다.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">순서</th><th scope="col">개발 묶음</th><th scope="col">예상 규모</th><th scope="col">먼저 필요한 것</th><th scope="col">완료 기준</th></tr></thead><tbody>
+<tr><td>P0</td><td>진행 중 데이트·선택·이벤트·그림 상태 저장 구조</td><td>중</td><td>기존 저장 호환 정책</td><td>이전 저장을 읽고 중간 저장도 정확히 재개</td></tr>
+<tr><td>P1</td><td>데이트 3단계와 대화 주제·반응·취향 노트</td><td>대</td><td>P0, 시험 데이터와 실제 대본 구분</td><td>선택이 결과를 바꾸며 재로드로 보상 중복 불가</td></tr>
+<tr><td>P2</td><td>코디 즐겨찾기·소품 슬롯·의상별 표정 연결</td><td>중</td><td>그림 조합 명세</td><td>착용·표정·추억의 조합이 일관됨</td></tr>
+<tr><td>P3</td><td>일정·약속·수련 상태·선물</td><td>대</td><td>초대 가능 규칙, P1</td><td>예약 충돌·재접속·취소·아이템 소모 검증</td></tr>
+<tr><td>P4</td><td>관계 단계·개인 사건·고백·연애 이후</td><td>대</td><td>공동 스토리 계획</td><td>승인된 분기 전체를 처음부터 끝까지 검증</td></tr>
+<tr><td>P5</td><td>자기계발·계절·음향·추가 연출</td><td>중~대</td><td>핵심 순환의 재미 검증</td><td>장기 반복 플레이와 실제 기기 검증</td></tr>
+</tbody></table></div>
+<p>P2의 코디 기능은 현재 사용자 요청과 밀접하여 P1과 나란히 기획할 수 있습니다. 다만 새 의상 수를 급격히 늘리기 전에 <strong>선택에 반응하는 데이트 한 코스</strong>를 먼저 완성하는 것을 권합니다.</p>
+<p>초기 개발에서 우선하지 않을 기능은 다인 공략·질투망, 3D 이동, 전투, 전면 Live2D·풀보이스, 온라인 실시간 접속, 확률형 의상 획득입니다. 현재 요청을 만족시키는 데 필요한 비용 대비 효과가 낮다는 판단이며 장르 전체에 불필요하다는 뜻은 아닙니다.</p>
+<h2 id="section-18">7. 첫 개발 단위와 검증</h2>
+<p>첫 개발 단위는 <strong>현재 카페 데이트 한 곳을 ‘선택 과정이 있는 외출’로 만드는 것</strong>입니다.</p>
+<p><code>현재 저장 불러오기 → 수입 확보 → 코디 선택 → 카페 출발 → 선택 3단계 → 반응 기록 → 추억 보관 → 저장 후 다시 열기</code></p>
+<p>시스템 시험에서는 대사를 대신 집필하지 않고 테스트 전용 선택 ID와 결과만 사용합니다. 플레이어에게 공개할 대사는 공동 기획 결과로 교체합니다.</p>
+<p>핵심 검증 항목:</p>
+<ul>
+<li>준비창에서 취소하면 돈·시간·착용 상태가 유지되는가.</li>
+<li>출발·선택·정산을 빠르게 두 번 누르거나 재로드해도 한 번만 처리되는가.</li>
+<li>진행 중인 데이트가 저장·내보내기·가져오기 후 같은 단계로 복원되는가.</li>
+<li>기력이 부족하거나 약속 시간이 충돌하면 실행 전에 이유가 표시되는가.</li>
+<li>미보유 의상·호환되지 않는 소품·없는 이미지 조합이 노출되지 않는가.</li>
+<li>다른 옷으로 갈아입어도 과거 추억의 코디와 결과가 유지되는가.</li>
+<li>반복 대화·선물만으로 모든 사건 조건을 건너뛰지 않는가.</li>
+<li>한 번의 덜 좋은 선택 뒤에도 다음 만남과 무료 활동으로 계속할 수 있는가.</li>
+<li>관계 변화의 이유를 플레이어가 이해할 수 있는가.</li>
+<li>모바일 390px와 PC에서 긴 대화·선택지·닫기·저장이 모두 사용 가능한가.</li>
+</ul>
+<p>이번 단계의 ‘완료’는 이야기 없는 데이터 구조만 존재하는 상태가 아닙니다. 실제 대본이 들어간 코스 한 곳을 끝까지 플레이할 수 있어야 콘텐츠를 포함한 첫 코스 완료로 판정합니다.</p>
+<h2 id="section-19">8. 함께 정할 결정 사항</h2>
+<p>보고서를 기준으로 먼저 논의할 것은 아래 세 가지입니다. 아직 확정하지 않았습니다.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">결정</th><th scope="col">추천 초안</th><th scope="col">다른 선택이 주는 변화</th></tr></thead><tbody>
+<tr><td>관계 발전의 중심</td><td>대화·경험·약속 중심, 능력치는 보조</td><td>육성 중심이면 자기계발과 수입 설계를 먼저 확대</td></tr>
+<tr><td>하루 진행</td><td>게임 안의 하루 3칸 유지, 조건 기반 사건 발견</td><td>시간대 세분화는 예약·이동·일정 UI가 더 필요</td></tr>
+<tr><td>연애 성립 뒤</td><td>계속 플레이하는 연인 일상 포함</td><td>고백 엔딩 중심이면 분기와 회차 플레이 비중 증가</td></tr>
+</tbody></table></div>
+<p>주인공 역할, 수련과의 초기 관계, 실제 고백·엔딩은 별도의 이야기 회의에서 결정합니다. 이 문서는 개발 방향을 검토할 수 있도록 만든 제안이며 그 결정들을 대신 확정하지 않습니다.</p>
+<h2 id="section-20">9. 근거와 후속 문서</h2>
+<ul>
+<li>각 작품의 시스템 사실은 2절과 3절에 연결한 공식 자료 범위를 따릅니다.</li>
+<li>원본 설정은 <a href="../../Aqua-Luna/GDD/03_캐릭터_설정.md">캐릭터 GDD</a>, <a href="../../Aqua-Luna/GDD/11_호감도_및_신뢰도_시스템.md">호감·신뢰 GDD</a>를 확인했습니다. 첨부 문서의 내부 작업 지시는 사용자 요청과 구분했습니다.</li>
+<li>현재 구현: <a href="SYSTEM_DESIGN.md">시스템 설계</a>, <a href="ART_ASSETS.md">이미지 명세</a>.</li>
+<li>다음 개발의 파일·상태·검증 단위: <a href="SYSTEM_DEVELOPMENT_BACKLOG.md">개발 작업 목록</a>.</li>
+</ul></article></div></body></html>

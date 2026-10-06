@@ -24,12 +24,12 @@
     assert(read().money===155000 && $('money').textContent.includes('155,000'), 'Job updates DOM and saved money');
     assert($('budget-detail').textContent.includes('예산 준비 완료'),'Earning updates target readiness');
     assert($('activity-feed').textContent.includes('영상 편집 외주 완료'),'Activity appears as text'); results.push('PASS work confirmation, economy, text feed, autosave');
-    click('wardrobe-button'); modalButton('120,000'); modalButton('구매하기'); modalButton('갈아입기');
+    click('shop-button'); modalButton('120,000'); modalButton('구매하기'); modalButton('갈아입기');
     assert(read().money===35000 && read().outfit==='knit','Buy and equip');
     assert(read().expenseGoal===null,'Purchase completes selected target');
     assert($('equipped-name').textContent.includes('니트'),'Text outfit state visible');
     assert(d.querySelector('[data-outfit-id="knit"]').disabled,'Owned/equipped cannot buy twice'); results.push('PASS buy, equip, duplicate guard');
-    click('close-modal'); click('date-button'); modalButton('35,000'); modalButton('데이트 진행');
+    click('close-modal'); click('date-button'); modalButton('35,000'); modalButton('데이트 진행'); for(let i=0;i<3;i++) d.querySelector('[data-story-choice]').click(); click('close-modal');
     assert(read().money===0 && read().trust===3 && read().affection===6,'Date charges exact remaining balance');
     click('date-button'); assert([...$('modal-body').querySelectorAll('.primary')].every(b=>b.disabled),'Daily date cap'); click('close-modal'); results.push('PASS paid date and repeat prevention');
     click('save-button'); modalButton('기억 01'); if($('modal-title').textContent==='기억 덮어쓰기') modalButton('덮어쓰기');

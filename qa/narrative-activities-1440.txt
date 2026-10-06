@@ -1,0 +1,20 @@
+PASS All 576 generated challenges terminate through legal moves, including every maze exit
+PASS A full 12-challenge course saves every input without charging or advancing its dialogue
+PASS Exploration rejects walls, teleportation, stale moves and narrative bypass
+PASS Music toggle affects exactly a cross; pressing twice restores the board
+PASS Memory pairs persist, mismatches stay visible and a third card closes them
+PASS Locked activities and corrupted replay records are rejected, legacy states migrate
+PASS 576 records with full course memories fit the actual pretty-printed export limit
+7/7 passed
+{
+  "challenges": 576,
+  "byKind": {
+    "explore": 192,
+    "music": 192,
+    "memory": 192
+  },
+  "allSolvable": true,
+  "prettySaveBytes": 167665,
+  "procedurallyGenerated": true,
+  "humanThirtyHourPlaytest": false
+}

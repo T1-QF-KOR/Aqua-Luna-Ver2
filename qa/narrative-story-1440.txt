@@ -1,0 +1,14 @@
+PASS All three dates reserve cost once and resume every dialogue step
+PASS Stale choices and locked scenes fail without mutation
+PASS Romance ends via basic clothes and free walks without grinding money
+PASS Friendship has its own ending and continues daily play
+PASS Deferral unlocks a second answer after two dates
+PASS Overstepping opens repair; both repair responses recover the route
+PASS Music choice survives through the independent performance scene
+PASS Promises persist without expiry and fulfill only on a finished walk
+PASS Choices change personal memory, reactions, and outcomes
+PASS Event replay cannot award or complete the same scene twice
+PASS Legacy v2 migration preserves economy and does not fabricate memories
+PASS Malformed narrative saves fail closed without crashing
+PASS Paid date max bonuses and capped changes remain saveable
+13/13 passed

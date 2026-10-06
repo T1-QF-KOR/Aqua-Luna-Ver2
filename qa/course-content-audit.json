@@ -1,0 +1,14 @@
+{
+  "courses": 51,
+  "newCourses": 48,
+  "themes": 6,
+  "events": 35,
+  "playableNodes": 360,
+  "uniqueSceneTexts": 232,
+  "uniqueNonWhitespaceCharacters": 26600,
+  "allTextReadingModelHours": {
+    "at300CharsPerMinute": 1.48,
+    "at600CharsPerMinute": 0.74
+  },
+  "thirtyHoursVerified": false
+}

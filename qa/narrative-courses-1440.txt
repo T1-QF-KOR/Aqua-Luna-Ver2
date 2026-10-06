@@ -1,0 +1,24 @@
+PASS 51 valid courses, 48 six-choice trips, 6 themes and 25 exploration stories
+PASS Variety gates reject repeated-course grinding and never charge on refusal
+PASS All 48 trips and all exploration chapters reach prequel finale through valid actions
+PASS First visits survive 240 later dates and recent-album eviction
+PASS Friendship can finish all exploration stories without forced romance
+PASS First choices change replies and rewards; replaying a course does not replace its first record
+PASS Corrupt exploration saves fail safely; legacy saves migrate with no invented visits
+PASS Long conversations cannot be skipped with stale input or produce duplicate rewards
+PASS Story content describes a friend before agency entry, without manager or debut claims
+9/9 passed
+{
+  "courses": 51,
+  "newCourses": 48,
+  "themes": 6,
+  "events": 35,
+  "playableNodes": 360,
+  "uniqueSceneTexts": 232,
+  "uniqueNonWhitespaceCharacters": 26600,
+  "allTextReadingModelHours": {
+    "at300CharsPerMinute": 1.48,
+    "at600CharsPerMinute": 0.74
+  },
+  "thirtyHoursVerified": false
+}

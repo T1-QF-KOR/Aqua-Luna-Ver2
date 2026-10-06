@@ -1,0 +1,24 @@
+PASS Initial economy and valid save
+PASS Jobs pay once, consume resources, do not mutate prior state
+PASS Work respects both time and energy
+PASS Buy, equip, own permanently; never double charge
+PASS Insufficient funds are atomic
+PASS Dates deduct money and add relationships once per day
+PASS Trust gates concert, free activities unlock it
+PASS Rest and next day are bounded; spending cannot trap player
+PASS Relationship cap and history retention
+PASS Reject corrupt, older, fabricated, or unsafe saves
+PASS Save/load roundtrip and corruption recovery
+PASS Random action sequences preserve all economy invariants
+PASS Budget plans do not spend resources and survive save/load
+PASS Budget money is not a bypass for date conditions
+PASS Other spending adjusts progress; only matching expense completes plan
+PASS Earlier version-2 saves upgrade without losing money or wardrobe
+PASS Date result text reports actual capped relationship gain
+PASS Skirt accessories are separate purchases, never auto-equipped or charged twice
+PASS Date preparation is atomic and freezes the outfit in memory
+PASS Older saves migrate; corrupt accessories and memories are rejected
+PASS Time follows action cost, resets next day, and date memory freezes departure
+PASS New outfits obey purchase ownership and expression fallback preserves clothing
+
+22/22 passed

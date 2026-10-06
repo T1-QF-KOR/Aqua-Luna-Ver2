@@ -1,0 +1,12 @@
+{
+  "challenges": 576,
+  "byKind": {
+    "explore": 192,
+    "music": 192,
+    "memory": 192
+  },
+  "allSolvable": true,
+  "prettySaveBytes": 167665,
+  "procedurallyGenerated": true,
+  "humanThirtyHourPlaytest": false
+}

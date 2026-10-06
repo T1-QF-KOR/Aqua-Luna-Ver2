@@ -32,7 +32,8 @@
     const input=$('modal-body').querySelector('input[type=file]'),transfer=new w.DataTransfer();
     transfer.items.add(new w.File(['{broken'],'broken.json',{type:'application/json'}));input.files=transfer.files;
     input.dispatchEvent(new w.Event('change',{bubbles:true}));
-    await new Promise(resolve=>setTimeout(resolve,30));
+    const deadline=performance.now()+2000;
+    while(input.value!==''&&performance.now()<deadline)await new Promise(resolve=>setTimeout(resolve,20));
     assert(E.storage.load(0).money===155000,'Invalid import leaves save intact');
     assert($('modal-title').textContent==='기억 불러오기','Invalid import does not navigate');
     assert(input.value==='','Invalid file picker resets for retry');

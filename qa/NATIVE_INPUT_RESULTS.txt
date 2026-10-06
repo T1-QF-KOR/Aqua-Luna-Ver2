@@ -1,0 +1,11 @@
+﻿PASS Initial action receives browser focus
+PASS Enter starts a new game and focuses the work action
+PASS Keyboard opens work menu with visible focus
+PASS Tab enters first available work action
+PASS Enter opens resource preview without spending time
+PASS Escape cancels preview and restores trigger focus
+PASS actual downloaded JSON contains earned money and history
+PASS Save notification remains visible inside an open modal
+PASS File import asks before replacing the current play state
+PASS Enter confirms imported save and restores full state
+PASS Reload plus keyboard continue restores downloaded/imported session
