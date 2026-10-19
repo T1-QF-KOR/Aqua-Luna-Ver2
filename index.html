@@ -6,8 +6,8 @@
   <title>Aqua Luna · 수련과 보내는 하루</title>
   <link rel="icon" href="assets/ui/moon.svg" type="image/svg+xml"><link rel="stylesheet" href="src/style.css"><link rel="stylesheet" href="src/reading.css"><link rel="stylesheet" href="src/wardrobe.css"><link rel="stylesheet" href="src/story.css">
   <link rel="stylesheet" href="src/typography.css"><link rel="stylesheet" href="src/courses.css"><link rel="stylesheet" href="src/activities.css"><link rel="stylesheet" href="src/desktop.css">
-  <link rel="stylesheet" href="src/intro.css"><link rel="stylesheet" href="src/stage.css">
-  <script defer src="src/data.js"></script><script defer src="src/story.js"></script><script defer src="src/courses.js"></script><script defer src="src/journeys.js"></script><script defer src="src/activities.js"></script><script defer src="src/engine.js"></script><script defer src="src/app.js"></script>
+  <link rel="stylesheet" href="src/intro.css"><link rel="stylesheet" href="src/stage.css"><link rel="stylesheet" href="src/phone.css"><link rel="stylesheet" href="src/work.css">
+  <script defer src="src/data.js"></script><script defer src="src/story.js"></script><script defer src="src/courses.js"></script><script defer src="src/journeys.js"></script><script defer src="src/activities.js"></script><script defer src="src/engine.js"></script><script defer src="src/work.js"></script><script defer src="src/app.js"></script>
 </head>
 <body>
 <main id="game" class="game title-mode">
@@ -46,7 +46,13 @@
     </div>
     <button id="sulien-touch" class="sulien-touch" aria-label="수련에게 말 걸기"></button>
     <div class="day-message dialogue-box" id="dialogue"><span class="speaker" id="speaker">SYSTEM</span><small class="dialogue-sub" id="dialogue-sub">DAY 01</small><h3 id="message-title">우리의 일상을 시작해 볼까요?</h3><p id="message-text">일해서 돈을 벌고, 수련과 함께할 시간을 계획해 보세요.</p><div class="dialogue-foot"><span>클릭하거나 SPACE를 눌러 계속하기</span><button id="dialogue-next" class="dialogue-next">CONTINUE <i aria-hidden="true">◇</i></button></div></div>
-    <aside id="phone" class="phone" hidden aria-label="수련의 메시지"><header><button id="phone-back" class="phone-back" aria-label="대화 목록으로" hidden>‹</button><span class="phone-avatar" id="phone-avatar" aria-hidden="true">수</span><div><b id="phone-name">수련</b><small id="phone-time">MESSAGE</small></div><button id="phone-close" class="phone-close" aria-label="메시지 닫기">×</button></header><div id="phone-list" class="phone-list" hidden></div><div id="phone-thread" class="phone-thread" role="log" aria-live="polite"></div><div id="phone-replies" class="phone-replies"></div></aside>
+    <aside id="phone" class="phone" hidden role="dialog" aria-label="휴대폰">
+      <div class="phone-status" aria-hidden="true"><span class="phone-clock">09:00</span><i class="phone-camera"></i><span>▂▄▆ ▰</span></div>
+      <header><button id="phone-back" class="phone-back" aria-label="뒤로" hidden>‹</button><span class="phone-avatar" id="phone-avatar" aria-hidden="true">☾</span><div><b id="phone-name">LUNA</b><small id="phone-time">나의 작은 일상</small></div><button id="phone-close" class="phone-close" aria-label="휴대폰 닫기">×</button></header>
+      <div id="phone-home" class="phone-home"><div class="phone-widget"><small>OUR EVERYDAY</small><strong id="phone-date"></strong><p>조금씩 쌓이는, 우리의 시간.</p></div><button id="phone-notification" class="phone-notification" hidden></button><div id="phone-apps" class="phone-apps" aria-label="휴대폰 앱"></div><p class="phone-home-note">AQUA LUNA · 나의 하루를 여는 곳</p></div>
+      <div id="phone-list" class="phone-list" hidden></div><div id="phone-thread" class="phone-thread" role="log" aria-live="polite" hidden></div><div id="phone-replies" class="phone-replies" hidden></div>
+      <button id="phone-home-button" class="phone-home-bar" aria-label="휴대폰 홈으로"><span></span></button>
+    </aside>
     <section class="text-play choice-card" id="choice-card" hidden aria-labelledby="choice-title">
       <div class="text-play-heading"><span>수련과 보내는 하루 · DAY <span id="log-day">01</span></span><small id="choice-time">아침</small></div>
       <h3 id="choice-title">오늘은 무엇을 할까?</h3><p class="choice-desc" id="choice-desc">한 가지를 고르면 시간이 흐릅니다.</p>
@@ -57,7 +63,7 @@
   </section>
   <div id="save-status" class="save-status" role="status" hidden><span>자동 저장이 막혔어요. 창을 닫기 전에 진행을 보관해 주세요.</span><button id="backup-button">파일로 보관</button></div>
   <div id="toast" role="status" class="toast" hidden></div>
-  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-head"><div><span class="eyebrow">AQUA LUNA</span><h2 id="modal-title"></h2></div><button id="close-modal" class="icon-button" aria-label="닫기">×</button></div><div id="modal-body"></div></dialog>
+  <dialog id="modal" aria-labelledby="modal-title"><div class="phone-status modal-phone-chrome" aria-hidden="true"><span class="phone-clock">09:00</span><i class="phone-camera"></i><span>▂▄▆ ▰</span></div><div class="modal-head"><div><span class="eyebrow">AQUA LUNA</span><h2 id="modal-title"></h2></div><button id="close-modal" class="icon-button" aria-label="닫기">×</button></div><div id="modal-body"></div><button id="modal-phone-home" class="phone-home-bar modal-phone-chrome" aria-label="휴대폰 홈으로"><span></span></button></dialog>
   <noscript>이 게임을 실행하려면 브라우저에서 JavaScript를 허용해 주세요.</noscript>
 </main>
 </body>

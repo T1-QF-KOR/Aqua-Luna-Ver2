@@ -7,7 +7,7 @@ const root = new URL('../', import.meta.url);
 const source = ['data','story','courses','journeys','activities','engine'];
 const suites = {};
 let assets;
-for (const name of ['engine','story','courses','activities','growth','intro','bond','pacing']) {
+for (const name of ['engine','story','courses','activities','growth','intro','bond','pacing','somesome']) {
   const output = { textContent: '' }, saved = new Map();
   const context = { console, Blob, document: { getElementById: () => output, body: { dataset: {} } }, localStorage: { getItem: k => saved.get(k) ?? null, setItem: (k,v) => saved.set(k,v), removeItem: k => saved.delete(k) } };
   context.window = context;

@@ -7,13 +7,16 @@
   const button = (label, className, action) => { const b = el('button', className, label); b.addEventListener('click', action); return b; };
   let state = E.makeState(), active = false, hasSession = false, unsaved = false, toastTimer, lastFocus, modalRevision = 0;
   let shopCategory = 'all';
+  let disposeWork = () => {};
+  function stopWorkPresentation() { disposeWork(); disposeWork = () => {}; }
   let choosing = true, reveal = null, touches = 0, touchDay = 0, bondShown = 0, storyLog = [], logged = new WeakSet();
   let courseTheme = 'all', courseStatus = 'all', courseSearch = '';
   const storedPrefs = E.storage.read('prefs', {});
-  const prefs = { portrait: storedPrefs?.portrait !== false, reduceMotion: storedPrefs?.reduceMotion === true, textSize: ['normal','large','largest'].includes(storedPrefs?.textSize) ? storedPrefs.textSize : 'normal', volume: Number.isFinite(storedPrefs?.volume) ? Math.max(0, Math.min(100, storedPrefs.volume)) : 25, introAuto: storedPrefs?.introAuto !== false, sfx: storedPrefs?.sfx !== false, blip: storedPrefs?.blip !== false };
+  const prefs = { portrait: storedPrefs?.portrait !== false, reduceMotion: storedPrefs?.reduceMotion === true, textSize: ['normal','large','largest'].includes(storedPrefs?.textSize) ? storedPrefs.textSize : 'normal', volume: Number.isFinite(storedPrefs?.volume) ? Math.max(0, Math.min(100, storedPrefs.volume)) : 25, introAuto: storedPrefs?.introAuto !== false, sfx: storedPrefs?.sfx !== false, blip: storedPrefs?.blip !== false, autoSpeed: ['slow','normal','fast'].includes(storedPrefs?.autoSpeed) ? storedPrefs.autoSpeed : 'normal', boxAlpha: Number.isFinite(storedPrefs?.boxAlpha) ? Math.max(40, Math.min(100, storedPrefs.boxAlpha)) : 88 };
+  const autoPace = ms => ms * { slow: 1.6, normal: 1, fast: .55 }[prefs.autoSpeed];
   let audioContext, audioGain, musicTimer, soundOn = false, noteIndex = 0;
   function toast(text) { clearTimeout(toastTimer); ($('modal').open ? $('modal') : $('game')).append($('toast')); $('toast').textContent = text; $('toast').hidden = false; toastTimer = setTimeout(() => $('toast').hidden = true, 3600); }
-  function applyPrefs() { $('game').classList.toggle('portrait-off', !prefs.portrait); $('game').classList.toggle('reduced-motion', prefs.reduceMotion); $('game').dataset.textSize = prefs.textSize; if (audioGain && audioContext) audioGain.gain.setTargetAtTime(prefs.volume / 100 * .13, audioContext.currentTime, .2); }
+  function applyPrefs() { $('game').classList.toggle('portrait-off', !prefs.portrait); $('game').classList.toggle('reduced-motion', prefs.reduceMotion); $('game').dataset.textSize = prefs.textSize; document.documentElement.style.setProperty('--vn-box', `rgba(11,22,34,${prefs.boxAlpha / 100})`); if (audioGain && audioContext) audioGain.gain.setTargetAtTime(prefs.volume / 100 * .13, audioContext.currentTime, .2); }
   function savePrefs() { E.storage.write('prefs', prefs); applyPrefs(); }
   function playNote() {
     if (!soundOn || document.hidden || !audioContext || audioContext.state !== 'running') return;
@@ -55,7 +58,11 @@
   }
   document.addEventListener('visibilitychange', async () => { if (audioContext && soundOn) { try { if (document.hidden) await audioContext.suspend(); else await audioContext.resume(); } catch { /* Next explicit toggle can recover audio. */ } } });
   function warnBeforeExit(event) { if (unsaved) { event.preventDefault(); event.returnValue = ''; } }
+  const legacyEndings = () => E.legacyList(E.storage.read('legacy', {})?.endings);
   function persist() {
+    // An ending reached in this run is remembered outside the save slots for the next new game.
+    const end = E.ending(state), known = end ? legacyEndings() : [];
+    if (end && !known.includes(end)) E.storage.write('legacy', { endings: E.legacyList([...known, end]) });
     unsaved = !E.storage.save(0, state);
     $('save-status').hidden = !unsaved;
     if (unsaved) window.addEventListener('beforeunload', warnBeforeExit);
@@ -65,10 +72,12 @@
   function showTitle() {
     showScene('pier', 'casual', 'none', 'night', 'none');
     stopCinema(); closePhone(); active = false; $('game').className = 'game title-mode'; applyPrefs(); $('title-screen').hidden = false; $('title-caption').hidden = false; $('title-footer').hidden = false; $('play-screen').hidden = true; $('intro-screen').hidden = true;
+    const legacy = legacyEndings().map(k => E.legacyBonus[k].name);
+    $('title-screen').querySelector('.chapter-preview').replaceChildren(el('span', '', '☾'), document.createTextNode(legacy.length ? ` 회차 보너스 준비 · ${legacy.join(' · ')} — 새로운 일상에 적용돼요` : ' 새로운 일상 · 우리가 친구가 되기까지'));
     const saved = hasSession ? state : E.storage.load(0); $('continue-game').disabled = !saved; $('continue-note').textContent = saved ? `${E.introPending(saved) ? `인트로 ${saved.intro.step + 1}/${N.intro.length}` : `${saved.day}일째 · ${won(saved.money)}`}${unsaved ? ' · 저장 필요' : ''}` : '아직 저장된 하루가 없어요';
   }
   function begin(loaded) {
-    state = loaded || E.makeState({ intro: true }); active = true; hasSession = true; $('game').className = 'game play-mode'; applyPrefs(); $('title-screen').hidden = true; $('title-caption').hidden = true; $('title-footer').hidden = true; $('play-screen').hidden = false;
+    state = loaded || E.makeState({ intro: true, legacy: legacyEndings() }); active = true; hasSession = true; $('game').className = 'game play-mode'; applyPrefs(); $('title-screen').hidden = true; $('title-caption').hidden = true; $('title-footer').hidden = true; $('play-screen').hidden = false;
     bondShown = N.bondLevel(state); render(); persist();
     if (E.introPending(state)) return;
     setChoosing(true);
@@ -92,7 +101,7 @@
       if ($('intro-screen').hidden) return;
       if ($('modal').open || document.hidden) { cine.timer = setTimeout(tick, 800); return; }
       advanceReveal();
-    }, delay);
+    }, autoPace(delay));
   }
   function cineBackdrop(name) {
     if (cine.bg === name) return;
@@ -165,6 +174,7 @@
     if (result.error) return;
     state = result.state; render(); persist();
     if (!E.introPending(state)) { setChoosing(true); $('story-button').focus({ preventScroll: true }); }
+    if (result.result?.legacy) toast(`지난 회차의 선물 · ${result.result.legacy.join(' · ')} 보너스를 받았어요.`);
   }
   function render() {
     if (E.introPending(state)) { introScene(); return; }
@@ -296,6 +306,17 @@
       const bond = el('section', 'note-bond'); const bar = el('span', 'note-bar'); const fill = el('i'); fill.style.width = `${level >= 10 ? 100 : 100 - toNext * 5}%`; bar.append(fill);
       bond.append(el('strong', '', `인연 Lv.${level}`), el('span', '', `${N.stage(state)}${state.story.speech === 'casual' ? ' · 말을 놓은 사이' : ''}`), bar, el('small', '', level >= 10 ? '가장 깊은 인연이에요.' : `다음 단계까지 호감·신뢰 합계 ${toNext}`));
       body.append(bond);
+      // Her heart, in words: four steps from friend to almost-a-confession (no percentages).
+      const h = N.heart(state), meter = el('section', 'note-heart'), steps = el('ol', 'heart-steps');
+      N.heartStages.forEach((st, i) => steps.append(el('li', i < h.index || h.final ? 'past' : i === h.index ? 'now' : '', st.name)));
+      if (h.final) steps.append(el('li', 'now final', h.name));
+      meter.append(el('h3', '', '수련의 마음'), steps, el('p', 'heart-note', `${h.name} · ${h.note}`));
+      if (h.index === 3 && !h.final && state.story.relationship !== 'considering') {
+        const ready = el('ul', 'heart-ready');
+        [['함께한 외출', state.story.dateCount, 12], ['호감', state.affection, 40], ['신뢰', state.trust, 40]].forEach(([k, v, need]) => ready.append(el('li', v >= need ? 'met' : '', `${k} ${Math.min(v, need)} / ${need}`)));
+        meter.append(ready);
+      }
+      body.append(meter);
       const next = N.events.find(e => !N.done(state, e.id) && !e.ready(state));
       if (next) body.append(el('p', 'story-hint', `다음 이야기의 단서 · ${next.hint}`));
       const tastes = el('section', 'note-section'); tastes.append(el('h3', '', '알게 된 취향'));
@@ -382,19 +403,40 @@
     }
   }
   // ---------- phone messages: arrive in the morning, optional to answer ----------
-  let phoneShown = '', phoneTimers = [];
+  let phoneShown = '', phoneTimers = [], phonePage = 'home';
+  function syncPhone() {
+    const count = unreadCount();
+    document.querySelectorAll('.phone-clock').forEach(x => x.textContent = ({ morning: '09:00', afternoon: '14:00', evening: '18:00', night: '21:00' })[D.timeForAp(state.ap)] || '09:00');
+    $('phone-date').textContent = D.calendar(state.day).label;
+    $('phone-button').classList.toggle('unread', count > 0);
+    const badge = document.querySelector('[data-phone-app="messages"] .phone-app-badge');
+    if (badge) { badge.hidden = !count; badge.textContent = count; }
+    $('phone-notification').hidden = !count;
+    $('phone-notification').textContent = `✉ 새 메시지 ${count}개 · 확인하기`;
+  }
+  function openPhoneHome() {
+    if ($('modal').open) closeModal();
+    if (active && choosing) setChoosing(false);
+    phoneTimers.forEach(clearTimeout); phoneTimers = [];
+    phonePage = 'home'; $('phone').hidden = false; $('phone').dataset.page = 'home';
+    $('phone-home').hidden = false;
+    ['phone-list', 'phone-thread', 'phone-replies', 'phone-back', 'phone-avatar'].forEach(id => $(id).hidden = true);
+    $('phone-name').textContent = 'LUNA'; $('phone-time').textContent = '나의 작은 일상';
+    syncPhone(); $('phone-close').focus({ preventScroll: true });
+  }
+  function phoneBack() { if (phonePage === 'thread') openMessenger(); else if (phonePage === 'messages') openPhoneHome(); else closePhone(); }
   const pendingMessage = () => { const m = state.story?.message; return m && m.day === state.day && N.messages[m.key] ? m : null; };
   function phoneCheck() {
     const m = pendingMessage();
-    $('phone-button').classList.toggle('unread', unreadCount() > 0);
+    syncPhone();
     if (!m || m.reply || phoneShown === `${m.day}:${m.key}` || !active || $('play-screen').hidden) return;
     phoneShown = `${m.day}:${m.key}`;
-    phoneTimers.push(setTimeout(() => { if (!$('modal').open && !$('play-screen').hidden && !choosing) openPhone(); else phoneShown = ''; }, 900));
+    phoneTimers.push(setTimeout(() => { if (!$('modal').open && !$('play-screen').hidden && !choosing && $('phone').hidden) { openPhoneHome(); sfx('phone'); } else phoneShown = ''; }, 900));
   }
   const unreadCount = () => { const m = pendingMessage(), seen = state.story?.seen || 0; return (m && !m.reply ? 1 : 0) + (state.story?.msgLog || []).filter((x, i) => x.from !== 'sulien' && i >= seen).length; };
   const threads = { sulien: { name: '수련', avatar: '수' }, friend: { name: '하윤 · 같은 과 친구', avatar: '하' }, notice: { name: '연습실 · 학과 알림', avatar: '✉' } };
-  function phoneHeader(who) { const t = threads[who]; $('phone-name').textContent = t ? t.name : '메시지'; $('phone-avatar').textContent = t ? t.avatar : '✉'; $('phone-back').hidden = !who; $('phone-list').hidden = !!who; $('phone-thread').hidden = !who; $('phone-replies').hidden = !who; }
-  function markSeen() { const r = E.markMessagesSeen(state); state = r.state; persist(); $('phone-button').classList.toggle('unread', unreadCount() > 0); }
+  function phoneHeader(who) { phonePage = who ? 'thread' : 'messages'; $('phone').dataset.page = phonePage; $('phone-home').hidden = true; $('phone-avatar').hidden = false; const t = threads[who]; $('phone-name').textContent = t ? t.name : '메시지'; $('phone-avatar').textContent = t ? t.avatar : '✉'; $('phone-back').hidden = false; $('phone-list').hidden = !!who; $('phone-thread').hidden = !who; $('phone-replies').hidden = !who; }
+  function markSeen() { const r = E.markMessagesSeen(state); state = r.state; persist(); syncPhone(); }
   function openMessenger() {
     phoneTimers.forEach(clearTimeout); phoneTimers = [];
     $('phone').hidden = false; phoneHeader(''); $('phone-time').textContent = `${D.calendar(state.day).label}`;
@@ -419,18 +461,20 @@
     if (!thread.children.length) thread.append(el('p', 'phone-day', '아직 메시지가 없어요.'));
     thread.scrollTop = thread.scrollHeight;
   }
-  function closePhone() { phoneTimers.forEach(clearTimeout); phoneTimers = []; $('phone').hidden = true; }
+  // After you answer, she follows up with a sticker, as people do in a messenger.
+  function stickerEl(key, old) { const [icon, label] = N.sticker(key), s = el('p', `phone-sticker${old ? ' old' : ''}`); s.setAttribute('aria-label', `이모티콘 · ${label}`); s.append(el('span', '', icon), el('small', '', label)); return s; }
+  function closePhone() { phoneTimers.forEach(clearTimeout); phoneTimers = []; const hadFocus = $('phone').contains(document.activeElement); $('phone').hidden = true; if (hadFocus && active) $('phone-button').focus({ preventScroll: true }); }
   function openPhone(fromList) {
     const m = pendingMessage();
     const thread = $('phone-thread'), replies = $('phone-replies');
     phoneTimers.forEach(clearTimeout); phoneTimers = [];
-    thread.replaceChildren(); replies.replaceChildren(); $('phone').hidden = false; phoneHeader('sulien'); $('phone-back').hidden = !fromList;
+    thread.replaceChildren(); replies.replaceChildren(); $('phone').hidden = false; phoneHeader('sulien');
     let lastDay = 0;
     (state.story.msgLog || []).filter(x => x.from === 'sulien').slice(-4).forEach(x => {
       const old = N.messages[x.key]; if (!old) return;
       if (x.day !== lastDay) { thread.append(el('p', 'phone-day', D.calendar(x.day).label)); lastDay = x.day; }
       old.lines.forEach(l => thread.append(el('p', 'phone-bubble old', N.messageText(state, l, x.place))));
-      const r = x.reply && old.replies.find(y => y.id === x.reply); if (r) { thread.append(el('p', 'phone-bubble mine old', N.messageText(state, r.say))); thread.append(el('p', 'phone-bubble old', N.messageText(state, r.back))); }
+      const r = x.reply && old.replies.find(y => y.id === x.reply); if (r) { thread.append(el('p', 'phone-bubble mine old', N.messageText(state, r.say))); thread.append(el('p', 'phone-bubble old', N.messageText(state, r.back))); thread.append(stickerEl(x.key, true)); }
     });
     if (!m) { if (!thread.children.length) thread.append(el('p', 'phone-day', '아직 메시지가 없어요.')); thread.scrollTop = thread.scrollHeight; return; }
     thread.append(el('p', 'phone-day', D.calendar(m.day).label));
@@ -440,7 +484,7 @@
     const bubble = (text, mine) => { thread.querySelector('.phone-typing')?.remove(); const b = el('p', `phone-bubble${mine ? ' mine' : ''}`, text); thread.append(b); thread.scrollTop = thread.scrollHeight; return b; };
     const typing = () => { const t = el('p', 'phone-typing'); t.append(el('i'), el('i'), el('i')); thread.append(t); };
     const text = pair => N.messageText(state, pair, m.place);
-    if (m.reply) { msg.lines.forEach(l => bubble(text(l))); const r = msg.replies.find(x => x.id === m.reply); bubble(text(r.say), true); bubble(text(r.back)); return; }
+    if (m.reply) { msg.lines.forEach(l => bubble(text(l))); const r = msg.replies.find(x => x.id === m.reply); bubble(text(r.say), true); bubble(text(r.back)); thread.append(stickerEl(m.key)); thread.scrollTop = thread.scrollHeight; return; }
     typing();
     msg.lines.forEach((l, i) => later(900 + i * 1300, () => { bubble(text(l)); sfx('phone'); if (i < msg.lines.length - 1) typing(); }));
     later(900 + msg.lines.length * 1300, () => {
@@ -448,7 +492,7 @@
         const result = E.replyMessage(state, r.id); if (result.error) { toast(result.error); return; }
         replies.replaceChildren(); bubble(text(r.say), true); sfx('select');
         state = result.state; persist(); render();
-        typing(); later(1100, () => { bubble(text(r.back)); sfx('phone'); if (result.result.trust) showReaction({ trust: result.result.trust }); later(2600, closePhone); });
+        typing(); later(1100, () => { bubble(text(r.back)); sfx('phone'); if (result.result.trust) showReaction({ trust: result.result.trust }); later(700, () => { thread.append(stickerEl(m.key)); thread.scrollTop = thread.scrollHeight; }); });
       }); b.dataset.messageReply = r.id; replies.append(b); });
       replies.append(button('나중에 답하기', 'phone-later', closePhone));
     });
@@ -491,14 +535,17 @@
     });
   }
   function openModal(title, build) {
+    stopWorkPresentation();
     modalRevision += 1;
     if (!$('modal').open) lastFocus = document.activeElement;
-    delete $('modal').dataset.interior; $('modal').classList.remove('story-stage','vn-hide'); $('modal').querySelector('.vn-log')?.remove();
+    closePhone(); syncPhone();
+    delete $('modal').dataset.interior; $('modal').classList.remove('story-stage','vn-hide'); $('modal').classList.add('phone-app-screen'); $('modal').querySelector('.vn-log')?.remove();
     $('modal-title').previousElementSibling.textContent = active ? `수련과 보내는 하루 · DAY ${String(state.day).padStart(2,'0')}` : 'AQUA LUNA';
     $('modal-title').textContent = title; $('modal-body').replaceChildren(); build($('modal-body'));
-    if (!$('modal').open) $('modal').showModal(); $('modal').scrollTop = 0; $('close-modal').focus({ preventScroll: true });
+    if (!$('modal').open) $('modal').showModal(); $('modal').scrollTop = 0; $('modal-body').scrollTop = 0; $('close-modal').focus({ preventScroll: true });
   }
-  function closeModal() { modalRevision += 1; $('modal').close(); }
+  function closeModal() { stopWorkPresentation(); modalRevision += 1; $('modal').close(); }
+  $('modal').addEventListener('close', () => { if (!$('modal').open) stopWorkPresentation(); });
   $('modal').addEventListener('close', () => { if (!$('modal').open && active && !$('play-screen').hidden && $('intro-screen').hidden) { const level = N.bondLevel(state); if (bondShown && level > bondShown) { bondShown = level; setTimeout(() => stageCard(`인연 Lv.${level}`, 'BOND'), 500); } } });
   $('modal').addEventListener('close', () => { if (!$('modal').open) { $('game').append($('toast')); if (lastFocus && lastFocus.isConnected && !lastFocus.closest('[hidden]')) lastFocus.focus({ preventScroll: true }); } });
   $('modal').addEventListener('click', e => { if ($('modal').classList.contains('vn-hide')) { e.stopPropagation(); hideStage(false); return; } }, true);
@@ -511,6 +558,38 @@
     if (result.error) { toast(result.error); return; }
     state = result.state; render(); persist();
     if (keepWardrobe) { wardrobe(); toast(result.result.title); } else { setChoosing(false); closeModal(); toast(result.result.title); if (active && !$('play-screen').hidden) $('dialogue-next').focus({ preventScroll: true }); }
+    if (type === 'work') showWorkPresentation([id]);
+    if (result.result.encounter) showEncounter(result.result.encounter);
+    if (result.result.week) weekReport(result.result.week);
+  }
+  function showEncounter(enc) { sayOnStage(enc.line, enc.face, enc.title); showReaction({ affection: enc.affection, mood: enc.mood }); }
+  function showWorkPresentation(ids, returnToSchedule = false) {
+    const jobs = ids.map(id => D.jobs.find(j => j.id === id)).filter(Boolean);
+    if (!jobs.length) return;
+    openModal(jobs.length > 1 ? '오늘의 작업 노트' : jobs[0].name, body => {
+      disposeWork = window.LunaWork.build(body, jobs, {
+        reduceMotion: prefs.reduceMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        doneLabel: returnToSchedule ? '일정으로 돌아가기' : '일상으로 돌아가기',
+        onDone: () => { closeModal(); if (returnToSchedule) schedulePlanner(); }
+      });
+    });
+  }
+  // ---------- weekly settlement: every Monday morning, last week on one card ----------
+  const weekComment = w => !w.dates && !w.talks && !w.gifts ? '이번 주에 수련 얼굴 거의 못 봤지? 연습실에서 네 자리 자꾸 쳐다보더라.'
+    : w.affection + w.trust >= 6 ? '너네 이번 주 분위기 좋던데? 수련이 계속 웃고 다녀.'
+    : w.earned > 0 && !w.dates ? '돈은 열심히 모았네 ㅋㅋ 이번 주엔 수련이랑 어디 좀 가.' : '평범하지만 괜찮은 한 주였네. 다음 주도 화이팅.';
+  function weekReport(w = state.lastWeek) {
+    if (!w) return;
+    openModal('지난 한 주의 결산', body => {
+      $('modal').dataset.interior = 'room';
+      body.append(el('p', 'modal-description', `${D.calendar(w.from).label} ~ ${D.calendar(w.to).label} · ${w.to - w.from + 1}일 동안 쌓인 기록이에요.`));
+      const grid = el('div', 'week-grid');
+      [['번 돈', won(w.earned), 'money'], ['쓴 돈', won(w.spent), 'money'], ['함께한 외출', `${w.dates}회`, 'date'], ['함께 읽은 이야기', `${w.stories}편`, 'story'], ['선물 · 대화', `${w.gifts} · ${w.talks}`, 'gift'], ['일한 횟수', `${w.works}번`, 'work'], ['♡ 호감', `+${w.affection}`, 'heart'], ['◇ 신뢰', `+${w.trust}`, 'trust']]
+        .forEach(([k, v, kind], i) => { const tile = el('div', `week-tile ${kind}`); tile.style.setProperty('--i', i); tile.append(el('small', '', k), el('strong', '', v)); grid.append(tile); });
+      const h = N.heart(state), mind = el('p', 'week-heart'); mind.append(el('b', '', `수련의 마음 · ${h.name}`), el('span', '', N.moodLabel(w.mood)));
+      const friend = el('p', 'week-friend'); friend.append(el('b', '', '하윤'), document.createTextNode(weekComment(w)));
+      body.append(grid, mind, friend, button('이번 주도 시작하기', 'primary', () => { closeModal(); phoneCheck(); }));
+    });
   }
   function confirmActivity(type, item) {
     if (type === 'date') { prepareDate(item); return; }
@@ -722,8 +801,13 @@
       if(!g.schedule.length)body.append(el('p','muted-note','활동을 예약한 뒤 하나씩 실행해 주세요. 예약에는 시간이나 비용이 들지 않아요.'));
       if(g.schedule.length){
         const expected=JSON.stringify(state),first=g.schedule[0],blocked=E.reason(state,first.type,first.id);
-        const run=button('다음 일정 실행','primary',()=>{const r=E.runSchedule(state,expected);if(r.error){toast(r.error);return;}state=r.state;render();persist();schedulePlanner();});
-        run.disabled=!!blocked;body.append(run);if(blocked)body.append(el('p','blocked-reason',blocked));
+        const run=button('다음 일정 실행','primary',()=>{const r=E.runSchedule(state,expected);if(r.error){toast(r.error);return;}state=r.state;render();persist();if(first.type==='work') showWorkPresentation([first.id],true); else schedulePlanner();if(r.result.encounter){toast(`${r.result.encounter.title} · 수련이 잠깐 들렀어요`);showReaction({affection:r.result.encounter.affection,mood:r.result.encounter.mood});}});
+        run.disabled=!!blocked;body.append(run);
+        // One click for the whole plan; stops at the first entry that can no longer run.
+        const all=button(`남은 일정 ${g.schedule.length}개 모두 실행`,'secondary',()=>{const r=E.runAllSchedule(state,expected);if(r.error){toast(r.error);return;}state=r.state;render();persist();closeModal();setChoosing(false);
+          toast(`일정 ${r.results.length}개를 마쳤어요${r.stopped?` · 멈춘 이유: ${r.stopped}`:''}`);const met=r.results.find(x=>x.encounter);if(met)showEncounter(met.encounter);
+          const worked=g.schedule.slice(0,r.results.length).filter(x=>x.type==='work').map(x=>x.id);if(worked.length)showWorkPresentation(worked,true);});
+        all.dataset.scheduleAll='';all.disabled=!!blocked||g.schedule.length<2;body.append(all);if(blocked)body.append(el('p','blocked-reason',blocked));
         const clear=button('예약 비우기','secondary',()=>{const r=E.setSchedule(state,[]);if(r.error){toast(r.error);return;}state=r.state;persist();schedulePlanner();});clear.disabled=!!E.setSchedule(state,[]).error;body.append(clear);
       }
       body.append(el('p','muted-note','실행할 때 실제 시간과 기력을 확인합니다. 다른 활동으로 자원이 줄면 예약이 막힐 수 있으며, 다음 날에는 남은 예약이 비워집니다.'),button('열린 이야기 확인','secondary',storyHub));
@@ -944,7 +1028,7 @@
     line.classList.toggle('typed',!typing); line.style.display='none'; void line.offsetWidth; line.style.display='';
     ctx.typingUntil=Date.now()+typing; clearInterval(ctx.blip);
     if(!logged.has(line)){ logged.add(line); storyLog.push([line.dataset.speaker||'',line.textContent]); storyLog=storyLog.slice(-120); }
-    clearTimeout(ctx.autoTimer); if(prefs.autoRead&&r.index<r.lines.length-1) ctx.autoTimer=setTimeout(()=>{ if(reveal===r&&!$('modal').classList.contains('vn-hide')) advanceReveal(); },typing+1500+chars*35);
+    clearTimeout(ctx.autoTimer); if(prefs.autoRead&&r.index<r.lines.length-1) ctx.autoTimer=setTimeout(()=>{ if(reveal===r&&!$('modal').classList.contains('vn-hide')) advanceReveal(); },autoPace(typing+1500+chars*35));
     if(typing&&prefs.blip&&line.dataset.speaker){ sfx('blip'); ctx.blip=setInterval(()=>{ if(Date.now()>=ctx.typingUntil||!line.isConnected){clearInterval(ctx.blip);return;} sfx('blip'); },85); }
   }
   function toggleAuto(b) {
@@ -1050,6 +1134,7 @@
   function journal() {
     openModal('일상 기록', body => {
       const summary = el('div', 'journal-summary'); summary.append(el('span', '', `누적 수입 ${won(state.totalEarned)}`), el('span', '', `누적 지출 ${won(state.totalSpent)}`)); body.append(summary);
+      if (state.lastWeek) body.append(button('지난주 결산 다시 보기', 'secondary', () => weekReport()));
       if (!state.journal.length) body.append(el('p', 'modal-description', '아직 기록된 활동이 없어요. 오늘의 첫 활동을 골라 보세요.'));
       [...state.journal].reverse().forEach(j => { const row = el('div', 'journal-entry'); row.append(el('small', '', `${j.day}일째`)); const text = el('div', '', j.title); text.append(el('p', '', j.text)); row.append(text); if (j.money) row.append(el('span', `amount${j.money < 0 ? ' negative' : ''}`, `${j.money > 0 ? '+' : '−'}${won(Math.abs(j.money))}`)); body.append(row); });
       body.append(el('p', 'muted-note', '최근 활동 200건을 보관합니다. 누적 수입과 지출은 계속 유지됩니다.'));
@@ -1067,10 +1152,10 @@
   function slots(mode) {
     const save = mode === 'save';
     openModal(save ? '하루를 저장하기' : '기억 불러오기', body => {
-      body.append(el('p', 'modal-description', '행동할 때마다 자동 저장됩니다. 수동 저장은 세 칸을 사용할 수 있어요. 브라우저 데이터를 지우기 전에는 파일로 내보내 주세요.'));
+      body.append(el('p', 'modal-description', '행동할 때마다 자동 저장됩니다. 수동 저장은 세 칸을 사용할 수 있어요. 게임 중 F5는 빠른 저장, F9는 빠른 불러오기예요. 브라우저 데이터를 지우기 전에는 파일로 내보내 주세요.'));
       const list = el('div', 'choice-list');
-      for (let i = save ? 1 : 0; i <= 3; i++) {
-        const saved = E.storage.load(i), label = i === 0 ? '자동 저장' : `기억 ${String(i).padStart(2,'0')}`;
+      for (const i of save ? [1, 2, 3] : ['quick', 0, 1, 2, 3]) {
+        const saved = E.storage.load(i), label = i === 'quick' ? '빠른 저장 (F5)' : i === 0 ? '자동 저장' : `기억 ${String(i).padStart(2,'0')}`;
         const slot = button('', 'save-slot', () => {
           const perform = () => { if (save) { toast(E.storage.save(i, state) ? `${label}에 저장했어요.` : '저장하지 못했어요. 파일 내보내기를 사용해 주세요.'); slots(mode); } else { const fresh = E.storage.load(i); if (!fresh) { toast('저장 데이터를 읽을 수 없어요.'); slots(mode); return; } closeModal(); begin(fresh); toast(`${label}을 불러왔어요.`); } };
           if (save && saved || !save && active) confirm(save ? '기억 덮어쓰기' : '저장된 하루로 돌아가기', save ? `${label}의 ${saved.day}일째 기록을 현재 상태로 바꿉니다.` : '현재 진행을 선택한 저장 기록으로 바꿉니다. 필요한 경우 먼저 다른 칸에 저장해 주세요.', save ? '덮어쓰기' : '불러오기', perform, () => slots(mode)); else perform();
@@ -1159,12 +1244,14 @@
     const focus=p.kind==='explore'?dQuery('.map-controls'):dQuery(`[data-activity-cell="${oldCell||0}"]:not(:disabled)`)||dQuery('.puzzle-cell:not(:disabled)');focus?.focus({preventScroll:true});
   }
   function dQuery(selector){return $('modal-body').querySelector(selector);}
-  function guide() { openModal('작은 일상을 쌓는 방법', body => { const list = el('ol', 'guide'); ['PC 전용 게임입니다. 1280 × 720 이상의 브라우저 화면에서 마우스와 키보드를 사용해 주세요. Tab으로 이동, Enter로 선택, Esc로 창을 닫습니다. 산책길 탐색은 방향키 또는 WASD로 이동합니다.', '하루에 시간 3칸이 주어집니다. 일과 데이트는 시간과 기력을 사용합니다.', '일하기로 주인공의 돈을 벌어요. 급여는 활동 완료 즉시 소지금에 더해집니다.', '상점에서 의상과 스타킹을 산 뒤 수련의 옷장에서 직접 입혀 주세요. 구매는 호감을 직접 올리지 않습니다.', '데이트는 하루 한 번. 장소를 고르고 보유한 코디를 확인한 뒤 출발하세요. 추억 앨범에 그날의 모습이 남아요.', '탐방 데이트 도중 또는 탐방 수첩에서 둘이 체험하기를 여세요. 산책길 탐색·음의 조각·추억 카드가 코스마다 12단계씩 있습니다.', '체험은 선택 사항이며 추가 비용이나 시간 제한이 없습니다. 힌트와 되돌리기로 편하게 진행해도 이야기 결말에는 불이익이 없어요.', '쉬면 시간 1칸으로 기력 35를 회복합니다. 다음 날에는 시간 3칸과 기력 60을 회복합니다.', '활동은 자동 저장됩니다. 저장 메뉴에서 수동 저장과 파일 내보내기를 사용할 수 있어요.'].forEach(t => list.append(el('li', '', t))); body.append(list, el('p', 'muted-note', '관계와 이야기에서 열린 장면과 다음 단서를 확인하세요. 기본 옷과 무료 산책으로 관계를 진전할 수 있어요. 고백은 연인·우정·보류 중 직접 선택합니다.'));
+  function guide() { openModal('작은 일상을 쌓는 방법', body => { const list = el('ol', 'guide'); ['PC 전용 게임입니다. 1280 × 720 이상의 브라우저 화면에서 마우스와 키보드를 사용해 주세요. Tab으로 이동, Enter로 선택, Esc로 창을 닫습니다. 산책길 탐색은 방향키 또는 WASD로 이동합니다.', '하루에 시간 3칸이 주어집니다. 일과 데이트는 시간과 기력을 사용합니다.', '일하기로 주인공의 돈을 벌어요. 급여는 활동 완료 즉시 소지금에 더해집니다.', '상점에서 의상과 스타킹을 산 뒤 수련의 옷장에서 직접 입혀 주세요. 구매는 호감을 직접 올리지 않습니다.', '데이트는 하루 한 번. 장소를 고르고 보유한 코디를 확인한 뒤 출발하세요. 추억 앨범에 그날의 모습이 남아요.', '탐방 데이트 도중 또는 탐방 수첩에서 둘이 체험하기를 여세요. 산책길 탐색·음의 조각·추억 카드가 코스마다 12단계씩 있습니다.', '체험은 선택 사항이며 추가 비용이나 시간 제한이 없습니다. 힌트와 되돌리기로 편하게 진행해도 이야기 결말에는 불이익이 없어요.', '쉬면 시간 1칸으로 기력 35를 회복합니다. 다음 날에는 시간 3칸과 기력 60을 회복합니다.', '활동은 자동 저장됩니다. 저장 메뉴에서 수동 저장과 파일 내보내기를 사용할 수 있어요. F5는 빠른 저장, F9는 빠른 불러오기입니다.', '매주 월요일 아침에는 지난 한 주의 결산이 도착해요. 일하는 날에는 가끔 수련이 들르기도 합니다. 관계 노트의 ‘수련의 마음’에서 두 사람의 거리를 확인하세요.', '결말을 본 뒤 새로운 일상을 시작하면 결말에 따라 회차 보너스를 받아요.'].forEach(t => list.append(el('li', '', t))); body.append(list, el('p', 'muted-note', '관계와 이야기에서 열린 장면과 다음 단서를 확인하세요. 기본 옷과 무료 산책으로 관계를 진전할 수 있어요. 고백은 연인·우정·보류 중 직접 선택합니다.'));
     }); }
   function settings() { openModal('환경 설정', body => {
     const textLabel=el('label','settings-row','본문 글자 크기'), select=el('select'); select.id='text-size'; [['normal','기본'],['large','크게'],['largest','아주 크게']].forEach(([value,text])=>{const option=el('option','',text);option.value=value;select.append(option);}); select.value=prefs.textSize; select.addEventListener('change',()=>{prefs.textSize=select.value;savePrefs();}); textLabel.append(select); body.append(textLabel,el('p','reading-sample','선택한 하루가 차곡차곡 쌓입니다. 편안한 크기로 이야기를 읽어 보세요.'));
     [['보조 일러스트 표시', 'portrait'], ['화면 움직임 줄이기', 'reduceMotion'], ['효과음 (선택·호감·메시지)', 'sfx'], ['대사 글자 소리', 'blip']].forEach(([text,key]) => { const label = el('label', 'settings-row', text); const input = el('input'); input.type = 'checkbox'; input.checked = prefs[key]; input.addEventListener('change', () => { prefs[key] = input.checked; savePrefs(); }); label.append(input); body.append(label); });
-    const label = el('label', 'settings-row', '배경음 크기'); const input = el('input'); input.type = 'range'; input.min = 0; input.max = 100; input.value = prefs.volume; input.setAttribute('aria-label', '배경음 크기'); input.addEventListener('input', () => { prefs.volume = Number(input.value); savePrefs(); }); label.append(input); body.append(label, el('p', 'settings-note', '상단 음표 버튼으로 배경음을 켜거나 끌 수 있어요. 음원 파일 없이 합성한 잔잔한 선율입니다.\n모든 활동은 버튼으로 선택합니다. Tab으로 이동하고 Enter로 선택하며, Esc로 창을 닫을 수 있어요.'));
+    const speedLabel = el('label', 'settings-row', '자동 진행 속도'), speed = el('select'); speed.id = 'auto-speed'; [['slow','느리게'],['normal','보통'],['fast','빠르게']].forEach(([value,text]) => { const option = el('option','',text); option.value = value; speed.append(option); }); speed.value = prefs.autoSpeed; speed.addEventListener('change', () => { prefs.autoSpeed = speed.value; savePrefs(); }); speedLabel.append(speed); body.append(speedLabel);
+    const boxLabel = el('label', 'settings-row', '대사창 불투명도'), box = el('input'); box.id = 'box-alpha'; box.type = 'range'; box.min = 40; box.max = 100; box.value = prefs.boxAlpha; box.setAttribute('aria-label', '대사창 불투명도'); box.addEventListener('input', () => { prefs.boxAlpha = Number(box.value); savePrefs(); }); boxLabel.append(box); body.append(boxLabel);
+    const label = el('label', 'settings-row', '배경음 크기'); const input = el('input'); input.type = 'range'; input.min = 0; input.max = 100; input.value = prefs.volume; input.setAttribute('aria-label', '배경음 크기'); input.addEventListener('input', () => { prefs.volume = Number(input.value); savePrefs(); }); label.append(input); body.append(label, el('p', 'settings-note', '상단 음표 버튼으로 배경음을 켜거나 끌 수 있어요. 음원 파일 없이 합성한 잔잔한 선율입니다.\n모든 활동은 버튼으로 선택합니다. Tab으로 이동하고 Enter로 선택하며, Esc로 창을 닫을 수 있어요. 게임 중 F5는 빠른 저장, F9는 빠른 불러오기입니다.'));
     if (!active) body.append(button('저장 파일 불러오기', 'secondary', () => slots('load')));
   }); }
   function legacyProfile() { openModal('수련 · 水蓮', body => { body.append(el('p', 'profile-quote', '무대 위의 이름보다 먼저, 당신의 친구였던 수련.')); const list = el('dl', 'profile-list'); [['시점','Aqua Luna 본편 이전'],['소속','엔터테인먼트 입사 전 · 소속 없음'],['당신과의 관계','같은 전공·같은 학년에서 친해진 대학 친구'],['지금의 일상','대학에 다니며 동네 연습실에서 노래하는 중'],['좋아하는 것','클래식, 첼로, 조용한 카페'],['성격','차분함 · 깊은 감수성 · 말보다 행동'],['호감',`${state.affection} / 100`],['신뢰',`${state.trust} / 100`],['현재 의상',D.outfits.find(o => o.id === state.outfit).name]].forEach(([k,v]) => list.append(el('dt','',k), el('dd','',v))); body.append(list, el('p','muted-note','Aqua Luna의 세계관과 수련의 기본 성격을 잇는 과거 이야기입니다. 현재 관계: ' + N.stage(state) + ' · 관계와 이야기에서 함께한 선택과 다음 단서를 확인해 보세요.')); }); }
@@ -1188,7 +1275,30 @@
   $('dialogue').addEventListener('click', () => setChoosing(true, true));
   $('choice-close').addEventListener('click', () => setChoosing(false, true));
   $('sulien-touch').addEventListener('click', touchSulien); $('gift-button').addEventListener('click', giftMenu); $('talk-button').addEventListener('click', talkScene);
-  $('phone-close').addEventListener('click', closePhone); $('phone-button').addEventListener('click', openMessenger); $('phone-back').addEventListener('click', openMessenger); $('calendar-button').addEventListener('click', () => calendarView());
+  $('phone-button').replaceChildren(document.createTextNode('휴대폰 '), el('i', '', '●'));
+  $('phone-button').setAttribute('aria-label', '휴대폰 열기');
+  const phoneApps = [
+    ['messages', '메시지', '✉', openMessenger, 'mint'], ['calendar', '달력', '▦', () => calendarView(), 'peach'],
+    ['schedule', '능력치·일정', '✓', schedulePlanner, 'blue'], ['budget', '저축 목표', '₩', budgetPlanner, 'gold'],
+    ['shop', '상점', '♧', shop, 'peach'], ['wardrobe', '옷장', '♧', wardrobe, 'lavender'],
+    ['album', '앨범', '▧', album, 'blue'], ['journal', '기록', '≡', journal, 'gold'],
+    ['work', '일하기', '▣', () => activities('work'), 'blue'], ['date', '데이트', '♡', () => activities('date'), 'peach'],
+    ['story', '이야기', '☾', storyHub, 'lavender'], ['bond', '우리 사이', '♥', relationshipNote, 'mint'],
+    ['gift', '선물', '◇', giftMenu, 'gold'], ['save', '저장', '↓', () => slots('save'), 'mint'],
+    ['load', '불러오기', '↺', () => slots('load'), 'blue'], ['settings', '설정', '⚙', settings, 'lavender']
+  ];
+  phoneApps.forEach(([id, label, icon, action, color]) => {
+    const app = button('', 'phone-app', action); app.dataset.phoneApp = id;
+    const tile = el('span', `phone-app-icon ${color}`, icon); tile.setAttribute('aria-hidden', 'true');
+    const iconPath = { shop:'M5 7h14l1 14H4L5 7ZM8 8V6a4 4 0 0 1 8 0v2', wardrobe:'m8 3-5 3-2 5 4 2 2-3v11h10V10l2 3 4-2-2-5-5-3a4 4 0 0 1-8 0Z', album:'M3 3h18v18H3ZM3 16l5-5 5 6 3-3 5 6M15 7h2' }[id];
+    if (iconPath) { const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'), path = document.createElementNS(svg.namespaceURI, 'path'); svg.setAttribute('viewBox', '0 0 24 24'); path.setAttribute('d', iconPath); svg.append(path); tile.replaceChildren(svg); }
+    if (id === 'messages') { const badge = el('b', 'phone-app-badge'); badge.hidden = true; tile.append(badge); }
+    app.append(tile, el('span', '', label)); $('phone-apps').append(app);
+  });
+  $('phone-close').addEventListener('click', closePhone); $('phone-button').addEventListener('click', openPhoneHome); $('phone-back').addEventListener('click', phoneBack);
+  $('phone-home-button').addEventListener('click', openPhoneHome); $('phone-notification').addEventListener('click', openMessenger);
+  $('modal-phone-home').addEventListener('click', () => { closeModal(); if (active && !$('play-screen').hidden) openPhoneHome(); });
+  $('calendar-button').addEventListener('click', () => calendarView());
   $('intro-screen').addEventListener('click', e => { if (!e.target.closest('button,.intro-top')) advanceReveal(); });
   const showAuto = () => { $('intro-auto').textContent = `자동 재생 ${prefs.introAuto ? 'ON' : 'OFF'}`; $('intro-auto').setAttribute('aria-pressed', String(prefs.introAuto)); };
   showAuto();
@@ -1197,6 +1307,15 @@
     if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
     const typing = e.target.closest?.('input,select,textarea'), onButton = e.target.closest?.('button');
     const advanceKey = e.key === ' ' || (e.key === 'Enter' && !onButton);
+    // Quick save / load (F5 / F9). In a browser this also stops F5 from reloading the page mid-play.
+    if ((e.key === 'F5' || e.key === 'F9') && hasSession && !typing) {
+      e.preventDefault();
+      if (e.key === 'F5') { toast(E.storage.save('quick', state) ? `빠른 저장 · ${state.day}일째` : '빠른 저장에 실패했어요. 파일 내보내기를 사용해 주세요.'); return; }
+      const fresh = E.storage.load('quick');
+      if (!fresh) { toast('빠른 저장 기록이 없어요. F5로 먼저 저장해 주세요.'); return; }
+      if ($('modal').open) closeModal();
+      closePhone(); begin(fresh); toast(`빠른 저장을 불러왔어요 · ${fresh.day}일째`); return;
+    }
     if ($('modal').open && $('modal').classList.contains('story-stage') && !typing) {
       const k = e.key.toLowerCase();
       if (k === 'h') { e.preventDefault(); hideStage(!$('modal').classList.contains('vn-hide')); return; }
@@ -1209,6 +1328,10 @@
       return;
     }
     if (typing) return;
+    if (!$('phone').hidden) {
+      if (e.key === 'Escape') { e.preventDefault(); phoneBack(); }
+      return;
+    }
     if (!$('intro-screen').hidden && (advanceKey && (!onButton || e.target.id === 'intro-next'))) { e.preventDefault(); advanceReveal(); return; }
     if (!active || $('play-screen').hidden) return;
     if (!choosing && (advanceKey || (e.key === 'Enter' && e.target.id === 'dialogue-next'))) { e.preventDefault(); setChoosing(true, true); }

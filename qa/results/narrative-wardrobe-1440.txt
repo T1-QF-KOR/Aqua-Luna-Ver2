@@ -4,5 +4,5 @@ PASS cancelled date preparation preserves state
 PASS date scene and persistent outfit memory
 PASS expression and location gallery without state mutation
 PASS time gallery, clothing-safe expressions, and frozen album lighting
-PASS all 42 local illustrations decode
+PASS all 80 local illustrations decode
 PASS 1440px wardrobe layout and runtime

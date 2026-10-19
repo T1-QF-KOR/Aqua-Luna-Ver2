@@ -5,3 +5,6 @@ qa/*-dom.html
 qa/reliability-before.html
 qa/downloads-*/
 *.tmp
+launcher/bin/
+launcher/obj/
+dist/

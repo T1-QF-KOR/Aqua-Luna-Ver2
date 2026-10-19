@@ -406,3 +406,33 @@ dialog.story-stage::backdrop { background:#08121c; }
 .cal-detail h3 { margin:16px 0 8px; font:400 15px var(--serif); }
 .cal-entry { margin:0; padding:7px 0; border-bottom:1px solid #ffffff0d; font-size:12px; line-height:1.7; color:#c9d6da; }
 .cal-entry b { margin-right:8px; color:#fff; font-weight:500; }
+/* Weekly settlement card (every Monday morning). */
+.week-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:6px 0 14px; }
+.week-tile { padding:14px 14px 12px; border:1px solid var(--vn-line); background:rgba(193,225,218,.04); display:flex; flex-direction:column; gap:6px; animation:vn-in .35s ease-out both; animation-delay:calc(var(--i,0) * 60ms); }
+.week-tile small { font-size:11px; letter-spacing:.5px; color:#8fa9b5; }
+.week-tile strong { font:400 22px var(--serif); color:#eef0ef; }
+.week-tile.heart strong { color:#ffc3d2; } .week-tile.trust strong { color:var(--mint); } .week-tile.date strong, .week-tile.story strong { color:var(--vn-gold); }
+.week-heart { display:flex; justify-content:space-between; gap:12px; margin:0 0 8px; padding:12px 14px; border:1px solid rgba(255,170,195,.35); background:rgba(255,170,195,.06); font-size:13px; }
+.week-heart b { font:400 15px var(--serif); color:#ffd8e2; } .week-heart span { color:#c9d6da; }
+.week-friend { margin:0 0 16px; padding:12px 14px; border-left:2px solid var(--mint); background:rgba(255,255,255,.03); font-size:13px; line-height:1.7; color:#dfe7e6; }
+.week-friend b { margin-right:10px; color:var(--mint); font-weight:500; }
+.reduced-motion .week-tile { animation:none; }
+/* Relationship note: her heart in four steps. */
+.note-heart { margin:0 0 14px; padding:14px 18px 16px; border:1px solid rgba(255,170,195,.3); background:linear-gradient(100deg,rgba(255,170,195,.07),rgba(193,225,218,.03)); }
+.note-heart h3 { margin:0 0 10px; font:400 16px var(--serif); color:#ffd8e2; }
+.heart-steps { display:flex; margin:0 0 10px; padding:0; list-style:none; counter-reset:heart; }
+.heart-steps li { flex:1; position:relative; padding:22px 4px 0; text-align:center; font-size:11px; color:#7f95a0; }
+.heart-steps li::before { content:'♡'; position:absolute; top:0; left:50%; transform:translateX(-50%); font-size:13px; line-height:1; }
+.heart-steps li:not(:first-child)::after { content:''; position:absolute; top:6px; right:calc(50% + 10px); width:calc(100% - 20px); height:1px; background:rgba(193,225,218,.18); }
+.heart-steps li.past { color:#c9d6da; } .heart-steps li.past::before { content:'♥'; color:#d99aab; }
+.heart-steps li.now { color:#ffd8e2; font-weight:600; } .heart-steps li.now::before { content:'♥'; color:#ff9fb8; font-size:17px; top:-2px; text-shadow:0 0 12px rgba(255,159,184,.7); }
+.heart-steps li.past::after, .heart-steps li.now::after { background:rgba(255,170,195,.55); }
+.heart-note { margin:0; font-size:12px; line-height:1.7; color:#dfe7e6; }
+.heart-ready { display:flex; gap:8px; margin:10px 0 0; padding:0; list-style:none; font-size:11px; }
+.heart-ready li { padding:5px 10px; border:1px solid var(--vn-line); color:#a9bbc6; }
+.heart-ready li.met { border-color:rgba(255,170,195,.55); color:#ffd8e2; }
+/* Messenger sticker after a reply. */
+.phone-sticker { align-self:flex-start; margin:0; display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 12px 6px; border-radius:18px; background:rgba(238,243,243,.1); animation:vn-in .3s ease; }
+.phone-sticker span { font-size:34px; line-height:1.1; }
+.phone-sticker small { font-size:10px; color:#c9d6da; }
+.phone-sticker.old { opacity:.72; }

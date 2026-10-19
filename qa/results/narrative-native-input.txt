@@ -1,9 +1,12 @@
-﻿PASS Narrative 1440 native Tab focuses a choice
+﻿PASS Narrative 1280 native Tab focuses a choice
+PASS Narrative 1280 native Enter commits one choice
+PASS Narrative 1280 Escape preserves progress
+PASS Narrative 1440 native Tab focuses a choice
 PASS Narrative 1440 native Enter commits one choice
 PASS Narrative 1440 Escape preserves progress
-PASS Narrative 390 native Tab focuses a choice
-PASS Narrative 390 native Enter commits one choice
-PASS Narrative 390 Escape preserves progress
+PASS Narrative 1920 native Tab focuses a choice
+PASS Narrative 1920 native Enter commits one choice
+PASS Narrative 1920 Escape preserves progress
+PASS Activity 1280 native arrow moves one tile
 PASS Activity 1440 native arrow moves one tile
-PASS Activity 390 native arrow moves one tile
-PASS Activity 320 native arrow moves one tile
+PASS Activity 1920 native arrow moves one tile

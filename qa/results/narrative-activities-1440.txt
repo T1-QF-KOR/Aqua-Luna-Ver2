@@ -14,7 +14,7 @@ PASS 576 records with full course memories fit the actual pretty-printed export 
     "memory": 192
   },
   "allSolvable": true,
-  "prettySaveBytes": 167665,
+  "prettySaveBytes": 168065,
   "procedurallyGenerated": true,
   "humanThirtyHourPlaytest": false
 }

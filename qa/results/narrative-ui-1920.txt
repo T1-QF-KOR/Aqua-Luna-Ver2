@@ -1,0 +1,10 @@
+PASS boot and new game
+PASS budget target and live shortage
+PASS work confirmation, economy, text feed, autosave
+PASS buy, equip, duplicate guard
+PASS paid date and repeat prevention
+PASS next day and manual save/load roundtrip
+PASS journal and illustration toggle
+PASS reading size preference and preview
+PASS return to title and resume
+PASS 1920px layout, controls, no runtime errors

@@ -310,6 +310,39 @@
   };
   const moodLabel = m => m >= 80 ? '기분 아주 좋음' : m >= 60 ? '기분 좋음' : m >= 40 ? '평온함' : m >= 25 ? '조금 지침' : '쓸쓸함';
   const bondLevel = s => Math.min(10, 1 + Math.floor((s.affection + s.trust) / 20));
+  // Sulien drops by during a shift: [title, [polite, casual], face]. Picked by day, so it never repeats twice running.
+  const workScenes = {
+    cafe: [
+      { title: '카페에 들른 수련', line: ['…여기서 일하는 줄 몰랐어요. 따뜻한 라테 하나요. 진하게는 말고, 당신이 좋아하는 대로요.', '…여기서 일하는 줄 몰랐어. 따뜻한 라테 하나. 진하게는 말고, 네가 좋아하는 대로.'], face: 'surprised' },
+      { title: '창가 자리의 단골', line: ['과제하러 왔다가 계속 카운터만 봤어요. 일하는 모습, 생각보다 멋있네요.', '과제하러 왔다가 계속 카운터만 봤어. 일하는 모습, 생각보다 멋있다.'], face: 'shy' }
+    ],
+    edit: [
+      { title: '편집실의 노크', line: ['배경음 고민한다길래 허밍 하나 녹음해 왔어요. 쓸 만하면 써요. 아니면… 그냥 들어 줘요.', '배경음 고민한다길래 허밍 하나 녹음해 왔어. 쓸 만하면 써. 아니면… 그냥 들어 줘.'], face: 'playful' },
+      { title: '야식 배달', line: ['아직도 자막 맞추는 중이에요? 김밥 두 줄 사 왔어요. 반씩 먹어요.', '아직도 자막 맞추는 중이야? 김밥 두 줄 사 왔어. 반씩 먹자.'], face: 'smile' }
+    ],
+    event: [
+      { title: '행사장의 자원봉사자', line: ['일손 모자라다고 해서 와 봤어요. 의자 나르는 건 자신 있어요. …진짜예요.', '일손 모자라다길래 와 봤어. 의자 나르는 건 자신 있어. …진짜야.'], face: 'playful' },
+      { title: '무대 뒤에서', line: ['리허설 소리 들으니까 저도 모르게 따라 부를 뻔했어요. 끝나면 같이 가요.', '리허설 소리 들으니까 나도 모르게 따라 부를 뻔했어. 끝나면 같이 가자.'], face: 'thoughtful' }
+    ]
+  };
+  // How close the friendship has grown, in words instead of a percentage (a quieter SOME SOME app).
+  const heartStages = [
+    { name: '편한 친구', note: '아직은 과제 이야기로 시작해 수업 이야기로 끝나는 사이예요.' },
+    { name: '신경 쓰이는 사이', note: '함께 걸은 길이 늘면서, 수련이 먼저 연락하는 날이 생겼어요.' },
+    { name: '썸', note: '서로의 결정을 존중하는 법을 알았어요. 말하지 않아도 같이 있는 시간이 편해졌어요.' },
+    { name: '고백 직전', note: '수련이 무언가 말하려다 삼키는 순간이 많아졌어요. 조금만 더 함께하면 돼요.' }
+  ];
+  function heart(s) {
+    const r = s.story.relationship;
+    if (r === 'lovers') return { index: 4, final: true, name: '연인', note: '친구라는 말 다음의 대답을 함께 골랐어요.' };
+    if (r === 'friends') return { index: 4, final: true, name: '소중한 친구', note: '서로를 가장 잘 아는 친구로 남기로 했어요.' };
+    if (r === 'considering') return { index: 3, name: '대답을 기다리는 사이', note: '수련은 서두르지 않고 당신의 대답을 기다리고 있어요.' };
+    const index = done(s, 'session') ? 3 : done(s, 'boundary') ? 2 : done(s, 'score') ? 1 : 0;
+    return { index, ...heartStages[index] };
+  }
+  // Stickers she sends after your reply: one per message kind.
+  const stickers = { walk: ['🌙', '또 걷자'], cafe: ['☕', '다음은 디저트'], concert: ['🎻', '브라보'], checkin: ['🍀', '힘내'], course: ['📒', '메모 완료'] };
+  const sticker = key => stickers[key] || stickers.course;
   function pickMessage(before, after) {
     const last = before.memories.at(-1);
     const themed = `course-${window.LunaData.dates.find(d => d.id === last?.date)?.theme}`;
@@ -326,6 +359,7 @@
     hint: arg => { const e = events.find(x => x.id === arg); return e?.theme || !e ? '수련이 탐방 수첩을 자주 들여다보더라. 안 가 본 곳도 같이 가 봐.' : `수련이 너한테 할 말 있는 것 같던데. 내가 보기엔… ${casualHint(e.hint)}`; },
     exam: () => '이번 주 시험이네… 수련도 도서관에서 계속 공부하더라. 너도 공부 좀 해 두면 수련이랑 얘기 잘 통할걸.',
     festival: () => '축제 시작이다! 수련 대학 축제는 처음이래. 같이 한 바퀴 돌아봐.',
+    heart: arg => ({ 1: '야, 수련 요즘 너 얘기 은근 많이 한다? 같이 간 데 얘기할 때 표정이 달라.', 2: '너네 둘… 요즘 좀 썸 같던데? 수련한테 물어봤더니 아니라는데 귀가 빨개지더라 ㅋㅋ', 3: '수련이 나한테 "고백은 어떻게 하는 거야?" 이러던데. 모르는 척해 줄게. 너도 마음 정해 둬.' })[arg] || '요즘 수련이랑 잘 지내?',
     stat: arg => ({ fitness: '수련이 요즘 강가 산책 코스 얘기를 자주 하던데, 같이 걸으려면 체력 좀 길러 둬 ㅋㅋ', knowledge: '수련이 전시랑 책 얘기를 자주 하더라. 공부 좀 해 두면 대화가 잘 통할걸.', sensitivity: '수련은 음악 얘기 할 때 제일 신나 보여. 음악 좀 들어 두면 좋을걸.' })[arg] || '요즘 수련이랑 잘 지내?'
   };
   const noticeText = {
@@ -340,6 +374,9 @@
     if (!done(after, 'hello')) return null;
     const sent = (key, arg) => (after.story.msgLog || []).some(m => m.from === 'friend' && m.key === key && m.arg === arg);
     if (soon.birthday) return { day: after.day, from: 'friend', key: 'birthday', arg: `${soon.month}월 ${soon.date}일` };
+    const h = heart(after).index;
+    // Tracked in story.heartHint, not the 60-message log, so an old hint never comes back after scrolling out.
+    if (h >= 1 && h <= 3 && h > (after.story.heartHint || 0)) return { day: after.day, from: 'friend', key: 'heart', arg: String(h) };
     if (after.growth.mood < 40 && after.day % 3 === 0) return { day: after.day, from: 'friend', key: 'mood' };
     if (cal.event?.id === 'exam' && cal.weekday === '월') return { day: after.day, from: 'friend', key: 'exam' };
     if (cal.event?.id === 'festival' && D.calendar(after.day - 1).event?.id !== 'festival') return { day: after.day, from: 'friend', key: 'festival' };
@@ -386,10 +423,11 @@
     if (r.last !== null && (!r.last || !['date','event'].includes(r.last.kind) || !validChoices(r.last.kind,r.last.id,r.last.choices) || r.last.choices.length !== script(r.last.kind,r.last.id).length || !snapshot(r.last) || !integer(r.last.affection,12) || !integer(r.last.trust,10))) return null;
     if (r.speech !== undefined && !['polite','casual'].includes(r.speech)) return null;
     if (r.carry !== undefined && (!r.carry || typeof r.carry !== 'object' || Array.isArray(r.carry) || Object.keys(r.carry).some(k => !['affection','trust'].includes(k)) || !Object.values(r.carry).every(v => integer(v, 99)))) return null;
-    if ([r.lastMet, r.giftDay].some(v => v !== undefined && (!integer(v) || v < 1 || v > state.day))) return null;
+    if ([r.lastMet, r.giftDay, r.workMet].some(v => v !== undefined && (!integer(v) || v < 1 || v > state.day))) return null;
     if (r.msgLog !== undefined && (!Array.isArray(r.msgLog) || r.msgLog.length > 60 || !r.msgLog.every(m => m && integer(m.day) && m.day >= 1 && m.day <= state.day && (m.arg === undefined || (typeof m.arg === 'string' && m.arg.length <= 60)) && (m.from === 'sulien' ? Object.hasOwn(messages, m.key) && [null, 'a', 'b', undefined].includes(m.reply) : m.from === 'friend' ? Object.hasOwn(friendText, m.key) : m.from === 'notice' && Object.hasOwn(noticeText, m.key))))) return null;
     if (r.seen !== undefined && (!integer(r.seen) || r.seen > (r.msgLog || []).length)) return null;
     if (r.birthdays !== undefined && (!Array.isArray(r.birthdays) || r.birthdays.length > 50 || !r.birthdays.every(y => integer(y, 3000)))) return null;
+    if (r.heartHint !== undefined && !integer(r.heartHint, 3)) return null;
     if (r.talkDay !== undefined && (!integer(r.talkDay) || r.talkDay < 1 || r.talkDay > state.day)) return null;
     if (r.talks !== undefined && (!Array.isArray(r.talks) || r.talks.length > 10 || !r.talks.every(t => t && integer(t.day) && t.day >= 1 && t.day <= state.day && integer(t.score, 100) && Array.isArray(t.picks) && t.picks.length === 3 && new Set(t.picks).size === 3 && t.picks.every(p => Object.hasOwn(talk, p))))) return null;
     if (r.tastes !== undefined && (!r.tastes || typeof r.tastes !== 'object' || Array.isArray(r.tastes) || !Object.entries(r.tastes).every(([k, v]) => window.LunaData.gifts.some(g => g.id === k && g.taste === v)))) return null;
@@ -403,5 +441,5 @@
     if(window.LunaActivities&&!activities)return null;
     return JSON.parse(JSON.stringify({...r,exploration,...(activities?{activities}:{})}));
   }
-  window.LunaStory = { storyGap, rested, intro, dates, events, fresh, script, available, stage, validate, done, messages, pickMessage, messageText, speechIndex, giftLines, reunionLines, touchLines, doing, moodLabel, bondLevel, talk, talkClose, friendText, noticeText, pickFriend, pickNotice, logText, birthdayLines, birthdayGreeting };
+  window.LunaStory = { workScenes, heart, heartStages, sticker, storyGap, rested, intro, dates, events, fresh, script, available, stage, validate, done, messages, pickMessage, messageText, speechIndex, giftLines, reunionLines, touchLines, doing, moodLabel, bondLevel, talk, talkClose, friendText, noticeText, pickFriend, pickNotice, logText, birthdayLines, birthdayGreeting };
 })();

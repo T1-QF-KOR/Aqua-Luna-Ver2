@@ -39,6 +39,17 @@
     if (!result.error) result.state.growth.schedule.shift();
     return result;
   }
+  // Runs the whole plan in one go; stops at the first blocked entry and keeps what already ran.
+  function runAllSchedule(state, expected) {
+    if (expected !== JSON.stringify(state) || !state.growth.schedule.length) return { state, error: '현재 일정에서 다음 활동을 골라 주세요.' };
+    let s = state; const results = [];
+    while (s.growth.schedule.length) {
+      const r = runSchedule(s, JSON.stringify(s));
+      if (r.error) return results.length ? { state: s, results, stopped: r.error } : { state, error: r.error };
+      s = r.state; results.push(r.result);
+    }
+    return { state: s, results };
+  }
   const copy = s => JSON.parse(JSON.stringify(s));
   const bounded = n => Math.max(0, Math.min(100, n));
   // Closeness grows slower as it deepens; fractions carry over so small kindnesses still add up.
@@ -51,13 +62,42 @@
     s.story.carry = carry;
   }
   const trainGain = value => value < 30 ? 4 : value < 60 ? 3 : value < 85 ? 2 : 1;
-  const makeState = ({ intro = false } = {}) => ({ version: VERSION, intro: intro ? { step: 0 } : null, day: 1, ap: D.maxAp, energy: 100, money: D.startingMoney, affection: 0, trust: 0, owned: ['casual'], outfit: 'casual', ownedAccessories: ['none'], legwear: 'none', ownedNeckAccessories: ['headset'], neckAccessory: 'none', location: 'practice', memories: [], datesToday: [], journal: [], totalEarned: 0, totalSpent: 0, expenseGoal: null, savedAt: null, story: N.fresh(), growth: freshGrowth() });
+  // Weekly settlement: a baseline taken each Monday morning, compared on the next Monday.
+  const weekMark = s => ({ day: s.day, affection: s.affection, trust: s.trust, earned: s.totalEarned, spent: s.totalSpent, dates: s.story.dateCount, stories: s.story.completed.length });
+  function weekSummary(state) {
+    const w = state.week || weekMark(state), inWeek = j => j.day >= w.day && j.day <= state.day, count = type => state.journal.filter(j => inWeek(j) && j.type === type).length;
+    return { from: w.day, to: state.day, earned: state.totalEarned - w.earned, spent: state.totalSpent - w.spent, dates: state.story.dateCount - w.dates, stories: state.story.completed.length - w.stories, affection: state.affection - w.affection, trust: state.trust - w.trust, gifts: count('gift'), talks: count('talk'), works: count('work'), mood: state.growth.mood };
+  }
+  // New game+: each ending seen leaves a small head start for the next run.
+  const legacyBonus = { lovers: { name: '연인 결말', money: 50000 }, friends: { name: '우정 결말', stats: 6 } };
+  const ending = s => N.done(s, 'epilogue') && Object.hasOwn(legacyBonus, s.story.relationship) ? s.story.relationship : null;
+  const legacyList = list => Array.isArray(list) ? Object.keys(legacyBonus).filter(k => list.includes(k)) : [];
+  function applyLegacy(s) {
+    if (!s.ngp || s.ngp.applied) return;
+    s.ngp.endings.forEach(k => {
+      const b = legacyBonus[k];
+      if (b.money) { s.money += b.money; s.totalEarned += b.money; }
+      if (b.stats) Object.keys(statNames).forEach(st => { s.growth.stats[st] = bounded(s.growth.stats[st] + b.stats); });
+      s.journal.push({ day: s.day, type: 'legacy', title: `지난 회차의 선물 · ${b.name}`, text: b.money ? `${b.name}을 본 기억이 남아 소지금 +${b.money.toLocaleString('ko-KR')}원으로 시작해요.` : `${b.name}을 본 기억이 남아 지식·체력·감수성 +${b.stats}으로 시작해요.`, money: b.money || 0, outfit: s.outfit });
+    });
+    s.ngp.applied = true; s.week = weekMark(s);
+  }
+  const makeState = ({ intro = false, legacy = [] } = {}) => {
+    const s = { version: VERSION, intro: intro ? { step: 0 } : null, day: 1, ap: D.maxAp, energy: 100, money: D.startingMoney, affection: 0, trust: 0, owned: ['casual'], outfit: 'casual', ownedAccessories: ['none'], legwear: 'none', ownedNeckAccessories: ['headset'], neckAccessory: 'none', location: 'practice', memories: [], datesToday: [], journal: [], totalEarned: 0, totalSpent: 0, expenseGoal: null, savedAt: null, story: N.fresh(), growth: freshGrowth(), lastWeek: null };
+    const endings = legacyList(legacy);
+    s.ngp = endings.length ? { endings, applied: false } : null;
+    s.week = weekMark(s);
+    if (!intro) applyLegacy(s);
+    return s;
+  };
   const introPending = state => !!state.intro && state.intro.step < N.intro.length;
   function moveIntro(state, expectedStep, action) {
     if (!introPending(state) || state.intro.step !== expectedStep || !['next','previous','skip'].includes(action) || action === 'previous' && expectedStep === 0) return { state, error: '현재 인트로 장면에서 이동해 주세요.' };
     const s = copy(state);
     s.intro.step = action === 'skip' ? N.intro.length : expectedStep + (action === 'previous' ? -1 : 1);
-    return { state: s };
+    const bonus = !introPending(s) && s.ngp && !s.ngp.applied ? s.ngp.endings.map(k => legacyBonus[k].name) : null;
+    if (bonus) applyLegacy(s);
+    return { state: s, result: bonus ? { legacy: bonus } : undefined };
   }
   function expenseItem(goal) {
     if (!goal || typeof goal !== 'object') return null;
@@ -126,7 +166,7 @@
     const error = reason(state, type, id);
     if (error) return { state, error };
     const s = copy(state);
-    let title, text, money = 0;
+    let title, text, money = 0, encounter = null, week = null;
     if (type === 'train') {
       const t = training.find(t => t.id === id), before = s.growth.stats[t.stat];
       const examBonus = D.calendar(s.day).event?.id === 'exam' && t.stat === 'knowledge' ? 2 : 0;
@@ -139,6 +179,12 @@
       title = `${j.name} 완료`; text = `${money.toLocaleString('ko-KR')}원을 벌었어요. 오늘의 노력이 작은 여유가 되었습니다.`;
       const stat = { cafe: 'sensitivity', edit: 'knowledge', event: 'fitness' }[id]; s.growth.stats[stat] = bounded(s.growth.stats[stat] + 2); text += ` ${statNames[stat]} +2.`;
       s.location = { cafe: 'cafe', edit: 'practice', event: 'concert' }[id];
+      if (workEncounter(state, id)) {
+        const scene = N.workScenes[id][s.day % N.workScenes[id].length], before = { affection: s.affection, mood: s.growth.mood };
+        grow(s, 'affection', 1); s.growth.mood = bounded(s.growth.mood + 4); s.story.workMet = s.day; s.story.lastMet = s.day;
+        text += ' 일하는 중에 수련이 잠깐 들렀어요.';
+        encounter = { title: scene.title, line: N.messageText(s, scene.line), face: scene.face, affection: s.affection - before.affection, mood: s.growth.mood - before.mood };
+      }
     } else if (type === 'date') {
       const d = D.dates.find(x => x.id === id);
       money = -d.cost; s.money += money; s.totalSpent += d.cost; s.ap -= d.ap; s.energy -= d.energy;
@@ -172,7 +218,9 @@
         const archive = [...(s.story.msgLog || [])];
         if (state.story.message) archive.push({ ...state.story.message, from: 'sulien' });
         s.story.message = N.pickMessage(state, s) || null;
-        [N.pickFriend(state, s), N.pickNotice(s)].filter(Boolean).forEach(m => archive.push(m));
+        const friend = N.pickFriend(state, s);
+        if (friend?.key === 'heart') s.story.heartHint = Number(friend.arg);
+        [friend, N.pickNotice(s)].filter(Boolean).forEach(m => archive.push(m));
         const trimmed = archive.slice(-60); s.story.seen = Math.max(0, (s.story.seen || 0) - (archive.length - trimmed.length)); s.story.msgLog = trimmed;
       }
       // Missing each other lowers only her mood, gently and with a floor; meeting again restores it.
@@ -181,12 +229,16 @@
       if (s.growth.mood > 70) s.growth.mood = Math.max(70, s.growth.mood - 3);
       title = `${s.day}일째의 시작`; text = '새로운 하루가 찾아왔어요. 시간 3칸과 기력을 회복했습니다.';
       s.location = 'practice';
+      if (D.calendar(s.day).weekday === '월') { week = weekSummary(state); s.lastWeek = week; s.week = weekMark(s); }
     }
     if (s.expenseGoal?.type === type && s.expenseGoal.id === id) s.expenseGoal = null;
     s.journal.push({ day: s.day, type, title, text, money, outfit: s.outfit });
     s.journal = s.journal.slice(-200);
-    return { state: s, result: { title, text, money } };
+    return { state: s, result: { title, text, money, ...(encounter ? { encounter } : {}), ...(week ? { week } : {}) } };
   }
+  // Work is not only a grind: on some shifts Sulien drops by. Deterministic, so the preview matches the result.
+  const encounterSlot = { cafe: 0, edit: 1, event: 2 };
+  const workEncounter = (state, id) => N.done(state, 'hello') && state.story.workMet !== state.day && (state.day * 7 + encounterSlot[id] * 3) % 5 < 2;
   function dateWithOutfit(state, id, outfit, legwear, neckAccessory = state.neckAccessory) {
     if (!['none','headset'].includes(neckAccessory) || neckAccessory !== 'none' && !state.ownedNeckAccessories.includes(neckAccessory)) return { state, error: '보유한 헤드셋을 선택해 주세요.' };
     if (!state.owned.includes(outfit) || !state.ownedAccessories.includes(legwear) || outfit !== 'skirt' && legwear !== 'none') return { state, error: '보유한 의상과 어울리는 소품을 골라 주세요.' };
@@ -251,7 +303,7 @@
     const outfitIds = D.outfits.map(x => x.id);
     if (!Array.isArray(s.owned) || !s.owned.includes('casual') || s.owned.length > outfitIds.length || new Set(s.owned).size !== s.owned.length || !s.owned.every(x => outfitIds.includes(x)) || !s.owned.includes(s.outfit)) return null;
     if (!Array.isArray(s.datesToday) || s.datesToday.length > 1 || !s.datesToday.every(id => D.dates.some(d => d.id === id))) return null;
-    if (!Array.isArray(s.journal) || s.journal.length > 200 || !s.journal.every(j => j && int(j.day, 1, s.day) && ['work','date','story','buy','equip','buyAccessory','equipAccessory','equipNeckAccessory','rest','nextDay','train','message','gift','talk'].includes(j.type) && typeof j.title === 'string' && j.title.length < 120 && typeof j.text === 'string' && j.text.length < 500 && int(j.money, -1e9, 1e9) && outfitIds.includes(j.outfit))) return null;
+    if (!Array.isArray(s.journal) || s.journal.length > 200 || !s.journal.every(j => j && int(j.day, 1, s.day) && ['work','date','story','buy','equip','buyAccessory','equipAccessory','equipNeckAccessory','rest','nextDay','train','message','gift','talk','legacy'].includes(j.type) && typeof j.title === 'string' && j.title.length < 120 && typeof j.text === 'string' && j.text.length < 500 && int(j.money, -1e9, 1e9) && outfitIds.includes(j.outfit))) return null;
     const ownedAccessories = s.ownedAccessories === undefined ? ['none'] : s.ownedAccessories;
     const legwear = s.legwear === undefined ? 'none' : s.legwear;
     const ownedNeckAccessories = s.ownedNeckAccessories === undefined ? ['headset'] : s.ownedNeckAccessories;
@@ -275,7 +327,14 @@
     if (!growth || !growth.stats || !Object.keys(statNames).every(k => int(growth.stats[k], 0, 100)) || !int(growth.mood, 0, 100) || !Array.isArray(growth.schedule) || growth.schedule.length > 3 || !growth.schedule.every(e => scheduleItem(e)) || growth.schedule.reduce((n,e) => n + scheduleItem(e).ap, 0) > 3) return null;
     const goal = s.expenseGoal === undefined ? null : s.expenseGoal;
     if (goal !== null && (!expenseItem(goal) || goal.type === 'buy' && s.owned.includes(goal.id))) return null;
-    return copy({ version: VERSION, intro, day: s.day, ap: s.ap, energy: s.energy, money: s.money, affection: s.affection, trust: s.trust, owned: s.owned, outfit: s.outfit, ownedAccessories, legwear, ownedNeckAccessories, neckAccessory, location, memories, datesToday: s.datesToday, journal: s.journal, totalEarned: s.totalEarned, totalSpent: s.totalSpent, expenseGoal: goal === null ? null : { type: goal.type, id: goal.id }, savedAt: s.savedAt, story, growth });
+    // Older saves have no weekly baseline: the current day becomes the start of the week.
+    const week = s.week === undefined ? weekMark({ ...s, story }) : s.week;
+    if (!week || !int(week.day, 1, s.day) || !int(week.affection, 0, s.affection) || !int(week.trust, 0, s.trust) || !int(week.earned, 0, s.totalEarned) || !int(week.spent, 0, s.totalSpent) || !int(week.dates, 0, story.dateCount) || !int(week.stories, 0, story.completed.length)) return null;
+    const lastWeek = s.lastWeek === undefined ? null : s.lastWeek;
+    if (lastWeek !== null && (!lastWeek || !int(lastWeek.from, 1, s.day) || !int(lastWeek.to, lastWeek.from, s.day) || !['earned','spent'].every(k => int(lastWeek[k], 0, 1e12)) || !['dates','stories','affection','trust','gifts','talks','works'].every(k => int(lastWeek[k], 0, 9999)) || !int(lastWeek.mood, 0, 100))) return null;
+    const ngp = s.ngp === undefined ? null : s.ngp;
+    if (ngp !== null && (!ngp || typeof ngp.applied !== 'boolean' || !Array.isArray(ngp.endings) || !ngp.endings.length || legacyList(ngp.endings).length !== ngp.endings.length || new Set(ngp.endings).size !== ngp.endings.length || !ngp.applied && !(intro && intro.step < N.intro.length))) return null;
+    return copy({ version: VERSION, intro, day: s.day, ap: s.ap, energy: s.energy, money: s.money, affection: s.affection, trust: s.trust, owned: s.owned, outfit: s.outfit, ownedAccessories, legwear, ownedNeckAccessories, neckAccessory, location, memories, datesToday: s.datesToday, journal: s.journal, totalEarned: s.totalEarned, totalSpent: s.totalSpent, expenseGoal: goal === null ? null : { type: goal.type, id: goal.id }, savedAt: s.savedAt, story, growth, week: { day: week.day, affection: week.affection, trust: week.trust, earned: week.earned, spent: week.spent, dates: week.dates, stories: week.stories }, lastWeek, ngp: ngp && { endings: [...ngp.endings], applied: ngp.applied } });
   }
   const storage = {
     read(key, fallback = null) { try { const v = localStorage.getItem(`aqualuna.v2.${key}`); return v === null ? fallback : JSON.parse(v); } catch { return fallback; } },
@@ -358,5 +417,5 @@
     return { state: s, result: { title, text, score: r.score, affection: s.affection - before.a, trust: s.trust - before.t, mood: s.growth.mood - before.m, reunion } };
   }
   function markMessagesSeen(state) { const s = copy(state); s.story.seen = (s.story.msgLog || []).length; return { state: s }; }
-  window.LunaEngine = { bondCurve, trainGain, markMessagesSeen, talkTopics, talkPlan, talkScore, talkReason, finishTalk, giftReason, giveGift, replyMessage, makeState, introPending, moveIntro, act, reason, validate, storage, training, statNames, choiceReason, scheduleItem, setSchedule, runSchedule, planExpense, expenseProgress, dateWithOutfit, startStory, chooseStory };
+  window.LunaEngine = { runAllSchedule, weekSummary, legacyBonus, ending, legacyList, bondCurve, trainGain, markMessagesSeen, talkTopics, talkPlan, talkScore, talkReason, finishTalk, giftReason, giveGift, replyMessage, makeState, introPending, moveIntro, act, reason, validate, storage, training, statNames, choiceReason, scheduleItem, setSchedule, runSchedule, planExpense, expenseProgress, dateWithOutfit, startStory, chooseStory };
 })();

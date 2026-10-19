@@ -1,4 +1,4 @@
-param([string]$ChromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe', [string[]]$Tests = @('runner','story','courses','activities','reliability','ui','wardrobe','story-ui','fashion','courses-ui','activities-ui'))
+param([string]$ChromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe', [string[]]$Tests = @('runner','story','courses','activities','reliability','ui','wardrobe','story-ui','fashion','courses-ui','activities-ui'), [switch]$ContinueOnFailure)
 
 # Real Chromium input and filesystem download/import checks. Uses only a dedicated test profile.
 $ErrorActionPreference = 'Stop'
@@ -12,6 +12,7 @@ New-Item -ItemType Directory -Force -Path $profilePath | Out-Null
 $script:socket = $null
 $script:commandNumber = 0
 $checks = [System.Collections.Generic.List[string]]::new()
+$failures = [System.Collections.Generic.List[string]]::new()
 $browserProcess = $null
 
 function Send-Cdp([string]$Method, [hashtable]$Params = @{}) {
@@ -83,20 +84,24 @@ try {
     $script:socket = [Net.WebSockets.ClientWebSocket]::new()
     $script:socket.ConnectAsync([Uri]$page.webSocketDebuggerUrl, [Threading.CancellationToken]::None).GetAwaiter().GetResult() | Out-Null
     Send-Cdp 'Page.enable' | Out-Null
+    # Each suite/viewport starts fresh; iframe reloads within a suite retain their saves.
+    Send-Cdp 'Page.addScriptToEvaluateOnNewDocument' @{source="if(window === window.top && location.protocol === 'file:') { localStorage.clear(); sessionStorage.clear(); }"} | Out-Null
     foreach ($test in $Tests) {
         $widths = if ($test -in @('courses-ui','activities-ui','ui','wardrobe','story-ui','fashion')) { @(1280,1440,1920) } else { @(1440) }
         foreach ($width in $widths) {
             Send-Cdp 'Emulation.setDeviceMetricsOverride' @{width=$width;height=$(if ($width -eq 1280) { 720 } elseif ($width -eq 1920) { 1080 } else { 900 });deviceScaleFactor=1;mobile=$false} | Out-Null
             $url = ([Uri](Join-Path $qaRoot "tests/$test.html")).AbsoluteUri + "?viewport=$width"
             Send-Cdp 'Page.navigate' @{url=$url} | Out-Null
-            Wait-Js "['passed','failed'].includes(document.body.dataset.status)"
+            $pageLiteral = $url | ConvertTo-Json -Compress
+            Wait-Js "location.href === $pageLiteral && ['passed','failed'].includes(document.body?.dataset.status)"
             $status = Eval-Js 'document.body.dataset.status'
             $result = Eval-Js 'document.getElementById("results").textContent'
             Write-Output "$test $width $status`n$result"
             [IO.File]::WriteAllText((Join-Path $resultsDirectory "narrative-$test-$width.txt"),$result,[Text.UTF8Encoding]::new($false))
+            Start-Sleep -Milliseconds 250
             $shot = Send-Cdp 'Page.captureScreenshot' @{format='png';captureBeyondViewport=$false}
             [IO.File]::WriteAllBytes((Join-Path $qaDirectory "narrative-$test-$width.png"),[Convert]::FromBase64String($shot.data))
-            if ($status -eq 'failed') { throw "Failed $test at $width" }
+            if ($status -eq 'failed') { $failures.Add("$test at $width"); if ($ContinueOnFailure) { continue }; throw "Failed $test at $width" }
             if ($test -eq 'activities') {
                 $audit = Eval-Js 'JSON.stringify(window.activityAudit,null,2)'
                 [IO.File]::WriteAllText((Join-Path $qaDirectory 'activity-audit.json'),$audit,[Text.UTF8Encoding]::new($false))
@@ -145,6 +150,7 @@ try {
     }
     $checks | Set-Content -Encoding UTF8 (Join-Path $resultsDirectory 'narrative-native-input.txt')
     $checks | Write-Output
+    if ($failures.Count) { throw ("Failed suites: " + ($failures -join ', ')) }
 } finally {
     if ($script:socket) { $script:socket.Dispose() }
     if ($browserProcess -and -not $browserProcess.HasExited) { Stop-Process -Id $browserProcess.Id -ErrorAction SilentlyContinue }

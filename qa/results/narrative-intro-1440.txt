@@ -1,0 +1,6 @@
+PASS new game opens admission story before daily play
+PASS previous, manual save, title return and reload resume
+PASS 1280/1440 layout, large text, all pages and daily handoff
+PASS new game restarts intro and skip enters day one
+PASS existing save resumes without intro
+PASS storage failure preserves session, recovery saves, no runtime errors

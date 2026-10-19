@@ -218,6 +218,7 @@
   // Interior UI backdrops do not change the saved story location.
   const interiors = { room: 'assets/environment/sulien-room.png', fitting: 'assets/environment/wardrobe-fitting.png' };
   const assetPaths = [...new Set([
+    'assets/characters/sulien-sd-work.png',
     ...Object.values(interiors),
     ...neckAccessories.map(a => a.image),
     ...Object.keys(locations).flatMap(place => times.map(time => sceneImage(place, time.id))),

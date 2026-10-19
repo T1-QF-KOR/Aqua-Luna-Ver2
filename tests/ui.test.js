@@ -45,13 +45,17 @@
     click('home-button'); click('continue-game'); assert(read().money===0 && !$('play-screen').hidden,'Continue'); results.push('PASS return to title and resume');
     const width=w.innerWidth; assert(d.documentElement.scrollWidth <= width+1,`Horizontal overflow: ${d.documentElement.scrollWidth} > ${width}`);
     if($('choice-card').hidden) click('dialogue'); assert(!$('choice-card').hidden&&$('dialogue').hidden,'Dialogue opens the choice card');
-    for(const id of ['story-button','work-button','date-button','wardrobe-button','rest-button','next-day','budget-button']) { const r=$(id).getBoundingClientRect(); assert(r.width>=44 && r.height>=36,`${id} button size`); assert(r.left>=0 && r.right<=width,`${id} outside viewport`); }
+    for(const id of ['story-button','work-button','date-button','wardrobe-button','rest-button','next-day','phone-button']) { const r=$(id).getBoundingClientRect(); assert(r.width>=44 && r.height>=36,`${id} button size`); assert(r.left>=0 && r.right<=width,`${id} outside viewport`); }
     const card=d.querySelector('.choice-card').getBoundingClientRect(); assert(card.top>=0&&card.bottom<=w.innerHeight&&card.left>=0&&card.right<=width,'Choice card fits the screen');
     click('choice-close'); assert($('choice-card').hidden&&!$('dialogue').hidden,'Esc/back returns to the scene');
     const box=$('dialogue').getBoundingClientRect(), hud=d.querySelector('.stage-hud').getBoundingClientRect(), info=d.querySelector('.day-info').getBoundingClientRect(), portrait=$('character').getBoundingClientRect();
     assert(box.bottom<=w.innerHeight&&box.left>=0&&box.right<=width&&box.top>hud.bottom&&box.top>info.bottom,'Dialogue box sits below the status bar');
     assert(info.right<=hud.left,'Title and status bar do not overlap');
     assert(Math.abs((box.left+box.right)/2-(portrait.left+portrait.right)/2)<width*.1,'Sulien stands centre stage');
+    click('phone-button');
+    const budgetApp=d.querySelector('[data-phone-app="budget"]'), appRect=budgetApp.getBoundingClientRect();
+    assert(appRect.width>=44&&appRect.height>=44&&appRect.right<=width,'Budget is reachable through the phone app');
+    budgetApp.click(); assert($('modal').open&&$('modal-title').textContent.includes('예산'),'Budget app opens the planner'); click('close-modal');
     assert(errors.length===0,errors.join('\n')); results.push(`PASS ${width}px layout, controls, no runtime errors`);
     const scene = new URLSearchParams(location.search).get('scene');
     if(scene==='title') click('home-button');

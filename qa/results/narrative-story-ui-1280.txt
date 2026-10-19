@@ -1,0 +1,6 @@
+PASS prologue and permanent choice history
+PASS in-progress reload, response restored, one charge
+PASS read-only album transcript
+PASS prior choice and outfit recall, fulfilled promise
+PASS complete free route, confession and continuing epilogue
+PASS 1280px large text, choice targets, reading focus, images and runtime
