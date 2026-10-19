@@ -1,12 +1,12 @@
 (async()=>{
-  const frame=document.getElementById('app'),results=[],errors=[];await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
+  const frame=document.getElementById('app'),results=[],errors=[];if (!frame.contentWindow.LunaEngine || frame.contentDocument.readyState !== 'complete') await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
   let w=frame.contentWindow,d=frame.contentDocument,E=w.LunaEngine,A=w.LunaActivities;
   const assert=(ok,msg)=>{if(!ok)throw Error(msg);},$=id=>d.getElementById(id),read=()=>E.storage.load(0),click=id=>$(id).click();
   const listen=()=>{w.addEventListener('error',e=>errors.push(e.message));w.addEventListener('unhandledrejection',e=>errors.push(String(e.reason)));};listen();
   const button=text=>{const b=[...$('modal-body').querySelectorAll('button')].find(b=>b.textContent.includes(text));assert(b&&!b.disabled,'button '+text);b.click();};
   const solve=()=>{let limit=0;while(A.progress(read()).active&&limit++<500)button('힌트 한 수');assert(!A.progress(read()).active,'solve failed');};
   try{
-    click('new-game');if($('modal').open)button('새로 시작');click('date-button');d.querySelector('[data-action-id="river-reed"]').click();button('데이트 진행');button('둘이 체험하기');
+    click('new-game');if($('modal').open)button('새로 시작'); click('intro-skip');click('date-button');d.querySelector('[data-action-id="river-reed"]').click();button('데이트 진행');button('둘이 체험하기');
     assert(d.querySelectorAll('[data-activity-level]').length===12&&d.querySelector('[data-activity-level="2"]').disabled,'stages');d.querySelector('[data-activity-level="1"]').click();assert(d.querySelector('.explore-map'),'map');
     const resources={money:read().money,ap:read().ap,energy:read().energy};button('힌트 한 수');const first=JSON.stringify(A.replay(A.progress(read()).active));button('한 수 되돌리기');assert(A.progress(read()).active.moves.length===0,'undo');button('힌트 한 수');assert(JSON.stringify(A.replay(A.progress(read()).active))===first,'hint consistency');results.push('PASS date-integrated map, progressive unlocks, hint and undo');
     await new Promise(resolve=>{frame.addEventListener('load',resolve,{once:true});w.location.reload();});w=frame.contentWindow;d=frame.contentDocument;E=w.LunaEngine;A=w.LunaActivities;listen();click('continue-game');assert(d.querySelector('.explore-map')&&A.progress(read()).active.moves.length===1,'resume map');

@@ -1,0 +1,392 @@
+{
+  "createdNodeIds": [
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23",
+    "4:24",
+    "4:25",
+    "4:26",
+    "4:27",
+    "4:28",
+    "4:29",
+    "4:30",
+    "4:31",
+    "4:32",
+    "4:33",
+    "4:34",
+    "4:35",
+    "4:36",
+    "4:37",
+    "4:38",
+    "4:39",
+    "4:40",
+    "4:41",
+    "4:42",
+    "4:43",
+    "4:44",
+    "4:45",
+    "4:46",
+    "4:47",
+    "4:48",
+    "4:49",
+    "4:50",
+    "4:51",
+    "4:52",
+    "4:53",
+    "4:54",
+    "4:55",
+    "4:56",
+    "4:57",
+    "4:58",
+    "4:59",
+    "4:60",
+    "4:61",
+    "4:62",
+    "4:63",
+    "4:64",
+    "4:65",
+    "4:66",
+    "4:67",
+    "4:68",
+    "4:69",
+    "4:70",
+    "4:71",
+    "4:72",
+    "4:73",
+    "4:74",
+    "4:75",
+    "4:76",
+    "4:77",
+    "4:78",
+    "4:79",
+    "4:80",
+    "4:81",
+    "4:82",
+    "4:83",
+    "4:84",
+    "4:85",
+    "4:86",
+    "4:87",
+    "4:88",
+    "4:89",
+    "4:90",
+    "4:91",
+    "4:92",
+    "4:93",
+    "4:94",
+    "4:95",
+    "4:96",
+    "4:97",
+    "4:98",
+    "4:99",
+    "4:100",
+    "4:101",
+    "4:102",
+    "4:103",
+    "4:104",
+    "4:105",
+    "4:106",
+    "4:107",
+    "4:108",
+    "4:109",
+    "4:110",
+    "4:111",
+    "4:112",
+    "4:113",
+    "4:114",
+    "4:115",
+    "4:116",
+    "4:117",
+    "4:118",
+    "4:119",
+    "4:120",
+    "4:121",
+    "4:122",
+    "4:123",
+    "4:124",
+    "4:125",
+    "4:126",
+    "4:127",
+    "4:128",
+    "4:129",
+    "4:130",
+    "4:131",
+    "4:132",
+    "4:133",
+    "4:134",
+    "4:135",
+    "4:136",
+    "4:137",
+    "4:138",
+    "4:139",
+    "4:140",
+    "4:141",
+    "4:142",
+    "4:143",
+    "4:144",
+    "4:145",
+    "4:146",
+    "4:147",
+    "4:148",
+    "7:2",
+    "7:3",
+    "7:4"
+  ],
+  "targets": [
+    {
+      "id": "casual",
+      "nodeId": "4:7",
+      "path": "assets/characters/fullbody-no-headset/casual.png"
+    },
+    {
+      "id": "knit",
+      "nodeId": "4:10",
+      "path": "assets/characters/fullbody-no-headset/knit.png"
+    },
+    {
+      "id": "coat",
+      "nodeId": "4:13",
+      "path": "assets/characters/fullbody-no-headset/coat.png"
+    },
+    {
+      "id": "skirt",
+      "nodeId": "4:16",
+      "path": "assets/characters/fullbody-no-headset/skirt.png"
+    },
+    {
+      "id": "shirt",
+      "nodeId": "4:20",
+      "path": "assets/characters/fullbody-no-headset/shirt.png"
+    },
+    {
+      "id": "blouse",
+      "nodeId": "4:23",
+      "path": "assets/characters/fullbody-no-headset/blouse.png"
+    },
+    {
+      "id": "mini-pleats",
+      "nodeId": "4:26",
+      "path": "assets/characters/fullbody-no-headset/mini-pleats.png"
+    },
+    {
+      "id": "denim-mini",
+      "nodeId": "4:29",
+      "path": "assets/characters/fullbody-no-headset/denim-mini.png"
+    },
+    {
+      "id": "suede-mini",
+      "nodeId": "4:33",
+      "path": "assets/characters/fullbody-no-headset/suede-mini.png"
+    },
+    {
+      "id": "bubble-mini",
+      "nodeId": "4:36",
+      "path": "assets/characters/fullbody-no-headset/bubble-mini.png"
+    },
+    {
+      "id": "layered-denim",
+      "nodeId": "4:39",
+      "path": "assets/characters/fullbody-no-headset/layered-denim.png"
+    },
+    {
+      "id": "quarter-bermuda",
+      "nodeId": "4:42",
+      "path": "assets/characters/fullbody-no-headset/quarter-bermuda.png"
+    },
+    {
+      "id": "satin-midi",
+      "nodeId": "4:46",
+      "path": "assets/characters/fullbody-no-headset/satin-midi.png"
+    },
+    {
+      "id": "utility-cargo",
+      "nodeId": "4:49",
+      "path": "assets/characters/fullbody-no-headset/utility-cargo.png"
+    },
+    {
+      "id": "warm-smile",
+      "nodeId": "4:56",
+      "path": "assets/characters/poses-no-headset/warm-smile.png"
+    },
+    {
+      "id": "shy",
+      "nodeId": "4:59",
+      "path": "assets/characters/poses-no-headset/shy.png"
+    },
+    {
+      "id": "surprised",
+      "nodeId": "4:62",
+      "path": "assets/characters/poses-no-headset/surprised.png"
+    },
+    {
+      "id": "worried",
+      "nodeId": "4:65",
+      "path": "assets/characters/poses-no-headset/worried.png"
+    },
+    {
+      "id": "playful",
+      "nodeId": "4:69",
+      "path": "assets/characters/poses-no-headset/playful.png"
+    },
+    {
+      "id": "thoughtful",
+      "nodeId": "4:72",
+      "path": "assets/characters/poses-no-headset/thoughtful.png"
+    },
+    {
+      "id": "scrunchie",
+      "nodeId": "4:79",
+      "path": "assets/accessories/20261007/scrunchie.png"
+    },
+    {
+      "id": "ribbon",
+      "nodeId": "4:82",
+      "path": "assets/accessories/20261007/ribbon.png"
+    },
+    {
+      "id": "claw-clip",
+      "nodeId": "4:85",
+      "path": "assets/accessories/20261007/claw-clip.png"
+    },
+    {
+      "id": "barrette",
+      "nodeId": "4:88",
+      "path": "assets/accessories/20261007/barrette.png"
+    },
+    {
+      "id": "huggie-earrings",
+      "nodeId": "4:92",
+      "path": "assets/accessories/20261007/huggie-earrings.png"
+    },
+    {
+      "id": "ear-cuff",
+      "nodeId": "4:95",
+      "path": "assets/accessories/20261007/ear-cuff.png"
+    },
+    {
+      "id": "pearl-earrings",
+      "nodeId": "4:98",
+      "path": "assets/accessories/20261007/pearl-earrings.png"
+    },
+    {
+      "id": "moon-necklace",
+      "nodeId": "4:101",
+      "path": "assets/accessories/20261007/moon-necklace.png"
+    },
+    {
+      "id": "pearl-necklace",
+      "nodeId": "4:105",
+      "path": "assets/accessories/20261007/pearl-necklace.png"
+    },
+    {
+      "id": "chain-bracelet",
+      "nodeId": "4:108",
+      "path": "assets/accessories/20261007/chain-bracelet.png"
+    },
+    {
+      "id": "stack-rings",
+      "nodeId": "4:111",
+      "path": "assets/accessories/20261007/stack-rings.png"
+    },
+    {
+      "id": "watch",
+      "nodeId": "4:114",
+      "path": "assets/accessories/20261007/watch.png"
+    },
+    {
+      "id": "silk-scarf",
+      "nodeId": "4:118",
+      "path": "assets/accessories/20261007/silk-scarf.png"
+    },
+    {
+      "id": "leaf-brooch",
+      "nodeId": "4:121",
+      "path": "assets/accessories/20261007/leaf-brooch.png"
+    },
+    {
+      "id": "slim-belt",
+      "nodeId": "4:124",
+      "path": "assets/accessories/20261007/slim-belt.png"
+    },
+    {
+      "id": "oval-glasses",
+      "nodeId": "4:127",
+      "path": "assets/accessories/20261007/oval-glasses.png"
+    },
+    {
+      "id": "beret",
+      "nodeId": "4:131",
+      "path": "assets/accessories/20261007/beret.png"
+    },
+    {
+      "id": "cap",
+      "nodeId": "4:134",
+      "path": "assets/accessories/20261007/cap.png"
+    },
+    {
+      "id": "shoulder-bag",
+      "nodeId": "4:137",
+      "path": "assets/accessories/20261007/shoulder-bag.png"
+    },
+    {
+      "id": "canvas-tote",
+      "nodeId": "4:140",
+      "path": "assets/accessories/20261007/canvas-tote.png"
+    },
+    {
+      "id": "nylon-crossbody",
+      "nodeId": "4:144",
+      "path": "assets/accessories/20261007/nylon-crossbody.png"
+    },
+    {
+      "id": "moon-charm",
+      "nodeId": "4:147",
+      "path": "assets/accessories/20261007/moon-charm.png"
+    },
+    {
+      "id": "headset",
+      "nodeId": "7:3",
+      "path": "assets/accessories/20261007/headset.png"
+    }
+  ],
+  "boards": [
+    {
+      "id": "4:2",
+      "name": "SULIEN / 전신 스타일",
+      "width": 1496,
+      "height": 2365
+    },
+    {
+      "id": "4:51",
+      "name": "SULIEN / 포즈와 표정",
+      "width": 1496,
+      "height": 1277
+    },
+    {
+      "id": "4:74",
+      "name": "SULIEN / 액세서리",
+      "width": 1496,
+      "height": 2553
+    }
+  ],
+  "fileKey": "1RXvK2xXHu7Zk5OjJBtSBE"
+}

@@ -1,0 +1,163 @@
+[
+  {
+    "test": "runner",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS Initial economy and valid save\nPASS Jobs pay once, consume resources, do not mutate prior state\nPASS Work respects both time and energy\nPASS Buy, equip, own permanently; never double charge\nPASS Insufficient funds are atomic\nPASS Dates deduct money and add relationships once per day\nPASS Trust gates concert, free activities unlock it\nPASS Rest and next day are bounded; spending cannot trap player\nPASS Relationship cap and history retention\nPASS Reject corrupt, older, fabricated, or unsafe saves\nPASS Save/load roundtrip and corruption recovery\nPASS Random action sequences preserve all economy invariants\nPASS Budget plans do not spend resources and survive save/load\nPASS Budget money is not a bypass for date conditions\nPASS Other spending adjusts progress; only matching expense completes plan\nPASS Earlier version-2 saves upgrade without losing money or wardrobe\nPASS Date result text reports actual capped relationship gain\nPASS Skirt accessories are separate purchases, never auto-equipped or charged twice\nPASS Date preparation is atomic and freezes the outfit in memory\nPASS Older saves migrate; corrupt accessories and memories are rejected\nPASS Time follows action cost, resets next day, and date memory freezes departure\nPASS New outfits obey purchase ownership and expression fallback preserves clothing\n\n22/22 passed"
+  },
+  {
+    "test": "story",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS All three dates reserve cost once and resume every dialogue step\nPASS Stale choices and locked scenes fail without mutation\nPASS Romance ends via basic clothes and free walks without grinding money\nPASS Friendship has its own ending and continues daily play\nPASS Deferral unlocks a second answer after two dates\nPASS Overstepping opens repair; both repair responses recover the route\nPASS Music choice survives through the independent performance scene\nPASS Promises persist without expiry and fulfill only on a finished walk\nPASS Choices change personal memory, reactions, and outcomes\nPASS Event replay cannot award or complete the same scene twice\nPASS Legacy v2 migration preserves economy and does not fabricate memories\nPASS Malformed narrative saves fail closed without crashing\nPASS Paid date max bonuses and capped changes remain saveable\n13/13 passed"
+  },
+  {
+    "test": "courses",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS 51 valid courses, 48 six-choice trips, 6 themes and 25 exploration stories\nPASS Variety gates reject repeated-course grinding and never charge on refusal\nPASS All 48 trips and all exploration chapters reach prequel finale through valid actions\nPASS First visits survive 240 later dates and recent-album eviction\nPASS Friendship can finish all exploration stories without forced romance\nPASS First choices change replies and rewards; replaying a course does not replace its first record\nPASS Corrupt exploration saves fail safely; legacy saves migrate with no invented visits\nPASS Long conversations cannot be skipped with stale input or produce duplicate rewards\nPASS Story content describes a friend before agency entry, without manager or debut claims\n9/9 passed\n{\n  \"courses\": 51,\n  \"newCourses\": 48,\n  \"themes\": 6,\n  \"events\": 35,\n  \"playableNodes\": 360,\n  \"uniqueSceneTexts\": 232,\n  \"uniqueNonWhitespaceCharacters\": 26600,\n  \"allTextReadingModelHours\": {\n    \"at300CharsPerMinute\": 1.48,\n    \"at600CharsPerMinute\": 0.74\n  },\n  \"thirtyHoursVerified\": false\n}"
+  },
+  {
+    "test": "activities",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS All 576 generated challenges terminate through legal moves, including every maze exit\nPASS A full 12-challenge course saves every input without charging or advancing its dialogue\nPASS Exploration rejects walls, teleportation, stale moves and narrative bypass\nPASS Music toggle affects exactly a cross; pressing twice restores the board\nPASS Memory pairs persist, mismatches stay visible and a third card closes them\nPASS Locked activities and corrupted replay records are rejected, legacy states migrate\nPASS 576 records with full course memories fit the actual pretty-printed export limit\n7/7 passed\n{\n  \"challenges\": 576,\n  \"byKind\": {\n    \"explore\": 192,\n    \"music\": 192,\n    \"memory\": 192\n  },\n  \"allSolvable\": true,\n  \"prettySaveBytes\": 167665,\n  \"procedurallyGenerated\": true,\n  \"humanThirtyHourPlaytest\": false\n}"
+  },
+  {
+    "test": "reliability",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS Unavailable storage retains session and leaves persistent notice\nPASS Storage recovers without losing unsaved progress\nPASS Import rejects malformed file without replacing play state\nPASS Closing import dialog cancels pending file read"
+  },
+  {
+    "test": "ui",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS boot and new game\nPASS budget target and live shortage\nPASS work confirmation, economy, text feed, autosave\nPASS buy, equip, duplicate guard\nPASS paid date and repeat prevention\nPASS next day and manual save/load roundtrip\nPASS journal and illustration toggle\nPASS reading size preference and preview\nPASS return to title and resume\nPASS 1280px layout, controls, no runtime errors"
+  },
+  {
+    "test": "ui",
+    "width": 1440,
+    "height": 900,
+    "status": "passed",
+    "results": "PASS boot and new game\nPASS budget target and live shortage\nPASS work confirmation, economy, text feed, autosave\nPASS buy, equip, duplicate guard\nPASS paid date and repeat prevention\nPASS next day and manual save/load roundtrip\nPASS journal and illustration toggle\nPASS reading size preference and preview\nPASS return to title and resume\nPASS 1440px layout, controls, no runtime errors"
+  },
+  {
+    "test": "ui",
+    "width": 1920,
+    "height": 1080,
+    "status": "passed",
+    "results": "PASS boot and new game\nPASS budget target and live shortage\nPASS work confirmation, economy, text feed, autosave\nPASS buy, equip, duplicate guard\nPASS paid date and repeat prevention\nPASS next day and manual save/load roundtrip\nPASS journal and illustration toggle\nPASS reading size preference and preview\nPASS return to title and resume\nPASS 1920px layout, controls, no runtime errors"
+  },
+  {
+    "test": "wardrobe",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS separate shop purchases and no automatic equip\nPASS free manual dressing and real black tights image\nPASS cancelled date preparation preserves state\nPASS date scene and persistent outfit memory\nPASS expression and location gallery without state mutation\nPASS time gallery, clothing-safe expressions, and frozen album lighting\nPASS all 44 local illustrations decode\nPASS 1280px wardrobe layout and runtime"
+  },
+  {
+    "test": "wardrobe",
+    "width": 1440,
+    "height": 900,
+    "status": "passed",
+    "results": "PASS separate shop purchases and no automatic equip\nPASS free manual dressing and real black tights image\nPASS cancelled date preparation preserves state\nPASS date scene and persistent outfit memory\nPASS expression and location gallery without state mutation\nPASS time gallery, clothing-safe expressions, and frozen album lighting\nPASS all 44 local illustrations decode\nPASS 1440px wardrobe layout and runtime"
+  },
+  {
+    "test": "wardrobe",
+    "width": 1920,
+    "height": 1080,
+    "status": "passed",
+    "results": "PASS separate shop purchases and no automatic equip\nPASS free manual dressing and real black tights image\nPASS cancelled date preparation preserves state\nPASS date scene and persistent outfit memory\nPASS expression and location gallery without state mutation\nPASS time gallery, clothing-safe expressions, and frozen album lighting\nPASS all 44 local illustrations decode\nPASS 1920px wardrobe layout and runtime"
+  },
+  {
+    "test": "story-ui",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS prologue and permanent choice history\nPASS in-progress reload, response restored, one charge\nPASS read-only album transcript\nPASS prior choice and outfit recall, fulfilled promise\nPASS complete free route, confession and continuing epilogue\nPASS 1280px large text, choice targets, reading focus, images and runtime"
+  },
+  {
+    "test": "story-ui",
+    "width": 1440,
+    "height": 900,
+    "status": "passed",
+    "results": "PASS prologue and permanent choice history\nPASS in-progress reload, response restored, one charge\nPASS read-only album transcript\nPASS prior choice and outfit recall, fulfilled promise\nPASS complete free route, confession and continuing epilogue\nPASS 1440px large text, choice targets, reading focus, images and runtime"
+  },
+  {
+    "test": "story-ui",
+    "width": 1920,
+    "height": 1080,
+    "status": "passed",
+    "results": "PASS prologue and permanent choice history\nPASS in-progress reload, response restored, one charge\nPASS read-only album transcript\nPASS prior choice and outfit recall, fulfilled promise\nPASS complete free route, confession and continuing epilogue\nPASS 1920px large text, choice targets, reading focus, images and runtime"
+  },
+  {
+    "test": "fashion",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS 14-outfit catalog and six category filters\nPASS full-body preview is free, preserves filter and enforces budget\nPASS purchase, equip, date, expressions and saved memory: mini-pleats\nPASS purchase, equip, date, expressions and saved memory: denim-mini\nPASS purchase, equip, date, expressions and saved memory: suede-mini\nPASS purchase, equip, date, expressions and saved memory: bubble-mini\nPASS purchase, equip, date, expressions and saved memory: layered-denim\nPASS purchase, equip, date, expressions and saved memory: quarter-bermuda\nPASS purchase, equip, date, expressions and saved memory: satin-midi\nPASS purchase, equip, date, expressions and saved memory: utility-cargo\nPASS reload and all eight historical outfits after changing clothes\nPASS eight full-size PNGs decode with transparent corners\nPASS 1280px shop layout, targets and runtime"
+  },
+  {
+    "test": "fashion",
+    "width": 1440,
+    "height": 900,
+    "status": "passed",
+    "results": "PASS 14-outfit catalog and six category filters\nPASS full-body preview is free, preserves filter and enforces budget\nPASS purchase, equip, date, expressions and saved memory: mini-pleats\nPASS purchase, equip, date, expressions and saved memory: denim-mini\nPASS purchase, equip, date, expressions and saved memory: suede-mini\nPASS purchase, equip, date, expressions and saved memory: bubble-mini\nPASS purchase, equip, date, expressions and saved memory: layered-denim\nPASS purchase, equip, date, expressions and saved memory: quarter-bermuda\nPASS purchase, equip, date, expressions and saved memory: satin-midi\nPASS purchase, equip, date, expressions and saved memory: utility-cargo\nPASS reload and all eight historical outfits after changing clothes\nPASS eight full-size PNGs decode with transparent corners\nPASS 1440px shop layout, targets and runtime"
+  },
+  {
+    "test": "fashion",
+    "width": 1920,
+    "height": 1080,
+    "status": "passed",
+    "results": "PASS 14-outfit catalog and six category filters\nPASS full-body preview is free, preserves filter and enforces budget\nPASS purchase, equip, date, expressions and saved memory: mini-pleats\nPASS purchase, equip, date, expressions and saved memory: denim-mini\nPASS purchase, equip, date, expressions and saved memory: suede-mini\nPASS purchase, equip, date, expressions and saved memory: bubble-mini\nPASS purchase, equip, date, expressions and saved memory: layered-denim\nPASS purchase, equip, date, expressions and saved memory: quarter-bermuda\nPASS purchase, equip, date, expressions and saved memory: satin-midi\nPASS purchase, equip, date, expressions and saved memory: utility-cargo\nPASS reload and all eight historical outfits after changing clothes\nPASS eight full-size PNGs decode with transparent corners\nPASS 1920px shop layout, targets and runtime"
+  },
+  {
+    "test": "courses-ui",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS friend prequel profile and no agency membership\nPASS pagination, eight-course themes, search and locked feedback\nPASS six-stage date reload, frozen cost and durable first memory\nPASS permanent first-visit transcript and read-only replay\nPASS distinct visits unlock a chapter with remembered choices\nPASS both local fonts loaded, Korean story typeface and largest text\nPASS 1280px narrative, keyboard focus, images and runtime"
+  },
+  {
+    "test": "courses-ui",
+    "width": 1440,
+    "height": 900,
+    "status": "passed",
+    "results": "PASS friend prequel profile and no agency membership\nPASS pagination, eight-course themes, search and locked feedback\nPASS six-stage date reload, frozen cost and durable first memory\nPASS permanent first-visit transcript and read-only replay\nPASS distinct visits unlock a chapter with remembered choices\nPASS both local fonts loaded, Korean story typeface and largest text\nPASS 1440px narrative, keyboard focus, images and runtime"
+  },
+  {
+    "test": "courses-ui",
+    "width": 1920,
+    "height": 1080,
+    "status": "passed",
+    "results": "PASS friend prequel profile and no agency membership\nPASS pagination, eight-course themes, search and locked feedback\nPASS six-stage date reload, frozen cost and durable first memory\nPASS permanent first-visit transcript and read-only replay\nPASS distinct visits unlock a chapter with remembered choices\nPASS both local fonts loaded, Korean story typeface and largest text\nPASS 1920px narrative, keyboard focus, images and runtime"
+  },
+  {
+    "test": "activities-ui",
+    "width": 1280,
+    "height": 720,
+    "status": "passed",
+    "results": "PASS date-integrated map, progressive unlocks, hint and undo\nPASS map input saved, reload and modal resume without additional charge\nPASS music cross puzzle, visible board response, undo and completion\nPASS memory mismatch stays visible, reload freezes both cards and pairs complete\nPASS three activities leave economy and dialogue step unchanged\nPASS explicit abandonment preserves finished activities and restores conversation\nPASS 1280px map layout, focus, fonts and runtime"
+  },
+  {
+    "test": "activities-ui",
+    "width": 1440,
+    "height": 900,
+    "status": "passed",
+    "results": "PASS date-integrated map, progressive unlocks, hint and undo\nPASS map input saved, reload and modal resume without additional charge\nPASS music cross puzzle, visible board response, undo and completion\nPASS memory mismatch stays visible, reload freezes both cards and pairs complete\nPASS three activities leave economy and dialogue step unchanged\nPASS explicit abandonment preserves finished activities and restores conversation\nPASS 1440px map layout, focus, fonts and runtime"
+  },
+  {
+    "test": "activities-ui",
+    "width": 1920,
+    "height": 1080,
+    "status": "passed",
+    "results": "PASS date-integrated map, progressive unlocks, hint and undo\nPASS map input saved, reload and modal resume without additional charge\nPASS music cross puzzle, visible board response, undo and completion\nPASS memory mismatch stays visible, reload freezes both cards and pairs complete\nPASS three activities leave economy and dialogue step unchanged\nPASS explicit abandonment preserves finished activities and restores conversation\nPASS 1920px map layout, focus, fonts and runtime"
+  }
+]

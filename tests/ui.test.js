@@ -1,6 +1,6 @@
 (async () => {
   const frame = document.getElementById('app');
-  await new Promise(resolve => frame.addEventListener('load', resolve, { once: true }));
+  if (!frame.contentWindow.LunaEngine || frame.contentDocument.readyState !== 'complete') await new Promise(resolve => frame.addEventListener('load', resolve, { once: true }));
   const w = frame.contentWindow, d = frame.contentDocument, E = w.LunaEngine;
   const results = [], errors = [];
   w.addEventListener('error', e => errors.push(e.message));
@@ -12,7 +12,7 @@
   try {
     assert($('title-screen') && !$('title-screen').hidden,'Title is visible');
     assert(w.LunaData && E, 'Runtime loads');
-    click('new-game'); if($('modal').open) modalButton('새로 시작');
+    click('new-game'); if($('modal').open) modalButton('새로 시작'); click('intro-skip');
     assert(!$('play-screen').hidden && read().money===80000,'New game starts'); results.push('PASS boot and new game');
     click('budget-button'); d.querySelector('[data-goal-id="buy:knit"]').click();
     assert(read().expenseGoal.id==='knit' && read().money===80000,'Budget target saved without spending');
@@ -44,8 +44,14 @@
     assert(E.storage.read('prefs').textSize==='largest','Reading preference saved'); click('close-modal'); results.push('PASS reading size preference and preview');
     click('home-button'); click('continue-game'); assert(read().money===0 && !$('play-screen').hidden,'Continue'); results.push('PASS return to title and resume');
     const width=w.innerWidth; assert(d.documentElement.scrollWidth <= width+1,`Horizontal overflow: ${d.documentElement.scrollWidth} > ${width}`);
-    for(const id of ['work-button','date-button','wardrobe-button','rest-button','next-day','budget-button']) { const r=$(id).getBoundingClientRect(); assert(r.width>=44 && r.height>=36,`${id} touch target`); assert(r.left>=0 && r.right<=width,`${id} outside viewport`); }
-    const feedPanel=d.querySelector('.text-play').getBoundingClientRect(), summaryPanel=d.querySelector('.day-message').getBoundingClientRect(); assert(feedPanel.bottom<=summaryPanel.top,'Large text does not overlap day summary');
+    if($('choice-card').hidden) click('dialogue'); assert(!$('choice-card').hidden&&$('dialogue').hidden,'Dialogue opens the choice card');
+    for(const id of ['story-button','work-button','date-button','wardrobe-button','rest-button','next-day','budget-button']) { const r=$(id).getBoundingClientRect(); assert(r.width>=44 && r.height>=36,`${id} button size`); assert(r.left>=0 && r.right<=width,`${id} outside viewport`); }
+    const card=d.querySelector('.choice-card').getBoundingClientRect(); assert(card.top>=0&&card.bottom<=w.innerHeight&&card.left>=0&&card.right<=width,'Choice card fits the screen');
+    click('choice-close'); assert($('choice-card').hidden&&!$('dialogue').hidden,'Esc/back returns to the scene');
+    const box=$('dialogue').getBoundingClientRect(), hud=d.querySelector('.stage-hud').getBoundingClientRect(), info=d.querySelector('.day-info').getBoundingClientRect(), portrait=$('character').getBoundingClientRect();
+    assert(box.bottom<=w.innerHeight&&box.left>=0&&box.right<=width&&box.top>hud.bottom&&box.top>info.bottom,'Dialogue box sits below the status bar');
+    assert(info.right<=hud.left,'Title and status bar do not overlap');
+    assert(Math.abs((box.left+box.right)/2-(portrait.left+portrait.right)/2)<width*.1,'Sulien stands centre stage');
     assert(errors.length===0,errors.join('\n')); results.push(`PASS ${width}px layout, controls, no runtime errors`);
     const scene = new URLSearchParams(location.search).get('scene');
     if(scene==='title') click('home-button');

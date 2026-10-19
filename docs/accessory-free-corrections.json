@@ -1,0 +1,23 @@
+[
+  {
+    "id": "coat",
+    "edit": "Remove the remaining gray scarf/cowl around the neck completely. Replace that fabric triangle with the plain round crewneck collar of the existing gray sweater below it, exposing the natural bare neck above the crewneck. No scarf or loose neck wrap remains.",
+    "source": "assets/characters/accessory-free/coat.png",
+    "path": "assets/characters/accessory-free/coat.png",
+    "prompt": "Precise object removal on image 1. Remove the remaining gray scarf/cowl around the neck completely. Replace that fabric triangle with the plain round crewneck collar of the existing gray sweater below it, exposing the natural bare neck above the crewneck. No scarf or loose neck wrap remains. Preserve ALL other parts of the image exactly: identity, face, expression, low ponytail hair without decorative ties, pose, body, clothing, shoes, whole-body framing and size. Accessory-free version. True transparent PNG, no background, no glow or halo."
+  },
+  {
+    "id": "suede-mini",
+    "edit": "Remove the remaining BLACK BELT AND SILVER RECTANGULAR BUCKLE at the waist. Reconstruct the simple plain charcoal waistband of the skirt. Absolutely no belt or buckle at the waist.",
+    "source": "assets/characters/accessory-free/suede-mini.png",
+    "path": "assets/characters/accessory-free/suede-mini.png",
+    "prompt": "Precise object removal on image 1. Remove the remaining BLACK BELT AND SILVER RECTANGULAR BUCKLE at the waist. Reconstruct the simple plain charcoal waistband of the skirt. Absolutely no belt or buckle at the waist. Preserve ALL other parts of the image exactly: identity, face, expression, low ponytail hair without decorative ties, pose, body, clothing, shoes, whole-body framing and size. Accessory-free version. True transparent PNG, no background, no glow or halo."
+  },
+  {
+    "id": "skirt",
+    "edit": "Remove the remaining small pearl/silver EARRING from the visible ear on the right of the image. Bare natural earlobe with no shiny dot, stud, jewelry or piercing.",
+    "source": "assets/characters/accessory-free/skirt.png",
+    "path": "assets/characters/accessory-free/skirt.png",
+    "prompt": "Precise object removal on image 1. Remove the remaining small pearl/silver EARRING from the visible ear on the right of the image. Bare natural earlobe with no shiny dot, stud, jewelry or piercing. Preserve ALL other parts of the image exactly: identity, face, expression, low ponytail hair without decorative ties, pose, body, clothing, shoes, whole-body framing and size. Accessory-free version. True transparent PNG, no background, no glow or halo."
+  }
+]

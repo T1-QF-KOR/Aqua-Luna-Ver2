@@ -1,0 +1,157 @@
+{
+  "date": "2026-10-07",
+  "mode": "built-in image_gen",
+  "reference": "assets/characters/fullbody-20261007/casual.png",
+  "poses": [
+    {
+      "id": "warm-smile",
+      "name": "반가운 미소",
+      "pose": "Standing with weight balanced naturally, one arm raised in a small welcoming open-palm wave near shoulder, other arm relaxed down. Gentle warm closed-mouth smile, softened open eyes looking at viewer.",
+      "path": "assets/characters/poses-20261007/warm-smile.png",
+      "prompt": "Use case: identity-preserve. Create ONE full-body pose/expression variant of Sulien for Aqua Luna PC romance visual novel. The reference is authoritative for recognizable face, narrow gray-blue eyes, dark teal-black long low ponytail with wispy bangs, mature young-woman anatomy, understated painterly Korean anime rendering, and clothing. Keep charcoal oversized hoodie, black straight trousers, dark low-top sneakers, black headphones at neck. Omit shoulder bag to keep new arm poses readable. Change ONLY body pose and facial emotion as requested, keep her face recognizable, no different character. Natural believable approximately 7.5-head anatomy, correctly jointed arms and hands, five fingers. Full crown to both complete shoes on portrait 2:3 transparent canvas, figure centered and occupies 87% height with clear margins above and below. True alpha outside clean silhouette, NO glow, aura, vignette or shadow around character, NO background or scene, no floor, text, labels, watermark, collage, second figure. Pose and expression: Standing with weight balanced naturally, one arm raised in a small welcoming open-palm wave near shoulder, other arm relaxed down. Gentle warm closed-mouth smile, softened open eyes looking at viewer.",
+      "validation": {
+        "size": [
+          1024,
+          1536
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_bbox": [
+          65,
+          0,
+          1010,
+          1516
+        ],
+        "file_exists": true
+      }
+    },
+    {
+      "id": "shy",
+      "name": "수줍은 고백",
+      "pose": "Standing with knees and shoulders relaxed, both hands loosely clasped in front of lower waist, head tilted very slightly down while eyes glance up toward viewer. Small shy smile, faint natural blush, reserved affectionate expression.",
+      "path": "assets/characters/poses-20261007/shy.png",
+      "prompt": "Use case: identity-preserve. Create ONE full-body pose/expression variant of Sulien for Aqua Luna PC romance visual novel. The reference is authoritative for recognizable face, narrow gray-blue eyes, dark teal-black long low ponytail with wispy bangs, mature young-woman anatomy, understated painterly Korean anime rendering, and clothing. Keep charcoal oversized hoodie, black straight trousers, dark low-top sneakers, black headphones at neck. Omit shoulder bag to keep new arm poses readable. Change ONLY body pose and facial emotion as requested, keep her face recognizable, no different character. Natural believable approximately 7.5-head anatomy, correctly jointed arms and hands, five fingers. Full crown to both complete shoes on portrait 2:3 transparent canvas, figure centered and occupies 87% height with clear margins above and below. True alpha outside clean silhouette, NO glow, aura, vignette or shadow around character, NO background or scene, no floor, text, labels, watermark, collage, second figure. Pose and expression: Standing with knees and shoulders relaxed, both hands loosely clasped in front of lower waist, head tilted very slightly down while eyes glance up toward viewer. Small shy smile, faint natural blush, reserved affectionate expression.",
+      "validation": {
+        "size": [
+          1024,
+          1536
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_bbox": [
+          65,
+          1,
+          938,
+          1521
+        ],
+        "file_exists": true
+      }
+    },
+    {
+      "id": "surprised",
+      "name": "뜻밖의 만남",
+      "pose": "Standing with torso leaning back just a little, one open hand lightly over upper chest and the other lowered open by hip. Eyebrows lifted, eyes moderately widened, lips softly parted in believable surprise, no exaggerated cartoon face.",
+      "path": "assets/characters/poses-20261007/surprised.png",
+      "prompt": "Use case: identity-preserve. Create ONE full-body pose/expression variant of Sulien for Aqua Luna PC romance visual novel. The reference is authoritative for recognizable face, narrow gray-blue eyes, dark teal-black long low ponytail with wispy bangs, mature young-woman anatomy, understated painterly Korean anime rendering, and clothing. Keep charcoal oversized hoodie, black straight trousers, dark low-top sneakers, black headphones at neck. Omit shoulder bag to keep new arm poses readable. Change ONLY body pose and facial emotion as requested, keep her face recognizable, no different character. Natural believable approximately 7.5-head anatomy, correctly jointed arms and hands, five fingers. Full crown to both complete shoes on portrait 2:3 transparent canvas, figure centered and occupies 87% height with clear margins above and below. True alpha outside clean silhouette, NO glow, aura, vignette or shadow around character, NO background or scene, no floor, text, labels, watermark, collage, second figure. Pose and expression: Standing with torso leaning back just a little, one open hand lightly over upper chest and the other lowered open by hip. Eyebrows lifted, eyes moderately widened, lips softly parted in believable surprise, no exaggerated cartoon face.",
+      "validation": {
+        "size": [
+          1024,
+          1536
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_bbox": [
+          65,
+          0,
+          816,
+          1496
+        ],
+        "file_exists": true
+      }
+    },
+    {
+      "id": "worried",
+      "name": "걱정과 위로",
+      "pose": "Standing in a gentle forward attentive lean, one hand loosely holding opposite forearm near waist. Inner eyebrows subtly raised, concerned soft eyes, closed neutral mouth. Caring and worried, not frightened.",
+      "path": "assets/characters/poses-20261007/worried.png",
+      "prompt": "Use case: identity-preserve. Create ONE full-body pose/expression variant of Sulien for Aqua Luna PC romance visual novel. The reference is authoritative for recognizable face, narrow gray-blue eyes, dark teal-black long low ponytail with wispy bangs, mature young-woman anatomy, understated painterly Korean anime rendering, and clothing. Keep charcoal oversized hoodie, black straight trousers, dark low-top sneakers, black headphones at neck. Omit shoulder bag to keep new arm poses readable. Change ONLY body pose and facial emotion as requested, keep her face recognizable, no different character. Natural believable approximately 7.5-head anatomy, correctly jointed arms and hands, five fingers. Full crown to both complete shoes on portrait 2:3 transparent canvas, figure centered and occupies 87% height with clear margins above and below. True alpha outside clean silhouette, NO glow, aura, vignette or shadow around character, NO background or scene, no floor, text, labels, watermark, collage, second figure. Pose and expression: Standing in a gentle forward attentive lean, one hand loosely holding opposite forearm near waist. Inner eyebrows subtly raised, concerned soft eyes, closed neutral mouth. Caring and worried, not frightened.",
+      "validation": {
+        "size": [
+          1024,
+          1536
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_bbox": [
+          65,
+          0,
+          1010,
+          1522
+        ],
+        "file_exists": true
+      }
+    },
+    {
+      "id": "playful",
+      "name": "장난스러운 초대",
+      "pose": "Standing in a relaxed contrapposto with one hand resting lightly on hip and the other arm extended a little toward viewer palm upwards inviting them along. Small teasing asymmetric smile, slightly raised eyebrow, bright open eyes, subtle playful confidence.",
+      "path": "assets/characters/poses-20261007/playful.png",
+      "prompt": "Use case: identity-preserve. Create ONE full-body pose/expression variant of Sulien for Aqua Luna PC romance visual novel. The reference is authoritative for recognizable face, narrow gray-blue eyes, dark teal-black long low ponytail with wispy bangs, mature young-woman anatomy, understated painterly Korean anime rendering, and clothing. Keep charcoal oversized hoodie, black straight trousers, dark low-top sneakers, black headphones at neck. Omit shoulder bag to keep new arm poses readable. Change ONLY body pose and facial emotion as requested, keep her face recognizable, no different character. Natural believable approximately 7.5-head anatomy, correctly jointed arms and hands, five fingers. Full crown to both complete shoes on portrait 2:3 transparent canvas, figure centered and occupies 87% height with clear margins above and below. True alpha outside clean silhouette, NO glow, aura, vignette or shadow around character, NO background or scene, no floor, text, labels, watermark, collage, second figure. Pose and expression: Standing in a relaxed contrapposto with one hand resting lightly on hip and the other arm extended a little toward viewer palm upwards inviting them along. Small teasing asymmetric smile, slightly raised eyebrow, bright open eyes, subtle playful confidence.",
+      "validation": {
+        "size": [
+          1024,
+          1536
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_bbox": [
+          65,
+          1,
+          1010,
+          1522
+        ],
+        "file_exists": true
+      }
+    },
+    {
+      "id": "thoughtful",
+      "name": "생각에 잠긴 오후",
+      "pose": "Standing naturally with one arm loosely crossed low and other hand's index finger resting lightly below chin, head slightly turned three-quarter, eyes looking thoughtfully to the side. Calm contemplative expression.",
+      "path": "assets/characters/poses-20261007/thoughtful.png",
+      "prompt": "Use case: identity-preserve. Create ONE full-body pose/expression variant of Sulien for Aqua Luna PC romance visual novel. The reference is authoritative for recognizable face, narrow gray-blue eyes, dark teal-black long low ponytail with wispy bangs, mature young-woman anatomy, understated painterly Korean anime rendering, and clothing. Keep charcoal oversized hoodie, black straight trousers, dark low-top sneakers, black headphones at neck. Omit shoulder bag to keep new arm poses readable. Change ONLY body pose and facial emotion as requested, keep her face recognizable, no different character. Natural believable approximately 7.5-head anatomy, correctly jointed arms and hands, five fingers. Full crown to both complete shoes on portrait 2:3 transparent canvas, figure centered and occupies 87% height with clear margins above and below. True alpha outside clean silhouette, NO glow, aura, vignette or shadow around character, NO background or scene, no floor, text, labels, watermark, collage, second figure. Pose and expression: Standing naturally with one arm loosely crossed low and other hand's index finger resting lightly below chin, head slightly turned three-quarter, eyes looking thoughtfully to the side. Calm contemplative expression.",
+      "validation": {
+        "size": [
+          1024,
+          1536
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          254
+        ],
+        "alpha_bbox": [
+          65,
+          9,
+          1010,
+          1523
+        ],
+        "file_exists": true
+      }
+    }
+  ]
+}

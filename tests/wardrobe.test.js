@@ -1,12 +1,12 @@
 (async () => {
-  const frame=document.getElementById('app'); await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
+  const frame=document.getElementById('app'); if (!frame.contentWindow.LunaEngine || frame.contentDocument.readyState !== 'complete') await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
   const w=frame.contentWindow,d=frame.contentDocument,E=w.LunaEngine,D=w.LunaData,results=[],errors=[];
   w.addEventListener('error',e=>errors.push(e.message));
   const assert=(ok,msg)=>{if(!ok)throw Error(msg);},$=id=>d.getElementById(id),click=id=>$(id).click();
   const button=text=>{const b=[...$('modal-body').querySelectorAll('button')].find(b=>b.textContent.includes(text));assert(b&&!b.disabled,text);b.click();};
   const read=()=>E.storage.load(0);
   try {
-    click('new-game');if($('modal').open)button('새로 시작');click('work-button');button('+120,000');button('일 시작하기');
+    click('new-game');if($('modal').open)button('새로 시작'); click('intro-skip');click('work-button');button('+120,000');button('일 시작하기');
     click('shop-button');button('160,000');button('구매하기');
     assert(read().owned.includes('skirt')&&read().outfit==='casual','purchase does not dress');
     button('새 의상');button('18,000');button('구매하기');button('새 의상');button('16,000');button('구매하기');

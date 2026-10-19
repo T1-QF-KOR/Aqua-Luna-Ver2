@@ -41,26 +41,4 @@
 dialog .toast { position: sticky; bottom: 0; left: auto; transform: none; max-width: 100%; margin: 16px 0 0; }
 .game[data-text-size="largest"] .day-message { min-height: 116px; }
 .game[data-text-size="largest"] .text-play { bottom: 204px; }
-@media (max-height:800px) and (min-width:801px) { .budget-button { bottom: 316px; } }
-@media (max-width:1050px) { .budget-button { right: 4%; width: 200px; padding: 15px; } }
-@media (max-width:800px) {
-  .play-mode { min-height: 1170px; }
-  .budget-button { top: 329px; bottom: auto; left: 6%; right: 6%; width: auto; padding: 12px 16px; gap: 5px; grid-template-columns: 1fr auto; }
-  .budget-button > span:first-child { grid-column: 1; }
-  .budget-button strong { grid-column: 1; font-size: 12px; }
-  .budget-button #budget-detail { grid-column: 1 / -1; font-size: 10px; }
-  .budget-button .budget-meter { grid-column: 2; grid-row: 1 / 3; width: 50px; align-self: center; }
-  .text-play { top: 442px; bottom: 241px; }
-  .game[data-text-size="largest"] .text-play { bottom: 263px; }
-  .day-message { min-height: 144px; }
-  .day-message p { line-height: 1.85; }
-  .game[data-text-size="largest"] .day-message { min-height: 168px; }
-  .daily-actions button { min-height: 56px; }
-  .feed-entry small { font-size: 10px; }
-  .budget-option { padding: 16px; flex-wrap: wrap; }
-  .budget-option button { width: 100%; min-height: 44px; }
-  .budget-controls button { flex: 1; justify-content: center; min-height: 44px; padding: 11px; }
-  .resource-preview th, .resource-preview td { padding: 12px 6px; }
-  .resource-preview { font-size: max(13px, calc(var(--reading-size) - 3px)); }
-  .save-status { font-size: 10px; padding: 10px 12px; }
-}
+@media (max-height:800px) { .budget-button { bottom: 316px; } }

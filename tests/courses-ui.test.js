@@ -1,6 +1,6 @@
 (async()=>{
   const frame=document.getElementById('app'),results=[],errors=[];
-  await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
+  if (!frame.contentWindow.LunaEngine || frame.contentDocument.readyState !== 'complete') await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
   let w=frame.contentWindow,d=frame.contentDocument,E=w.LunaEngine;
   const listen=()=>{w.addEventListener('error',e=>errors.push(e.message));w.addEventListener('unhandledrejection',e=>errors.push(String(e.reason)));};listen();
   const assert=(ok,msg)=>{if(!ok)throw Error(msg);},$=id=>d.getElementById(id),click=id=>{assert($(id),'missing '+id);$(id).click();},read=()=>E.storage.load(0);
@@ -12,7 +12,7 @@
   const next=()=>{close();click('next-day');if($('modal').open)button('다음 날로');};
   const start=id=>{click('date-button');const b=d.querySelector(`[data-action-id="${id}"]`);assert(b&&!b.disabled,'date '+id);b.click();button('데이트 진행');};
   try{
-    click('new-game');if($('modal').open)button('새로 시작');
+    click('new-game');if($('modal').open)button('새로 시작'); click('intro-skip');
     click('bond-button');assert($('modal-body').textContent.includes('입사 전')&&$('modal-body').textContent.includes('친구'),'profile premise');assert(!$('modal-body').textContent.includes('리더 /'),'future role leaked');close();results.push('PASS friend prequel profile and no agency membership');
     click('date-button');assert(d.querySelectorAll('[data-action-id]').length===12,'paging');button('다음 →');assert(d.querySelectorAll('[data-action-id]').length===12,'second page');
     select('course-theme','river');assert(d.querySelectorAll('[data-action-id]').length===8,'theme filter');
@@ -32,6 +32,7 @@
     assert(d.fonts.check('16px Pretendard','수련')&&d.fonts.check('16px "Gowun Batang"','수련'),'fonts failed');
     assert([...d.fonts].filter(f=>f.status==='loaded').length>=2,'font fallback only');assert(w.getComputedStyle(d.querySelector('.story-text')).fontFamily.includes('Gowun'),'story typography');assert(w.getComputedStyle(d.querySelector('.story-text')).fontSize==='21px','size preference');results.push('PASS both local fonts loaded, Korean story typeface and largest text');
     assert(d.documentElement.scrollWidth<=w.innerWidth+1&&$('modal').scrollWidth<=$('modal').clientWidth+1,'overflow');
+    for(let i=0;i<60&&d.querySelector('.story-choices.line-hidden');i++)d.querySelector('.story-prose').click();assert(!d.querySelector('.story-choices.line-hidden'),'lines reveal choices');
     for(const b of d.querySelectorAll('[data-story-choice]')){const r=b.getBoundingClientRect();assert(r.height>=44&&r.width>=44&&r.left>=0&&r.right<=w.innerWidth+1,'choice target');}
     assert(errors.length===0,errors.join('\n'));await Promise.all([...$('modal-body').querySelectorAll('img')].map(img=>img.decode()));
     results.push(`PASS ${w.innerWidth}px narrative, keyboard focus, images and runtime`);

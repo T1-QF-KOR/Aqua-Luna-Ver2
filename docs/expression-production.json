@@ -1,0 +1,710 @@
+{
+  "mode": "built-in image_gen",
+  "status": "in_progress",
+  "expressions": [
+    {
+      "id": "smile",
+      "name": "잔잔한 미소",
+      "direction": "a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows"
+    },
+    {
+      "id": "thoughtful",
+      "name": "생각에 잠긴 표정",
+      "direction": "a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips"
+    },
+    {
+      "id": "shy",
+      "name": "수줍은 표정",
+      "direction": "a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes"
+    },
+    {
+      "id": "surprised",
+      "name": "살짝 놀란 표정",
+      "direction": "a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth"
+    },
+    {
+      "id": "worried",
+      "name": "걱정스러운 표정",
+      "direction": "a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips"
+    },
+    {
+      "id": "playful",
+      "name": "장난스러운 미소",
+      "direction": "a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "casual/smile",
+      "outfit": "casual",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/casual.png",
+      "path": "assets/characters/accessory-free/casual-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "casual/thoughtful",
+      "outfit": "casual",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/casual.png",
+      "path": "assets/characters/accessory-free/casual-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "casual/shy",
+      "outfit": "casual",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/casual.png",
+      "path": "assets/characters/accessory-free/casual-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "casual/surprised",
+      "outfit": "casual",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/casual.png",
+      "path": "assets/characters/accessory-free/casual-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "casual/worried",
+      "outfit": "casual",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/casual.png",
+      "path": "assets/characters/accessory-free/casual-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "casual/playful",
+      "outfit": "casual",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/casual.png",
+      "path": "assets/characters/accessory-free/casual-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "knit/smile",
+      "outfit": "knit",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/knit.png",
+      "path": "assets/characters/accessory-free/knit-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "knit/thoughtful",
+      "outfit": "knit",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/knit.png",
+      "path": "assets/characters/accessory-free/knit-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "knit/shy",
+      "outfit": "knit",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/knit.png",
+      "path": "assets/characters/accessory-free/knit-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "knit/surprised",
+      "outfit": "knit",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/knit.png",
+      "path": "assets/characters/accessory-free/knit-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "knit/worried",
+      "outfit": "knit",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/knit.png",
+      "path": "assets/characters/accessory-free/knit-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "knit/playful",
+      "outfit": "knit",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/knit.png",
+      "path": "assets/characters/accessory-free/knit-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "coat/smile",
+      "outfit": "coat",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/coat.png",
+      "path": "assets/characters/accessory-free/coat-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "coat/thoughtful",
+      "outfit": "coat",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/coat.png",
+      "path": "assets/characters/accessory-free/coat-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "coat/shy",
+      "outfit": "coat",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/coat.png",
+      "path": "assets/characters/accessory-free/coat-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "coat/surprised",
+      "outfit": "coat",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/coat.png",
+      "path": "assets/characters/accessory-free/coat-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "coat/worried",
+      "outfit": "coat",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/coat.png",
+      "path": "assets/characters/accessory-free/coat-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "coat/playful",
+      "outfit": "coat",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/coat.png",
+      "path": "assets/characters/accessory-free/coat-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "skirt/smile",
+      "outfit": "skirt",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/skirt.png",
+      "path": "assets/characters/accessory-free/skirt-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "skirt/thoughtful",
+      "outfit": "skirt",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/skirt.png",
+      "path": "assets/characters/accessory-free/skirt-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "skirt/shy",
+      "outfit": "skirt",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/skirt.png",
+      "path": "assets/characters/accessory-free/skirt-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "skirt/surprised",
+      "outfit": "skirt",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/skirt.png",
+      "path": "assets/characters/accessory-free/skirt-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "skirt/worried",
+      "outfit": "skirt",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/skirt.png",
+      "path": "assets/characters/accessory-free/skirt-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "skirt/playful",
+      "outfit": "skirt",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/skirt.png",
+      "path": "assets/characters/accessory-free/skirt-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "shirt/smile",
+      "outfit": "shirt",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/shirt.png",
+      "path": "assets/characters/accessory-free/shirt-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "shirt/thoughtful",
+      "outfit": "shirt",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/shirt.png",
+      "path": "assets/characters/accessory-free/shirt-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "shirt/shy",
+      "outfit": "shirt",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/shirt.png",
+      "path": "assets/characters/accessory-free/shirt-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "shirt/surprised",
+      "outfit": "shirt",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/shirt.png",
+      "path": "assets/characters/accessory-free/shirt-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "shirt/worried",
+      "outfit": "shirt",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/shirt.png",
+      "path": "assets/characters/accessory-free/shirt-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "shirt/playful",
+      "outfit": "shirt",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/shirt.png",
+      "path": "assets/characters/accessory-free/shirt-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "blouse/smile",
+      "outfit": "blouse",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/blouse.png",
+      "path": "assets/characters/accessory-free/blouse-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "blouse/thoughtful",
+      "outfit": "blouse",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/blouse.png",
+      "path": "assets/characters/accessory-free/blouse-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "blouse/shy",
+      "outfit": "blouse",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/blouse.png",
+      "path": "assets/characters/accessory-free/blouse-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "blouse/surprised",
+      "outfit": "blouse",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/blouse.png",
+      "path": "assets/characters/accessory-free/blouse-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "blouse/worried",
+      "outfit": "blouse",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/blouse.png",
+      "path": "assets/characters/accessory-free/blouse-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "blouse/playful",
+      "outfit": "blouse",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/blouse.png",
+      "path": "assets/characters/accessory-free/blouse-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "mini-pleats/smile",
+      "outfit": "mini-pleats",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/mini-pleats.png",
+      "path": "assets/characters/accessory-free/mini-pleats-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "mini-pleats/thoughtful",
+      "outfit": "mini-pleats",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/mini-pleats.png",
+      "path": "assets/characters/accessory-free/mini-pleats-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "mini-pleats/shy",
+      "outfit": "mini-pleats",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/mini-pleats.png",
+      "path": "assets/characters/accessory-free/mini-pleats-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "mini-pleats/surprised",
+      "outfit": "mini-pleats",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/mini-pleats.png",
+      "path": "assets/characters/accessory-free/mini-pleats-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "mini-pleats/worried",
+      "outfit": "mini-pleats",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/mini-pleats.png",
+      "path": "assets/characters/accessory-free/mini-pleats-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "mini-pleats/playful",
+      "outfit": "mini-pleats",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/mini-pleats.png",
+      "path": "assets/characters/accessory-free/mini-pleats-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "denim-mini/smile",
+      "outfit": "denim-mini",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/denim-mini.png",
+      "path": "assets/characters/accessory-free/denim-mini-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "denim-mini/thoughtful",
+      "outfit": "denim-mini",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/denim-mini.png",
+      "path": "assets/characters/accessory-free/denim-mini-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "denim-mini/shy",
+      "outfit": "denim-mini",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/denim-mini.png",
+      "path": "assets/characters/accessory-free/denim-mini-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "denim-mini/surprised",
+      "outfit": "denim-mini",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/denim-mini.png",
+      "path": "assets/characters/accessory-free/denim-mini-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "denim-mini/worried",
+      "outfit": "denim-mini",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/denim-mini.png",
+      "path": "assets/characters/accessory-free/denim-mini-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "denim-mini/playful",
+      "outfit": "denim-mini",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/denim-mini.png",
+      "path": "assets/characters/accessory-free/denim-mini-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "suede-mini/smile",
+      "outfit": "suede-mini",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/suede-mini.png",
+      "path": "assets/characters/accessory-free/suede-mini-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "suede-mini/thoughtful",
+      "outfit": "suede-mini",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/suede-mini.png",
+      "path": "assets/characters/accessory-free/suede-mini-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "suede-mini/shy",
+      "outfit": "suede-mini",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/suede-mini.png",
+      "path": "assets/characters/accessory-free/suede-mini-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "suede-mini/surprised",
+      "outfit": "suede-mini",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/suede-mini.png",
+      "path": "assets/characters/accessory-free/suede-mini-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "suede-mini/worried",
+      "outfit": "suede-mini",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/suede-mini.png",
+      "path": "assets/characters/accessory-free/suede-mini-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "suede-mini/playful",
+      "outfit": "suede-mini",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/suede-mini.png",
+      "path": "assets/characters/accessory-free/suede-mini-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "bubble-mini/smile",
+      "outfit": "bubble-mini",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/bubble-mini.png",
+      "path": "assets/characters/accessory-free/bubble-mini-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "bubble-mini/thoughtful",
+      "outfit": "bubble-mini",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/bubble-mini.png",
+      "path": "assets/characters/accessory-free/bubble-mini-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "bubble-mini/shy",
+      "outfit": "bubble-mini",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/bubble-mini.png",
+      "path": "assets/characters/accessory-free/bubble-mini-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "bubble-mini/surprised",
+      "outfit": "bubble-mini",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/bubble-mini.png",
+      "path": "assets/characters/accessory-free/bubble-mini-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "bubble-mini/worried",
+      "outfit": "bubble-mini",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/bubble-mini.png",
+      "path": "assets/characters/accessory-free/bubble-mini-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "bubble-mini/playful",
+      "outfit": "bubble-mini",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/bubble-mini.png",
+      "path": "assets/characters/accessory-free/bubble-mini-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "layered-denim/smile",
+      "outfit": "layered-denim",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/layered-denim.png",
+      "path": "assets/characters/accessory-free/layered-denim-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "layered-denim/thoughtful",
+      "outfit": "layered-denim",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/layered-denim.png",
+      "path": "assets/characters/accessory-free/layered-denim-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "layered-denim/shy",
+      "outfit": "layered-denim",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/layered-denim.png",
+      "path": "assets/characters/accessory-free/layered-denim-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "layered-denim/surprised",
+      "outfit": "layered-denim",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/layered-denim.png",
+      "path": "assets/characters/accessory-free/layered-denim-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "layered-denim/worried",
+      "outfit": "layered-denim",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/layered-denim.png",
+      "path": "assets/characters/accessory-free/layered-denim-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "layered-denim/playful",
+      "outfit": "layered-denim",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/layered-denim.png",
+      "path": "assets/characters/accessory-free/layered-denim-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "quarter-bermuda/smile",
+      "outfit": "quarter-bermuda",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/quarter-bermuda.png",
+      "path": "assets/characters/accessory-free/quarter-bermuda-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "quarter-bermuda/thoughtful",
+      "outfit": "quarter-bermuda",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/quarter-bermuda.png",
+      "path": "assets/characters/accessory-free/quarter-bermuda-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "quarter-bermuda/shy",
+      "outfit": "quarter-bermuda",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/quarter-bermuda.png",
+      "path": "assets/characters/accessory-free/quarter-bermuda-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "quarter-bermuda/surprised",
+      "outfit": "quarter-bermuda",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/quarter-bermuda.png",
+      "path": "assets/characters/accessory-free/quarter-bermuda-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "quarter-bermuda/worried",
+      "outfit": "quarter-bermuda",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/quarter-bermuda.png",
+      "path": "assets/characters/accessory-free/quarter-bermuda-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "quarter-bermuda/playful",
+      "outfit": "quarter-bermuda",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/quarter-bermuda.png",
+      "path": "assets/characters/accessory-free/quarter-bermuda-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "satin-midi/smile",
+      "outfit": "satin-midi",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/satin-midi.png",
+      "path": "assets/characters/accessory-free/satin-midi-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "satin-midi/thoughtful",
+      "outfit": "satin-midi",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/satin-midi.png",
+      "path": "assets/characters/accessory-free/satin-midi-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "satin-midi/shy",
+      "outfit": "satin-midi",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/satin-midi.png",
+      "path": "assets/characters/accessory-free/satin-midi-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "satin-midi/surprised",
+      "outfit": "satin-midi",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/satin-midi.png",
+      "path": "assets/characters/accessory-free/satin-midi-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "satin-midi/worried",
+      "outfit": "satin-midi",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/satin-midi.png",
+      "path": "assets/characters/accessory-free/satin-midi-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "satin-midi/playful",
+      "outfit": "satin-midi",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/satin-midi.png",
+      "path": "assets/characters/accessory-free/satin-midi-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "utility-cargo/smile",
+      "outfit": "utility-cargo",
+      "expression": "smile",
+      "source": "assets/characters/accessory-free/utility-cargo.png",
+      "path": "assets/characters/accessory-free/utility-cargo-smile.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clear gentle warm closed-mouth smile, softened eyes, relaxed eyebrows. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "utility-cargo/thoughtful",
+      "outfit": "utility-cargo",
+      "expression": "thoughtful",
+      "source": "assets/characters/accessory-free/utility-cargo.png",
+      "path": "assets/characters/accessory-free/utility-cargo-thoughtful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a distinctly thoughtful expression, eyes glancing slightly aside, subtly knitted brows and gently pressed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "utility-cargo/shy",
+      "outfit": "utility-cargo",
+      "expression": "shy",
+      "source": "assets/characters/accessory-free/utility-cargo.png",
+      "path": "assets/characters/accessory-free/utility-cargo-shy.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a shy bashful expression with visible pink blush on both cheeks, a small hesitant smile and slightly averted eyes. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "utility-cargo/surprised",
+      "outfit": "utility-cargo",
+      "expression": "surprised",
+      "source": "assets/characters/accessory-free/utility-cargo.png",
+      "path": "assets/characters/accessory-free/utility-cargo-surprised.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly surprised expression, widened gray-blue eyes, lifted eyebrows and a small parted mouth. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "utility-cargo/worried",
+      "outfit": "utility-cargo",
+      "expression": "worried",
+      "source": "assets/characters/accessory-free/utility-cargo.png",
+      "path": "assets/characters/accessory-free/utility-cargo-worried.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a clearly worried expression, inner brows raised and drawn together, troubled eyes and slightly downturned closed lips. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    },
+    {
+      "id": "utility-cargo/playful",
+      "outfit": "utility-cargo",
+      "expression": "playful",
+      "source": "assets/characters/accessory-free/utility-cargo.png",
+      "path": "assets/characters/accessory-free/utility-cargo-playful.png",
+      "prompt": "Use case: identity-preserve. Edit image 1, the accessory-free full-body Sulien sprite. Change ONLY the facial expression to a playful teasing smile, one subtly raised eyebrow, lively eyes and asymmetric upturned mouth, both eyes open. Make the emotion readable in a romance visual novel while preserving her exact identity, face shape, gray-blue eye color and reserved personality. Keep every other pixel as close as possible: identical head angle, hair, low ponytail, body, hand positions, pose, outfit, proportions, shoes, image scale, placement and full head-to-toe 1024x1536 framing. Do not change clothing or pose. No accessories at all: no earrings, necklace, rings, watch, bag, belt, hat, glasses, headset, scarf, hair ornaments or ribbons. Transparent alpha background; no glow, halo, background, floor shadow, text or additional character. Single full-body character PNG, not a collage."
+    }
+  ]
+}

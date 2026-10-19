@@ -1,0 +1,149 @@
+{
+  "status": "implemented",
+  "defaultOwned": true,
+  "defaultEquipped": false,
+  "images": [
+    {
+      "id": "casual",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/casual.png",
+      "path": "assets/characters/fullbody-no-headset/casual.png"
+    },
+    {
+      "id": "knit",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/knit.png",
+      "path": "assets/characters/fullbody-no-headset/knit.png"
+    },
+    {
+      "id": "coat",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/coat.png",
+      "path": "assets/characters/fullbody-no-headset/coat.png"
+    },
+    {
+      "id": "skirt",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/skirt.png",
+      "path": "assets/characters/fullbody-no-headset/skirt.png"
+    },
+    {
+      "id": "shirt",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/shirt.png",
+      "path": "assets/characters/fullbody-no-headset/shirt.png"
+    },
+    {
+      "id": "blouse",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/blouse.png",
+      "path": "assets/characters/fullbody-no-headset/blouse.png"
+    },
+    {
+      "id": "mini-pleats",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/mini-pleats.png",
+      "path": "assets/characters/fullbody-no-headset/mini-pleats.png"
+    },
+    {
+      "id": "denim-mini",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/denim-mini.png",
+      "path": "assets/characters/fullbody-no-headset/denim-mini.png"
+    },
+    {
+      "id": "suede-mini",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/suede-mini.png",
+      "path": "assets/characters/fullbody-no-headset/suede-mini.png"
+    },
+    {
+      "id": "bubble-mini",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/bubble-mini.png",
+      "path": "assets/characters/fullbody-no-headset/bubble-mini.png"
+    },
+    {
+      "id": "layered-denim",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/layered-denim.png",
+      "path": "assets/characters/fullbody-no-headset/layered-denim.png"
+    },
+    {
+      "id": "quarter-bermuda",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/quarter-bermuda.png",
+      "path": "assets/characters/fullbody-no-headset/quarter-bermuda.png"
+    },
+    {
+      "id": "satin-midi",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/satin-midi.png",
+      "path": "assets/characters/fullbody-no-headset/satin-midi.png"
+    },
+    {
+      "id": "utility-cargo",
+      "kind": "style",
+      "source": "assets/characters/fullbody-20261007/utility-cargo.png",
+      "path": "assets/characters/fullbody-no-headset/utility-cargo.png"
+    },
+    {
+      "id": "warm-smile",
+      "kind": "pose",
+      "source": "assets/characters/poses-20261007/warm-smile.png",
+      "path": "assets/characters/poses-no-headset/warm-smile.png"
+    },
+    {
+      "id": "shy",
+      "kind": "pose",
+      "source": "assets/characters/poses-20261007/shy.png",
+      "path": "assets/characters/poses-no-headset/shy.png"
+    },
+    {
+      "id": "surprised",
+      "kind": "pose",
+      "source": "assets/characters/poses-20261007/surprised.png",
+      "path": "assets/characters/poses-no-headset/surprised.png"
+    },
+    {
+      "id": "worried",
+      "kind": "pose",
+      "source": "assets/characters/poses-20261007/worried.png",
+      "path": "assets/characters/poses-no-headset/worried.png"
+    },
+    {
+      "id": "playful",
+      "kind": "pose",
+      "source": "assets/characters/poses-20261007/playful.png",
+      "path": "assets/characters/poses-no-headset/playful.png"
+    },
+    {
+      "id": "thoughtful",
+      "kind": "pose",
+      "source": "assets/characters/poses-20261007/thoughtful.png",
+      "path": "assets/characters/poses-no-headset/thoughtful.png"
+    }
+  ],
+  "completed": "2026-10-11",
+  "equipmentField": "neckAccessory",
+  "icon": "assets/accessories/20261007/headset.png",
+  "validation": "qa/core-results-2026-10-11.json",
+  "variants": [
+    "assets/characters/variants-no-headset/coat-smile.png",
+    "assets/characters/variants-no-headset/coat-thoughtful.png",
+    "assets/characters/variants-no-headset/knit-smile.png",
+    "assets/characters/variants-no-headset/knit-thoughtful.png",
+    "assets/characters/variants-no-headset/skirt-black-smile.png",
+    "assets/characters/variants-no-headset/skirt-black-thoughtful.png",
+    "assets/characters/variants-no-headset/skirt-black.png",
+    "assets/characters/variants-no-headset/skirt-nude-smile.png",
+    "assets/characters/variants-no-headset/skirt-nude-thoughtful.png",
+    "assets/characters/variants-no-headset/skirt-nude.png",
+    "assets/characters/variants-no-headset/skirt-smile.png",
+    "assets/characters/variants-no-headset/skirt-thoughtful.png"
+  ],
+  "headsetOnOverrides": [
+    "assets/characters/fullbody-headset/blouse.png",
+    "assets/characters/fullbody-headset/satin-midi.png"
+  ]
+}

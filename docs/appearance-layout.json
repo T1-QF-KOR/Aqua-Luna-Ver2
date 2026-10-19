@@ -1,0 +1,2774 @@
+{
+  "version": 1,
+  "canvas": [
+    1024,
+    1536
+  ],
+  "expressions": [
+    "neutral",
+    "smile",
+    "thoughtful",
+    "shy",
+    "surprised",
+    "worried",
+    "playful"
+  ],
+  "items": [
+    {
+      "id": "scrunchie",
+      "name": "새틴 스크런치",
+      "slot": "hair",
+      "source": "assets/accessories/wearable-layers/scrunchie.png",
+      "box": [
+        550,
+        178,
+        40,
+        36
+      ]
+    },
+    {
+      "id": "ribbon",
+      "name": "아이보리 리본",
+      "slot": "hair",
+      "source": "assets/accessories/wearable-layers/ribbon.png",
+      "box": [
+        546,
+        182,
+        68,
+        63
+      ]
+    },
+    {
+      "id": "claw-clip",
+      "name": "실버 집게핀",
+      "slot": "hair",
+      "source": "assets/accessories/wearable-layers/claw-clip.png",
+      "box": [
+        553,
+        173,
+        33,
+        44
+      ]
+    },
+    {
+      "id": "barrette",
+      "name": "토터스 헤어핀",
+      "slot": "hair",
+      "source": "assets/accessories/wearable-layers/barrette.png",
+      "box": [
+        529,
+        100,
+        34,
+        19
+      ]
+    },
+    {
+      "id": "huggie-earrings",
+      "name": "실버 링 귀걸이",
+      "slot": "ear",
+      "source": "assets/accessories/wearable-layers/huggie-earrings.png",
+      "box": [
+        549,
+        156,
+        12,
+        16
+      ]
+    },
+    {
+      "id": "ear-cuff",
+      "name": "실버 이어커프",
+      "slot": "ear",
+      "source": "assets/accessories/wearable-layers/ear-cuff.png",
+      "box": [
+        555,
+        144,
+        10,
+        14
+      ]
+    },
+    {
+      "id": "pearl-earrings",
+      "name": "진주 귀걸이",
+      "slot": "ear",
+      "source": "assets/accessories/wearable-layers/pearl-earrings.png",
+      "box": [
+        550,
+        158,
+        9,
+        11
+      ]
+    },
+    {
+      "id": "moon-necklace",
+      "name": "달 펜던트 목걸이",
+      "slot": "necklace",
+      "source": "assets/accessories/wearable-layers/moon-necklace.png",
+      "box": [
+        450,
+        260,
+        113,
+        115
+      ]
+    },
+    {
+      "id": "pearl-necklace",
+      "name": "짧은 진주 목걸이",
+      "slot": "necklace",
+      "source": "assets/accessories/wearable-layers/pearl-necklace.png",
+      "box": [
+        453,
+        267,
+        107,
+        34
+      ]
+    },
+    {
+      "id": "chain-bracelet",
+      "name": "실버 체인 팔찌",
+      "slot": "wrist",
+      "source": "assets/accessories/wearable-layers/chain-bracelet.png",
+      "box": [
+        661,
+        740,
+        36,
+        13
+      ]
+    },
+    {
+      "id": "stack-rings",
+      "name": "레이어드 반지",
+      "slot": "rings",
+      "source": "assets/accessories/wearable-layers/stack-rings.png",
+      "box": [
+        668,
+        818,
+        29,
+        18
+      ]
+    },
+    {
+      "id": "watch",
+      "name": "가죽 스트랩 시계",
+      "slot": "wrist",
+      "source": "assets/accessories/wearable-layers/watch.png",
+      "box": [
+        660,
+        739,
+        42,
+        22
+      ]
+    },
+    {
+      "id": "silk-scarf",
+      "name": "슬림 실크 스카프",
+      "slot": "neck",
+      "source": "assets/accessories/wearable-layers/silk-scarf.png",
+      "box": [
+        452,
+        253,
+        113,
+        162
+      ]
+    },
+    {
+      "id": "leaf-brooch",
+      "name": "은빛 잎 브로치",
+      "slot": "brooch",
+      "source": "assets/accessories/wearable-layers/leaf-brooch.png",
+      "box": [
+        598,
+        323,
+        26,
+        46
+      ]
+    },
+    {
+      "id": "slim-belt",
+      "name": "슬림 블랙 벨트",
+      "slot": "waist",
+      "source": "assets/accessories/wearable-layers/slim-belt.png",
+      "box": [
+        385,
+        605,
+        222,
+        30
+      ]
+    },
+    {
+      "id": "oval-glasses",
+      "name": "실버 타원 안경",
+      "slot": "face",
+      "source": "assets/accessories/wearable-layers/oval-glasses.png",
+      "box": [
+        421,
+        137,
+        121,
+        35
+      ]
+    },
+    {
+      "id": "beret",
+      "name": "차콜 울 베레모",
+      "slot": "hat",
+      "source": "assets/accessories/wearable-layers/beret.png",
+      "box": [
+        382,
+        14,
+        238,
+        115
+      ]
+    },
+    {
+      "id": "cap",
+      "name": "슬레이트 볼캡",
+      "slot": "hat",
+      "source": "assets/accessories/wearable-layers/cap.png",
+      "box": [
+        386,
+        14,
+        222,
+        122
+      ]
+    },
+    {
+      "id": "shoulder-bag",
+      "name": "스웨이드 숄더백",
+      "slot": "bag",
+      "source": "assets/accessories/wearable-layers/shoulder-bag.png",
+      "box": [
+        607,
+        282,
+        138,
+        407
+      ]
+    },
+    {
+      "id": "canvas-tote",
+      "name": "크림 캔버스 토트",
+      "slot": "bag",
+      "source": "assets/accessories/wearable-layers/canvas-tote.png",
+      "box": [
+        609,
+        283,
+        162,
+        528
+      ]
+    },
+    {
+      "id": "nylon-crossbody",
+      "name": "나일론 크로스백",
+      "slot": "bag",
+      "source": "assets/accessories/wearable-layers/nylon-crossbody.png",
+      "box": [
+        423,
+        279,
+        267,
+        470
+      ]
+    },
+    {
+      "id": "moon-charm",
+      "name": "달빛 키링",
+      "slot": "charm",
+      "source": "assets/accessories/wearable-layers/moon-charm.png",
+      "box": [
+        611,
+        640,
+        25,
+        69
+      ]
+    },
+    {
+      "id": "headset",
+      "name": "수련의 헤드셋",
+      "slot": "neck",
+      "source": "assets/accessories/wearable-layers/headset.png",
+      "box": [
+        427,
+        242,
+        174,
+        128
+      ]
+    }
+  ],
+  "outfits": {
+    "casual": {
+      "name": "차콜 후드",
+      "boxes": {
+        "scrunchie": [
+          550,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          667,
+          808,
+          34,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          667,
+          808,
+          34,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "knit": {
+      "name": "아이보리 니트",
+      "boxes": {
+        "scrunchie": [
+          550,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          661,
+          740,
+          36,
+          13
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          660,
+          739,
+          42,
+          22
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "coat": {
+      "name": "네이비 코트",
+      "boxes": {
+        "scrunchie": [
+          558,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          554,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          561,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          537,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          557,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          563,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          558,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          392,
+          276,
+          37,
+          10
+        ],
+        "stack-rings": [
+          422,
+          251,
+          24,
+          14
+        ],
+        "watch": [
+          392,
+          276,
+          37,
+          20
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          429,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          390,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          394,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "skirt": {
+      "name": "가디건·플리츠",
+      "boxes": {
+        "scrunchie": [
+          548,
+          183,
+          40,
+          36
+        ],
+        "ribbon": [
+          544,
+          187,
+          68,
+          63
+        ],
+        "claw-clip": [
+          551,
+          178,
+          33,
+          44
+        ],
+        "barrette": [
+          527,
+          105,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          547,
+          161,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          553,
+          149,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          548,
+          163,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          669,
+          834,
+          34,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          669,
+          834,
+          34,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          419,
+          142,
+          121,
+          35
+        ],
+        "beret": [
+          380,
+          19,
+          238,
+          115
+        ],
+        "cap": [
+          384,
+          19,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "shirt": {
+      "name": "하늘빛 셔츠",
+      "boxes": {
+        "scrunchie": [
+          550,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          657,
+          779,
+          36,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          657,
+          779,
+          36,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "blouse": {
+      "name": "라벤더 블라우스",
+      "boxes": {
+        "scrunchie": [
+          550,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          665,
+          764,
+          36,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          665,
+          764,
+          36,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "mini-pleats": {
+      "name": "버건디 미니 플리츠",
+      "boxes": {
+        "scrunchie": [
+          550,
+          185,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          189,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          180,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          107,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          163,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          151,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          165,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          677,
+          818,
+          36,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          677,
+          818,
+          36,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          144,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          21,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          21,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "denim-mini": {
+      "name": "데님 미니",
+      "boxes": {
+        "scrunchie": [
+          550,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          674,
+          799,
+          37,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          674,
+          799,
+          37,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "suede-mini": {
+      "name": "스웨이드 재킷",
+      "boxes": {
+        "scrunchie": [
+          550,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          669,
+          786,
+          37,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          669,
+          786,
+          37,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "bubble-mini": {
+      "name": "더스티 핑크 버블",
+      "boxes": {
+        "scrunchie": [
+          540,
+          188,
+          40,
+          36
+        ],
+        "ribbon": [
+          536,
+          192,
+          68,
+          63
+        ],
+        "claw-clip": [
+          543,
+          183,
+          33,
+          44
+        ],
+        "barrette": [
+          519,
+          110,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          539,
+          166,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          545,
+          154,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          540,
+          168,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          666,
+          746,
+          39,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          666,
+          746,
+          39,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          411,
+          147,
+          121,
+          35
+        ],
+        "beret": [
+          372,
+          24,
+          238,
+          115
+        ],
+        "cap": [
+          376,
+          24,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "layered-denim": {
+      "name": "레이어드 와이드 데님",
+      "boxes": {
+        "scrunchie": [
+          550,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          654,
+          700,
+          40,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          654,
+          700,
+          40,
+          20
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "quarter-bermuda": {
+      "name": "쿼터집 버뮤다",
+      "boxes": {
+        "scrunchie": [
+          554,
+          188,
+          40,
+          36
+        ],
+        "ribbon": [
+          550,
+          192,
+          68,
+          63
+        ],
+        "claw-clip": [
+          557,
+          183,
+          33,
+          44
+        ],
+        "barrette": [
+          533,
+          110,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          553,
+          166,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          559,
+          154,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          554,
+          168,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          390,
+          276,
+          38,
+          10
+        ],
+        "stack-rings": [
+          422,
+          251,
+          24,
+          14
+        ],
+        "watch": [
+          390,
+          276,
+          38,
+          20
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          425,
+          147,
+          121,
+          35
+        ],
+        "beret": [
+          386,
+          24,
+          238,
+          115
+        ],
+        "cap": [
+          390,
+          24,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "satin-midi": {
+      "name": "블루 새틴 미디",
+      "boxes": {
+        "scrunchie": [
+          540,
+          178,
+          40,
+          36
+        ],
+        "ribbon": [
+          536,
+          182,
+          68,
+          63
+        ],
+        "claw-clip": [
+          543,
+          173,
+          33,
+          44
+        ],
+        "barrette": [
+          519,
+          100,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          539,
+          156,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          545,
+          144,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          540,
+          158,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          650,
+          790,
+          36,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          650,
+          790,
+          36,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          411,
+          137,
+          121,
+          35
+        ],
+        "beret": [
+          372,
+          14,
+          238,
+          115
+        ],
+        "cap": [
+          376,
+          14,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    },
+    "utility-cargo": {
+      "name": "시티 카고",
+      "boxes": {
+        "scrunchie": [
+          550,
+          183,
+          40,
+          36
+        ],
+        "ribbon": [
+          546,
+          187,
+          68,
+          63
+        ],
+        "claw-clip": [
+          553,
+          178,
+          33,
+          44
+        ],
+        "barrette": [
+          529,
+          105,
+          34,
+          19
+        ],
+        "huggie-earrings": [
+          549,
+          161,
+          12,
+          16
+        ],
+        "ear-cuff": [
+          555,
+          149,
+          10,
+          14
+        ],
+        "pearl-earrings": [
+          550,
+          163,
+          9,
+          11
+        ],
+        "moon-necklace": [
+          450,
+          260,
+          113,
+          115
+        ],
+        "pearl-necklace": [
+          453,
+          267,
+          107,
+          34
+        ],
+        "chain-bracelet": [
+          678,
+          795,
+          37,
+          10
+        ],
+        "stack-rings": [
+          668,
+          818,
+          29,
+          18
+        ],
+        "watch": [
+          678,
+          795,
+          37,
+          18
+        ],
+        "silk-scarf": [
+          452,
+          253,
+          113,
+          162
+        ],
+        "leaf-brooch": [
+          598,
+          323,
+          26,
+          46
+        ],
+        "slim-belt": [
+          385,
+          605,
+          222,
+          30
+        ],
+        "oval-glasses": [
+          421,
+          142,
+          121,
+          35
+        ],
+        "beret": [
+          382,
+          19,
+          238,
+          115
+        ],
+        "cap": [
+          386,
+          19,
+          222,
+          122
+        ],
+        "shoulder-bag": [
+          615,
+          278,
+          198,
+          447
+        ],
+        "canvas-tote": [
+          612,
+          278,
+          223,
+          557
+        ],
+        "nylon-crossbody": [
+          423,
+          279,
+          267,
+          470
+        ],
+        "moon-charm": [
+          611,
+          640,
+          25,
+          69
+        ],
+        "headset": [
+          427,
+          242,
+          174,
+          128
+        ]
+      },
+      "bagArmOcclusion": [
+        [
+          647,
+          321
+        ],
+        [
+          620,
+          456
+        ],
+        [
+          656,
+          702
+        ],
+        [
+          677,
+          803
+        ],
+        [
+          716,
+          832
+        ],
+        [
+          753,
+          770
+        ],
+        [
+          710,
+          597
+        ],
+        [
+          697,
+          399
+        ]
+      ]
+    }
+  }
+}

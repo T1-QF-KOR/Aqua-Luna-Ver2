@@ -1,5 +1,5 @@
 (async()=>{
-  const frame=document.getElementById('app');await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
+  const frame=document.getElementById('app');if (!frame.contentWindow.LunaEngine || frame.contentDocument.readyState !== 'complete') await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
   let w=frame.contentWindow,d=frame.contentDocument,E=w.LunaEngine,D=w.LunaData;
   const results=[],errors=[],listen=()=>{w.addEventListener('error',e=>errors.push(e.message));w.addEventListener('unhandledrejection',e=>errors.push(String(e.reason)));};listen();
   const assert=(v,msg)=>{if(!v)throw Error(msg);},$=id=>d.getElementById(id),click=id=>$(id).click(),read=()=>E.storage.load(0);
@@ -8,7 +8,7 @@
   const nextDay=()=>{close();click('next-day');if($('modal').open)button('다음 날로');};
   const filter=id=>{const b=d.querySelector(`[data-shop-filter="${id}"]`);assert(b,'filter '+id);b.click();};
   try{
-    click('new-game');if($('modal').open)button('새로 시작');
+    click('new-game');if($('modal').open)button('새로 시작'); click('intro-skip');
     const fresh=D.outfits.filter(o=>o.collection==='city-2026');assert(fresh.length===8&&D.outfits.length===14,'catalog count');assert(new Set(fresh.map(o=>o.image)).size===8,'distinct images');
     click('shop-button');filter('new');assert(d.querySelectorAll('[data-shop-item]').length===8,'new filter');filter('mini');assert(d.querySelectorAll('[data-shop-item]').length===4,'mini filter');filter('midi');assert(d.querySelectorAll('[data-shop-item]').length===2,'midi filter');filter('pants');assert(d.querySelectorAll('[data-shop-item]').length===7,'pants filter');filter('accessory');assert(d.querySelectorAll('[data-shop-item]').length===2,'accessory filter');results.push('PASS 14-outfit catalog and six category filters');
     filter('mini');let before=JSON.stringify(read());d.querySelector('[data-shop-item="mini-pleats"] .product-preview').click();
@@ -37,7 +37,7 @@
     click('shop-button');filter('mini');
     await Promise.all([...$('modal-body').querySelectorAll('img')].map(img=>img.decode()));
     assert($('modal').scrollWidth<=$('modal').clientWidth+1&&d.documentElement.scrollWidth<=w.innerWidth+1,'overflow');
-    for(const b of d.querySelectorAll('.shop-filters button,.product-preview')){const r=b.getBoundingClientRect();assert(r.width>=44&&r.height>=44&&r.left>=0&&r.right<=w.innerWidth,'touch target');}
+    for(const b of d.querySelectorAll('.shop-filters button,.product-preview')){const r=b.getBoundingClientRect();assert(r.width>=44&&r.height>=44&&r.left>=0&&r.right<=w.innerWidth,'button size');}
     assert(errors.length===0,errors.join('\n'));results.push(`PASS ${w.innerWidth}px shop layout, targets and runtime`);
     if(new URLSearchParams(location.search).get('scene')==='preview')d.querySelector('[data-shop-item="mini-pleats"] .product-preview').click();
     document.body.dataset.status='passed';

@@ -138,6 +138,7 @@
   dates.forEach(d => d.location = d.id === 'walk' ? 'pier' : d.id);
   const expressions = [{ id: 'neutral', name: '차분한 표정' }, { id: 'smile', name: '잔잔한 미소' }, { id: 'thoughtful', name: '생각에 잠긴 표정' }];
   expressions.push({ id: 'shy', name: '수줍은 표정' }, { id: 'surprised', name: '살짝 놀란 표정' });
+  expressions.push({ id: 'worried', name: '걱정스러운 표정' }, { id: 'playful', name: '장난스러운 미소' });
   const times = [{ id: 'morning', name: '아침' }, { id: 'afternoon', name: '오후' }, { id: 'evening', name: '노을' }, { id: 'night', name: '밤' }];
   const timeForAp = ap => times[Math.max(0, Math.min(3, 3 - ap))].id;
   locations.pier.variants = { morning: 'pier-morning', afternoon: 'pier-afternoon', evening: 'pier-evening' };
@@ -151,16 +152,76 @@
   function availableExpressions(outfit) {
     return expressions.filter(e => e.id === 'neutral' || outfit === 'casual' || ['knit', 'coat', 'skirt'].includes(outfit) && ['smile', 'thoughtful'].includes(e.id));
   }
-  function characterImage(outfit, legwear = 'none', expression = 'neutral') {
+  function characterImage(outfit, legwear = 'none', expression = 'neutral', neckAccessory = 'none') {
+    if (!outfits.some(o => o.id === outfit)) outfit = 'casual';
     if (!availableExpressions(outfit).some(e => e.id === expression)) expression = 'neutral';
-    if (outfit === 'casual' && expression !== 'neutral') return `assets/characters/${['smile', 'thoughtful'].includes(expression) ? expression : 'casual-' + expression}.png`;
-    const base = outfit === 'skirt' && ['black', 'nude'].includes(legwear) ? `skirt-${legwear}` : outfit;
-    if (['knit', 'coat', 'skirt'].includes(outfit)) return `assets/characters/${base}${expression === 'neutral' ? '' : '-' + expression}.png`;
-    return outfits.find(o => o.id === outfit)?.image || outfits[0].image;
+    const on = neckAccessory === 'headset';
+    if (outfit === 'casual' && expression !== 'neutral') {
+      const pose = expression === 'smile' ? 'warm-smile' : expression;
+      return `assets/characters/${on ? 'poses-20261007' : 'poses-no-headset'}/${pose}.png`;
+    }
+    const base = outfit === 'skirt' && ['black','nude'].includes(legwear) ? `skirt-${legwear}` : outfit;
+    if ((['knit','coat','skirt'].includes(outfit) && expression !== 'neutral') || base !== outfit)
+      return `assets/characters/${on ? '' : 'variants-no-headset/'}${base}${expression === 'neutral' ? '' : '-' + expression}.png`;
+    return `assets/characters/${!on ? 'fullbody-no-headset' : ['blouse','satin-midi'].includes(outfit) ? 'fullbody-headset' : 'fullbody-20261007'}/${outfit}.png`;
   }
+  // Story scenes: every outfit has 7 expressions in the accessory-free set (same pose, only the face changes).
+  // With the headset or tights on, fall back to the main portrait set so the outfit stays accurate.
+  const sceneFaces = ['neutral', 'smile', 'thoughtful', 'shy', 'surprised', 'worried', 'playful'];
+  function sceneCharacter(outfit, legwear = 'none', expression = 'neutral', neckAccessory = 'none') {
+    if (!outfits.some(o => o.id === outfit)) outfit = 'casual';
+    if (!sceneFaces.includes(expression)) expression = 'neutral';
+    if (neckAccessory === 'headset' || (outfit === 'skirt' && legwear !== 'none')) return characterImage(outfit, legwear, expression, neckAccessory);
+    return `assets/characters/accessory-free/${outfit}${expression === 'neutral' ? '' : '-' + expression}.png`;
+  }
+  function characterFraming(path) {
+    return /(?:^|\/)(?:knit|coat)-(?:smile|thoughtful)\.png$/.test(path) ? 'portrait' : 'full';
+  }
+  // Small daily gifts. Tastes follow Sulien's profile (classic, cello, quiet cafes, warm drinks) and stay hidden until given.
+  const gifts = [
+    { id: 'citron-tea', name: '따뜻한 유자차', cost: 4500, taste: 'loved', icon: '☕', desc: '목이 쉬기 쉬운 날을 위한 따뜻한 한 잔.' },
+    { id: 'score-clip', name: '악보 집게', cost: 6000, taste: 'loved', icon: '♪', desc: '바람에 넘어가는 악보를 붙잡아 두는 작은 집게.' },
+    { id: 'cello-card', name: '첼로 연주회 엽서', cost: 3000, taste: 'liked', icon: '✉', desc: '공연장 매표소 옆에서 파는 그림엽서.' },
+    { id: 'lemon-candy', name: '레몬 사탕', cost: 2000, taste: 'liked', icon: '◍', desc: '연습 전에 하나씩 먹기 좋은 새콤한 사탕.' },
+    { id: 'iced-americano', name: '아이스 아메리카노', cost: 4000, taste: 'neutral', icon: '❄', desc: '시원하지만, 목을 아끼는 사람에게는 어떨지.' },
+    { id: 'charm-keyring', name: '고양이 키링', cost: 5000, taste: 'neutral', icon: '✧', desc: '가방에 다는 작은 고양이 장식.' },
+    { id: 'spicy-snack', name: '매운 떡볶이 과자', cost: 2500, taste: 'disliked', icon: '✺', desc: '요즘 유행하는 아주 매운 과자.' },
+    { id: 'perfume-sample', name: '진한 향수 샘플', cost: 7000, taste: 'disliked', icon: '❀', desc: '향이 오래 남는 진한 향수.' }
+  ];
+  // School calendar: DAY 1 is Monday, 2 March 2026 (first day of spring term). Days keep running; the calendar only adds rhythm.
+  const birthday = { month: 4, date: 17 };
+  const termEvents = [
+    { from: [3, 2], to: [3, 6], id: 'start', name: '개강 주간' },
+    { from: [4, 20], to: [4, 24], id: 'exam', name: '중간고사' },
+    { from: [5, 20], to: [5, 22], id: 'festival', name: '봄 축제' },
+    { from: [6, 15], to: [6, 19], id: 'exam', name: '기말고사' },
+    { from: [6, 20], to: [8, 31], id: 'break', name: '여름방학' },
+    { from: [9, 1], to: [9, 4], id: 'start', name: '2학기 개강 주간' },
+    { from: [10, 19], to: [10, 23], id: 'exam', name: '중간고사' },
+    { from: [10, 28], to: [10, 30], id: 'festival', name: '가을 축제' },
+    { from: [12, 14], to: [12, 18], id: 'exam', name: '기말고사' },
+    { from: [12, 19], to: [12, 31], id: 'break', name: '겨울방학' },
+    { from: [1, 1], to: [3, 1], id: 'break', name: '겨울방학' }
+  ];
+  const weekdayNames = ['일', '월', '화', '수', '목', '금', '토'];
+  function calendar(day) {
+    const d = new Date(Date.UTC(2026, 2, 2 + day - 1)), month = d.getUTCMonth() + 1, date = d.getUTCDate(), md = month * 100 + date;
+    const event = termEvents.find(e => md >= e.from[0] * 100 + e.from[1] && md <= e.to[0] * 100 + e.to[1]) || null;
+    const term = md >= 302 && md <= 619 ? 1 : md >= 901 && md <= 1218 ? 2 : 0;
+    const termStart = term === 1 ? Date.UTC(d.getUTCFullYear(), 2, 2) : term === 2 ? Date.UTC(d.getUTCFullYear(), 8, 1) : 0;
+    const week = term ? Math.floor((d - termStart) / 604800000) + 1 : 0;
+    return { year: d.getUTCFullYear(), month, date, weekday: weekdayNames[d.getUTCDay()], event, term, week, birthday: month === birthday.month && date === birthday.date,
+      label: `${month}월 ${date}일 (${weekdayNames[d.getUTCDay()]})`, termLabel: term ? `${term}학기 ${week}주차` : event?.name || '방학' };
+  }
+  const dayOf = (year, month, date) => Math.round((Date.UTC(year, month - 1, date) - Date.UTC(2026, 2, 2)) / 86400000) + 1;
+  const neckAccessories = [{ id: 'headset', name: '수련의 헤드셋', image: 'assets/accessories/20261007/headset.png', cost: 0, defaultOwned: true }];
+  // Interior UI backdrops do not change the saved story location.
+  const interiors = { room: 'assets/environment/sulien-room.png', fitting: 'assets/environment/wardrobe-fitting.png' };
   const assetPaths = [...new Set([
+    ...Object.values(interiors),
+    ...neckAccessories.map(a => a.image),
     ...Object.keys(locations).flatMap(place => times.map(time => sceneImage(place, time.id))),
-    ...outfits.flatMap(o => (o.id === 'skirt' ? accessories : [accessories[0]]).flatMap(a => availableExpressions(o.id).map(e => characterImage(o.id, a.id, e.id))))
+    ...outfits.flatMap(o => (o.id === 'skirt' ? accessories : [accessories[0]]).flatMap(a => availableExpressions(o.id).flatMap(e => ['none','headset'].map(neck => characterImage(o.id, a.id, e.id, neck)))))
   ])];
-  window.LunaData = { jobs, dates, outfits, outfitCategories, accessories, locations, expressions, times, timeForAp, sceneImage, characterImage, availableExpressions, assetPaths, startingMoney: 80000, maxAp: 3 };
+  window.LunaData = { calendar, dayOf, birthday, termEvents, gifts, jobs, dates, outfits, outfitCategories, accessories, neckAccessories, locations, interiors, expressions, times, timeForAp, sceneImage, characterImage, sceneCharacter, sceneFaces, characterFraming, availableExpressions, assetPaths, startingMoney: 80000, maxAp: 3 };
 })();

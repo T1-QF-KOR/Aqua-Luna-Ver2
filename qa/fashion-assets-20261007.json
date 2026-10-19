@@ -1,0 +1,580 @@
+[
+  {
+    "id": "casual",
+    "path": "assets/characters/fullbody-20261007/casual.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1456233
+  },
+  {
+    "id": "knit",
+    "path": "assets/characters/fullbody-20261007/knit.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1402939
+  },
+  {
+    "id": "coat",
+    "path": "assets/characters/fullbody-20261007/coat.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1539926
+  },
+  {
+    "id": "skirt",
+    "path": "assets/characters/fullbody-20261007/skirt.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1560490
+  },
+  {
+    "id": "shirt",
+    "path": "assets/characters/fullbody-20261007/shirt.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1431278
+  },
+  {
+    "id": "blouse",
+    "path": "assets/characters/fullbody-20261007/blouse.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1347186
+  },
+  {
+    "id": "mini-pleats",
+    "path": "assets/characters/fullbody-20261007/mini-pleats.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1450858
+  },
+  {
+    "id": "denim-mini",
+    "path": "assets/characters/fullbody-20261007/denim-mini.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1572445
+  },
+  {
+    "id": "suede-mini",
+    "path": "assets/characters/fullbody-20261007/suede-mini.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1411016
+  },
+  {
+    "id": "bubble-mini",
+    "path": "assets/characters/fullbody-20261007/bubble-mini.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1419063
+  },
+  {
+    "id": "layered-denim",
+    "path": "assets/characters/fullbody-20261007/layered-denim.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1830677
+  },
+  {
+    "id": "quarter-bermuda",
+    "path": "assets/characters/fullbody-20261007/quarter-bermuda.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1555385
+  },
+  {
+    "id": "satin-midi",
+    "path": "assets/characters/fullbody-20261007/satin-midi.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1587146
+  },
+  {
+    "id": "utility-cargo",
+    "path": "assets/characters/fullbody-20261007/utility-cargo.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1533849
+  },
+  {
+    "id": "warm-smile",
+    "path": "assets/characters/poses-20261007/warm-smile.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1475383
+  },
+  {
+    "id": "shy",
+    "path": "assets/characters/poses-20261007/shy.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1381174
+  },
+  {
+    "id": "surprised",
+    "path": "assets/characters/poses-20261007/surprised.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1451805
+  },
+  {
+    "id": "worried",
+    "path": "assets/characters/poses-20261007/worried.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1393605
+  },
+  {
+    "id": "playful",
+    "path": "assets/characters/poses-20261007/playful.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1407048
+  },
+  {
+    "id": "thoughtful",
+    "path": "assets/characters/poses-20261007/thoughtful.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      254
+    ],
+    "bytes": 1363911
+  },
+  {
+    "id": "scrunchie",
+    "path": "assets/accessories/20261007/scrunchie.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 1875263
+  },
+  {
+    "id": "ribbon",
+    "path": "assets/accessories/20261007/ribbon.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 1148499
+  },
+  {
+    "id": "claw-clip",
+    "path": "assets/accessories/20261007/claw-clip.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 938126
+  },
+  {
+    "id": "barrette",
+    "path": "assets/accessories/20261007/barrette.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 611371
+  },
+  {
+    "id": "huggie-earrings",
+    "path": "assets/accessories/20261007/huggie-earrings.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 465080
+  },
+  {
+    "id": "ear-cuff",
+    "path": "assets/accessories/20261007/ear-cuff.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 402117
+  },
+  {
+    "id": "pearl-earrings",
+    "path": "assets/accessories/20261007/pearl-earrings.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 607999
+  },
+  {
+    "id": "moon-necklace",
+    "path": "assets/accessories/20261007/moon-necklace.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 371007
+  },
+  {
+    "id": "pearl-necklace",
+    "path": "assets/accessories/20261007/pearl-necklace.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 559140
+  },
+  {
+    "id": "chain-bracelet",
+    "path": "assets/accessories/20261007/chain-bracelet.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 512069
+  },
+  {
+    "id": "stack-rings",
+    "path": "assets/accessories/20261007/stack-rings.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 613553
+  },
+  {
+    "id": "watch",
+    "path": "assets/accessories/20261007/watch.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 697804
+  },
+  {
+    "id": "silk-scarf",
+    "path": "assets/accessories/20261007/silk-scarf.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 876971
+  },
+  {
+    "id": "leaf-brooch",
+    "path": "assets/accessories/20261007/leaf-brooch.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 729991
+  },
+  {
+    "id": "slim-belt",
+    "path": "assets/accessories/20261007/slim-belt.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 666914
+  },
+  {
+    "id": "oval-glasses",
+    "path": "assets/accessories/20261007/oval-glasses.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 507499
+  },
+  {
+    "id": "beret",
+    "path": "assets/accessories/20261007/beret.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 1357259
+  },
+  {
+    "id": "cap",
+    "path": "assets/accessories/20261007/cap.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 1716565
+  },
+  {
+    "id": "shoulder-bag",
+    "path": "assets/accessories/20261007/shoulder-bag.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 1037928
+  },
+  {
+    "id": "canvas-tote",
+    "path": "assets/accessories/20261007/canvas-tote.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 1641331
+  },
+  {
+    "id": "nylon-crossbody",
+    "path": "assets/accessories/20261007/nylon-crossbody.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "bytes": 1461688
+  },
+  {
+    "id": "moon-charm",
+    "missing": true
+  }
+]

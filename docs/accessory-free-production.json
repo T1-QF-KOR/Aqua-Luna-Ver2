@@ -1,0 +1,60 @@
+{
+  "mode": "built-in image_gen",
+  "status": "in_progress",
+  "jobs": [
+    {
+      "id": "casual",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/casual.png",
+      "path": "assets/characters/accessory-free/casual.png"
+    },
+    {
+      "id": "knit",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/knit.png",
+      "path": "assets/characters/accessory-free/knit.png"
+    },
+    {
+      "id": "coat",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/coat.png",
+      "path": "assets/characters/accessory-free/coat.png"
+    },
+    {
+      "id": "skirt",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/skirt.png",
+      "path": "assets/characters/accessory-free/skirt.png"
+    },
+    {
+      "id": "shirt",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/shirt.png",
+      "path": "assets/characters/accessory-free/shirt.png"
+    },
+    {
+      "id": "blouse",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/blouse.png",
+      "path": "assets/characters/accessory-free/blouse.png"
+    },
+    {
+      "id": "mini-pleats",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/mini-pleats.png",
+      "path": "assets/characters/accessory-free/mini-pleats.png"
+    },
+    {
+      "id": "denim-mini",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/denim-mini.png",
+      "path": "assets/characters/accessory-free/denim-mini.png"
+    },
+    {
+      "id": "suede-mini",
+      "prompt": "Use case: precise-object-edit. Edit the referenced full-body Sulien character sprite into the completely accessory-free base for a PC romance game. Remove EVERY detachable accessory: all bags and their straps, key charms, necklaces, earrings, ear cuffs, rings, bracelets, watches, hats, glasses, scarves, brooches, decorative belts, headphones, hair ribbons, hair clips and scrunchies. Remove chest ribbon/bow if present. Restore the underlying clothing, skin and hair naturally where removed. Keep the SAME face, gray-blue eyes, dark teal-black hair, low ponytail silhouette (secured with an invisible concealed tie), body proportions, pose, hands, clothing colors, folds, shoes and canvas framing. Keep the same full body from top of hair to soles. Clothing buttons, drawstrings, zippers, socks and footwear are clothing and stay. Do not add any accessories. True transparent alpha background, no colored backdrop, no glow or halo, no floor shadow, no text. One character, same portrait 1024x1536 composition.",
+      "source": "assets/characters/fullbody-no-headset/suede-mini.png",
+      "path": "assets/characters/accessory-free/suede-mini.png"
+    }
+  ]
+}

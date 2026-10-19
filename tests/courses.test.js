@@ -10,8 +10,8 @@
   let full;
   test('51 valid courses, 48 six-choice trips, 6 themes and 25 exploration stories',()=>{
     assert(D.dates.length===51&&C.themes.length===6,'catalog counts');assert(new Set(D.dates.map(d=>d.id)).size===51,'duplicate course');
-    for(const t of C.themes){const items=D.dates.filter(d=>d.theme===t.id);assert(items.length===8,'theme size');for(const item of items){const script=N.script('date',item.id);assert(script.length===6&&script.every(n=>n.text&&n.choices.length===2&&n.choices.every(c=>c.label&&c.reply)),'incomplete scene');assert(D.locations[item.location]&&item.cost>=0,'bad metadata');}}
-    assert(N.events.length===35&&new Set(N.events.map(e=>e.id)).size===35,'event count');
+    for(const t of C.themes){const items=D.dates.filter(d=>d.theme===t.id);assert(items.length===8,'theme size');for(const item of items){const script=N.script('date',item.id);assert(script.length===6&&script.every(n=>n.text&&n.choices.filter(c=>!c.requireStat).length===2&&n.choices.length<=3&&n.choices.every(c=>c.label&&c.reply))&&script[1].choices.some(c=>c.requireStat&&c.requireValue>=10),'incomplete scene');assert(D.locations[item.location]&&item.cost>=0,'bad metadata');}}
+    assert(N.events.length===39&&new Set(N.events.map(e=>e.id)).size===39,'event count');
   });
   test('Variety gates reject repeated-course grinding and never charge on refusal',()=>{
     let s=E.makeState();const locked=D.dates.find(d=>d.theme==='river'&&d.requiredVisits===2);
@@ -22,7 +22,7 @@
   });
   test('All 48 trips and all exploration chapters reach prequel finale through valid actions',()=>{
     let s=E.makeState();
-    for(let i=0;i<8;i++){s=events(s);s=date(s,'walk');s=next(s);}s=events(s);assert(N.done(s,'epilogue'),'base story');
+    for(let i=0;i<80&&!N.done(s,'epilogue');i++){s=events(s);if(N.done(s,'epilogue'))break;s=date(s,'walk');s=next(s);}s=events(s);assert(N.done(s,'epilogue'),'base story');
     for(const item of D.dates.filter(d=>d.theme)){
       s=check(E.act(s,'work','edit'));
       const money=s.money,before=JSON.stringify(s);s=check(E.act(s,'date',item.id));assert(s.money===money-item.cost,'cost');
@@ -35,7 +35,7 @@
       assert(before!==JSON.stringify(s),'no progress');s=events(s);s=next(s);
     }
     assert(N.done(s,'prelude-next')&&Object.keys(C.entries(s)).length===48,'finale not reachable');
-    assert(s.story.completed.filter(e=>e.id.startsWith('journey-')).length===24,'missing chapters');assert(s.day===57,'unexpected grind');
+    assert(s.story.completed.filter(e=>e.id.startsWith('journey-')).length===24,'missing chapters');assert(s.day===75,'unexpected grind '+s.day);
     assert(new Blob([JSON.stringify(s)]).size<256000,'save import size');full=s;
   });
   test('First visits survive 240 later dates and recent-album eviction',()=>{

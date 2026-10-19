@@ -1,0 +1,178 @@
+{
+  "status": "Native layered model saved; 8 meshes and Body_Sway rig verified; facial and hair animation pending",
+  "method": "built-in image_gen; non-destructive component edits",
+  "reference": "assets/characters/accessory-free/casual.png",
+  "parts": [
+    {
+      "name": "Body_Base",
+      "file": "Body_Base.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        268,
+        191,
+        779,
+        1516
+      ],
+      "sha256": "535d8427f23afc4f5e8dac1ea32e939518002cbdab84c97dba112230f9626602"
+    },
+    {
+      "name": "Face_Base",
+      "file": "Face_Base.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        404,
+        62,
+        625,
+        413
+      ],
+      "sha256": "d8d56f3982bf8c9229c638b157b54ec1c0ccba4fde3f94ca9244b8c4c621be8f"
+    },
+    {
+      "name": "Hair_Front",
+      "file": "Hair_Front.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        336,
+        14,
+        617,
+        339
+      ],
+      "sha256": "2b0da09d731fbebac610c360f4f41ccb10a63de274c920560c4cbdc743e31eb8"
+    },
+    {
+      "name": "Hair_Back",
+      "file": "Hair_Back.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        322,
+        14,
+        862,
+        766
+      ],
+      "sha256": "b9dacfde706ca6eb167d453ff8d6ed3a858f9baf81e96a13f88b455de9ee4133"
+    },
+    {
+      "name": "Eye_ViewerLeft",
+      "file": "Eye_ViewerLeft.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        407,
+        131,
+        458,
+        157
+      ],
+      "sha256": "3afc9c561fe59411a828306afba95b424e99e36df05baa6552b9653f52cc60d7"
+    },
+    {
+      "name": "Eye_ViewerRight",
+      "file": "Eye_ViewerRight.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        478,
+        132,
+        548,
+        161
+      ],
+      "sha256": "9dabd47c7fd9eabe0625bd3f07b99af735ad6897ba437a403af0c2f363a9a0cc"
+    },
+    {
+      "name": "Brows",
+      "file": "Brows.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        425,
+        122,
+        526,
+        148
+      ],
+      "sha256": "2eca964b2fe2b0d9cb7ebc80e68ed4a21358965f592217dc74ff36b3c76954f1"
+    },
+    {
+      "name": "Mouth",
+      "file": "Mouth.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "solid_alpha_bbox": [
+        480,
+        191,
+        498,
+        196
+      ],
+      "sha256": "91b847ad423a488d12bc883732d0733745a37deb4b69bb2ed7668a51f225b7e3"
+    }
+  ],
+  "psd": "sulien-parts-v01.psd",
+  "psd_sha256": "4a164bb391bb575a4d5a867ff111da7ac3c5c81a22a238da4568b4e1861e8549",
+  "psd_layers": 9,
+  "psd_validation": "Pillow decoded all nine layers; native Cubism import and CMO3 save verified",
+  "hidden_reference_layer": "_Reference_Original",
+  "prompts": "generation-prompts.json",
+  "known_issues": [
+    "Registration is an initial visual alignment; facial seams and identity need further review",
+    "Eyes combine iris, white and lashes; brows share one layer; open-mouth and eyelid textures missing",
+    "Independent blink, lip sync, hair physics and breathing not yet rigged in this layered model",
+    "Runtime texture atlas, moc3 export and app integration not yet done"
+  ],
+  "generation_mode": "built-in image_gen (user chose continued generative refinement)",
+  "pixel_packaging": "PNG pixels packed unchanged into PSD; no code-based masks or cutting",
+  "native_model": {
+    "file": "sulien-parts-v01.cmo3",
+    "verified_date": "2026-10-17",
+    "mesh_preset": "Small deformation",
+    "visible_meshes": 8,
+    "deformer": "Body_Sway",
+    "parameter": "ParamBodyAngleZ",
+    "keys": [
+      -10,
+      0,
+      10
+    ],
+    "sway_horizontal": 0.8,
+    "sway_vertical": 0,
+    "softness": 3,
+    "anchor": "bottom",
+    "validation": "All 8 visible meshes parented to Body_Sway; three keys displayed; both extremes visually checked; native Save executed before preview checks",
+    "preview_value": 10
+  },
+  "native_registration": {
+    "note": "Geometry changes only in CMO3; source PNG/PSD unchanged",
+    "scale_percent": {
+      "Face_Base": 69,
+      "Hair_Front": 75,
+      "Hair_Back": 83
+    },
+    "draw_order": {
+      "Hair_Back": 100,
+      "Face_Base": 200,
+      "Body_Base": 300,
+      "Eye_ViewerLeft": 400,
+      "Eye_ViewerRight": 400,
+      "Brows": 410,
+      "Mouth": 420,
+      "Hair_Front": 450
+    }
+  }
+}

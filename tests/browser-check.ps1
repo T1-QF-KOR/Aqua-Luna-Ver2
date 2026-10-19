@@ -4,6 +4,8 @@ param([string]$ChromePath = 'C:/Program Files/Google/Chrome/Application/chrome.e
 $ErrorActionPreference = 'Stop'
 $qaRoot = Split-Path -Parent $PSScriptRoot
 $qaDirectory = Join-Path $qaRoot 'qa'
+$resultsDirectory = Join-Path $qaDirectory 'results'
+New-Item -ItemType Directory -Force -Path $resultsDirectory | Out-Null
 $runId = [Guid]::NewGuid().ToString('N').Substring(0, 10)
 $profilePath = Join-Path $qaDirectory "chrome-native-$runId"
 $downloadPath = Join-Path $qaDirectory "downloads-$runId"
@@ -84,6 +86,7 @@ try {
     $script:socket = [Net.WebSockets.ClientWebSocket]::new()
     $script:socket.ConnectAsync([Uri]$page.webSocketDebuggerUrl, [Threading.CancellationToken]::None).GetAwaiter().GetResult() | Out-Null
     Send-Cdp 'Page.enable' | Out-Null
+    Send-Cdp 'Emulation.setDeviceMetricsOverride' @{width=1280;height=720;deviceScaleFactor=1;mobile=$false} | Out-Null
     Send-Cdp 'Browser.setDownloadBehavior' @{ behavior = 'allow'; downloadPath = $downloadPath } | Out-Null
     $gameUrl = ([Uri](Join-Path $qaRoot 'index.html')).AbsoluteUri
     Send-Cdp 'Page.navigate' @{ url = $gameUrl } | Out-Null
@@ -138,11 +141,11 @@ try {
     Wait-Js "!document.getElementById('play-screen').hidden"
     Assert-Js 'Reload plus keyboard continue restores downloaded/imported session' "document.getElementById('money').textContent.includes('155,000') && LunaEngine.storage.load(0).ap === 2"
 
-    $checks | Set-Content -LiteralPath (Join-Path $qaDirectory 'NATIVE_INPUT_RESULTS.txt') -Encoding utf8
+    $checks | Set-Content -LiteralPath (Join-Path $resultsDirectory 'NATIVE_INPUT_RESULTS.txt') -Encoding utf8
     $checks | Write-Output
 } catch {
     $checks.Add("FAIL $($_.Exception.Message)")
-    $checks | Set-Content -LiteralPath (Join-Path $qaDirectory 'NATIVE_INPUT_RESULTS.txt') -Encoding utf8
+    $checks | Set-Content -LiteralPath (Join-Path $resultsDirectory 'NATIVE_INPUT_RESULTS.txt') -Encoding utf8
     if ($script:socket -and $script:socket.State -eq [Net.WebSockets.WebSocketState]::Open) {
         try { Eval-Js "JSON.stringify({focus:document.activeElement?.id,modal:document.getElementById('modal')?.open,title:document.getElementById('modal-title')?.textContent,ready:document.readyState})" | Set-Content -LiteralPath (Join-Path $qaDirectory 'native-debug.txt') -Encoding utf8 } catch { }
     }

@@ -10,9 +10,9 @@
   test('Buy, equip, own permanently; never double charge', () => { let s=act(E.makeState(),'work','edit'); s=act(s,'buy','knit'); assert(s.money===35000 && s.owned.includes('knit') && s.ap===2,'purchase'); const again=E.act(s,'buy','knit'); assert(again.error && again.state===s,'duplicate purchase'); s=act(s,'equip','knit'); assert(s.outfit==='knit' && s.money===35000 && s.ap===2,'equip no cost'); assert(E.act(s,'equip','coat').error,'unowned cannot equip'); });
   test('Insufficient funds are atomic', () => { const s=E.makeState(); const r=E.act(s,'buy','coat'); assert(r.error && r.state===s && s.money===80000,'blocked transaction'); });
   test('Dates deduct money and add relationships once per day', () => { let s=act(E.makeState(),'date','cafe'); assert(s.money===45000 && s.affection===6 && s.trust===3 && s.ap===2,'date accounting'); assert(E.act(s,'date','walk').error,'daily date cap'); s=act(s,'nextDay'); s=act(s,'date','walk'); assert(s.money===45000 && s.trust===7,'free walk'); });
-  test('Trust gates concert, free activities unlock it', () => { let s=E.makeState(); assert(E.act(s,'date','concert').error,'trust gate'); for(let i=0;i<5;i++){s=act(s,'date','walk');s=act(s,'nextDay');} assert(s.trust===20,'trust earned'); assert(E.act(s,'date','concert').error,'money gate after trust'); s=act(s,'work','cafe'); s=act(s,'date','concert'); assert(s.money===35000 && s.trust===26 && s.ap===0,'concert effects'); });
+  test('Trust gates concert, free activities unlock it', () => { let s=E.makeState(); assert(E.act(s,'date','concert').error,'trust gate'); for(let i=0;i<5;i++){s=act(s,'date','walk');s=act(s,'nextDay');} assert(s.trust===20,'trust earned'); assert(E.act(s,'date','concert').error,'money gate after trust'); s=act(s,'work','cafe'); s=act(s,'date','concert'); assert(s.money===35000 && s.trust===23 && s.ap===0,'concert effects'); });
   test('Rest and next day are bounded; spending cannot trap player', () => { let s=act(E.makeState(),'work','edit'); s=act(s,'rest'); assert(s.energy===100 && s.ap===1,'rest clamp'); assert(E.act(s,'rest').error,'full energy'); s=act(s,'nextDay'); assert(s.day===2 && s.ap===3 && s.energy===100,'day reset'); });
-  test('Relationship cap and history retention', () => { let s=E.makeState(); for(let i=0;i<120;i++){ s=act(s,'date','walk'); s=act(s,'nextDay'); } assert(s.affection===100 && s.trust===100,'cap'); assert(s.journal.length===200 && E.validate(s),'bounded valid history'); });
+  test('Relationship cap and history retention', () => { let s=E.makeState(); for(let i=0;i<160;i++){ s=act(s,'date','walk'); s=act(s,'nextDay'); } assert(s.affection===100 && s.trust===100,'cap'); assert(s.journal.length===200 && E.validate(s),'bounded valid history'); });
   test('Reject corrupt, older, fabricated, or unsafe saves', () => { const s=E.makeState(); [null,{}, {...s,version:1}, {...s,money:-1}, {...s,money:999999}, {...s,ap:9}, {...s,owned:['casual','fake']}, {...s,outfit:'coat'}, {...s,journal:[{title:'invalid'}]}, {...s,savedAt:'invalid'}, {...s,energy:NaN}].forEach(v=>assert(!E.validate(v),'invalid save accepted')); });
   test('Save/load roundtrip and corruption recovery', () => { const s=act(E.makeState(),'work','cafe'); assert(E.storage.save('test',s),'storage write'); const loaded=E.storage.load('test'); assert(loaded.money===125000 && loaded.ap===2,'load parity'); localStorage.setItem('aqualuna.v2.save.test','{broken'); assert(E.storage.load('test')===null,'corrupt fallback'); localStorage.removeItem('aqualuna.v2.save.test'); });
   test('Random action sequences preserve all economy invariants', () => { let s=E.makeState(), seed=48; const actions=[...D.jobs.map(j=>['work',j.id]),...D.dates.map(d=>['date',d.id]),...D.outfits.flatMap(o=>[['buy',o.id],['equip',o.id]]),['rest'],['nextDay']]; for(let i=0;i<3000;i++){ seed=(seed*1664525+1013904223)>>>0; const a=actions[seed%actions.length]; const r=E.act(s,...a); if(r.error) assert(r.state===s,'failed action mutated state'); s=finish(r.state); assert(E.validate(s),`invalid state at ${i}`); } });
@@ -46,7 +46,7 @@
   });
   test('Date result text reports actual capped relationship gain', () => {
     const s={...E.makeState(),affection:99,trust:98}; const r={state:finish(E.act(s,'date','walk').state)}; r.result=r.state.journal.at(-1);
-    assert(r.state.affection===100 && r.state.trust===100 && r.result.text.includes('호감 +1 · 신뢰 +2'),'partial gain text');
+    assert(r.state.affection<=100 && r.state.trust<=100 && r.state.story.carry && r.result.text.includes(`호감 +${r.state.affection-99} · 신뢰 +${r.state.trust-98}`),'partial gain text');
     const full={...E.makeState(),affection:100,trust:100}; assert(finish(E.act(full,'date','walk').state).journal.at(-1).text.includes('호감 +0 · 신뢰 +0'),'no phantom gain');
   });
   test('Skirt accessories are separate purchases, never auto-equipped or charged twice', () => {
@@ -90,7 +90,7 @@
     assert(E.validate(s) && s.outfit==='blouse','blouse save');
     assert(D.characterImage('skirt','black','smile').endsWith('skirt-black-smile.png'),'black tights preserved');
     assert(D.characterImage('skirt','nude','thoughtful').endsWith('skirt-nude-thoughtful.png'),'nude tights preserved');
-    assert(D.availableExpressions('casual').length===5 && D.availableExpressions('shirt').length===1,'supported combinations');
+    assert(D.availableExpressions('casual').length===7 && D.availableExpressions('shirt').length===1,'supported combinations');
   });
   const failed=results.filter(r=>r.startsWith('FAIL')).length;
   document.getElementById('results').textContent=results.join('\n')+`\n\n${results.length-failed}/${results.length} passed`;

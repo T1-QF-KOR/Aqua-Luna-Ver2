@@ -4,6 +4,8 @@ param([string]$ChromePath = 'C:/Program Files/Google/Chrome/Application/chrome.e
 $ErrorActionPreference = 'Stop'
 $qaRoot = (Get-Location).Path
 $qaDirectory = Join-Path $qaRoot 'qa'
+$resultsDirectory = Join-Path $qaDirectory 'results'
+New-Item -ItemType Directory -Force -Path $resultsDirectory | Out-Null
 $runId = [Guid]::NewGuid().ToString('N').Substring(0, 10)
 $profilePath = Join-Path $qaDirectory "chrome-native-$runId"
 New-Item -ItemType Directory -Force -Path $profilePath | Out-Null
@@ -82,16 +84,16 @@ try {
     $script:socket.ConnectAsync([Uri]$page.webSocketDebuggerUrl, [Threading.CancellationToken]::None).GetAwaiter().GetResult() | Out-Null
     Send-Cdp 'Page.enable' | Out-Null
     foreach ($test in $Tests) {
-        $widths = if ($test -in @('courses-ui','activities-ui')) { @(1440,390,320) } elseif ($test -in @('ui','wardrobe','story-ui','fashion')) { @(1440,390) } else { @(1440) }
+        $widths = if ($test -in @('courses-ui','activities-ui','ui','wardrobe','story-ui','fashion')) { @(1280,1440,1920) } else { @(1440) }
         foreach ($width in $widths) {
-            Send-Cdp 'Emulation.setDeviceMetricsOverride' @{width=$width;height=1000;deviceScaleFactor=1;mobile=$false} | Out-Null
+            Send-Cdp 'Emulation.setDeviceMetricsOverride' @{width=$width;height=$(if ($width -eq 1280) { 720 } elseif ($width -eq 1920) { 1080 } else { 900 });deviceScaleFactor=1;mobile=$false} | Out-Null
             $url = ([Uri](Join-Path $qaRoot "tests/$test.html")).AbsoluteUri + "?viewport=$width"
             Send-Cdp 'Page.navigate' @{url=$url} | Out-Null
             Wait-Js "['passed','failed'].includes(document.body.dataset.status)"
             $status = Eval-Js 'document.body.dataset.status'
             $result = Eval-Js 'document.getElementById("results").textContent'
             Write-Output "$test $width $status`n$result"
-            [IO.File]::WriteAllText((Join-Path $qaDirectory "narrative-$test-$width.txt"),$result,[Text.UTF8Encoding]::new($false))
+            [IO.File]::WriteAllText((Join-Path $resultsDirectory "narrative-$test-$width.txt"),$result,[Text.UTF8Encoding]::new($false))
             $shot = Send-Cdp 'Page.captureScreenshot' @{format='png';captureBeyondViewport=$false}
             [IO.File]::WriteAllBytes((Join-Path $qaDirectory "narrative-$test-$width.png"),[Convert]::FromBase64String($shot.data))
             if ($status -eq 'failed') { throw "Failed $test at $width" }
@@ -141,7 +143,7 @@ try {
             }
         }
     }
-    $checks | Set-Content -Encoding UTF8 (Join-Path $qaDirectory 'narrative-native-input.txt')
+    $checks | Set-Content -Encoding UTF8 (Join-Path $resultsDirectory 'narrative-native-input.txt')
     $checks | Write-Output
 } finally {
     if ($script:socket) { $script:socket.Dispose() }

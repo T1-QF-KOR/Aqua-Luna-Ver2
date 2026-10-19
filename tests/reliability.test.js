@@ -1,12 +1,12 @@
 (async()=>{
   const frame=document.getElementById('app');
-  await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
+  if (!frame.contentWindow.LunaEngine || frame.contentDocument.readyState !== 'complete') await new Promise(resolve=>frame.addEventListener('load',resolve,{once:true}));
   const w=frame.contentWindow,d=frame.contentDocument,E=w.LunaEngine,results=[];
   const assert=(ok,message)=>{if(!ok)throw new Error(message);};
   const $=id=>d.getElementById(id);
   const modalButton=text=>{const b=[...$('modal-body').querySelectorAll('button')].find(b=>b.textContent.includes(text));assert(b&&!b.disabled,`Missing modal action ${text}`);b.click();};
   const test=async(name,fn)=>{try{await fn();results.push(`PASS ${name}`);}catch(e){results.push(`FAIL ${name}: ${e.message}`);}};
-  const start=()=>{$('new-game').click();if($('modal').open)modalButton('새로 시작');};
+  const start=()=>{$('new-game').click();if($('modal').open)modalButton('새로 시작');$('intro-skip').click();};
   const work=()=>{$('work-button').click();modalButton('+75,000');modalButton('일 시작하기');};
   const storageWrite=w.Storage.prototype.setItem;
   await test('Unavailable storage retains session and leaves persistent notice',()=>{

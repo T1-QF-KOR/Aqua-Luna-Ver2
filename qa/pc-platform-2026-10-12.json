@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-12",
+  "passed": true,
+  "scope": "Static platform checks; desktop layout must also be tested in a browser",
+  "cssFiles": 9,
+  "minimumViewport": [
+    1280,
+    720
+  ],
+  "desktopTestViewports": [
+    [
+      1280,
+      720
+    ],
+    [
+      1440,
+      900
+    ],
+    [
+      1920,
+      1080
+    ]
+  ],
+  "failures": []
+}

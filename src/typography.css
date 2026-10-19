@@ -11,4 +11,3 @@ button,select,input{font-family:var(--sans)}
 .costs,.resources,.story-progress{font-variant-numeric:tabular-nums}
 .modal-description{line-height:1.9}
 #modal .muted-note{font-size:12px;line-height:1.85}
-@media(max-width:600px){.story-prose .story-text,.story-reply{font-size:max(16px,var(--reading-size,15px))}.activity-card p{line-height:1.8}}

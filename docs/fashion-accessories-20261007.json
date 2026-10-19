@@ -1,0 +1,284 @@
+{
+  "date": "2026-10-07",
+  "mode": "built-in image_gen",
+  "figma": "https://www.figma.com/design/1RXvK2xXHu7Zk5OjJBtSBE",
+  "scope": "14 styled full-body character illustrations and 22 standalone accessory illustrations. Artwork production; independently equipable item system is not included.",
+  "styles": [
+    {
+      "id": "casual",
+      "name": "차콜 후드",
+      "outfit": "Oversized charcoal hoodie, straight black casual trousers, dark gray low-top sneakers",
+      "accessories": "matte black small crossbody nylon bag at hip and a little silver crescent key charm on bag; small slate scrunchie at low ponytail",
+      "path": "assets/characters/fullbody-20261007/casual.png"
+    },
+    {
+      "id": "knit",
+      "name": "아이보리 니트",
+      "outfit": "Soft ivory crewneck knit sweater, straight black tailored trousers, black loafers",
+      "accessories": "small silver crescent pendant necklace over sweater, tiny silver huggie earrings, slim dark brown leather-strap watch",
+      "path": "assets/characters/fullbody-20261007/knit.png"
+    },
+    {
+      "id": "coat",
+      "name": "네이비 코트",
+      "outfit": "Navy knee-length wool coat over gray knit, black straight trousers, low-heeled black ankle boots",
+      "accessories": "soft gray short scarf, small silver curved leaf brooch on coat lapel, simple black shoulder bag",
+      "path": "assets/characters/fullbody-20261007/coat.png"
+    },
+    {
+      "id": "skirt",
+      "name": "가디건·플리츠",
+      "outfit": "Ivory button cardigan with charcoal knee-length pleated skirt, black loafers, bare legs",
+      "accessories": "small pearl stud earrings, charcoal satin bow at low ponytail, tiny cream canvas tote held low",
+      "path": "assets/characters/fullbody-20261007/skirt.png"
+    },
+    {
+      "id": "shirt",
+      "name": "하늘빛 셔츠",
+      "outfit": "Relaxed pale-blue button-front shirt with sleeves to wrists, black tailored trousers, black loafers",
+      "accessories": "thin black belt with small silver oval buckle, slim silver chain bracelet, small tortoiseshell hair barrette above visible ear",
+      "path": "assets/characters/fullbody-20261007/shirt.png"
+    },
+    {
+      "id": "blouse",
+      "name": "라벤더 블라우스",
+      "outfit": "Dusty lavender modest blouse with gently gathered cuffs, black straight trousers, simple black flats",
+      "accessories": "tiny pearl drop earrings, short restrained pearl necklace, small dark shoulder bag",
+      "path": "assets/characters/fullbody-20261007/blouse.png"
+    },
+    {
+      "id": "mini-pleats",
+      "name": "버건디 미니 플리츠",
+      "outfit": "Burgundy rib knit, charcoal mid-thigh pleated skirt, black Mary Jane shoes, dark opaque knee socks",
+      "accessories": "charcoal wool beret worn lightly back so all face and bangs remain visible; tiny silver huggie earrings, black shoulder bag",
+      "path": "assets/characters/fullbody-20261007/mini-pleats.png"
+    },
+    {
+      "id": "denim-mini",
+      "name": "데님 미니",
+      "outfit": "Melange-gray cropped zip hoodie over fully opaque white tee, indigo A-line mid-thigh denim skirt, white socks and sneakers",
+      "accessories": "cream canvas tote with small silver crescent bag charm and dark teal satin scrunchie in low ponytail",
+      "path": "assets/characters/fullbody-20261007/denim-mini.png"
+    },
+    {
+      "id": "suede-mini",
+      "name": "스웨이드 재킷",
+      "outfit": "Chocolate suede bomber over opaque ivory crewneck, black mid-thigh mini skirt, black opaque tights, low black ankle boots",
+      "accessories": "chocolate suede crescent shoulder bag, slim silver ear cuff, thin black belt with small silver buckle",
+      "path": "assets/characters/fullbody-20261007/suede-mini.png"
+    },
+    {
+      "id": "bubble-mini",
+      "name": "더스티 핑크 버블",
+      "outfit": "Dusty pink soft cardigan over ivory opaque top, ivory bubble mid-thigh skirt, simple cream ballet flats",
+      "accessories": "small ivory ribbon tied to low ponytail, pearl stud earrings, fine silver chain bracelet",
+      "path": "assets/characters/fullbody-20261007/bubble-mini.png"
+    },
+    {
+      "id": "layered-denim",
+      "name": "레이어드 와이드 데님",
+      "outfit": "Ivory tee beneath sage knit vest, wide-leg medium blue jeans, simple gray sneakers",
+      "accessories": "thin silver oval eyeglasses with clear lenses and fully visible eyes, simple cream canvas tote, slim dark wristwatch",
+      "path": "assets/characters/fullbody-20261007/layered-denim.png"
+    },
+    {
+      "id": "quarter-bermuda",
+      "name": "쿼터집 버뮤다",
+      "outfit": "Oatmeal quarter-zip knit with modest neckline, charcoal knee-length tailored Bermuda shorts, white socks, gray sneakers",
+      "accessories": "unbranded slate-blue cap worn normally with eyes unobstructed, small black nylon crossbody bag",
+      "path": "assets/characters/fullbody-20261007/quarter-bermuda.png"
+    },
+    {
+      "id": "satin-midi",
+      "name": "블루 새틴 미디",
+      "outfit": "Smoky blue modest knit sweater, champagne satin calf-length midi skirt, black low slingback shoes",
+      "accessories": "short pearl necklace, small pearl stud earrings, dark narrow silk scarf tied to handle of small black shoulder bag",
+      "path": "assets/characters/fullbody-20261007/satin-midi.png"
+    },
+    {
+      "id": "utility-cargo",
+      "name": "시티 카고",
+      "outfit": "Sage windbreaker over ivory opaque tee, charcoal relaxed cargo trousers, sturdy gray walking sneakers",
+      "accessories": "matte black nylon crossbody bag with silver crescent bag charm, thin silver stack rings, charcoal hair scrunchie",
+      "path": "assets/characters/fullbody-20261007/utility-cargo.png"
+    }
+  ],
+  "items": [
+    {
+      "id": "scrunchie",
+      "name": "새틴 스크런치",
+      "subject": "One muted dark-teal satin scrunchie, gathered soft fabric ring.",
+      "category": "헤어",
+      "path": "assets/accessories/20261007/scrunchie.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One muted dark-teal satin scrunchie, gathered soft fabric ring."
+    },
+    {
+      "id": "ribbon",
+      "name": "아이보리 리본",
+      "subject": "One small ivory grosgrain hair ribbon tied in a neat bow with short tails and concealed clip.",
+      "category": "헤어",
+      "path": "assets/accessories/20261007/ribbon.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One small ivory grosgrain hair ribbon tied in a neat bow with short tails and concealed clip."
+    },
+    {
+      "id": "claw-clip",
+      "name": "실버 집게핀",
+      "subject": "One small matte silver curved claw hair clip, clear hinge and interlocking rounded teeth, three-quarter view.",
+      "category": "헤어",
+      "path": "assets/accessories/20261007/claw-clip.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One small matte silver curved claw hair clip, clear hinge and interlocking rounded teeth, three-quarter view."
+    },
+    {
+      "id": "barrette",
+      "name": "토터스 헤어핀",
+      "subject": "One small amber-and-dark-brown tortoiseshell acetate barrette with simple softly rectangular rounded form.",
+      "category": "헤어",
+      "path": "assets/accessories/20261007/barrette.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One small amber-and-dark-brown tortoiseshell acetate barrette with simple softly rectangular rounded form."
+    },
+    {
+      "id": "huggie-earrings",
+      "name": "실버 링 귀걸이",
+      "subject": "One matching pair of tiny polished silver huggie hoop earrings, subtle closures, pair separated neatly.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/huggie-earrings.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One matching pair of tiny polished silver huggie hoop earrings, subtle closures, pair separated neatly."
+    },
+    {
+      "id": "ear-cuff",
+      "name": "실버 이어커프",
+      "subject": "One minimalist slim silver open ear cuff, polished small double curve, no ear or body.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/ear-cuff.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One minimalist slim silver open ear cuff, polished small double curve, no ear or body."
+    },
+    {
+      "id": "pearl-earrings",
+      "name": "진주 귀걸이",
+      "subject": "One matching pair of petite freshwater pearl stud earrings in silver settings, posts discreetly visible, pair arranged neatly.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/pearl-earrings.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One matching pair of petite freshwater pearl stud earrings in silver settings, posts discreetly visible, pair arranged neatly."
+    },
+    {
+      "id": "moon-necklace",
+      "name": "달 펜던트 목걸이",
+      "subject": "One fine silver chain necklace arranged in a full oval loop with a small polished crescent moon pendant at bottom.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/moon-necklace.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One fine silver chain necklace arranged in a full oval loop with a small polished crescent moon pendant at bottom."
+    },
+    {
+      "id": "pearl-necklace",
+      "name": "짧은 진주 목걸이",
+      "subject": "One short elegant necklace of small irregular freshwater pearls with silver clasp, arranged oval.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/pearl-necklace.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One short elegant necklace of small irregular freshwater pearls with silver clasp, arranged oval."
+    },
+    {
+      "id": "chain-bracelet",
+      "name": "실버 체인 팔찌",
+      "subject": "One slender silver chain bracelet with small lobster clasp, laid in a relaxed loop.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/chain-bracelet.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One slender silver chain bracelet with small lobster clasp, laid in a relaxed loop."
+    },
+    {
+      "id": "stack-rings",
+      "name": "레이어드 반지",
+      "subject": "One coordinated set of three thin silver stacking rings: plain round band, subtly twisted band, and tiny rounded-bead band, separated.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/stack-rings.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One coordinated set of three thin silver stacking rings: plain round band, subtly twisted band, and tiny rounded-bead band, separated."
+    },
+    {
+      "id": "watch",
+      "name": "가죽 스트랩 시계",
+      "subject": "One petite analog wristwatch, dark-brown leather strap, small round silver case, cream dial with simple index ticks, no numbers or lettering, flat straight strap.",
+      "category": "시계",
+      "path": "assets/accessories/20261007/watch.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One petite analog wristwatch, dark-brown leather strap, small round silver case, cream dial with simple index ticks, no numbers or lettering, flat straight strap."
+    },
+    {
+      "id": "silk-scarf",
+      "name": "슬림 실크 스카프",
+      "subject": "One narrow navy and cream silk scarf with original subtle geometric edge pattern, loosely folded in a graceful S curve.",
+      "category": "패브릭",
+      "path": "assets/accessories/20261007/silk-scarf.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One narrow navy and cream silk scarf with original subtle geometric edge pattern, loosely folded in a graceful S curve."
+    },
+    {
+      "id": "leaf-brooch",
+      "name": "은빛 잎 브로치",
+      "subject": "One small minimalist silver curved leaf brooch, restrained engraved central vein, softly brushed metal.",
+      "category": "주얼리",
+      "path": "assets/accessories/20261007/leaf-brooch.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One small minimalist silver curved leaf brooch, restrained engraved central vein, softly brushed metal."
+    },
+    {
+      "id": "slim-belt",
+      "name": "슬림 블랙 벨트",
+      "subject": "One thin black leather belt with small silver oval buckle, loosely coiled so the buckle and tip remain visible.",
+      "category": "벨트",
+      "path": "assets/accessories/20261007/slim-belt.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One thin black leather belt with small silver oval buckle, loosely coiled so the buckle and tip remain visible."
+    },
+    {
+      "id": "oval-glasses",
+      "name": "실버 타원 안경",
+      "subject": "One pair of thin silver oval eyeglasses, clear untinted lenses, realistic delicate temples folded back, three-quarter product angle.",
+      "category": "안경",
+      "path": "assets/accessories/20261007/oval-glasses.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One pair of thin silver oval eyeglasses, clear untinted lenses, realistic delicate temples folded back, three-quarter product angle."
+    },
+    {
+      "id": "beret",
+      "name": "차콜 울 베레모",
+      "subject": "One soft charcoal wool beret with tiny center nub, slightly slouched, tasteful realistic felt texture.",
+      "category": "모자",
+      "path": "assets/accessories/20261007/beret.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One soft charcoal wool beret with tiny center nub, slightly slouched, tasteful realistic felt texture."
+    },
+    {
+      "id": "cap",
+      "name": "슬레이트 볼캡",
+      "subject": "One unbranded slate-blue cotton baseball cap with curved brim, understated seams, no embroidery or lettering.",
+      "category": "모자",
+      "path": "assets/accessories/20261007/cap.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One unbranded slate-blue cotton baseball cap with curved brim, understated seams, no embroidery or lettering."
+    },
+    {
+      "id": "shoulder-bag",
+      "name": "스웨이드 숄더백",
+      "subject": "One modest small chocolate-brown suede crescent shoulder bag with short adjustable dark leather strap and subtle silver hardware.",
+      "category": "가방",
+      "path": "assets/accessories/20261007/shoulder-bag.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One modest small chocolate-brown suede crescent shoulder bag with short adjustable dark leather strap and subtle silver hardware."
+    },
+    {
+      "id": "canvas-tote",
+      "name": "크림 캔버스 토트",
+      "subject": "One simple small cream canvas tote bag with two soft handles, subtle interior pocket, no lettering, no graphics.",
+      "category": "가방",
+      "path": "assets/accessories/20261007/canvas-tote.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One simple small cream canvas tote bag with two soft handles, subtle interior pocket, no lettering, no graphics."
+    },
+    {
+      "id": "nylon-crossbody",
+      "name": "나일론 크로스백",
+      "subject": "One compact matte black nylon zip crossbody bag with adjustable webbing strap, softly rounded rectangular shape and small silver zip.",
+      "category": "가방",
+      "path": "assets/accessories/20261007/nylon-crossbody.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One compact matte black nylon zip crossbody bag with adjustable webbing strap, softly rounded rectangular shape and small silver zip."
+    },
+    {
+      "id": "moon-charm",
+      "name": "달빛 키링",
+      "subject": "One small bag charm: silver split key ring, short fine chain, polished silver crescent moon and a single muted teal glass bead, original simple design.",
+      "category": "키링",
+      "path": "assets/accessories/20261007/moon-charm.png",
+      "prompt": "Create one standalone accessory inventory illustration for Aqua Luna Korean anime romance PC game. Single product fully visible, centered on square transparent PNG canvas with 12% margin, true alpha background. Detailed hand-painted anime item art, restrained linework, realistic construction and soft neutral highlights. No person, body, mannequin, background, floor, cast shadow, glow, text, number, label, watermark, logo or collage. Product: One small bag charm: silver split key ring, short fine chain, polished silver crescent moon and a single muted teal glass bead, original simple design."
+    }
+  ]
+}

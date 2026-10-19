@@ -12,4 +12,3 @@
 .story-summary,.story-entry{padding:18px;margin-bottom:15px;border:1px solid #3c525d;border-radius:8px}.story-summary h3{color:#e8d2a4}.story-summary p,.story-entry p,.story-hint,.story-outcome{line-height:1.8}
 .story-hint{padding:14px;background:#162936;border-radius:6px}.story-outcome{color:#e8d2a4}.story-archive summary{padding:14px 0;cursor:pointer;color:#d5bd86}.story-archive details{border-top:1px solid #3c525d}.memory-choice{font-size:.85em;line-height:1.8}
 .portrait-off .story-layout{grid-template-columns:1fr}.portrait-off .story-layout .art-scene{display:none}
-@media(max-width:600px){.story-layout{grid-template-columns:1fr;gap:10px}.story-layout .art-scene{height:190px;position:static}.story-layout .art-scene img{object-position:center 22%}.story-text{font-size:1em}.story-summary,.story-entry{padding:14px}}

@@ -7,6 +7,16 @@
   const D=window.LunaData, N=window.LunaStory;
   const c=(id,label,reply,effect={})=>({id,label,reply,...effect});
   const n=(text,choices,location)=>({text,choices,...(location?{location}:{})});
+  // Growth widens dates: each theme leans on one stat; later courses ask for more. Two variants per theme alternate.
+  const insight={
+    river:{stat:'fitness',lines:[['조금 더 먼 물길까지 같이 걸어 보자고 하기','숨이 고르게 이어지는 걸 보고 수련이 웃습니다. “같이 오래 걸을 수 있는 사람이 있으니까, 오늘은 지도 끝까지 가 봐도 되겠어요.” 돌아오는 길에 둘은 처음 보는 작은 선착장을 발견합니다.'],['수련의 가방을 대신 들고 걸음을 맞추기','“괜찮은데….” 하다가 수련이 가방끈을 건넵니다. “그럼 돌아갈 때는 제가 들게요. 번갈아 가면 공평하잖아요.” 가벼워진 어깨로 수련의 걸음이 조금 빨라집니다.']]},
+    culture:{stat:'knowledge',lines:[['작품의 배경을 조용히 들려주기','수업에서 배운 이야기를 짧게 덧붙이자 수련의 눈이 커집니다. “그럼 이 빛은 일부러 비워 둔 거네요.” 그녀는 안내문에 없던 문장을 수첩에 옮겨 적습니다.'],['수련이 좋아할 만한 책 한 권을 골라 주기','“제목만 보고도 알 것 같아요. 제가 요즘 무슨 생각 하는지.” 수련은 책을 바로 펼치지 않고 가방 안쪽에 조심스럽게 넣습니다.']]},
+    taste:{stat:'sensitivity',lines:[['수련의 오늘 컨디션에 맞는 메뉴를 먼저 골라 주기','“어떻게 알았어요? 오늘 목이 좀 칼칼했거든요.” 따뜻한 국물이 나오자 수련은 말없이 한 숟가락을 먼저 건넵니다.'],['창밖 소리를 들으며 천천히 먹자고 하기','식기 부딪히는 소리, 바깥의 발소리. 수련이 젓가락을 내려놓고 귀를 기울입니다. “밥 먹으면서 이런 걸 듣는 건 처음이에요. 맛이 더 오래 남네요.”']]},
+    craft:{stat:'knowledge',lines:[['재료의 성질을 알려 주며 다른 방법을 함께 시험하기','“그럼 이렇게 하면 덜 갈라지겠네요.” 수련이 새로 배운 방법으로 한 번 더 시도합니다. 처음 것과 두 번째 것을 나란히 놓으니 둘 다 마음에 듭니다.'],['설명서에 없는 요령을 하나 보여 주기','손끝을 따라 하던 수련이 작게 감탄합니다. “이거, 다음엔 제가 가르쳐 줄게요. 배운 걸 누군가한테 다시 말하면 안 잊어버리니까요.”']]},
+    music:{stat:'sensitivity',lines:[['방금 그 소절에서 느낀 것을 한마디로 건네기','“…맞아요, 거기서 숨을 한 번 참는 것 같았어요.” 수련이 같은 곳을 짚은 당신을 오래 바라봅니다. “같은 데서 같은 걸 느끼는 사람, 생각보다 드물어요.”'],['수련이 흥얼거린 선율을 따라 불러 보기','서툴게 따라 부르자 수련이 웃음을 참다가 화음을 얹습니다. 아주 짧은 이중창이 끝나고, 수련은 “방금 건 녹음해 둘걸.” 하고 아쉬워합니다.']]},
+    night:{stat:'fitness',lines:[['한 정거장 더 걸어서 바래다주기','“한 정거장이 이렇게 짧았나요?” 수련이 걸음을 늦춥니다. 밤공기 속에서 둘은 오늘 하지 못한 말을 하나씩 꺼냅니다.'],['계단 끝 전망 좋은 자리까지 먼저 올라가 기다리기','숨을 고르며 올라온 수련에게 손을 내밉니다. 수련이 그 손을 잡고 마지막 계단을 오르며 웃습니다. “먼저 와서 기다려 주는 거, 좋네요. 여기 경치, 같이 봐서 다행이에요.”']]}
+  };
+  const insightNeed=index=>[10,14,22,30,40,50,60,70][index];
   const themes=[
     {id:'river',name:'물길과 바람',icon:'≈',location:'pier',color:'#9ed6d1',
       intro:'지도에는 직선인 길도 실제로 걸으면 굽이가 있습니다. 수련은 오늘 지나온 곳에 작은 물결을 그립니다. “목적지가 없으면 길을 잘못 들었다고 할 일도 없겠네요.”',
@@ -114,7 +124,7 @@
     D.dates.push(item);
     N.dates[id]=[
       n(opening,[c('quiet','먼저 풍경을 함께 느끼기','수련은 당신이 보고 있는 쪽으로 시선을 옮깁니다. 오늘의 첫 장면이 말보다 먼저 두 사람 사이에 놓입니다.',{preference:'quiet'}),c('share','내 눈에 들어온 것을 이야기하기','수련은 당신이 가리킨 곳을 다시 봅니다. “저는 지나쳤는데, 같이 오니까 다른 게 보이네요.”',{preference:'share'})]),
-      n(dilemma,[c('notice',a,ar,{trust:1}),c('explore',b,br,{affection:1})]),
+      n(dilemma,[c('notice',a,ar,{trust:1}),c('explore',b,br,{affection:1}),c('insight',...insight[theme.id].lines[index%2],{requireStat:insight[theme.id].stat,requireValue:insightNeed(index),affection:2,trust:1,mood:5})]),
       n(theme.intro,[c('slow','지금의 속도를 수련에게 묻기','“지금 정도가 좋아요.” 서로의 속도를 확인한 뒤 두 사람은 다음 순서를 고릅니다.'),c('tell','내가 편한 속도도 함께 말하기','“늘 제 쪽으로만 맞추지 않아도 돼요.” 수련은 당신의 이야기를 듣고 오늘 계획의 빈칸을 바꿉니다.')]),
       n(theme.question,[c('pause',...theme.a),c('change',...theme.b)]),
       n(theme.reflection,[c('listen','수련의 말을 끝까지 듣고 기억하기','당장 멋진 대답을 찾지 않아도 됩니다. 수련은 말을 끝낸 뒤 당신 쪽으로 몸을 조금 돌립니다.'),c('answer','나에게 남은 오늘의 마음도 말하기','서로 다르게 기억한 순간을 번갈아 이야기합니다. 어느 하나를 고르지 않아도 오늘의 이야기는 이어집니다.')]),
@@ -128,7 +138,7 @@
     const item=D.dates.find(d=>d.id===a.id); if(!item?.theme)return;
     s.story.exploration ||= {};
     const old=s.story.exploration[a.id];
-    s.story.exploration[a.id]={visits:(old?.visits||0)+1,first:old?.first||{day:a.day,date:a.id,outfit:a.outfit,legwear:a.legwear,time:a.time,choices:[...a.choices],keptPromise:false}};
+    s.story.exploration[a.id]={visits:(old?.visits||0)+1,first:old?.first||{day:a.day,date:a.id,outfit:a.outfit,legwear:a.legwear,neckAccessory:a.neckAccessory || 'none',time:a.time,choices:[...a.choices],keptPromise:false}};
   }
   function validate(book,state,dateCount){
     if(book===undefined)return {};
@@ -136,10 +146,10 @@
     let total=0;
     for(const [id,r] of Object.entries(book)){
       const item=D.dates.find(d=>d.id===id&&d.theme),f=r?.first,script=N.script('date',id);
-      if(!item||!r||!Number.isInteger(r.visits)||r.visits<1||r.visits>9999||!f||f.date!==id||!Number.isInteger(f.day)||f.day<1||f.day>state.day||!state.owned.includes(f.outfit)||!state.ownedAccessories.includes(f.legwear)||(f.outfit!=='skirt'&&f.legwear!=='none')||!D.times.some(t=>t.id===f.time)||f.keptPromise!==false||!Array.isArray(f.choices)||f.choices.length!==script.length||!f.choices.every((v,i)=>script[i].choices.some(c=>c.id===v)))return null;
+      if(!item||!r||!Number.isInteger(r.visits)||r.visits<1||r.visits>9999||!f||(f.neckAccessory!==undefined&&!['none','headset'].includes(f.neckAccessory))||f.date!==id||!Number.isInteger(f.day)||f.day<1||f.day>state.day||!state.owned.includes(f.outfit)||!state.ownedAccessories.includes(f.legwear)||(f.outfit!=='skirt'&&f.legwear!=='none')||!D.times.some(t=>t.id===f.time)||f.keptPromise!==false||!Array.isArray(f.choices)||f.choices.length!==script.length||!f.choices.every((v,i)=>script[i].choices.some(c=>c.id===v)))return null;
       total+=r.visits;
     }
     return total<=dateCount?JSON.parse(JSON.stringify(book)):null;
   }
-  window.LunaCourses={themes,entries,visited,lockReason,record,validate};
+  window.LunaCourses={insight,insightNeed,themes,entries,visited,lockReason,record,validate};
 })();

@@ -1,0 +1,64 @@
+{
+  "source": "assets/characters/accessory-free/casual.png",
+  "source_sha256": "a7578bbb65a8bcc974d5dd1d78ccb590063fe722636c44a8570380c815acc68b",
+  "psd": "sulien-reference-cubism.psd",
+  "psd_sha256": "db857450a77390f77a40a52b1c78b0d51c97be3a3ad1ce3c42068195f74b16ab",
+  "dimensions": [
+    1024,
+    1536
+  ],
+  "layers": [
+    "Sulien_original_reference"
+  ],
+  "status": "editable basic rig; mesh, breathing and lateral sway present; detailed parts rigging and runtime export pending",
+  "conversion": "Lossless RGBA channel packaging into uncompressed PSD; original unchanged",
+  "cubism_project": "sulien-reference-cubism.cmo3",
+  "cubism_project_sha256": "37e99aad49b54e019368172780effe8593a408329ee164d212a16607c18a4022",
+  "validated_in": "Live2D Cubism Editor 5.3.04 FREE",
+  "validation": "PSD imported and visually checked; native CMO3 saved. Automatic mesh dialog opened; mesh generation and rigging not completed.",
+  "deprecated_psd": {
+    "file": "sulien-original-reference.psd",
+    "reason": "Cubism parser rejects empty image resources; use sulien-reference-cubism.psd instead."
+  },
+  "basic_rig": {
+    "project": "sulien-basic-rig.cmo3",
+    "sha256": "931099cfedd7da7404857adaf6577b851f69ecd1eac708e3d7bb44c5f8f0afce",
+    "bytes": 2049583,
+    "editor": "Live2D Cubism 5.3.04 FREE",
+    "mesh": "Automatic mesh: small-deformation preset; triangulated vertices visually verified in editor",
+    "hierarchy": [
+      "Breath_Root",
+      "Body_Sway",
+      "Sulien_original_reference"
+    ],
+    "bindings": {
+      "Breath_Root": {
+        "parameter": "호흡 / Breath",
+        "keyforms": [
+          0,
+          1
+        ],
+        "inhale_scale_percent": 100.35
+      },
+      "Body_Sway": {
+        "parameter": "각도 X / Angle X",
+        "keyforms": 3,
+        "sway_horizontal": 0.8,
+        "sway_vertical": 0,
+        "softness": 3
+      }
+    },
+    "validation": "Native CMO3 saved. Parameter filter verified Breath_Root -> Breath and Body_Sway -> Angle X. Mesh and artwork visually inspected.",
+    "limitations": [
+      "Single flattened artwork; no independent blinking, mouth shapes, or hair physics",
+      "Runtime atlas/MOC3 export and game integration not performed"
+    ],
+    "preview_note": "Current editor pose retained. Reset-to-default preview action was rejected by automatic approval review."
+  },
+  "parts_work": {
+    "directory": "parts-v01",
+    "status": "generated separated component draft; registration refinement pending",
+    "psd": "parts-v01/sulien-parts-v01.psd",
+    "native_import": "not verified; Cubism window unavailable"
+  }
+}
