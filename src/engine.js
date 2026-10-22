@@ -6,9 +6,9 @@
   const LEGACY_INTRO_PAGES = 9;
   const statNames = { knowledge: '지식', fitness: '체력', sensitivity: '감수성' };
   const training = [
-    { id: 'study', name: '공부하기 · 화성학·코드', stat: 'knowledge', energy: 10, gain: 4 },
+    { id: 'study', name: '공부하기 · 화성학·보컬 이론', stat: 'knowledge', energy: 10, gain: 4 },
     { id: 'exercise', name: '운동하기', stat: 'fitness', energy: 20, gain: 4 },
-    { id: 'music', name: '합주·작사 감각 익히기', stat: 'sensitivity', energy: 10, gain: 4 }
+    { id: 'music', name: '발라드 감상·가사 해석 익히기', stat: 'sensitivity', energy: 10, gain: 4 }
   ];
   const freshGrowth = () => ({ stats: { knowledge: 0, fitness: 0, sensitivity: 0 }, mood: 50, schedule: [] });
   function choiceReason(state, choice) {

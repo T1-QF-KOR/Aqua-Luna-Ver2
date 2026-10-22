@@ -8,7 +8,7 @@
   const next=s=>check(E.act(s,'nextDay'));
   function prepared(){let s=scene(E.makeState(),'hello');for(const id of ['study','study','study','music','music','music','music']){if(s.ap===0||s.energy<10)s=next(s);s=check(E.act(s,'train',id));}return next(s);}
   function trip(s,id){s=check(E.act(s,'work','edit'));s=finish(check(E.act(s,'date',id)));return next(s);}
-  test('Acoustic project unlocks from learned skills and real first visits',()=>{
+  test('Ballad vocal project unlocks from learned skills and real first visits',()=>{
     assert(E.startStory(E.makeState(),'acoustic-chords').error,'no skills gate');
     let s=prepared();assert(N.acousticProject(s)[0].ready,'practice not ready');
     const money=s.money,ap=s.ap;s=scene(s,'acoustic-chords',{'acoustic-chords:0':'voicing'});
@@ -29,17 +29,20 @@
   });
   test('Legacy concert, gift discoveries and mid-scene choices remain loadable',()=>{
     let s=E.makeState();s=check(E.giveGift(s,'cello-card'));assert(s.story.tastes['cello-card']==='liked','legacy taste');s=next(s);
-    s=check(E.giveGift(s,'score-clip'));assert(s.story.tastes['score-clip']==='loved','legacy pick taste');
+    s=check(E.giveGift(s,'score-clip'));assert(s.story.tastes['score-clip']==='loved','legacy gift taste');
     s=next(s);s=check(E.act(s,'work','event'));s=next(s);s.trust=20;
     s=check(E.act(s,'date','concert'));s=check(E.chooseStory(s,'share',0));
     assert(E.storage.save(1,s),'concert save');s=E.storage.load(1);assert(s.story.active.id==='concert','legacy concert id');
     s=finish(s);assert(s.memories.at(-1).date==='concert','concert memory');
-    assert(D.gifts.find(g=>g.id==='score-clip').name==='통기타 피크 세트','gift content');
+    assert(D.gifts.find(g=>g.id==='score-clip').name==='보컬 악보 표시 탭','gift content');
   });
-  test('Live game content consistently uses the new major and acoustic setting',()=>{
+  test('Live game content consistently uses the vocal major and ballad setting',()=>{
     const text=JSON.stringify({intro:N.intro,events:N.events.map(e=>e.nodes),dates:N.dates,talk:N.talk,locations:D.locations,gifts:D.gifts});
-    assert(!/첼로|클래식|성악|예고|문화콘텐츠/.test(text),'old character premise');
-    assert(N.intro[0].lines.some(l=>l[1].includes('실용음악')),'major missing');
+    assert(!/첼로|클래식|성악|예고|문화콘텐츠|통기타|인디 어쿠스틱/.test(text),'old character premise');
+    assert(N.intro[0].lines.some(l=>l[1].includes('실용음악과 보컬 전공')),'major missing');
+    assert(N.intro[3].lines.some(l=>l[1].includes('듣는 음악도, 즐겨 부르는 노래도 발라드')),'genre premise missing');
+    assert(D.dates.find(d=>d.id==='concert').name==='발라드 라이브','concert genre');
+    assert(N.talk.music.neutral[0].every(l=>l.includes('발라드')),'both speech styles');
     assert(D.locations.concert.image.endsWith('acoustic-live.png'),'old concert art');
   });
   document.body.dataset.status=results.some(r=>r.startsWith('FAIL'))?'failed':'passed';

@@ -8,7 +8,7 @@
   const dates = [
     { id: 'walk', name: '달빛 부두 산책', sub: '돈보다 소중한 시간', description: '한강을 따라 천천히 걸으며 함께 시간을 보냅니다.', cost: 0, energy: 10, ap: 1, affection: 3, trust: 4, requiredTrust: 0, icon: '☾' },
     { id: 'cafe', name: '조용한 카페', sub: '따뜻한 두 잔의 여유', description: '수련이 좋아하는 조용한 카페에서 쉬어 갑니다.', cost: 35000, energy: 10, ap: 1, affection: 6, trust: 3, requiredTrust: 0, icon: '☕' },
-    { id: 'concert', name: '인디 어쿠스틱 라이브', sub: '기타와 목소리가 가까운 밤', description: '작은 라이브 카페에서 통기타와 자작곡 무대를 함께 듣습니다.', cost: 90000, energy: 20, ap: 2, affection: 10, trust: 6, requiredTrust: 20, icon: '♫' }
+    { id: 'concert', name: '발라드 라이브', sub: '한 소절의 마음이 가까운 밤', description: '작은 라이브 카페에서 피아노 반주와 보컬이 전하는 발라드 무대를 함께 듣습니다.', cost: 90000, energy: 20, ap: 2, affection: 10, trust: 6, requiredTrust: 20, icon: '♫' }
   ];
   const outfits = [
     { id: 'casual', name: '익숙한 차콜 후드', sub: '수련의 평소 모습', description: '편안한 후드와 목에 걸친 헤드폰.', cost: 0, image: 'assets/characters/sulien.png', color: '#737880' },
@@ -132,7 +132,7 @@
     pier: { name: '망원동 · 달빛 부두', image: 'assets/environment/moonlit-pier.png' },
     cafe: { name: '망원동 · 조용한 카페', image: 'assets/environment/cafe.png' },
     practice: { name: '망원동 · 대여 연습실', image: 'assets/environment/practice.png' },
-    concert: { name: '망원동 · 어쿠스틱 라이브 카페', image: 'assets/environment/acoustic-live.png' },
+    concert: { name: '망원동 · 발라드 라이브 카페', image: 'assets/environment/acoustic-live.png' },
     rooftop: { name: '동네 건물 · 옥상 쉼터', image: 'assets/environment/rooftop.png' }
   };
   dates.forEach(d => d.location = d.id === 'walk' ? 'pier' : d.id);
@@ -181,8 +181,8 @@
   // Small daily gifts. Tastes follow Sulien's profile (acoustic guitar, indie acoustic, quiet cafes, warm drinks) and stay hidden until given.
   const gifts = [
     { id: 'citron-tea', name: '따뜻한 유자차', cost: 4500, taste: 'loved', icon: '☕', desc: '목이 쉬기 쉬운 날을 위한 따뜻한 한 잔.' },
-    { id: 'score-clip', name: '통기타 피크 세트', cost: 6000, taste: 'loved', icon: '♪', desc: '두께가 다른 피크 세 개. 스트로크와 아르페지오에 맞춰 고를 수 있어요.' },
-    { id: 'cello-card', name: '인디 공연 엽서', cost: 3000, taste: 'liked', icon: '✉', desc: '작은 어쿠스틱 공연의 기타 그림과 날짜가 담긴 엽서.' },
+    { id: 'score-clip', name: '보컬 악보 표시 탭', cost: 6000, taste: 'loved', icon: '♪', desc: '숨 쉴 자리와 강조할 가사를 표시하는 탭. 발라드 연습 노트에 붙일 수 있어요.' },
+    { id: 'cello-card', name: '발라드 공연 엽서', cost: 3000, taste: 'liked', icon: '✉', desc: '작은 발라드 공연의 마이크 그림과 날짜가 담긴 엽서.' },
     { id: 'lemon-candy', name: '레몬 사탕', cost: 2000, taste: 'liked', icon: '◍', desc: '연습 전에 하나씩 먹기 좋은 새콤한 사탕.' },
     { id: 'iced-americano', name: '아이스 아메리카노', cost: 4000, taste: 'neutral', icon: '❄', desc: '시원하지만, 목을 아끼는 사람에게는 어떨지.' },
     { id: 'charm-keyring', name: '고양이 키링', cost: 5000, taste: 'neutral', icon: '✧', desc: '가방에 다는 작은 고양이 장식.' },

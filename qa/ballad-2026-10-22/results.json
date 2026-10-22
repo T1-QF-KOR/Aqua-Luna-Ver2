@@ -1,0 +1,124 @@
+{
+  "status": "passed",
+  "date": "2026-10-22",
+  "browser": "148.0.7778.96",
+  "results": [
+    {
+      "width": 1440,
+      "suite": "acoustic",
+      "status": "passed",
+      "detail": "PASS Ballad vocal project unlocks from learned skills and real first visits\nPASS Legacy concert, gift discoveries and mid-scene choices remain loadable\nPASS Live game content consistently uses the vocal major and ballad setting\n3/3 passed"
+    },
+    {
+      "width": 1440,
+      "suite": "acoustic-ui",
+      "status": "passed",
+      "detail": "PASS project progress, major and first vocal practice action\nPASS lyrics, demo consent, mid-scene reload and completion feedback\nPASS project note fits PC viewport without runtime errors"
+    },
+    {
+      "width": 1440,
+      "suite": "intro",
+      "status": "passed",
+      "detail": "PASS new game opens admission story before daily play\nPASS previous, manual save, title return and reload resume\nPASS 1280/1440 layout, large text, all pages and daily handoff\nPASS new game restarts intro and skip enters day one\nPASS existing save resumes without intro\nPASS storage failure preserves session, recovery saves, no runtime errors"
+    },
+    {
+      "width": 1440,
+      "suite": "story-ui",
+      "status": "passed",
+      "detail": "PASS prologue and permanent choice history\nPASS in-progress reload, response restored, one charge\nPASS read-only album transcript\nPASS prior choice and outfit recall, fulfilled promise\nPASS complete free route, confession and continuing epilogue\nPASS 1440px large text, choice targets, reading focus, images and runtime"
+    },
+    {
+      "width": 1440,
+      "suite": "courses-ui",
+      "status": "passed",
+      "detail": "PASS friend prequel profile and no agency membership\nPASS pagination, eight-course themes, search and locked feedback\nPASS six-stage date reload, frozen cost and durable first memory\nPASS permanent first-visit transcript and read-only replay\nPASS distinct visits unlock a chapter with remembered choices\nPASS both local fonts loaded, Korean story typeface and largest text\nPASS 1440px narrative, keyboard focus, images and runtime"
+    },
+    {
+      "width": 1440,
+      "suite": "activities-ui",
+      "status": "passed",
+      "detail": "PASS date-integrated map, progressive unlocks, hint and undo\nPASS map input saved, reload and modal resume without additional charge\nPASS music cross puzzle, visible board response, undo and completion\nPASS memory mismatch stays visible, reload freezes both cards and pairs complete\nPASS three activities leave economy and dialogue step unchanged\nPASS explicit abandonment preserves finished activities and restores conversation\nPASS 1440px map layout, focus, fonts and runtime"
+    },
+    {
+      "width": 1440,
+      "suite": "somesome-ui",
+      "status": "passed",
+      "detail": "PASS new game+ notice on title, bonus after the intro\nPASS heart stage meter in the relationship note\nPASS auto speed and dialogue opacity settings\nPASS F5 quick save, F9 quick load, quick slot in the load list\nPASS run-all schedule\nPASS weekly settlement card and journal recall\nPASS work drop-in scene on the main stage\nPASS messenger sticker after a reply\nPASS 1440px runtime without errors"
+    },
+    {
+      "width": 1440,
+      "suite": "ui",
+      "status": "passed",
+      "detail": "PASS boot and new game\nPASS budget target and live shortage\nPASS work confirmation, economy, text feed, autosave\nPASS buy, equip, duplicate guard\nPASS paid date and repeat prevention\nPASS next day and manual save/load roundtrip\nPASS journal and illustration toggle\nPASS reading size preference and preview\nPASS return to title and resume\nPASS 1440px layout, controls, no runtime errors"
+    },
+    {
+      "width": 1440,
+      "suite": "reliability",
+      "status": "passed",
+      "detail": "PASS Unavailable storage retains session and leaves persistent notice\nPASS Storage recovers without losing unsaved progress\nPASS Import rejects malformed file without replacing play state\nPASS Closing import dialog cancels pending file read"
+    },
+    {
+      "width": 1280,
+      "suite": "acoustic",
+      "status": "passed",
+      "detail": "PASS Ballad vocal project unlocks from learned skills and real first visits\nPASS Legacy concert, gift discoveries and mid-scene choices remain loadable\nPASS Live game content consistently uses the vocal major and ballad setting\n3/3 passed"
+    },
+    {
+      "width": 1280,
+      "suite": "acoustic-ui",
+      "status": "passed",
+      "detail": "PASS project progress, major and first vocal practice action\nPASS lyrics, demo consent, mid-scene reload and completion feedback\nPASS project note fits PC viewport without runtime errors"
+    },
+    {
+      "width": 1280,
+      "suite": "intro",
+      "status": "passed",
+      "detail": "PASS new game opens admission story before daily play\nPASS previous, manual save, title return and reload resume\nPASS 1280/1440 layout, large text, all pages and daily handoff\nPASS new game restarts intro and skip enters day one\nPASS existing save resumes without intro\nPASS storage failure preserves session, recovery saves, no runtime errors"
+    },
+    {
+      "width": 1280,
+      "suite": "story-ui",
+      "status": "passed",
+      "detail": "PASS prologue and permanent choice history\nPASS in-progress reload, response restored, one charge\nPASS read-only album transcript\nPASS prior choice and outfit recall, fulfilled promise\nPASS complete free route, confession and continuing epilogue\nPASS 1280px large text, choice targets, reading focus, images and runtime"
+    },
+    {
+      "width": 1280,
+      "suite": "courses-ui",
+      "status": "passed",
+      "detail": "PASS friend prequel profile and no agency membership\nPASS pagination, eight-course themes, search and locked feedback\nPASS six-stage date reload, frozen cost and durable first memory\nPASS permanent first-visit transcript and read-only replay\nPASS distinct visits unlock a chapter with remembered choices\nPASS both local fonts loaded, Korean story typeface and largest text\nPASS 1280px narrative, keyboard focus, images and runtime"
+    },
+    {
+      "width": 1280,
+      "suite": "activities-ui",
+      "status": "passed",
+      "detail": "PASS date-integrated map, progressive unlocks, hint and undo\nPASS map input saved, reload and modal resume without additional charge\nPASS music cross puzzle, visible board response, undo and completion\nPASS memory mismatch stays visible, reload freezes both cards and pairs complete\nPASS three activities leave economy and dialogue step unchanged\nPASS explicit abandonment preserves finished activities and restores conversation\nPASS 1280px map layout, focus, fonts and runtime"
+    },
+    {
+      "width": 1280,
+      "suite": "somesome-ui",
+      "status": "passed",
+      "detail": "PASS new game+ notice on title, bonus after the intro\nPASS heart stage meter in the relationship note\nPASS auto speed and dialogue opacity settings\nPASS F5 quick save, F9 quick load, quick slot in the load list\nPASS run-all schedule\nPASS weekly settlement card and journal recall\nPASS work drop-in scene on the main stage\nPASS messenger sticker after a reply\nPASS 1280px runtime without errors"
+    },
+    {
+      "width": 1280,
+      "suite": "ui",
+      "status": "passed",
+      "detail": "PASS boot and new game\nPASS budget target and live shortage\nPASS work confirmation, economy, text feed, autosave\nPASS buy, equip, duplicate guard\nPASS paid date and repeat prevention\nPASS next day and manual save/load roundtrip\nPASS journal and illustration toggle\nPASS reading size preference and preview\nPASS return to title and resume\nPASS 1280px layout, controls, no runtime errors"
+    },
+    {
+      "width": 1280,
+      "suite": "reliability",
+      "status": "passed",
+      "detail": "PASS Unavailable storage retains session and leaves persistent notice\nPASS Storage recovers without losing unsaved progress\nPASS Import rejects malformed file without replacing play state\nPASS Closing import dialog cancels pending file read"
+    },
+    {
+      "suite": "new-game intro",
+      "status": "passed"
+    },
+    {
+      "suite": "ballad concert resume",
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}

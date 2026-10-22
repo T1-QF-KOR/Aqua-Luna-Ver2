@@ -15,11 +15,11 @@
     start();
     assert(!$('intro-screen').hidden&&$('play-screen').hidden,'new game must show intro first');
     assert(read().intro.step===0&&$('intro-previous').disabled,'first page state');
-    assert($('intro-lines').textContent.includes('인디 어쿠스틱'),'admission background missing');
+    assert($('intro-lines').textContent.includes('실용음악과 보컬 전공')&&$('intro-lines').textContent.includes('발라드'),'admission background missing');
     assert(d.activeElement===$('intro-title'),'reading focus');
     results.push('PASS new game opens admission story before daily play');
     click('intro-next');click('intro-next');
-    assert(read().intro.step===2&&$('intro-title').textContent.includes('같은 소리')&&$('intro-lines').textContent.includes('합주 과제'),'first project');
+    assert(read().intro.step===2&&$('intro-title').textContent.includes('같은 소리')&&$('intro-lines').textContent.includes('보컬 앙상블 과제'),'first project');
     click('intro-previous');assert(read().intro.step===1,'previous');click('intro-next');
     click('intro-save');modalButton('기억 03');if($('modal-title').textContent==='기억 덮어쓰기')modalButton('덮어쓰기');click('close-modal');
     assert(E.storage.load(3).intro.step===2,'manual intro save');

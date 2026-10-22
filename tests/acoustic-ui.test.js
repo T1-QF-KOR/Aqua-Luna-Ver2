@@ -14,8 +14,8 @@
   let s=finishState(apply(E.startStory(E.makeState(),'hello')));
   for(const id of ['study','study','study','music','music','music','music']){if(s.ap===0||s.energy<10)s=apply(E.act(s,'nextDay'));s=apply(E.act(s,'train',id));}s=apply(E.act(s,'nextDay'));
   await load(s);click('bond-button');
-  assert(d.querySelectorAll('.acoustic-project-step').length===3,'project step count');assert(d.getElementById('modal-body').textContent.includes('실용음악'),'major');
-  button('함께 작업하기');assert(read().story.active.id==='acoustic-chords','start from note');finishUI('voicing');results.push('PASS project progress, major and first chord action');
+  assert(d.querySelectorAll('.acoustic-project-step').length===3,'project step count');assert(d.getElementById('modal-body').textContent.includes('실용음악과 · 보컬 전공'),'major');assert(d.querySelector('.note-profile').textContent.includes('좋아하는 장르발라드주로 부르는 장르발라드'),'listening and singing genres');
+  button('함께 작업하기');assert(read().story.active.id==='acoustic-chords','start from note');finishUI('voicing');results.push('PASS project progress, major and first vocal practice action');
   s=trip(read(),'music-busking');await load(s);click('bond-button');button('함께 작업하기');assert(read().story.active.id==='acoustic-lyrics','lyrics');finishUI('space');
   s=read();for(const id of ['music-listening','music-vinyl','music-rehearsal','music-recording'])s=trip(s,id);
   await load(s);click('bond-button');button('함께 작업하기');assert(read().story.active.id==='acoustic-demo','demo');

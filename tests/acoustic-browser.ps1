@@ -115,14 +115,14 @@ try {
     Wait-Js "Boolean(window.LunaEngine && document.readyState==='complete')"
     Eval-Js "localStorage.clear();document.getElementById('new-game').focus()" | Out-Null
     Press-Key 'Enter' 'Enter' 13
-    Assert-Js 'Indie acoustic major in new-game intro' "document.getElementById('intro-lines').textContent.includes('인디 어쿠스틱')&&document.getElementById('intro-lines').textContent.includes('실용음악')"
+    Assert-Js 'Ballad vocal major in new-game intro' "document.getElementById('intro-lines').textContent.includes('발라드')&&document.getElementById('intro-lines').textContent.includes('실용음악과 보컬 전공')"
     $capture = Send-Cdp 'Page.captureScreenshot' @{format='png'}
     [IO.File]::WriteAllBytes((Join-Path $qaDirectory 'acoustic-2026-10-21/intro.png'),[Convert]::FromBase64String($capture.data))
     Eval-Js "document.getElementById('intro-skip').click();let acousticState=LunaEngine.makeState();acousticState.trust=20;acousticState=LunaEngine.act(acousticState,'work','event').state;acousticState=LunaEngine.act(acousticState,'nextDay').state;acousticState=LunaEngine.act(acousticState,'date','concert').state;LunaEngine.storage.save(0,acousticState)" | Out-Null
     Send-Cdp 'Page.reload' @{} | Out-Null
     Wait-Js "Boolean(window.LunaEngine&&document.readyState==='complete')"
     Eval-Js "document.getElementById('continue-game').click()" | Out-Null
-    Assert-Js 'Concert resume uses new acoustic art and scene' "LunaEngine.storage.load(0).story.active.id==='concert'&&document.getElementById('modal-body').textContent.includes('인디 어쿠스틱')&&LunaData.sceneImage('concert').includes('acoustic-live')"
+    Assert-Js 'Concert resume uses ballad scene in live cafe' "LunaEngine.storage.load(0).story.active.id==='concert'&&document.getElementById('modal-body').textContent.includes('발라드')&&LunaData.sceneImage('concert').includes('acoustic-live')"
     Wait-Js "[...document.querySelectorAll('img')].filter(i=>i.offsetWidth).every(i=>i.complete&&i.naturalWidth>0)"
     Eval-Js "new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(true);i.onerror=reject;i.src=LunaData.sceneImage('concert')})" | Out-Null
     Eval-Js "document.querySelectorAll('.vn-tool').forEach(b=>{if(b.textContent==='건너뛰기')b.click()});new Promise(r=>setTimeout(r,600))" | Out-Null

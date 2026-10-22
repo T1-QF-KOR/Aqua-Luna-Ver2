@@ -68,7 +68,7 @@
   });
   test('Story content describes a friend before agency entry, without manager or debut claims',()=>{
     const text=JSON.stringify([...Object.values(N.dates),...N.events.map(e=>e.nodes)]);
-    assert(!text.includes('매니저')&&!text.includes('함께 일하시는'),'old role remains');assert(N.events[0].nodes[0].text.includes('실용음악 전공 동기'),'friend premise');
+    assert(!text.includes('매니저')&&!text.includes('함께 일하시는'),'old role remains');assert(N.events[0].nodes[0].text.includes('실용음악과 보컬 전공 동기'),'friend premise');
     assert(N.events.find(e=>e.id==='prelude-next').nodes[1].text.includes('어느 엔터테인먼트에도 들어가지 않았습니다'),'timeline crossed');
   });
   const all=[...Object.values(N.dates).flat(),...N.events.flatMap(e=>e.nodes)],unique=new Set(all.map(n=>n.text)),strings=new Set(all.flatMap(n=>[n.text,...n.choices.flatMap(c=>[c.label,c.reply])]));
