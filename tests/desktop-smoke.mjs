@@ -9,7 +9,9 @@ const root=fileURLToPath(new URL('../',import.meta.url)), out=path.join(root,'qa
 await fs.mkdir(out,{recursive:true});
 const profile=await fs.mkdtemp(path.join(os.tmpdir(),'aqualuna-webview-test-'));
 const probe=net.createServer(); await new Promise(r=>probe.listen(0,'127.0.0.1',r)); const port=probe.address().port; await new Promise(r=>probe.close(r));
-const app=spawn(path.join(root,'dist','AquaLuna','AquaLuna.exe'),[],{windowsHide:true,stdio:'ignore',env:{...process.env,WEBVIEW2_USER_DATA_FOLDER:profile,WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS:`--remote-debugging-port=${port} --remote-debugging-address=127.0.0.1`}});
+const app=spawn(path.join(root,'dist','AquaLuna','AquaLuna.exe'),[],{windowsHide:!process.argv.includes('--visible'),stdio:'ignore',env:{...process.env,WEBVIEW2_USER_DATA_FOLDER:profile,WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS:`--remote-debugging-port=${port} --remote-debugging-address=127.0.0.1`}});
+app.on('exit',(code,signal)=>console.log('Test app exit',code,signal));
+console.log('Test profile',profile,'CDP port',port);
 let socket,id=0; const pending=new Map(),errors=[],network=[],checks=[];
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function until(fn){for(let i=0;i<200;i++){const v=await fn();if(v)return v;await wait(100);}throw Error('Timed out waiting for packaged app');}
@@ -20,7 +22,8 @@ async function click(selector){const p=await evaluate(`(()=>{const b=document.qu
 async function key(key,code){await send('Input.dispatchKeyEvent',{type:'keyDown',key,windowsVirtualKeyCode:code});await send('Input.dispatchKeyEvent',{type:'keyUp',key,windowsVirtualKeyCode:code});await wait(100);}
 async function shot(name){await wait(300);const r=await send('Page.captureScreenshot',{format:'png'});await fs.writeFile(path.join(out,name+'.png'),Buffer.from(r.data,'base64'));}
 try{
-  const target=await until(async()=>{try{const tabs=await(await fetch(`http://127.0.0.1:${port}/json/list`)).json();return tabs.find(t=>t.type==='page'&&t.url.startsWith('https://aqualuna.example/'));}catch{return null;}});
+  let lastTargets='';
+  const target=await until(async()=>{try{const tabs=await(await fetch(`http://127.0.0.1:${port}/json/list`)).json();const summary=JSON.stringify(tabs.map(t=>({type:t.type,url:t.url})));if(summary!==lastTargets){console.log('WebView targets',summary);lastTargets=summary;}return tabs.find(t=>t.type==='page'&&t.url.startsWith('https://aqualuna.example/'));}catch{return null;}});
   if(!(await fs.readdir(profile)).length)throw Error('Isolated profile was not created');
   socket=new WebSocket(target.webSocketDebuggerUrl);await new Promise(r=>socket.addEventListener('open',r,{once:true}));
   socket.addEventListener('message',e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);if(p)m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails);else if(m.method==='Network.responseReceived'&&m.params.response.status>=400)network.push({url:m.params.response.url,status:m.params.response.status});else if(m.method==='Network.loadingFailed'&&!m.params.canceled)network.push(m.params.errorText);});

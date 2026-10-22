@@ -1,4 +1,4 @@
-param([string]$ChromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe')
+﻿param([string]$ChromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe')
 
 # Real Chromium input and filesystem download/import checks. Uses only a dedicated test profile.
 $ErrorActionPreference = 'Stop'
@@ -95,8 +95,14 @@ try {
     Eval-Js "document.getElementById('new-game').focus()" | Out-Null
     Assert-Js 'Initial action receives browser focus' "document.activeElement.id === 'new-game'"
     Press-Key 'Enter' 'Enter' 13
+    Wait-Js "Boolean(document.getElementById('intro-screen') && !document.getElementById('intro-screen').hidden)"
+    Assert-Js 'Keyboard new game opens the prologue' "LunaEngine.storage.load(0).intro.step === 0"
+    Eval-Js "document.getElementById('intro-skip').focus()" | Out-Null
+    Press-Key 'Enter' 'Enter' 13
     Wait-Js "!document.getElementById('play-screen').hidden"
-    Assert-Js 'Enter starts a new game and focuses the work action' "document.activeElement.id === 'work-button' && LunaEngine.storage.load(0).money === 80000"
+    Assert-Js 'Skipping the prologue focuses the first story action' "document.activeElement.id === 'story-button' && LunaEngine.storage.load(0).money === 80000"
+    Press-Key 'Tab' 'Tab' 9
+    Assert-Js 'Tab reaches the work action' "document.activeElement.id === 'work-button'"
 
     Press-Key 'Enter' 'Enter' 13
     Wait-Js "document.getElementById('modal').open"

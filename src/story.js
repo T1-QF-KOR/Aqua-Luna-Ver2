@@ -14,26 +14,26 @@
     pick('promise', '다음 외출은 무료 부두 산책으로 약속하기', promiseSay, promiseReact, { promise: true })]);
   // A self-contained memory before DAY 01; it never awards relationship or economy points.
   const intro = [
-    { time: '입학 전의 겨울', title: '접어 둔 악보', expression: 'thoughtful', lines: [
-      ['', '예고에서 성악을 공부하던 수련은, 집안 형편이 어려워지면서 클래식 진학을 접었습니다.'],
-      ['', '대신 소리와 영상, 이야기를 만드는 학과에 지원해 합격했습니다. 악보는 버리지 못하고 책장 한쪽에 꽂아 두었습니다.'],
-      ['수련', '일단 가보자. 좋아하는 건, 더 찾아봐도 되니까.'] ] },
+    { time: '입학 전의 겨울', title: '여섯 줄에서 시작된 노래', expression: 'thoughtful', lines: [
+      ['', '수련은 오래 쓰던 통기타로 좋아하는 인디 어쿠스틱 곡을 따라 부르다가, 자기 이야기도 노래로 남기고 싶어졌습니다.'],
+      ['', '집안 형편 때문에 레슨과 장비를 마음껏 늘릴 수는 없었지만, 실용음악 전공에 합격했습니다. 기타 케이스에는 입시 때 쓰던 코드 노트도 넣었습니다.'],
+      ['수련', '기타 한 대랑 제 목소리로, 어디까지 할 수 있을지 배워 보고 싶어요.'] ] },
     { time: '1학년 · 첫 전공 수업', title: '빈자리인가요?', expression: 'neutral', lines: [
       ['', '강의실을 잘못 찾아 늦게 들어온 당신에게, 창가 쪽 학생이 옆 의자의 가방을 치워 주었습니다.'],
       ['플레이어', '여기 앉아도 돼요?'], ['수련', '네. 강의계획서, 같이 봐요.'],
-      ['', '같은 전공, 같은 학년. 두 사람이 처음 나눈 것은 이름보다 한 장의 종이였습니다.'] ] },
+      ['', '같은 실용음악 전공, 같은 학년. 두 사람이 처음 나눈 것은 이름보다 한 장의 종이였습니다.'] ] },
     { time: '첫 조별 과제', title: '같은 소리를 듣는 사람', expression: 'smile', lines: [
-      ['', '첫 과제는 짝을 지어 학교의 하루를 소리로 기록하는 일이었습니다. 당신은 옆자리의 수련에게 같이 하자고 했습니다.'],
+      ['', '첫 합주 과제는 짝을 지어 학교의 하루를 짧은 어쿠스틱 곡으로 만드는 일이었습니다. 당신은 옆자리의 수련에게 같이 하자고 했습니다.'],
       ['수련', '조금만 더 들어봐요. 바람 들어오는 소리도 있어요.'],
-      ['', '수련이 듣던 소리가 뒤늦게 당신 귀에도 들어왔습니다. 발표 전날에는 수련이 떨리는 당신의 첫 문장을 끝까지 들어 주었습니다.'],
+      ['', '당신이 모은 소리 위로 수련의 통기타 아르페지오가 겹쳤습니다. 합주 발표 전날에는 수련이 떨리는 당신의 첫 소절을 끝까지 들어 주었습니다.'],
       ['', '혼자라면 미뤘을 일을, 둘은 함께 조금씩 끝내고 있었습니다.'] ] },
     { time: '함께 보낸 첫 학년', title: '친구가 되는 동안', expression: 'shy', lines: [
       ['', '과제가 끝난 날, 수련이 먼저 점심을 먹자고 했습니다. 그 뒤로 점심 약속은 과제가 없어도 이어졌습니다.'],
-      ['', '수련이 성악을 공부했다는 것도 그때 알았습니다. 언젠가 듣고 싶다는 말에, 수련은 아직은 부끄럽다며 웃었습니다.'],
+      ['', '수련이 인디 어쿠스틱을 좋아하고 혼자 가사를 써 왔다는 것도 그때 알았습니다. 언젠가 듣고 싶다는 말에, 수련은 아직은 부끄럽다며 웃었습니다.'],
       ['수련', '다음 학기에도 시간표 같이 볼래요?'],
       ['', '같은 전공이라 만났지만, 이제는 만나고 싶어서 시간을 맞추는 사이. 그렇게 두 사람은 친구가 되었습니다.'] ] },
     { time: '현재 · 다시 찾아온 봄', title: '오늘도, 옆자리', expression: 'smile', lines: [
-      ['', '새 학기. 수련은 수업이 끝나면 틈틈이 동네 연습실을 빌립니다. 노래를 앞으로 어떻게 할지는 아직 정하지 못했습니다.'],
+      ['', '새 학기. 실용음악 전공 동기인 두 사람은 수업과 아르바이트 사이에 합주 시간을 맞춥니다. 수련은 자작곡 데모와 작은 라이브를 준비하고 있습니다.'],
       ['수련 · 메시지', '수업 끝나고 연습실 들를 거예요. 시간 괜찮으면 와요.'],
       ['플레이어 · 메시지', '끝날 때쯤 갈게요. 같이 걸어요.'],
       ['', '수련이 버츄얼 아이돌 연습생이 되기 전. 수련과 당신의 새로운 일상이 시작됩니다.'] ] }
@@ -91,8 +91,8 @@
     ],
     concert: [
       scene([
-        ['', '공연장 문이 열리고, 조율하는 현 소리가 낮게 깔립니다.', { cam: 'wide' }],
-        ['수련', '첼로 소리는 사람이 숨 쉬는 것 같아서 좋아요.', { face: 'smile' }],
+        ['', '작은 라이브 카페 문이 열리고, 통기타를 튜닝하는 소리가 낮게 깔립니다.', { cam: 'wide' }],
+        ['수련', '통기타 줄을 짚는 소리까지 들리는 인디 어쿠스틱 무대가 좋아요.', { face: 'smile' }],
         ['', '수련이 표를 반으로 접어 손에 꼭 쥡니다.'],
         ['수련', '오늘은 끝까지 들어 보고 싶어요.', { face: 'thoughtful', cam: 'lean' }]
       ], [
@@ -107,7 +107,7 @@
         pick('ask', '언젠가 수련의 노래도 이렇게 듣고 싶다고 말하기', '언젠가 그 노래도, 이렇게 끝까지 듣고 싶어요.', [['수련', '멋지게 부르겠다는 약속은 못 해요.', { face: 'surprised' }], ['수련', '그래도… 듣고 싶은 사람이 있다는 건, 좋네요.', { face: 'shy', cam: 'close' }]], { trust: 1 }),
         pick('theory', '마지막 화음 이야기를 꺼내기', '마지막에 장조로 끝난 거, 일부러 그런 거겠죠?', [['수련', '알아들었어요? 저 그 부분에서 소름 돋았어요.', { face: 'surprised' }], ['수련', '슬픈 곡인데 마지막에 문을 열어 두는 느낌… 저도 그런 노래 부르고 싶어요.', { face: 'smile', cam: 'lean' }]], { requireStat: 'knowledge', requireValue: 16, affection: 2, trust: 1, mood: 5 })]),
       farewell([
-        ['', '공연장 밖, 밤공기에 아직 첼로 소리가 남아 있는 것 같습니다.', { cam: 'wide' }],
+        ['', '라이브 카페 밖, 밤공기에 아직 기타의 마지막 울림이 남아 있는 것 같습니다.', { cam: 'wide' }],
         ['수련', '귀가 아직 멍해요. 좋은 쪽으로요.', { face: 'playful' }],
         ['수련', '다음에는… 어떻게 만날까요?', { face: 'shy', cam: 'lean' }]
       ], '또 좋은 공연 있으면 같이 와요.', '다음엔 부두를 걸어요. 오늘 들은 걸 얘기하면서요.', [['수련', '기억할게요.', { face: 'smile' }], ['수련', '다음번엔 제가 먼저 물가 쪽으로 걸어갈게요.', { face: 'playful' }]])
@@ -120,8 +120,8 @@
     { id: 'hello', title: '친구가 기다리는 연습실', location: 'practice', hint: '연습실에서 기다리는 친구 수련을 만나 보세요.', ready: () => true, nodes: [
       scene([
         ['', '아직 수련이 어떤 엔터테인먼트에도 들어가지 않았던 시절.', { cam: 'wide' }],
-        ['', '빌린 동네 연습실의 문이 반쯤 열려 있습니다. 피아노 소리가 멈췄다가, 다시 이어집니다.'],
-        ['', '문틈으로 들여다보는 순간, 오랜 친구 수련과 눈이 마주칩니다.', { face: 'surprised', cam: 'lean' }],
+        ['', '합주 수업이 끝난 뒤, 빌린 동네 연습실의 문이 반쯤 열려 있습니다. 통기타 스트로크가 멈췄다가, 다시 이어집니다.'],
+        ['', '문틈으로 들여다보는 순간, 같은 실용음악 전공 동기 수련과 눈이 마주칩니다.', { face: 'surprised', cam: 'lean' }],
         ['수련', '왔네요.', { face: 'smile' }],
         ['수련', '오늘도 같은 데서 막혔어요. 세 번째 마디요.', { face: 'playful' }],
         ['', '늘 두던 옆자리에, 종이컵 하나가 놓입니다.', { cam: 'back' }],
@@ -137,27 +137,27 @@
       node('수련이 개인 수첩을 펼칩니다. 연습 메모 옆의 빈 여백에 작은 물결이 그려져 있습니다. “지난번처럼 걸을까요? 이번에는 제가 먼저 물어보고 싶었어요.”', [
         choice('yes', '다음 외출을 부두에서 함께하기', '“그럼 물가 쪽 길은 제가 안내할게요. 비용 들이는 약속은 아니에요.”', { promise: true }),
         choice('later', '지금은 여유가 없지만 다음에 다시 이야기하기', '“알려 줘서 고마워요. 가능한 날에 말해 주세요. 기다리는 숙제로 만들지는 않을게요.”')]) ] },
-    { id: 'score', title: '접힌 악보', location: 'practice', hint: '며칠 뒤, 데이트 3회·신뢰 15를 쌓아 보세요.', ready: s => done(s, 'invite') && rested(s) && s.story.dateCount >= 3 && s.trust >= 15, nodes: [
-      node('악보의 접힌 귀퉁이를 수련이 펴고 또 접습니다. “예고 성악과에 들어갔을 때는 이 길을 계속 갈 줄 알았어요. 집안 사정으로 클래식 진로를 접었는데, 이 악보를 펴면 그때의 저를 흉내 내야 할 것 같아요.” 아직 어느 엔터테인먼트에도 속하지 않은 수련이 오랜 친구 앞에 악보를 내려놓습니다.', [
+    { id: 'score', title: '고쳐 쓴 코드 노트', location: 'practice', hint: '며칠 뒤, 데이트 3회·신뢰 15를 쌓아 보세요.', ready: s => done(s, 'invite') && rested(s) && s.story.dateCount >= 3 && s.trust >= 15, nodes: [
+      node('수련이 통기타 옆에 낡은 코드 노트를 펼칩니다. “입시 때는 정답처럼 들리는 연주만 하려고 했어요. 실용음악을 배우면 제 노래도 쉽게 쓸 줄 알았는데요. 레슨비랑 장비값을 계산하다 보면, 좋아하는 마음까지 점수를 매기게 돼요.” 지운 가사 아래로 아직 제목 없는 후렴이 남아 있습니다.', [
         choice('listen', '지금 부르면 어떤 느낌일지 묻기', '“아직 모르겠어요. 그걸 모르는 채로 시작해도 괜찮을까요?”', { music: 'now' }),
-        choice('new', '다른 곡을 고를 수도 있다고 말하기', '“버리는 게 아니라 고르는 거겠죠. 이번엔 제가 정해 보고 싶어요.”', { music: 'new' })]),
-      node('수련이 악보를 가방 밖에 둡니다. “작은 세션을 열어 볼까 해요. 누구에게 증명하려는 건지부터 생각해 볼게요.”', [
+        choice('new', '후렴을 새로 써 봐도 된다고 말하기', '“버리는 게 아니라 고르는 거겠죠. 이번엔 제가 정해 보고 싶어요.”', { music: 'new' })]),
+      node('수련이 코드 노트를 기타 케이스 밖에 둡니다. “자작곡으로 작은 어쿠스틱 세션을 열어 볼까 해요. 실기 점수 말고, 제가 전하고 싶은 말부터 생각해 볼게요.”', [
         choice('wait', '곡을 정할 때까지 기다리기', '“정해지면 가장 먼저 들려드릴게요. 대신, 조금 오래 걸려도 괜찮아요?”'),
         choice('help', '필요한 준비가 생기면 알려 달라고 하기', '“의자 몇 개면 될 것 같아요. 큰 무대로 만들지 않아도 괜찮아요.”')]) ] },
-    { id: 'boundary', title: '아직 정하지 않은 일', location: 'practice', hint: '접힌 악보 이야기에서 며칠 지나 데이트 6회·호감 20을 쌓아 보세요.', ready: s => done(s, 'score') && rested(s) && s.story.dateCount >= 6 && s.affection >= 20, nodes: [
-      node('연락을 마친 수련이 휴대폰을 뒤집습니다. “예전 선생님이 세션 이야기를 들으셨어요. 반갑지만… 벌써 기대에 맞춰 부르고 있는 것 같아요.”', [
-        choice('ask', '누구에게 들려주고 싶은지 먼저 묻기', '“지금의 제 노래를 듣고 싶은 사람에게요. 선생님께도 제가 직접 말씀드릴게요.”', { boundary: 'clear' }),
+    { id: 'boundary', title: '아직 정하지 않은 일', location: 'practice', hint: '코드 노트 이야기에서 며칠 지나 데이트 6회·호감 20을 쌓아 보세요.', ready: s => done(s, 'score') && rested(s) && s.story.dateCount >= 6 && s.affection >= 20, nodes: [
+      node('연락을 마친 수련이 휴대폰을 뒤집습니다. “합주 수업 선배가 축제 세션 이야기를 들었어요. 반갑지만… 자작곡 대신 유명한 곡을 부르라는 기대에 벌써 맞추고 있는 것 같아요.”', [
+        choice('ask', '누구에게 들려주고 싶은지 먼저 묻기', '“지금의 제 노래를 듣고 싶은 사람에게요. 선배에게도 제가 직접 말씀드릴게요.”', { boundary: 'clear' }),
         choice('decide', '부담 없게 내가 대신 거절해 줄게요', '“도와주려는 건 알아요. 그래도 제 대답을 먼저 듣고 움직여 주셨으면 해요.” 수련은 악보를 닫지 않습니다. 다시 이야기할 여지는 남아 있습니다.', { boundary: 'repair' })]) ] },
     { id: 'repair', title: '대답을 기다리는 연습', location: 'rooftop', hint: '수련에게 결정권을 돌려주는 대화를 할 수 있어요.', ready: s => done(s, 'boundary') && s.story.boundary === 'repair', nodes: [
       node('수련은 옥상 문을 열어 둡니다. “멀어지고 싶어서 한 말은 아니었어요. 가까운 사람에게도 제가 고를 자리는 필요해서요.”', [
-        choice('sorry', '먼저 정하려 해서 미안해요. 무엇을 원해요?', '“선생님께 제가 연락하고 싶어요. 옆에 있어 주는 건, 그 다음에 부탁할게요.”', { boundary: 'clear' }),
+        choice('sorry', '먼저 정하려 해서 미안해요. 무엇을 원해요?', '“선배에게 제가 연락하고 싶어요. 옆에 있어 주는 건, 그 다음에 부탁할게요.”', { boundary: 'clear' }),
         choice('honest', '돕고 싶어 서둘렀어요. 다음엔 먼저 물을게요', '“그 말이면 돼요. 저도 필요한 걸 더 분명히 말해 볼게요.”', { boundary: 'clear' })]) ] },
-    { id: 'session', title: '다시 부르는 이유', location: 'practice', hint: '서로의 결정권을 확인하고 며칠 지나 데이트 9회·신뢰 30을 쌓아 보세요.', ready: s => done(s, 'boundary') && s.story.boundary === 'clear' && rested(s) && s.story.dateCount >= 9 && s.trust >= 30, nodes: [
-      node('연습실에는 의자 몇 개만 놓여 있습니다. 수련이 직접 고른 악보를 펼칩니다. “완벽해진 다음에 부르려고 했는데, 그러면 계속 미루게 될 것 같아요.”', [
+    { id: 'session', title: '내 노래로 서는 작은 무대', location: 'practice', hint: '서로의 결정권을 확인하고 며칠 지나 데이트 9회·신뢰 30을 쌓아 보세요.', ready: s => done(s, 'boundary') && s.story.boundary === 'clear' && rested(s) && s.story.dateCount >= 9 && s.trust >= 30, nodes: [
+      node('연습실의 작은 오픈 마이크. 의자 몇 개 앞에 앉은 수련이 통기타를 튜닝하고 자작곡의 코드 노트를 펼칩니다. “완벽해진 다음에 부르려고 했는데, 그러면 계속 미루게 될 것 같아요. 오늘은 제 가사로 끝까지 해 볼래요.”', [
         choice('listen', '관객석에서 끝까지 듣기', '마지막 숨이 끝난 뒤에야 손뼉을 칩니다. “기다려 주니까, 끝까지 제 노래처럼 부를 수 있었어요.”'),
-        choice('support', '준비할 것이 있는지 묻고 자리에 앉기', '“물 한 잔이면 돼요. 이제는 듣는 사람이 되어 주세요.” 수련은 자기 손으로 반주를 시작합니다.')]),
-      node('수련이 악보를 접지 않고 책상 위에 펼쳐 둡니다. “잘 불렀는지는 나중에 생각하려고요. 오늘은 제가 부르고 싶어서 불렀다는 걸 기억할래요.”', [
-        choice('memory', '오늘의 순간을 함께 기억하자고 하기', '“그럼 제목은 제가 정할게요. 다시 부르는 이유. 오늘은 그 정도면 충분해요.”'),
+        choice('support', '준비할 것이 있는지 묻고 자리에 앉기', '“물 한 잔이면 돼요. 이제는 듣는 사람이 되어 주세요.” 수련은 피크를 고쳐 쥐고 첫 스트로크를 시작합니다.')]),
+      node('수련이 기타를 내려놓고 코드 노트에 오늘의 날짜를 적습니다. “잘 불렀는지는 나중에 생각하려고요. 오늘은 제가 부르고 싶어서 불렀다는 걸 기억할래요.”', [
+        choice('memory', '오늘의 순간을 함께 기억하자고 하기', '“그럼 제목은 제가 정할게요. 오늘의 소리를 접어 둬. 아직 작은 노래지만, 제 첫 자작곡이에요.”'),
         choice('joy', '마지막에 웃는 모습이 좋았다고 말하기', '“저, 웃었어요? 그건 계획에 없었는데.” 수련이 이번에는 숨기지 않고 웃습니다.')]) ] },
     { id: 'confession', title: '친구라는 말 다음에', location: 'pier', hint: '작은 세션 이후 며칠 지나 데이트 12회·호감 40·신뢰 40을 쌓아 보세요.', ready: s => done(s, 'session') && rested(s) && s.story.dateCount >= 12 && s.affection >= 40 && s.trust >= 40, nodes: [
       scene([
@@ -198,9 +198,57 @@
         pick('yes', '“응. 우리 말 놓자.”', '응. 우리 이제 말 놓자.', [['수련', '…응.', { face: 'surprised' }], ['수련', '이상하다. 한 글자 바꿨을 뿐인데, 되게 가까워진 것 같아.', { face: 'shy', cam: 'close' }], ['수련', '앞으로도 잘 부탁해.', { face: 'smile' }]], { speech: 'casual', affection: 2 }),
         pick('slow', '천천히 바꿔 가자고 말하기', '좋아요. 대신 천천히, 편해질 때마다 하나씩 바꿔 가요.', [['수련', '네. 그럼 오늘은… 한 번만 연습해 볼게요.', { face: 'playful' }], ['수련', '잘 자. …아, 아직 저녁이다.', { face: 'shy' }]])]) ] }
   ];
+  // Optional songwriting route: progress follows learned skills and actual outings.
+  // No new save fields: completed scene/choice ids are the durable project notebook.
+  const acousticProjectIds = ['acoustic-chords', 'acoustic-lyrics', 'acoustic-demo'];
+  events.push(
+    { id: 'acoustic-chords', title: '둘이 맞추는 첫 코드', location: 'practice',
+      hint: '연습실에서 인사한 뒤 지식 8·감수성 8을 쌓으면 첫 합주가 열려요.',
+      ready: s => done(s, 'hello') && s.growth.stats.knowledge >= 8 && s.growth.stats.sensitivity >= 8,
+      nodes: [scene([
+        ['', '합주 수업이 끝나고도 수련은 기타 케이스를 닫지 않습니다. 코드 노트 위에 C, G, Am, F가 나란히 적혀 있습니다.', { cam: 'wide' }],
+        ['수련', '과제는 끝났는데요. 이 진행으로 제 곡도 만들어 보고 싶어요. 한 번만 같이 맞춰 볼래요?', { face: 'shy' }],
+        ['수련', '다만 속도는 제가 정해도 돼요? 노래까지 같이 하려니까 손이 자꾸 앞서 가요.', { face: 'thoughtful' }]
+      ], [
+        pick('pulse', '수련이 정한 박자에 맞춰 작게 세어 주기', '먼저 쳐 봐요. 거기에 맞출게요.', [['', '수련이 네 번 줄을 튕기고, 당신은 그 뒤에 박자를 얹습니다.'], ['수련', '이번에는 제 목소리가 들어갈 자리가 있네요.', { face: 'smile' }]], { trust: 1 }),
+        pick('voicing', '공통음을 남기는 코드 연결을 함께 시험하기', '이 음은 그대로 두고 연결해 볼까요?', [['수련', '같은 코드인데 손도 덜 급하고, 더 따뜻하게 들려요.', { face: 'surprised' }], ['수련', '그런데 마지막은 제가 고를게요. 두 가지 다 녹음해 봐요.', { face: 'smile' }]], { requireStat: 'knowledge', requireValue: 12, trust: 2 })])]
+    },
+    { id: 'acoustic-lyrics', title: '후렴에 남길 한 문장', location: 'cafe',
+      hint: '첫 합주 뒤 음악 테마 코스 1곳을 다녀오고 감수성 12를 쌓아 보세요.',
+      ready: s => done(s, 'acoustic-chords') && s.growth.stats.sensitivity >= 12 && window.LunaData.dates.some(d => d.theme === 'music' && s.story.exploration?.[d.id]),
+      nodes: [scene([
+        ['', '카페 창가. 수련은 음악 탐방 때 적은 메모와 가사 노트를 나란히 펼칩니다.', { cam: 'wide' }],
+        ['수련', '버스가 지나가는 소리랑 컵 내려놓는 소리도, 기타 사이에 넣으면 우리 동네 같을까요?', { face: 'thoughtful' }],
+        ['수련', '후렴은 멋진 말보다… 같이 걷던 날의 말이면 좋겠어요.', { face: 'shy' }]
+      ], [
+        pick('image', '함께 들은 소리를 가사로 제안하기', '바람이 먼저 박자를 정하던 날, 어때요?', [['수련', '좋아요. 그 다음 문장은 제가 이어 볼게요.', { face: 'smile' }], ['', '두 사람이 쓴 문장을 수련이 노래하기 편한 길이로 고칩니다.']], { affection: 1 }),
+        pick('space', '가사 사이에 기타만 남는 쉼표 제안하기', '말하지 않는 한 마디도 남겨 볼까요?', [['수련', '거기에 아르페지오만 넣을게요. 듣는 사람도 잠깐 숨 쉴 수 있게.', { face: 'smile' }]], { requireStat: 'sensitivity', requireValue: 16, trust: 2 })])]
+    },
+    { id: 'acoustic-demo', title: '우리의 첫 어쿠스틱 데모', location: 'practice',
+      hint: '후렴·신뢰 20·‘처음 남기는 연습 녹음’ 방문이 필요해요. 이 코스는 음악 탐방 4곳을 경험하면 열려요.',
+      ready: s => done(s, 'acoustic-lyrics') && s.trust >= 20 && !!s.story.exploration?.['music-recording'],
+      nodes: [scene([
+        ['', '비싼 장비 대신 휴대폰과 통기타 한 대를 놓습니다. 기타에서 조금 떨어진 자리를 찾자 목소리도 함께 담깁니다.', { cam: 'wide' }],
+        ['수련', '손가락 미끄러지는 소리가 남았네요. 그래도 이번엔 끝까지 불렀어요.', { face: 'surprised' }],
+        ['수련', '제목은 「오늘의 소리를 접어 둬」. 이 파일을 누구에게 들려줄지는 아직 고민이에요.', { face: 'shy' }]
+      ], [
+        pick('private', '오늘은 둘만 듣는 데모로 보관하기', '지금은 우리만 들어도 충분해요.', [['수련', '네. 공유하지 말고, 다음에 제가 먼저 물어볼게요.', { face: 'smile' }]], { trust: 1 }),
+        pick('class', '수련이 고르면 합주 수업에서 함께 틀기', '들려주고 싶어지면 수업에서 같이 틀어요.', [['수련', '좋아요. 먼저 하윤한테 들어 달라고 해 볼래요. 파일은 제가 보낼게요.', { face: 'smile' }]], { trust: 1 })]),
+        scene([
+          ['', '수련이 파일 이름 끝의 ‘최종’을 지우고 오늘 날짜를 붙입니다.'],
+          ['수련', '과제는 제출하면 끝나지만, 노래는 다음에 또 바꿔도 되네요.', { face: 'playful' }],
+          ['수련', '다음에는 라이브로 들려주고 싶어요. 관객 수 말고, 끝까지 부른 걸 기억하면서요.', { face: 'shy' }]
+        ], [
+          pick('keep', '다음 버전도 듣고 싶다고 말하기', '다음 버전도 제일 먼저 듣고 싶어요.', [['수련', '그럼 첫 번째 청자 자리는 비워 둘게요.', { face: 'smile' }]]),
+          pick('rest', '오늘은 기타를 내려놓고 함께 쉬기', '오늘 녹음은 여기까지 하고 쉬어요.', [['수련', '네. 손끝도 좀 쉬어야겠어요. 같이 걸어요.', { face: 'smile' }]])])]
+    }
+  );
+  function acousticProject(s) {
+    return acousticProjectIds.map(id => { const event = events.find(e => e.id === id); return { id, title: event.title, complete: done(s, id), ready: !done(s, id) && event.ready(s), hint: event.hint }; });
+  }
   // Optional growth stories enrich the route without blocking existing endings.
   [
-    { id: 'growth-score', stat: 'knowledge', title: '악보 사이의 메모', location: 'practice', expression: 'thoughtful', text: '수련이 낡은 악보를 펼칩니다. “여기 적힌 말이 늘 어려웠어요. 오늘은 같이 읽어 볼래요?”', special: '공부한 배경을 설명하고 수련의 해석을 듣기', reply: '“설명을 듣고 나니 제가 부르고 싶은 느낌도 조금 선명해졌어요.”' },
+    { id: 'growth-score', stat: 'knowledge', title: '코드 사이의 메모', location: 'practice', expression: 'thoughtful', text: '수련이 코드 노트를 펼칩니다. “같은 멜로디인데 코드를 바꾸면 왜 느낌이 달라질까요? 화성학 수업 내용, 같이 짚어 볼래요?”', special: '공통음을 짚고 수련이 고른 코드의 느낌 듣기', reply: '“설명을 듣고 나니 제가 부르고 싶은 느낌도 조금 선명해졌어요.”' },
     { id: 'growth-walk', stat: 'fitness', title: '같은 속도로 걷는 연습', location: 'pier', expression: 'smile', text: '강가의 계단을 내려오던 수련이 숨을 고릅니다. “조금 천천히 가도 되죠? 풍경도 보고 싶어요.”', special: '쉬어 갈 자리를 찾아 같은 속도로 걷기', reply: '“옆에서 속도를 맞춰 주니까, 더 오래 같이 걸을 수 있겠네요.”' },
     { id: 'growth-music', stat: 'sensitivity', title: '한 소절에 남은 마음', location: 'concert', expression: 'shy', text: '수련이 오늘 들은 선율을 작게 흥얼거립니다. “저는 마지막보다 중간에 멈춘 음이 자꾸 생각나요.”', special: '멈춘 음에서 느낀 여운을 나누기', reply: '“같은 부분을 기억하고 있었네요. 말하지 않아도 통할 때가 있나 봐요.”' }
   ].forEach(e => events.push({ ...e,
@@ -268,7 +316,7 @@
   };
   // What Sulien is doing right now, by place and time of day.
   const doing = {
-    practice: { morning: '악보에 연필로 표시하는 중', afternoon: '피아노로 음을 잡는 중', evening: '발성 연습을 마무리하는 중', night: '불 꺼진 연습실을 정리하는 중' },
+    practice: { morning: '코드 노트에 가사를 적는 중', afternoon: '통기타 아르페지오를 맞추는 중', evening: '자작곡 데모를 다시 듣는 중', night: '불 꺼진 연습실을 정리하는 중' },
     cafe: { morning: '창가에서 과제를 펼쳐 둔 채', afternoon: '따뜻한 차를 식히는 중', evening: '오늘 들은 곡을 적는 중', night: '마감 직전 마지막 한 모금' },
     pier: { morning: '강바람을 맞으며 걷는 중', afternoon: '벤치에서 이어폰 한쪽을 낀 채', evening: '노을을 바라보는 중', night: '물가 가로등 아래에서 쉬는 중' },
     rooftop: { morning: '물병을 들고 바람 쐬는 중', afternoon: '난간에 기대 하늘을 보는 중', evening: '노을빛 아래 흥얼거리는 중', night: '별을 찾는 중' },
@@ -278,15 +326,15 @@
   // Every text is [polite, casual]; reactions carry a face.
   const talk = {
     music: { name: '음악', say: ['요즘 무슨 노래 들어요?', '요즘 무슨 노래 들어?'], opener: ['요즘 계속 같은 노래만 듣고 있어요. 이어폰이 뜨거워질 정도로요.', '요즘 계속 같은 노래만 듣고 있어. 이어폰이 뜨거워질 정도로.'], hint: '이어폰 줄을 계속 만지작거린다.',
-      hit: [['아, 이거요! 첼로 소리가 처음부터 끝까지 이어지는 곡인데요… 들어 볼래요?', '아, 이거! 첼로 소리가 처음부터 끝까지 이어지는 곡인데… 들어 볼래?'], 'playful'],
-      neutral: [['음… 이것저것요. 요즘은 클래식이 많아요.', '음… 이것저것. 요즘은 클래식이 많아.'], 'neutral'],
+      hit: [['아, 이거요! 통기타랑 목소리만 있는 인디 곡인데요… 들어 볼래요?', '아, 이거! 통기타랑 목소리만 있는 인디 곡인데… 들어 볼래?'], 'playful'],
+      neutral: [['음… 이것저것요. 요즘은 인디 어쿠스틱이 많아요.', '음… 이것저것. 요즘은 인디 어쿠스틱이 많아.'], 'neutral'],
       miss: [['오늘은 음악 얘기는 조금 쉬고 싶어요. 하루 종일 연습했거든요.', '오늘은 음악 얘기는 좀 쉬고 싶어. 하루 종일 연습했거든.'], 'worried'] },
     class: { name: '수업', say: ['오늘 수업 어땠어요?', '오늘 수업 어땠어?'], opener: ['오늘 수업에서 교수님이 재밌는 얘길 하셨어요.', '오늘 수업에서 교수님이 재밌는 얘기 하셨어.'], hint: '가방 밖으로 수업 노트가 삐죽 나와 있다.',
-      hit: [['맞다, 그 얘기 하려고 했어요! 소리도 이야기처럼 편집할 수 있대요.', '맞다, 그 얘기 하려고 했어! 소리도 이야기처럼 편집할 수 있대.'], 'smile'],
+      hit: [['맞다, 그 얘기 하려고 했어요! 같은 멜로디도 코드 보이싱을 바꾸면 느낌이 달라져요.', '맞다, 그 얘기 하려고 했어! 같은 멜로디도 코드 보이싱을 바꾸면 느낌이 달라져.'], 'smile'],
       neutral: [['평소랑 비슷했어요. 과제가 하나 늘었어요.', '평소랑 비슷했어. 과제가 하나 늘었어.'], 'neutral'],
       miss: [['수업 얘기는… 오늘 발표를 좀 망쳐서요.', '수업 얘기는… 오늘 발표를 좀 망쳐서.'], 'worried'] },
     worry: { name: '요즘 고민', say: ['무슨 고민 있어요?', '무슨 고민 있어?'], opener: ['…아, 미안해요. 잠깐 딴생각했어요.', '…아, 미안. 잠깐 딴생각했어.'], hint: '웃고 있지만 어딘가 생각이 많아 보인다.',
-      hit: [['…티 났어요? 사실, 다시 노래해도 될지 계속 고민 중이에요.', '…티 났어? 사실, 다시 노래해도 될지 계속 고민 중이야.'], 'thoughtful'],
+      hit: [['…티 났어요? 사실, 제 자작곡을 다른 사람한테 들려줘도 될지 계속 고민 중이에요.', '…티 났어? 사실, 내 자작곡을 다른 사람한테 들려줘도 될지 계속 고민 중이야.'], 'thoughtful'],
       neutral: [['고민까지는 아니에요. 그냥 조금 피곤해요.', '고민까지는 아니야. 그냥 조금 피곤해.'], 'neutral'],
       miss: [['괜찮아요. 오늘은 그런 얘기 말고 다른 얘기 해요.', '괜찮아. 오늘은 그런 얘기 말고 다른 얘기 하자.'], 'worried'] },
     food: { name: '음식', say: ['뭐 먹고 싶은 거 있어요?', '뭐 먹고 싶은 거 있어?'], opener: ['배고프다…. 아침을 걸렀거든요.', '배고프다…. 아침을 걸렀거든.'], hint: '편의점 쪽을 자꾸 힐끔거린다.',
@@ -341,7 +389,7 @@
     return { index, ...heartStages[index] };
   }
   // Stickers she sends after your reply: one per message kind.
-  const stickers = { walk: ['🌙', '또 걷자'], cafe: ['☕', '다음은 디저트'], concert: ['🎻', '브라보'], checkin: ['🍀', '힘내'], course: ['📒', '메모 완료'] };
+  const stickers = { walk: ['🌙', '또 걷자'], cafe: ['☕', '다음은 디저트'], concert: ['🎸', '앵콜'], checkin: ['🍀', '힘내'], course: ['📒', '메모 완료'] };
   const sticker = key => stickers[key] || stickers.course;
   function pickMessage(before, after) {
     const last = before.memories.at(-1);
@@ -360,14 +408,14 @@
     exam: () => '이번 주 시험이네… 수련도 도서관에서 계속 공부하더라. 너도 공부 좀 해 두면 수련이랑 얘기 잘 통할걸.',
     festival: () => '축제 시작이다! 수련 대학 축제는 처음이래. 같이 한 바퀴 돌아봐.',
     heart: arg => ({ 1: '야, 수련 요즘 너 얘기 은근 많이 한다? 같이 간 데 얘기할 때 표정이 달라.', 2: '너네 둘… 요즘 좀 썸 같던데? 수련한테 물어봤더니 아니라는데 귀가 빨개지더라 ㅋㅋ', 3: '수련이 나한테 "고백은 어떻게 하는 거야?" 이러던데. 모르는 척해 줄게. 너도 마음 정해 둬.' })[arg] || '요즘 수련이랑 잘 지내?',
-    stat: arg => ({ fitness: '수련이 요즘 강가 산책 코스 얘기를 자주 하던데, 같이 걸으려면 체력 좀 길러 둬 ㅋㅋ', knowledge: '수련이 전시랑 책 얘기를 자주 하더라. 공부 좀 해 두면 대화가 잘 통할걸.', sensitivity: '수련은 음악 얘기 할 때 제일 신나 보여. 음악 좀 들어 두면 좋을걸.' })[arg] || '요즘 수련이랑 잘 지내?'
+    stat: arg => ({ fitness: '수련이 요즘 강가 산책 코스 얘기를 자주 하던데, 같이 걸으려면 체력 좀 길러 둬 ㅋㅋ', knowledge: '수련이 자작곡 코드 진행 고민하더라. 화성학 복습해 두면 같이 얘기하기 좋을걸.', sensitivity: '수련은 인디 어쿠스틱 얘기 할 때 제일 신나 보여. 합주랑 가사 얘기도 해 봐.' })[arg] || '요즘 수련이랑 잘 지내?'
   };
   const noticeText = {
     practice: () => '[동네 연습실] 이번 주 대관이 열렸어요. 평일 저녁은 빨리 마감돼요.',
-    exam: arg => `[학과 공지] ${arg} 주간입니다. 도서관은 자정까지 연장 운영합니다.`,
+    exam: arg => `[실용음악과 공지] ${arg} 주간입니다. 실기 평가 곡과 합주실 예약을 확인해 주세요.`,
     festival: arg => `[총학생회] ${arg}가 시작됐어요! 학생회관 앞 공연은 저녁 7시부터.`,
     break: arg => `[학과 공지] ${arg}이 시작됐어요. 연습실 이용 시간이 늘어나요.`,
-    start: arg => `[학과 공지] ${arg}입니다. 새 시간표를 확인해 주세요.`
+    start: arg => `[실용음악과 공지] ${arg}입니다. 화성학·합주·송라이팅 시간표를 확인해 주세요.`
   };
   function pickFriend(before, after) {
     const D = window.LunaData, cal = D.calendar(after.day), soon = D.calendar(after.day + 2);
@@ -441,5 +489,5 @@
     if(window.LunaActivities&&!activities)return null;
     return JSON.parse(JSON.stringify({...r,exploration,...(activities?{activities}:{})}));
   }
-  window.LunaStory = { workScenes, heart, heartStages, sticker, storyGap, rested, intro, dates, events, fresh, script, available, stage, validate, done, messages, pickMessage, messageText, speechIndex, giftLines, reunionLines, touchLines, doing, moodLabel, bondLevel, talk, talkClose, friendText, noticeText, pickFriend, pickNotice, logText, birthdayLines, birthdayGreeting };
+  window.LunaStory = { acousticProject, workScenes, heart, heartStages, sticker, storyGap, rested, intro, dates, events, fresh, script, available, stage, validate, done, messages, pickMessage, messageText, speechIndex, giftLines, reunionLines, touchLines, doing, moodLabel, bondLevel, talk, talkClose, friendText, noticeText, pickFriend, pickNotice, logText, birthdayLines, birthdayGreeting };
 })();

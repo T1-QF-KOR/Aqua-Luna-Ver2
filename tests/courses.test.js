@@ -11,7 +11,7 @@
   test('51 valid courses, 48 six-choice trips, 6 themes and 25 exploration stories',()=>{
     assert(D.dates.length===51&&C.themes.length===6,'catalog counts');assert(new Set(D.dates.map(d=>d.id)).size===51,'duplicate course');
     for(const t of C.themes){const items=D.dates.filter(d=>d.theme===t.id);assert(items.length===8,'theme size');for(const item of items){const script=N.script('date',item.id);assert(script.length===6&&script.every(n=>n.text&&n.choices.filter(c=>!c.requireStat).length===2&&n.choices.length<=3&&n.choices.every(c=>c.label&&c.reply))&&script[1].choices.some(c=>c.requireStat&&c.requireValue>=10),'incomplete scene');assert(D.locations[item.location]&&item.cost>=0,'bad metadata');}}
-    assert(N.events.length===39&&new Set(N.events.map(e=>e.id)).size===39,'event count');
+    assert(N.events.length===42&&new Set(N.events.map(e=>e.id)).size===42,'event count');
   });
   test('Variety gates reject repeated-course grinding and never charge on refusal',()=>{
     let s=E.makeState();const locked=D.dates.find(d=>d.theme==='river'&&d.requiredVisits===2);
@@ -68,7 +68,7 @@
   });
   test('Story content describes a friend before agency entry, without manager or debut claims',()=>{
     const text=JSON.stringify([...Object.values(N.dates),...N.events.map(e=>e.nodes)]);
-    assert(!text.includes('매니저')&&!text.includes('함께 일하시는'),'old role remains');assert(N.events[0].nodes[0].text.includes('오랜 친구'),'friend premise');
+    assert(!text.includes('매니저')&&!text.includes('함께 일하시는'),'old role remains');assert(N.events[0].nodes[0].text.includes('실용음악 전공 동기'),'friend premise');
     assert(N.events.find(e=>e.id==='prelude-next').nodes[1].text.includes('어느 엔터테인먼트에도 들어가지 않았습니다'),'timeline crossed');
   });
   const all=[...Object.values(N.dates).flat(),...N.events.flatMap(e=>e.nodes)],unique=new Set(all.map(n=>n.text)),strings=new Set(all.flatMap(n=>[n.text,...n.choices.flatMap(c=>[c.label,c.reply])]));

@@ -4,10 +4,13 @@ import fs from 'node:fs/promises';
 import vm from 'node:vm';
 import { Blob } from 'node:buffer';
 const root = new URL('../', import.meta.url);
+const dateArg = process.argv.find(arg => arg.startsWith('--date='))?.slice(7);
+const runDate = dateArg || new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+if (!/^\d{4}-\d{2}-\d{2}$/.test(runDate)) throw Error('Expected --date=YYYY-MM-DD');
 const source = ['data','story','courses','journeys','activities','engine'];
 const suites = {};
 let assets;
-for (const name of ['engine','story','courses','activities','growth','intro','bond','pacing','somesome']) {
+for (const name of ['engine','story','courses','activities','growth','intro','bond','pacing','somesome','acoustic']) {
   const output = { textContent: '' }, saved = new Map();
   const context = { console, Blob, document: { getElementById: () => output, body: { dataset: {} } }, localStorage: { getItem: k => saved.get(k) ?? null, setItem: (k,v) => saved.set(k,v), removeItem: k => saved.delete(k) } };
   context.window = context;
@@ -21,8 +24,8 @@ const missing=[];
 for (const asset of assets) { try { await fs.access(new URL(asset,root)); } catch { missing.push(asset); } }
 for (const file of (await fs.readdir(new URL('src/',root))).filter(f=>f.endsWith('.js'))) new vm.Script(await fs.readFile(new URL(`src/${file}`,root),'utf8'),{filename:file});
 const passed=Object.values(suites).every(s=>!s.includes('FAIL'))&&!missing.length;
-const report={date:'2026-10-11',runtime:'Node.js VM; DOM output stub; no browser rendering',passed,suites,assetPaths:assets.length,missing,syntax:'passed',browserVisualQA:'not run: CUA Safari cgWindowNotFound'};
-await fs.writeFile(new URL('qa/core-results-2026-10-11.json',root),JSON.stringify(report,null,2)+'\n');
+const report={date:runDate,runtime:'Node.js VM; DOM output stub; no browser rendering',passed,suites,assetPaths:assets.length,missing,syntax:'passed',browserVisualQA:'Not part of this VM run; see separate browser test reports.'};
+await fs.writeFile(new URL(`qa/core-results-${runDate}.json`,root),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify({passed,suites:Object.fromEntries(Object.entries(suites).map(([k,v])=>[k,v.split('\n').find(l=>/\d+\/\d+ passed/.test(l))])),assetPaths:assets.length,missing}));
-if (!passed) throw Error('Core regression failed; see qa/core-results-2026-10-11.json');
+if (!passed) throw Error(`Core regression failed; see qa/core-results-${runDate}.json`);
 export default report;

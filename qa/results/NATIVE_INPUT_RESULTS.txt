@@ -1,5 +1,7 @@
 ﻿PASS Initial action receives browser focus
-PASS Enter starts a new game and focuses the work action
+PASS Keyboard new game opens the prologue
+PASS Skipping the prologue focuses the first story action
+PASS Tab reaches the work action
 PASS Keyboard opens work menu with visible focus
 PASS Tab enters first available work action
 PASS Enter opens resource preview without spending time

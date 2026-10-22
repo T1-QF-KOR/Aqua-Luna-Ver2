@@ -317,18 +317,30 @@
         meter.append(ready);
       }
       body.append(meter);
+      const project = el('section', 'note-section acoustic-project');
+      project.append(el('h3', '', '함께 만드는 어쿠스틱 데모'));
+      N.acousticProject(state).forEach(step => {
+        const item = el('div', 'acoustic-project-step');
+        item.append(el('p', '', `${step.complete ? '✓' : step.ready ? '♪' : '○'} ${step.title}`));
+        if (!step.complete) item.append(el('p', 'muted-note', step.hint));
+        if (step.ready) item.append(button('함께 작업하기', 'secondary', () => beginStory(step.id)));
+        project.append(item);
+      });
+      const demo = state.story.completed.find(e => e.id === 'acoustic-demo');
+      if (demo) project.append(el('p', 'muted-note', demo.choices[0] === 'private' ? '데모는 둘만 듣는 파일로 보관했어요. 공유는 수련이 다시 결정해요.' : '수련이 먼저 하윤에게 데모를 들려주기로 했어요.'));
+      body.append(project);
       const next = N.events.find(e => !N.done(state, e.id) && !e.ready(state));
       if (next) body.append(el('p', 'story-hint', `다음 이야기의 단서 · ${next.hint}`));
       const tastes = el('section', 'note-section'); tastes.append(el('h3', '', '알게 된 취향'));
       const known = D.gifts.filter(g => state.story.tastes?.[g.id]);
       if (known.length) { const ul = el('ul', 'note-tastes'); known.forEach(g => ul.append(el('li', state.story.tastes[g.id], `${g.icon} ${g.name} — ${tasteName[state.story.tastes[g.id]]}`))); tastes.append(ul); }
-      tastes.append(el('p', 'muted-note', `${known.length} / ${D.gifts.length} · 작은 선물로 알아 갈 수 있어요. 좋아하는 것: 클래식, 첼로, 조용한 카페`));
+      tastes.append(el('p', 'muted-note', `${known.length} / ${D.gifts.length} · 작은 선물로 알아 갈 수 있어요. 좋아하는 것: 통기타, 인디 어쿠스틱, 조용한 카페`));
       body.append(tastes);
       const memory = el('section', 'note-section'); memory.append(el('h3', '', '함께한 기록'));
       const firstDate = state.memories[0], list = el('dl', 'profile-list');
       [['함께한 외출', `${state.story.dateCount}회`], ['지킨 약속', `${state.story.keptPromises}번`], ['함께 읽은 이야기', `${state.story.completed.length}편`], ['최근 나눈 이야기', state.story.talks?.length ? state.story.talks.slice(-3).reverse().map(t => `${t.day}일째 ${t.score}점`).join(' · ') : '아직 없어요'], ['첫 외출', firstDate ? `${firstDate.day}일째 · ${D.dates.find(d => d.id === firstDate.date)?.name || ''}` : '아직 없어요'], ['요즘의 수련', `${N.doing[state.location]?.[D.timeForAp(state.ap)] || ''} · ${N.moodLabel(state.growth.mood)}`]].forEach(([k, v]) => list.append(el('dt', '', k), el('dd', '', v)));
       memory.append(list); body.append(memory);
-      const profileList = el('dl', 'profile-list'); [['시점','Aqua Luna 본편 이전'],['소속','엔터테인먼트 입사 전 · 소속 없음'],['당신과의 관계','같은 전공·같은 학년에서 친해진 대학 친구'],['지금의 일상','대학에 다니며 동네 연습실에서 노래하는 중'],['성격','차분함 · 깊은 감수성 · 말보다 행동'],['호감',`${state.affection} / 100`],['신뢰',`${state.trust} / 100`],['현재 의상',D.outfits.find(o => o.id === state.outfit).name]].forEach(([k,v]) => profileList.append(el('dt','',k), el('dd','',v)));
+      const profileList = el('dl', 'profile-list'); [['시점','Aqua Luna 본편 이전'],['소속','엔터테인먼트 입사 전 · 소속 없음'],['전공','실용음악'],['당신과의 관계','같은 실용음악 전공·같은 학년의 대학 친구'],['지금의 일상','통기타로 자작곡을 쓰며 합주·데모·작은 라이브를 준비하는 중'],['성격','차분함 · 깊은 감수성 · 말보다 행동'],['호감',`${state.affection} / 100`],['신뢰',`${state.trust} / 100`],['현재 의상',D.outfits.find(o => o.id === state.outfit).name]].forEach(([k,v]) => profileList.append(el('dt','',k), el('dd','',v)));
       const details = el('details', 'note-profile'); details.append(el('summary', '', '수련 프로필'), profileList); details.open = true; body.append(details);
     });
   }
@@ -1254,7 +1266,7 @@
     const label = el('label', 'settings-row', '배경음 크기'); const input = el('input'); input.type = 'range'; input.min = 0; input.max = 100; input.value = prefs.volume; input.setAttribute('aria-label', '배경음 크기'); input.addEventListener('input', () => { prefs.volume = Number(input.value); savePrefs(); }); label.append(input); body.append(label, el('p', 'settings-note', '상단 음표 버튼으로 배경음을 켜거나 끌 수 있어요. 음원 파일 없이 합성한 잔잔한 선율입니다.\n모든 활동은 버튼으로 선택합니다. Tab으로 이동하고 Enter로 선택하며, Esc로 창을 닫을 수 있어요. 게임 중 F5는 빠른 저장, F9는 빠른 불러오기입니다.'));
     if (!active) body.append(button('저장 파일 불러오기', 'secondary', () => slots('load')));
   }); }
-  function legacyProfile() { openModal('수련 · 水蓮', body => { body.append(el('p', 'profile-quote', '무대 위의 이름보다 먼저, 당신의 친구였던 수련.')); const list = el('dl', 'profile-list'); [['시점','Aqua Luna 본편 이전'],['소속','엔터테인먼트 입사 전 · 소속 없음'],['당신과의 관계','같은 전공·같은 학년에서 친해진 대학 친구'],['지금의 일상','대학에 다니며 동네 연습실에서 노래하는 중'],['좋아하는 것','클래식, 첼로, 조용한 카페'],['성격','차분함 · 깊은 감수성 · 말보다 행동'],['호감',`${state.affection} / 100`],['신뢰',`${state.trust} / 100`],['현재 의상',D.outfits.find(o => o.id === state.outfit).name]].forEach(([k,v]) => list.append(el('dt','',k), el('dd','',v))); body.append(list, el('p','muted-note','Aqua Luna의 세계관과 수련의 기본 성격을 잇는 과거 이야기입니다. 현재 관계: ' + N.stage(state) + ' · 관계와 이야기에서 함께한 선택과 다음 단서를 확인해 보세요.')); }); }
+  function legacyProfile() { openModal('수련 · 水蓮', body => { body.append(el('p', 'profile-quote', '무대 위의 이름보다 먼저, 당신의 친구였던 수련.')); const list = el('dl', 'profile-list'); [['시점','Aqua Luna 본편 이전'],['소속','엔터테인먼트 입사 전 · 소속 없음'],['전공','실용음악'],['당신과의 관계','같은 실용음악 전공·같은 학년의 대학 친구'],['지금의 일상','통기타로 자작곡을 쓰며 합주·데모·작은 라이브를 준비하는 중'],['좋아하는 것','통기타, 인디 어쿠스틱, 조용한 카페'],['성격','차분함 · 깊은 감수성 · 말보다 행동'],['호감',`${state.affection} / 100`],['신뢰',`${state.trust} / 100`],['현재 의상',D.outfits.find(o => o.id === state.outfit).name]].forEach(([k,v]) => list.append(el('dt','',k), el('dd','',v))); body.append(list, el('p','muted-note','Aqua Luna의 세계관과 수련의 기본 성격을 잇는 과거 이야기입니다. 현재 관계: ' + N.stage(state) + ' · 관계와 이야기에서 함께한 선택과 다음 단서를 확인해 보세요.')); }); }
   $('new-game').addEventListener('click', () => hasSession || E.storage.load(0) ? confirm('새로운 일상', unsaved ? '현재 저장되지 않은 진행이 있습니다. 필요한 경우 먼저 파일로 보관해 주세요. 새로 시작하면 현재 진행이 바뀝니다.' : '새로 시작하면 자동 저장 기록이 바뀝니다. 수동 저장 기록은 유지됩니다.', '새로 시작', () => begin()) : begin());
   $('continue-game').addEventListener('click', () => { const saved = hasSession ? state : E.storage.load(0); if (saved) begin(saved); else toast('불러올 수 있는 자동 저장이 없어요.'); });
   $('brand').addEventListener('click', () => { if (active) { persist(); showTitle(); } });

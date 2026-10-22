@@ -1,0 +1,38 @@
+﻿{
+    "status":  "passed",
+    "date":  "2026-10-21",
+    "mode":  "Updated game payload; unchanged launcher binary and save origin",
+    "files":  [
+                  {
+                      "file":  "src/data.js",
+                      "sha256":  "E97C43E8704946F1DE7FA6B30961C060DD084373E8D960F5A93F649CF69E635C",
+                      "match":  true
+                  },
+                  {
+                      "file":  "src/story.js",
+                      "sha256":  "731B4C284C8ABEA566265F1C6FF4A1A3B7D2418241C1FFFB2473FCA8884489AD",
+                      "match":  true
+                  },
+                  {
+                      "file":  "src/courses.js",
+                      "sha256":  "DC0198E5B23867652E63D219C149DAE27564F103ECD15005564C6F842EC6A3DF",
+                      "match":  true
+                  },
+                  {
+                      "file":  "src/engine.js",
+                      "sha256":  "06663445238B9DB058624751490995C13C35B940F9A7D20444BBCF34D12E9BB9",
+                      "match":  true
+                  },
+                  {
+                      "file":  "src/app.js",
+                      "sha256":  "8A68EB07C785146F72C61795B905FAA3C6AE5CF66F792AD817BACDEC97D7E071",
+                      "match":  true
+                  },
+                  {
+                      "file":  "assets/environment/acoustic-live.png",
+                      "sha256":  "0E2D241AC16ECCAFC3DEBFB0BF70C102CA1B30B7EA829E791545D3C8703FB4A7",
+                      "match":  true
+                  }
+              ],
+    "nativeRendering":  "Not verified in this run"
+}
