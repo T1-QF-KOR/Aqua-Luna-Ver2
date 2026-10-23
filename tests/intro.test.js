@@ -17,7 +17,7 @@
     // Validation normalizes optional story records, so compare normalized base states.
     const expected = E.validate({ ...baseline, intro: null }); delete expected.intro;
     assert(JSON.stringify(after) === JSON.stringify(expected), 'intro changed gameplay');
-    assert(!E.act(s, 'work', 'cafe').error, 'daily play did not unlock');
+    assert(!E.act(s, 'work', 'edit').error, 'daily play did not unlock');
   });
   test('Previous, skip, stale clicks and completed callbacks are safe', () => {
     const start = E.makeState({ intro: true });
@@ -33,12 +33,12 @@
   });
   test('Pending prologue blocks daily actions, schedules and story starts', () => {
     const s = E.makeState({ intro: true });
-    for (const [type,id] of [['work','cafe'],['date','walk'],['rest'],['nextDay'],['train','study'],['equipNeckAccessory','headset']]) assert(E.act(s,type,id).error, type + ' bypassed intro');
+    for (const [type,id] of [['work','edit'],['date','walk'],['rest'],['nextDay'],['train','study'],['equipNeckAccessory','headset']]) assert(E.act(s,type,id).error, type + ' bypassed intro');
     assert(E.setSchedule(s, [{type:'rest',id:'rest'}]).error, 'schedule bypass');
     assert(E.startStory(s,'hello').error, 'story bypass');
   });
   test('Legacy and progressed saves continue without a surprise prologue', () => {
-    let s = E.act(E.makeState(),'work','cafe').state; delete s.intro;
+    let s = E.act(E.makeState(),'work','edit').state; delete s.intro;
     const loaded = E.validate(s);
     assert(loaded && loaded.intro === null && !E.introPending(loaded), 'legacy replay');
     assert(loaded.money === s.money && loaded.journal.length === 1, 'legacy data changed');
@@ -51,7 +51,7 @@
   test('Corrupt progress and contradictory active sessions are rejected', () => {
     const s = E.makeState({ intro: true });
     for (const intro of [{step:-1},{step:Math.max(N.intro.length,9)+1},{step:0.5},{step:'0'},[],{},false]) assert(!E.validate({...s,intro}), 'invalid progress accepted');
-    const progressed = E.act(E.makeState(),'work','cafe').state;
+    const progressed = E.act(E.makeState(),'work','edit').state;
     assert(!E.validate({...progressed,intro:{step:0}}), 'progressed save accepted pending intro');
     const story = E.startStory(E.makeState(),'hello').state;
     assert(!E.validate({...story,intro:{step:0}}), 'simultaneous story accepted');

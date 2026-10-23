@@ -42,13 +42,14 @@
     let fresh=E.makeState();for(let i=0;i<12;i++){assert(!ok(E.act(fresh,'work','edit')).result.encounter,'no drop-in before hello');fresh=ok(E.act(fresh,'nextDay')).state;}
     let s=hello(),met=0,days=0;
     for(let day=1;day<=30;day++){
-      const a=E.act(s,'work','cafe'),b=E.act(s,'work','cafe');assert(JSON.stringify(a)===JSON.stringify(b),'preview equals result');
+      const id=['수','금','토'].includes(D.calendar(s.day).weekday)?'cafe':'edit';
+      const a=E.act(s,'work',id),b=E.act(s,'work',id);assert(JSON.stringify(a)===JSON.stringify(b),'preview equals result');
       const r=ok(a);days++;
       if(r.result.encounter){
         met++;const e=r.result.encounter;assert(typeof e.line==='string'&&e.line.length>10&&e.title&&e.face,'scene text');
         assert(r.state.story.workMet===r.state.day&&r.state.story.lastMet===r.state.day,'counts as meeting');
         assert(e.mood===r.state.growth.mood-s.growth.mood&&e.mood>0&&e.affection>=0,'small, visible effect');
-        assert(!ok(E.act(r.state,'work','edit')).result.encounter,'only once a day');
+        assert(E.act(r.state,'work','edit').error,'a second shift cannot run');
         roundtrip(r.state);
       }
       s=ok(E.act(r.state,'nextDay')).state;
@@ -56,14 +57,14 @@
     assert(met>=6&&met<=days*0.5,'drop-in rate '+met+'/'+days);
   });
   test('Drop-in lines switch to casual speech after 말 놓기',()=>{
-    let s=hello();s.story.speech='casual';let e=null;for(let i=0;i<10&&!e;i++){e=ok(E.act(s,'work','event')).result.encounter;if(!e)s=ok(E.act(s,'nextDay')).state;}
+    let s=hello();s.story.speech='casual';let e=null;for(let i=0;i<10&&!e;i++){if(['토','일'].includes(D.calendar(s.day).weekday))e=ok(E.act(s,'work','event')).result.encounter;if(!e)s=ok(E.act(s,'nextDay')).state;}
     assert(e&&N.workScenes.event.some(x=>x.line[1]===e.line),'casual line used');
   });
   test('Run all: the whole plan in one call, stale clicks rejected, partial stop keeps finished work',()=>{
-    let s=E.makeState();s=ok(E.setSchedule(s,[{type:'train',id:'study'},{type:'work',id:'cafe'},{type:'rest',id:'rest'}])).state;
+    let s={...E.makeState(),day:3};s=ok(E.setSchedule(s,[{type:'train',id:'study'},{type:'work',id:'cafe'},{type:'rest',id:'rest'}])).state;
     const r=ok(E.runAllSchedule(s,JSON.stringify(s)));assert(r.results.length===3&&!r.state.growth.schedule.length&&r.state.ap===0&&!r.stopped,'all three ran');
     assert(E.runAllSchedule(s,'stale').error,'stale state rejected');
-    let low=E.makeState();low.energy=40;low=ok(E.setSchedule(low,[{type:'train',id:'study'},{type:'work',id:'event'}])).state;
+    let low={...E.makeState(),day:6};low.energy=40;low=ok(E.setSchedule(low,[{type:'train',id:'study'},{type:'work',id:'event'}])).state;
     const p=ok(E.runAllSchedule(low,JSON.stringify(low)));assert(p.results.length===1&&p.stopped&&p.state.growth.schedule.length===1&&p.state.ap===2,'stopped after first');
     roundtrip(p.state);
   });

@@ -30,7 +30,7 @@
   test('Legacy concert, gift discoveries and mid-scene choices remain loadable',()=>{
     let s=E.makeState();s=check(E.giveGift(s,'cello-card'));assert(s.story.tastes['cello-card']==='liked','legacy taste');s=next(s);
     s=check(E.giveGift(s,'score-clip'));assert(s.story.tastes['score-clip']==='loved','legacy gift taste');
-    s=next(s);s=check(E.act(s,'work','event'));s=next(s);s.trust=20;
+    s=next(s);while(!['토','일'].includes(D.calendar(s.day).weekday))s=next(s);s=check(E.act(s,'work','event'));s=next(s);s.trust=20;
     s=check(E.act(s,'date','concert'));s=check(E.chooseStory(s,'share',0));
     assert(E.storage.save(1,s),'concert save');s=E.storage.load(1);assert(s.story.active.id==='concert','legacy concert id');
     s=finish(s);assert(s.memories.at(-1).date==='concert','concert memory');

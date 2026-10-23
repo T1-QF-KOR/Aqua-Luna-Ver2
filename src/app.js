@@ -198,7 +198,7 @@
     $('rest-button').disabled = !!E.reason(state, 'rest'); $('rest-button').title = E.reason(state, 'rest') || '기력을 회복합니다';
     const recent = state.journal.filter(j => j.day === state.day).slice(-12);
     const feed = $('activity-feed'); feed.replaceChildren();
-    const intro = el('div', 'feed-entry'); intro.append(el('small', '', `DAY ${String(state.day).padStart(2,'0')} · 일상`), el('p', '', `${state.day}일째의 하루입니다. 남은 시간과 소지금을 살펴보고 오늘 할 일을 선택해 주세요.`)); feed.append(intro);
+    const intro = el('div', 'feed-entry'); intro.append(el('small', '', `DAY ${String(state.day).padStart(2,'0')} · 일상`), el('p', '', `${D.calendar(state.day).weekday}요일 · 수업과 왕복 통학을 제외한 자유 시간 ${state.ap}칸. 평일 첫 활동으로 학식을 먹거나, 근무와 짧은 만남을 맞춰 보세요.`)); feed.append(intro);
     recent.forEach((j, index) => { const row = el('div', `feed-entry${index === recent.length - 1 ? ' latest' : ''}`); const heading = el('small', '', j.title); if (j.money) heading.append(el('em', '', `${j.money > 0 ? '+' : '−'}${won(Math.abs(j.money))}`)); row.append(heading, el('p', '', j.text)); feed.append(row); });
     feed.scrollTop = feed.scrollHeight;
     const latest = state.journal.at(-1); $('message-title').textContent = latest?.title || '우리의 일상을 시작해 볼까요?'; $('message-text').textContent = latest?.text || '일해서 돈을 벌고, 수련과 함께할 시간을 계획해 보세요.';
@@ -650,14 +650,14 @@
   function activities(type) {
     const work = type === 'work';
     openModal(work ? '일하러 가기' : '데이트 초대', body => {
-      body.append(el('p', 'modal-description', work ? `주인공이 직접 일해서 돈을 벌어요. 현재 ${won(state.money)} · 남은 시간 ${state.ap}칸 · 기력 ${state.energy}` : `입사 전, 친구 수련과 함께 고르는 ${D.dates.length}개의 외출. 하루 한 번 출발하며 비용과 시간이 사용됩니다. 기본 코스는 3번, 탐방 코스는 6번의 선택으로 이어져요.`));
+      body.append(el('p', 'modal-description', work ? `근무·외주 납품은 하루 한 번. 카페는 수·금·토 4시간, 행사는 토·일 8시간이며 정산은 플레이 편의를 위해 즉시 지급해요. 현재 ${won(state.money)} · 남은 시간 ${state.ap}칸 · 기력 ${state.energy}` : `공강과 귀가 시간에 맞춰 친구 수련과 함께 고르는 ${D.dates.length}개의 외출. 하루 한 번 출발하며 비용과 시간이 사용됩니다. 학식·카페 비용은 두 사람 합계예요. 기본 코스는 3번, 탐방 코스는 6번의 선택으로 이어져요.`));
       if (state.story.active) body.append(button('진행 중인 이야기 이어가기', 'primary', storyScene));
       const filters=el('div','course-filters');
       if(!work){
         body.append(button(`탐방 수첩 · ${Object.keys(C.entries(state)).length}/48곳`,'secondary',courseBook));
         const search=el('input');search.type='search';search.placeholder='코스 이름이나 내용 검색';search.value=courseSearch;search.setAttribute('aria-label','데이트 코스 검색');search.id='course-search';
         function select(label,id,options,value){const wrap=el('label','dress-field',label),input=el('select');input.id=id;options.forEach(([v,t])=>{const o=el('option','',t);o.value=v;input.append(o);});input.value=value;wrap.append(input);filters.append(wrap);return input;}
-        const theme=select('테마','course-theme',[['all','모든 테마'],['classic','익숙한 세 코스'],...C.themes.map(t=>[t.id,t.name])],courseTheme);
+        const theme=select('테마','course-theme',[['all','모든 테마'],['classic','학식과 익숙한 외출'],...C.themes.map(t=>[t.id,t.name])],courseTheme);
         const status=select('방문 상태','course-status',[['all','모든 코스'],['new','아직 가지 않은 곳'],['ready','지금 출발 가능한 곳'],['visited','다녀온 곳']],courseStatus);
         filters.prepend(search);body.append(filters);
         search.addEventListener('input',()=>{courseSearch=search.value;page=0;draw();});
@@ -678,11 +678,12 @@
       matches.slice(page*12,page*12+12).forEach(item => {
         const row = el('article', 'activity-card'); row.append(el('span', 'card-icon', item.icon));
         const copy = el('div'); copy.append(el('h3', '', item.name), el('p', '', item.description));
+        if(work)copy.prepend(el('small','course-tag',item.sub));
         if(!work)copy.prepend(el('small','course-tag',`${item.sub} · ${seen(item.id)?'다녀온 곳':'새로운 곳'} · ${N.script('date',item.id).length}장면`));
         const costs = el('div', 'costs'); costs.append(el('span', '', `시간 ${item.ap}칸`), el('span', '', `기력 −${item.energy}`));
         if (!work) costs.append(el('span', '', `완료 기본 호감 +${Math.min(100-state.affection,item.affection)} · 신뢰 +${Math.min(100-state.trust,item.trust)} · 선택에 따라 추가 변화`)); copy.append(costs); row.append(copy);
         const action = el('div', 'card-action'); const reason = E.reason(state, type, item.id);
-        const b = button(work ? `+${won(item.pay)} · 일하기` : item.cost ? `${won(item.cost)} · 초대` : '무료 · 함께 걷기', 'primary', () => confirmActivity(type,item));
+        const b = button(work ? `+${won(item.pay)} · 일하기` : item.cost ? `${won(item.cost)} · 초대` : '무료 · 초대', 'primary', () => confirmActivity(type,item));
         b.disabled = !!reason; b.dataset.actionId = item.id; action.append(b); if (reason) action.append(el('span', 'blocked-reason', reason)); row.append(action); list.append(row);
       });
       if(!matches.length)list.append(el('p','story-hint','조건에 맞는 코스가 없어요. 테마나 방문 상태를 바꿔 보세요.'));
@@ -800,6 +801,7 @@
       body.append(el('p','modal-description',`${state.day}일째 · 남은 시간 ${state.ap}칸 · 기력 ${state.energy} · 수련의 기분 ${g.mood}/100`));
       const stats = el('div','growth-stats');
       Object.entries(E.statNames).forEach(([key,name]) => stats.append(el('p','',`${name} ${g.stats[key]} / 100`)));
+      body.append(el('p','story-hint',`수업과 왕복 통학은 기본 생활로 두고, 남는 자유 시간 3칸을 계획해요. 시계는 정확한 수업 시각이 아닌 진행 구간입니다. 오늘은 ${D.calendar(state.day).weekday}요일 · 카페 수·금·토 / 행사 토·일 · 근무·납품 하루 1회.`));
       body.append(stats, el('p','muted-note','공부·운동·음악 감상은 능력치 +4, 아르바이트는 관련 능력치 +2. 능력치 8과 2일째부터 새 이야기가 열리고, 12부터 특별한 대화를 선택할 수 있어요.'));
       const guide = el('ul','stat-guide'); [['fitness','물길과 바람 · 도시의 빈 시간 · 달빛 부두 산책'],['knowledge','책과 그림 · 손으로 남긴 하루 · 공연'],['sensitivity','식탁의 온도 · 작은 음악 여행 · 카페, 그리고 잠깐 이야기의 속마음 힌트(20)']].forEach(([k,t]) => { const li = el('li'); li.append(el('span',`stat-chip ${k}`,E.statNames[k]), document.createTextNode(` ${g.stats[k]} — 데이트 특별 선택지: ${t}. 코스 순서에 따라 10·16·22·28이 필요해요.`)); guide.append(li); }); body.append(guide);
       const options = [...E.training.map(t => ({type:'train',id:t.id,name:`${t.name} · 시간 1 · 기력 -${t.energy}`})), ...D.jobs.map(j=>({type:'work',id:j.id,name:`${j.name} · 시간 ${j.ap} · 기력 -${j.energy} · ${won(j.pay)}`})),{type:'rest',id:'rest',name:'잠깐 쉬기 · 시간 1 · 기력 +35'}];
@@ -813,7 +815,7 @@
       if(!g.schedule.length)body.append(el('p','muted-note','활동을 예약한 뒤 하나씩 실행해 주세요. 예약에는 시간이나 비용이 들지 않아요.'));
       if(g.schedule.length){
         const expected=JSON.stringify(state),first=g.schedule[0],blocked=E.reason(state,first.type,first.id);
-        const run=button('다음 일정 실행','primary',()=>{const r=E.runSchedule(state,expected);if(r.error){toast(r.error);return;}state=r.state;render();persist();if(first.type==='work') showWorkPresentation([first.id],true); else schedulePlanner();if(r.result.encounter){toast(`${r.result.encounter.title} · 수련이 잠깐 들렀어요`);showReaction({affection:r.result.encounter.affection,mood:r.result.encounter.mood});}});
+        const run=button('다음 일정 실행','primary',()=>{const r=E.runSchedule(state,expected);if(r.error){toast(r.error);return;}state=r.state;render();persist();if(first.type==='work') showWorkPresentation([first.id],true); else schedulePlanner();if(r.result.encounter){toast(`${r.result.encounter.title} · 수련의 짧은 안부가 왔어요`);showReaction({affection:r.result.encounter.affection,mood:r.result.encounter.mood});}});
         run.disabled=!!blocked;body.append(run);
         // One click for the whole plan; stops at the first entry that can no longer run.
         const all=button(`남은 일정 ${g.schedule.length}개 모두 실행`,'secondary',()=>{const r=E.runAllSchedule(state,expected);if(r.error){toast(r.error);return;}state=r.state;render();persist();closeModal();setChoosing(false);
@@ -854,7 +856,7 @@
   function prepareDate(item) {
     let outfit = state.outfit, legwear = state.legwear, neck = state.neckAccessory;
     openModal(`${item.name} · 외출 준비`, body => {
-      body.append(el('p', 'modal-description', `${timeLabel(D.timeForAp(state.ap))}에 출발해요. 장소와 코디를 확인해 주세요. ${won(item.cost)} · 시간 ${item.ap}칸 · 기력 ${item.energy}. 출발 전까지 돈과 시간이 줄지 않아요.`));
+      body.append(el('p', 'modal-description', `${item.departureTime ? '점심시간' : timeLabel(D.timeForAp(state.ap))}에 만나요. 장소와 코디를 확인해 주세요. ${won(item.cost)} · 시간 ${item.ap}칸 · 기력 ${item.energy}. 출발 전까지 돈과 시간이 줄지 않아요.`));
       const layout = el('div', 'dressing-layout'), preview = artScene(item.location, outfit, legwear), controls = el('div', 'dressing-controls');
       layout.append(preview, controls); body.append(layout);
       controls.append(el('small', 'product-kind', D.locations[item.location].name), el('h3', '', '오늘, 함께할 모습'));

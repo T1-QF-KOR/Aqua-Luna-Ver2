@@ -1,14 +1,15 @@
 /* Economy values are provisional. Authored narrative lives in story.js. */
 (() => {
   const jobs = [
-    { id: 'cafe', name: '카페 아르바이트', sub: '망원동의 작은 카페', description: '주문을 받고 커피를 내리는 짧은 근무.', pay: 45000, energy: 20, ap: 1, icon: '☕' },
-    { id: 'edit', name: '영상 편집 외주', sub: '집중이 필요한 오후', description: '짧은 영상의 자막과 컷 편집을 마무리합니다.', pay: 75000, energy: 35, ap: 1, icon: '▣' },
-    { id: 'event', name: '행사 운영 보조', sub: '하루를 부지런히', description: '행사 준비부터 현장 정리까지 돕습니다.', pay: 120000, energy: 50, ap: 2, icon: '✧' }
+    { id: 'cafe', name: '카페 아르바이트', sub: '수·금·토 · 4시간 근무', description: '미리 잡아 둔 수·금·토 근무. 주문과 설거지를 마치고 교대합니다. 하루 한 번, 4시간 일해 45,000원을 받아요.', weekdays: ['수','금','토'], hours: 4, pay: 45000, energy: 20, ap: 1, icon: '☕' },
+    { id: 'edit', name: '영상 편집 외주', sub: '사전 수주한 짧은 영상 1편', description: '미리 맡은 영상 한 편의 자막·컷 수정과 납품을 마무리합니다. 하루 작업 한 건만 정산하며, 다른 근무와 겹쳐 잡지 않아요.', pay: 75000, energy: 35, ap: 1, icon: '▣' },
+    { id: 'event', name: '행사 운영 보조', sub: '토·일 · 8시간 근무', description: '주말에 신청한 현장 근무. 준비·안내·정리를 포함해 8시간 일하고, 식사·휴식 시간은 따로 확보합니다.', weekdays: ['토','일'], hours: 8, pay: 120000, energy: 50, ap: 2, icon: '✧' }
   ];
   const dates = [
-    { id: 'walk', name: '달빛 부두 산책', sub: '돈보다 소중한 시간', description: '한강을 따라 천천히 걸으며 함께 시간을 보냅니다.', cost: 0, energy: 10, ap: 1, affection: 3, trust: 4, requiredTrust: 0, icon: '☾' },
-    { id: 'cafe', name: '조용한 카페', sub: '따뜻한 두 잔의 여유', description: '수련이 좋아하는 조용한 카페에서 쉬어 갑니다.', cost: 35000, energy: 10, ap: 1, affection: 6, trust: 3, requiredTrust: 0, icon: '☕' },
-    { id: 'concert', name: '발라드 라이브', sub: '한 소절의 마음이 가까운 밤', description: '작은 라이브 카페에서 피아노 반주와 보컬이 전하는 발라드 무대를 함께 듣습니다.', cost: 90000, energy: 20, ap: 2, affection: 10, trust: 6, requiredTrust: 20, icon: '♫' }
+    { id: 'walk', name: '달빛 부두 산책', sub: '귀가 전 짧게 · 무료', description: '돌아갈 버스와 환승 시간을 먼저 확인하고, 한강의 짧은 구간만 함께 걷습니다.', cost: 0, energy: 10, ap: 1, affection: 3, trust: 4, requiredTrust: 0, icon: '☾' },
+    { id: 'cafe', name: '조용한 카페', sub: '음료 두 잔 · 2인 합계', description: '공강이나 알바 전의 짧은 약속. 음료 두 잔을 사고 다음 일정 전까지 이야기합니다.', cost: 12000, energy: 10, ap: 1, affection: 6, trust: 3, requiredTrust: 0, icon: '☕' },
+    { id: 'concert', name: '발라드 라이브', sub: '미리 비워 둔 날 · 2인 티켓', description: '둘 다 근무 없는 날을 골라 예매하는 특별한 외출. 공연 종료 후 환승할 여유까지 잡습니다.', cost: 90000, energy: 20, ap: 2, affection: 10, trust: 6, requiredTrust: 20, icon: '♫' },
+    { id: 'lunch', name: '공강 사이 학식', sub: '평일 점심 · 식권 두 장', description: '학생식당에서 함께 먹는 점심. 1인 5,000원, 두 사람 합계 10,000원을 내가 결제해요. 평일 첫 활동으로 선택합니다.', weekdays: ['월','화','수','목','금'], firstActivity: true, departureTime: 'afternoon', cost: 10000, energy: 5, ap: 1, affection: 3, trust: 4, requiredTrust: 0, icon: '🍚' }
   ];
   const outfits = [
     { id: 'casual', name: '익숙한 차콜 후드', sub: '수련의 평소 모습', description: '편안한 후드와 목에 걸친 헤드폰.', cost: 0, image: 'assets/characters/sulien.png', color: '#737880' },
@@ -133,9 +134,10 @@
     cafe: { name: '망원동 · 조용한 카페', image: 'assets/environment/cafe.png' },
     practice: { name: '망원동 · 대여 연습실', image: 'assets/environment/practice.png' },
     concert: { name: '망원동 · 발라드 라이브 카페', image: 'assets/environment/acoustic-live.png' },
-    rooftop: { name: '동네 건물 · 옥상 쉼터', image: 'assets/environment/rooftop.png' }
+    rooftop: { name: '동네 건물 · 옥상 쉼터', image: 'assets/environment/rooftop.png' },
+    cafeteria: { name: '교내 · 학생식당', image: 'assets/environment/cafe-day.png' }
   };
-  dates.forEach(d => d.location = d.id === 'walk' ? 'pier' : d.id);
+  dates.forEach(d => d.location = ({ walk: 'pier', lunch: 'cafeteria' })[d.id] || d.id);
   const expressions = [{ id: 'neutral', name: '차분한 표정' }, { id: 'smile', name: '잔잔한 미소' }, { id: 'thoughtful', name: '생각에 잠긴 표정' }];
   expressions.push({ id: 'shy', name: '수줍은 표정' }, { id: 'surprised', name: '살짝 놀란 표정' });
   expressions.push({ id: 'worried', name: '걱정스러운 표정' }, { id: 'playful', name: '장난스러운 미소' });

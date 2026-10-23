@@ -29,20 +29,20 @@
     assert(read().expenseGoal===null,'Purchase completes selected target');
     assert($('equipped-name').textContent.includes('니트'),'Text outfit state visible');
     assert(d.querySelector('[data-outfit-id="knit"]').disabled,'Owned/equipped cannot buy twice'); results.push('PASS buy, equip, duplicate guard');
-    click('close-modal'); click('date-button'); modalButton('35,000'); modalButton('데이트 진행'); for(let i=0;i<3;i++) d.querySelector('[data-story-choice]').click(); click('close-modal');
-    assert(read().money===0 && read().trust===3 && read().affection===6,'Date charges exact remaining balance');
+    click('close-modal'); click('date-button'); modalButton('12,000'); modalButton('데이트 진행'); for(let i=0;i<3;i++) d.querySelector('[data-story-choice]').click(); click('close-modal');
+    assert(read().money===23000 && read().trust===3 && read().affection===6,'Date deducts the revised two-drink cost');
     click('date-button'); assert([...$('modal-body').querySelectorAll('.primary')].every(b=>b.disabled),'Daily date cap'); click('close-modal'); results.push('PASS paid date and repeat prevention');
     click('save-button'); modalButton('기억 01'); if($('modal-title').textContent==='기억 덮어쓰기') modalButton('덮어쓰기');
     click('close-modal'); click('next-day'); if($('modal').open) modalButton('다음 날로');
     assert(read().day===2 && read().ap===3,'Advance day');
     click('load-button'); modalButton('기억 01'); modalButton('불러오기');
-    assert(read().day===1 && read().money===0 && read().outfit==='knit','Manual save restore'); results.push('PASS next day and manual save/load roundtrip');
+    assert(read().day===1 && read().money===23000 && read().outfit==='knit','Manual save restore'); results.push('PASS next day and manual save/load roundtrip');
     click('journal-button'); assert($('modal-body').textContent.includes('누적 지출 155,000원'),'Journal accounting'); click('close-modal');
     click('settings'); const checkbox=$('modal-body').querySelector('input[type=checkbox]'); checkbox.click(); assert($('game').classList.contains('portrait-off'),'Text only mode'); checkbox.click(); click('close-modal'); results.push('PASS journal and illustration toggle');
     click('settings'); const size=$('text-size'); size.value='largest'; size.dispatchEvent(new w.Event('change',{bubbles:true}));
     assert(w.getComputedStyle($('modal-body').querySelector('.reading-sample')).fontSize==='21px','Large reading font');
     assert(E.storage.read('prefs').textSize==='largest','Reading preference saved'); click('close-modal'); results.push('PASS reading size preference and preview');
-    click('home-button'); click('continue-game'); assert(read().money===0 && !$('play-screen').hidden,'Continue'); results.push('PASS return to title and resume');
+    click('home-button'); click('continue-game'); assert(read().money===23000 && !$('play-screen').hidden,'Continue'); results.push('PASS return to title and resume');
     const width=w.innerWidth; assert(d.documentElement.scrollWidth <= width+1,`Horizontal overflow: ${d.documentElement.scrollWidth} > ${width}`);
     if($('choice-card').hidden) click('dialogue'); assert(!$('choice-card').hidden&&$('dialogue').hidden,'Dialogue opens the choice card');
     for(const id of ['story-button','work-button','date-button','wardrobe-button','rest-button','next-day','phone-button']) { const r=$(id).getBoundingClientRect(); assert(r.width>=44 && r.height>=36,`${id} button size`); assert(r.left>=0 && r.right<=width,`${id} outside viewport`); }

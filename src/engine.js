@@ -28,6 +28,9 @@
     if (introPending(state)) return { state, error: '인트로를 마친 뒤 일정을 정해 주세요.' };
     if (state.story.active || state.story.activities?.active) return { state, error: '진행 중인 이야기나 체험을 먼저 마쳐 주세요.' };
     if (!Array.isArray(entries) || entries.length > 3 || entries.some(e => !scheduleItem(e)) || entries.reduce((n,e) => n + scheduleItem(e).ap, 0) > state.ap) return { state, error: '남은 시간 안에 가능한 일정을 골라 주세요.' };
+    const work = entries.filter(e => e.type === 'work');
+    if (work.length > 1) return { state, error: '근무나 외주 납품은 하루 한 번만 잡을 수 있어요.' };
+    if (work.length) { const blocked = workReason(state, D.jobs.find(j => j.id === work[0].id)); if (blocked) return { state, error: blocked }; }
     const s = copy(state); s.growth.schedule = entries.map(e => ({ type: e.type, id: e.id }));
     return { state: s };
   }
@@ -82,8 +85,18 @@
     });
     s.ngp.applied = true; s.week = weekMark(s);
   }
+  // Last shift is explicit: trimming the journal cannot grant another shift.
+  const shiftToday = s => s.lastWork?.day === s.day ? s.lastWork.id : D.jobs.find(j => s.journal.some(row => row.day === s.day && row.type === 'work' && row.title === `${j.name} 완료`))?.id;
+  function workReason(s, job) {
+    if (shiftToday(s)) return '오늘 근무를 이미 마쳤어요. 다음 일감은 다음 날 확인해 주세요.';
+    if (job.weekdays && !job.weekdays.includes(D.calendar(s.day).weekday)) return `${job.name}: ${job.weekdays.join('·')}요일에 미리 잡아 둔 근무예요.`;
+    if (job.id === 'event' && s.datesToday.length) return '긴 현장 근무와 외출은 같은 날에 잡지 않아요.';
+    if (s.datesToday.includes('concert')) return '공연을 보는 날에는 근무를 따로 잡지 않아요.';
+    return null;
+  }
   const makeState = ({ intro = false, legacy = [] } = {}) => {
     const s = { version: VERSION, intro: intro ? { step: 0 } : null, day: 1, ap: D.maxAp, energy: 100, money: D.startingMoney, affection: 0, trust: 0, owned: ['casual'], outfit: 'casual', ownedAccessories: ['none'], legwear: 'none', ownedNeckAccessories: ['headset'], neckAccessory: 'none', location: 'practice', memories: [], datesToday: [], journal: [], totalEarned: 0, totalSpent: 0, expenseGoal: null, savedAt: null, story: N.fresh(), growth: freshGrowth(), lastWeek: null };
+    s.lastWork = null;
     const endings = legacyList(legacy);
     s.ngp = endings.length ? { endings, applied: false } : null;
     s.week = weekMark(s);
@@ -150,8 +163,12 @@
     if (type === 'buy' && state.owned.includes(id)) return '이미 보유한 의상입니다.';
     if (type === 'equip' && !state.owned.includes(id)) return '먼저 의상을 구매해 주세요.';
     if (type === 'equip' && state.outfit === id) return '지금 착용 중인 의상입니다.';
+    if (type === 'work' && workReason(state, item)) return workReason(state, item);
+    if (type === 'date' && item.weekdays && !item.weekdays.includes(D.calendar(state.day).weekday)) return '학생식당 점심 약속은 평일에 잡을 수 있어요.';
+    if (type === 'date' && item.firstActivity && state.ap !== D.maxAp) return '학식은 평일 첫 활동으로 골라 주세요. 점심 약속이 끝난 뒤 다른 일정을 잡아요.';
     if (type === 'date' && state.datesToday.length) return '데이트는 하루 한 번 할 수 있어요. 다음 날 다시 초대해 주세요.';
     if (type === 'date' && state.trust < item.requiredTrust) return `신뢰 ${item.requiredTrust}부터 함께 갈 수 있어요.`;
+    if (type === 'date' && (id === 'concert' && shiftToday(state) || shiftToday(state) === 'event')) return '긴 현장 근무와 공연·외출은 날짜를 나눠 잡아요. 오늘은 귀가해서 쉬어요.';
     if (type === 'date' && window.LunaCourses?.lockReason(state,item)) return window.LunaCourses.lockReason(state,item);
     if (['work', 'date'].includes(type) && state.ap < item.ap) return '남은 시간이 부족해요. 다음 날을 시작해 주세요.';
     if (['work', 'date'].includes(type) && state.energy < item.energy) return '기력이 부족해요. 잠시 쉬어 주세요.';
@@ -175,14 +192,15 @@
       s.location = t.id === 'exercise' ? 'rooftop' : 'practice';
     } else if (type === 'work') {
       const j = D.jobs.find(x => x.id === id);
+      s.lastWork = { day: s.day, id };
       money = j.pay; s.money += money; s.totalEarned += money; s.ap -= j.ap; s.energy -= j.energy;
-      title = `${j.name} 완료`; text = `${money.toLocaleString('ko-KR')}원을 벌었어요. 오늘의 노력이 작은 여유가 되었습니다.`;
+      title = `${j.name} 완료`; text = `${j.hours ? `${j.hours}시간 근무` : '미리 맡은 영상 1편 납품'}를 마치고 ${money.toLocaleString('ko-KR')}원을 정산했어요. 다음 근무는 다른 날에 잡아요.`;
       const stat = { cafe: 'sensitivity', edit: 'knowledge', event: 'fitness' }[id]; s.growth.stats[stat] = bounded(s.growth.stats[stat] + 2); text += ` ${statNames[stat]} +2.`;
       s.location = { cafe: 'cafe', edit: 'practice', event: 'concert' }[id];
       if (workEncounter(state, id)) {
         const scene = N.workScenes[id][s.day % N.workScenes[id].length], before = { affection: s.affection, mood: s.growth.mood };
         grow(s, 'affection', 1); s.growth.mood = bounded(s.growth.mood + 4); s.story.workMet = s.day; s.story.lastMet = s.day;
-        text += ' 일하는 중에 수련이 잠깐 들렀어요.';
+        text += id === 'edit' ? ' 납품 전후로 수련의 메시지가 왔어요.' : ' 근무 중 수련이 짧은 안부를 전했어요.';
         encounter = { title: scene.title, line: N.messageText(s, scene.line), face: scene.face, affection: s.affection - before.affection, mood: s.growth.mood - before.mood };
       }
     } else if (type === 'date') {
@@ -191,7 +209,7 @@
       s.datesToday.push(id);
       title = `${d.name} 출발`; text = `비용과 시간을 사용했어요. ${N.script('date',id).length}번의 선택을 나누면 관계 변화와 추억이 남습니다.`;
       s.location = d.location;
-      s.story.active = { kind: 'date', id, day: s.day, outfit: s.outfit, legwear: s.legwear, neckAccessory: s.neckAccessory, time: D.timeForAp(state.ap), choices: [] };
+      s.story.active = { kind: 'date', id, day: s.day, outfit: s.outfit, legwear: s.legwear, neckAccessory: s.neckAccessory, time: d.departureTime || D.timeForAp(state.ap), choices: [] };
     } else if (type === 'buy') {
       const o = D.outfits.find(x => x.id === id);
       money = -o.cost; s.money += money; s.totalSpent += o.cost; s.owned.push(id);
@@ -227,7 +245,7 @@
       if (s.story?.lastMet !== undefined && s.day - s.story.lastMet >= 3 && s.growth.mood > 30) s.growth.mood = Math.max(30, s.growth.mood - 5);
       // A very good mood settles a little overnight, so today's care still shows.
       if (s.growth.mood > 70) s.growth.mood = Math.max(70, s.growth.mood - 3);
-      title = `${s.day}일째의 시작`; text = '새로운 하루가 찾아왔어요. 시간 3칸과 기력을 회복했습니다.';
+      title = `${s.day}일째의 시작`; text = '각자 귀가해 쉬고 새로운 하루를 맞았어요. 수업과 왕복 통학을 제외한 자유 시간 3칸과 기력을 회복했습니다. 만날 때는 돌아갈 교통편도 함께 확인해요.';
       s.location = 'practice';
       if (D.calendar(s.day).weekday === '월') { week = weekSummary(state); s.lastWeek = week; s.week = weekMark(s); }
     }
@@ -304,6 +322,9 @@
     if (!Array.isArray(s.owned) || !s.owned.includes('casual') || s.owned.length > outfitIds.length || new Set(s.owned).size !== s.owned.length || !s.owned.every(x => outfitIds.includes(x)) || !s.owned.includes(s.outfit)) return null;
     if (!Array.isArray(s.datesToday) || s.datesToday.length > 1 || !s.datesToday.every(id => D.dates.some(d => d.id === id))) return null;
     if (!Array.isArray(s.journal) || s.journal.length > 200 || !s.journal.every(j => j && int(j.day, 1, s.day) && ['work','date','story','buy','equip','buyAccessory','equipAccessory','equipNeckAccessory','rest','nextDay','train','message','gift','talk','legacy'].includes(j.type) && typeof j.title === 'string' && j.title.length < 120 && typeof j.text === 'string' && j.text.length < 500 && int(j.money, -1e9, 1e9) && outfitIds.includes(j.outfit))) return null;
+    const oldShift = s.journal.filter(j => j.type === 'work').at(-1);
+    const lastWork = s.lastWork === undefined ? oldShift ? { day: oldShift.day, id: D.jobs.find(j => oldShift.title === `${j.name} 완료`)?.id } : null : s.lastWork;
+    if (lastWork !== null && (!lastWork || !int(lastWork.day, 1, s.day) || !D.jobs.some(j => j.id === lastWork.id) || s.journal.some(j => j.type === 'work' && j.day > lastWork.day))) return null;
     const ownedAccessories = s.ownedAccessories === undefined ? ['none'] : s.ownedAccessories;
     const legwear = s.legwear === undefined ? 'none' : s.legwear;
     const ownedNeckAccessories = s.ownedNeckAccessories === undefined ? ['headset'] : s.ownedNeckAccessories;
@@ -334,7 +355,7 @@
     if (lastWeek !== null && (!lastWeek || !int(lastWeek.from, 1, s.day) || !int(lastWeek.to, lastWeek.from, s.day) || !['earned','spent'].every(k => int(lastWeek[k], 0, 1e12)) || !['dates','stories','affection','trust','gifts','talks','works'].every(k => int(lastWeek[k], 0, 9999)) || !int(lastWeek.mood, 0, 100))) return null;
     const ngp = s.ngp === undefined ? null : s.ngp;
     if (ngp !== null && (!ngp || typeof ngp.applied !== 'boolean' || !Array.isArray(ngp.endings) || !ngp.endings.length || legacyList(ngp.endings).length !== ngp.endings.length || new Set(ngp.endings).size !== ngp.endings.length || !ngp.applied && !(intro && intro.step < N.intro.length))) return null;
-    return copy({ version: VERSION, intro, day: s.day, ap: s.ap, energy: s.energy, money: s.money, affection: s.affection, trust: s.trust, owned: s.owned, outfit: s.outfit, ownedAccessories, legwear, ownedNeckAccessories, neckAccessory, location, memories, datesToday: s.datesToday, journal: s.journal, totalEarned: s.totalEarned, totalSpent: s.totalSpent, expenseGoal: goal === null ? null : { type: goal.type, id: goal.id }, savedAt: s.savedAt, story, growth, week: { day: week.day, affection: week.affection, trust: week.trust, earned: week.earned, spent: week.spent, dates: week.dates, stories: week.stories }, lastWeek, ngp: ngp && { endings: [...ngp.endings], applied: ngp.applied } });
+    return copy({ version: VERSION, intro, lastWork, day: s.day, ap: s.ap, energy: s.energy, money: s.money, affection: s.affection, trust: s.trust, owned: s.owned, outfit: s.outfit, ownedAccessories, legwear, ownedNeckAccessories, neckAccessory, location, memories, datesToday: s.datesToday, journal: s.journal, totalEarned: s.totalEarned, totalSpent: s.totalSpent, expenseGoal: goal === null ? null : { type: goal.type, id: goal.id }, savedAt: s.savedAt, story, growth, week: { day: week.day, affection: week.affection, trust: week.trust, earned: week.earned, spent: week.spent, dates: week.dates, stories: week.stories }, lastWeek, ngp: ngp && { endings: [...ngp.endings], applied: ngp.applied } });
   }
   const storage = {
     read(key, fallback = null) { try { const v = localStorage.getItem(`aqualuna.v2.${key}`); return v === null ? fallback : JSON.parse(v); } catch { return fallback; } },

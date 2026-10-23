@@ -46,7 +46,7 @@
     click('home-button');start();assert(read().intro.step===0,'restart intro');click('intro-skip');
     assert(!$('play-screen').hidden&&!E.introPending(read()),'skip did not finish');
     results.push('PASS new game restarts intro and skip enters day one');
-    let legacy=E.act(E.makeState(),'work','cafe').state;delete legacy.intro;
+    let legacy=E.act(E.makeState(),'work','edit').state;delete legacy.intro;
     E.storage.write('save.0',legacy);await reload();click('continue-game');
     assert($('intro-screen').hidden&&read().money===125000,'legacy save lost progress or replayed');
     results.push('PASS existing save resumes without intro');

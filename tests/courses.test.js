@@ -8,8 +8,8 @@
   function date(s,id,side=0){return finish(check(E.act(s,'date',id)),side);}
   function events(s,friend=false){for(let i=0;i<40;i++){const e=N.available(s)[0];if(!e)return s;s=check(E.startStory(s,e.id));if(friend&&e.id==='confession')s=check(E.chooseStory(s,'friend',0));else s=finish(s);}throw Error('event loop');}
   let full;
-  test('51 valid courses, 48 six-choice trips, 6 themes and 25 exploration stories',()=>{
-    assert(D.dates.length===51&&C.themes.length===6,'catalog counts');assert(new Set(D.dates.map(d=>d.id)).size===51,'duplicate course');
+  test('52 valid courses, 48 six-choice trips, 6 themes and 25 exploration stories',()=>{
+    assert(D.dates.length===52&&C.themes.length===6,'catalog counts');assert(new Set(D.dates.map(d=>d.id)).size===52,'duplicate course');
     for(const t of C.themes){const items=D.dates.filter(d=>d.theme===t.id);assert(items.length===8,'theme size');for(const item of items){const script=N.script('date',item.id);assert(script.length===6&&script.every(n=>n.text&&n.choices.filter(c=>!c.requireStat).length===2&&n.choices.length<=3&&n.choices.every(c=>c.label&&c.reply))&&script[1].choices.some(c=>c.requireStat&&c.requireValue>=10),'incomplete scene');assert(D.locations[item.location]&&item.cost>=0,'bad metadata');}}
     assert(N.events.length===42&&new Set(N.events.map(e=>e.id)).size===42,'event count');
   });

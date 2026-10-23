@@ -10,7 +10,7 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(runDate)) throw Error('Expected --date=YYYY-MM-D
 const source = ['data','story','courses','journeys','activities','engine'];
 const suites = {};
 let assets;
-for (const name of ['engine','story','courses','activities','growth','intro','bond','pacing','somesome','acoustic']) {
+for (const name of ['engine','story','courses','activities','growth','intro','bond','pacing','somesome','acoustic','campus-life']) {
   const output = { textContent: '' }, saved = new Map();
   const context = { console, Blob, document: { getElementById: () => output, body: { dataset: {} } }, localStorage: { getItem: k => saved.get(k) ?? null, setItem: (k,v) => saved.set(k,v), removeItem: k => saved.delete(k) } };
   context.window = context;

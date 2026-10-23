@@ -13,10 +13,10 @@
     assert(E.act({...before,energy:5},'train','exercise').error&&E.act({...before,ap:0},'train','music').error&&E.act(before,'train','unknown').error,'gates');
   });
   test('All three jobs develop the corresponding stat without changing pay',()=>{
-    for(const [id,stat,pay] of [['cafe','sensitivity',45000],['edit','knowledge',75000],['event','fitness',120000]]){const s=take(E.act(E.makeState(),'work',id));assert(s.growth.stats[stat]===2&&s.money===80000+pay,'job reward');}
+    for(const [id,stat,pay] of [['cafe','sensitivity',45000],['edit','knowledge',75000],['event','fitness',120000]]){const s=take(E.act({...E.makeState(),day:id==='cafe'?3:6},'work',id));assert(s.growth.stats[stat]===2&&s.money===80000+pay,'job reward');}
   });
   test('Planning is free, weighted by action time and bounded to remaining turns',()=>{
-    const before=E.makeState(),s=take(E.setSchedule(before,[{type:'work',id:'event'},{type:'train',id:'study'}]));assert(s.ap===3&&s.money===80000&&before.growth.schedule.length===0,'reservation cost');
+    const before={...E.makeState(),day:6},s=take(E.setSchedule(before,[{type:'work',id:'event'},{type:'train',id:'study'}]));assert(s.ap===3&&s.money===80000&&before.growth.schedule.length===0,'reservation cost');
     assert(E.setSchedule(s,[{type:'work',id:'event'},{type:'work',id:'event'}]).error,'weighted AP');assert(E.setSchedule(s,[{type:'date',id:'walk'}]).error,'unsupported entry');
   });
   test('Stale schedule callbacks cannot execute a second identical task',()=>{
