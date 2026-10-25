@@ -72,8 +72,8 @@
     return { from: w.day, to: state.day, earned: state.totalEarned - w.earned, spent: state.totalSpent - w.spent, dates: state.story.dateCount - w.dates, stories: state.story.completed.length - w.stories, affection: state.affection - w.affection, trust: state.trust - w.trust, gifts: count('gift'), talks: count('talk'), works: count('work'), mood: state.growth.mood };
   }
   // New game+: each ending seen leaves a small head start for the next run.
-  const legacyBonus = { lovers: { name: '연인 결말', money: 50000 }, friends: { name: '우정 결말', stats: 6 } };
-  const ending = s => N.done(s, 'epilogue') && Object.hasOwn(legacyBonus, s.story.relationship) ? s.story.relationship : null;
+  const legacyBonus = { E1: { name: '첫 번째 청자', money: 50000 }, E2: { name: '같은 속도로', money: 50000 }, E3: { name: '이번엔 내가 들을 차례', stats: 6 }, E4: { name: '아직 쓰는 중인 문장', stats: 3 }, E5: { name: '보내지 않은 파일', stats: 3 }, lovers: { name: '연인 결말', money: 50000 }, friends: { name: '우정 결말', stats: 6 } };
+  const ending = s => window.LunaCampus?.active(s) ? LunaCampus.ending(s) : N.done(s, 'epilogue') && Object.hasOwn(legacyBonus, s.story.relationship) ? s.story.relationship : null;
   const legacyList = list => Array.isArray(list) ? Object.keys(legacyBonus).filter(k => list.includes(k)) : [];
   function applyLegacy(s) {
     if (!s.ngp || s.ngp.applied) return;
@@ -94,9 +94,10 @@
     if (s.datesToday.includes('concert')) return '공연을 보는 날에는 근무를 따로 잡지 않아요.';
     return null;
   }
-  const makeState = ({ intro = false, legacy = [] } = {}) => {
+  const makeState = ({ intro = false, legacy = [], route = 'campus2026' } = {}) => {
     const s = { version: VERSION, intro: intro ? { step: 0 } : null, day: 1, ap: D.maxAp, energy: 100, money: D.startingMoney, affection: 0, trust: 0, owned: ['casual'], outfit: 'casual', ownedAccessories: ['none'], legwear: 'none', ownedNeckAccessories: ['headset'], neckAccessory: 'none', location: 'practice', memories: [], datesToday: [], journal: [], totalEarned: 0, totalSpent: 0, expenseGoal: null, savedAt: null, story: N.fresh(), growth: freshGrowth(), lastWeek: null };
     s.lastWork = null;
+    if (window.LunaCampus && route === 'campus2026') { s.day = 2; s.story.route = route; s.story.speech = 'casual'; }
     const endings = legacyList(legacy);
     s.ngp = endings.length ? { endings, applied: false } : null;
     s.week = weekMark(s);
@@ -297,7 +298,9 @@
       s.memories.push({ day: a.day, date: a.id, outfit: a.outfit, legwear: a.legwear, neckAccessory: a.neckAccessory || 'none', time: a.time, choices: a.choices, keptPromise: kept });
       s.memories = s.memories.slice(-60);
     } else s.story.completed.push({ id: a.id, choices: a.choices, day: a.day });
+    let response = '';
     choices.forEach(c => {
+      if (c.campusRelation && window.LunaCampus?.active(s)) response = LunaCampus.resolveRelation(s, c.campusRelation);
       ['preference','boundary','music','relationship','speech'].forEach(key=> { if (c[key]) s.story[key] = c[key]; });
       if (c.promise) s.story.promise = true;
       if (c.relationship === 'considering') s.story.considerAt = s.story.dateCount;
@@ -307,8 +310,10 @@
     if (s.story.lastMet !== undefined && s.day - s.story.lastMet >= 3) s.growth.mood = bounded(s.growth.mood + 8);
     s.story.lastMet = s.day;
     const title = a.kind === 'date' ? `${D.dates.find(d=>d.id===a.id).name} 완료` : N.events.find(e=>e.id===a.id).title;
-    const text = `${choice.reply}${a.kind === 'date' ? ` 호감 +${s.affection-state.affection} · 신뢰 +${s.trust-state.trust}${kept ? ' · 산책 약속을 지켰어요.' : ''}` : ''}`;
-    s.story.last = { ...a, affection: s.affection-state.affection, trust: s.trust-state.trust };
+    if (window.LunaCampus?.active(s) && a.id === 'uni-e01') response = `${LunaCampus.endings[LunaCampus.ending(s)]} · ${LunaCampus.endingText(s)}\n수련의 진로: ${LunaCampus.career(s)}. 준비 기록 ${LunaCampus.flags(s).prep}개. ${LunaCampus.career(s) === '합격' ? '수련: 합격했어. 준비한 곡을 끝까지 들려준 게 잘 전해졌나 봐. 다음 일정도 내가 직접 정해 볼게.' : '수련: 이번에는 안 됐어. 아쉽지만 내가 부족했던 부분은 알겠어. 다음 준비는 내 속도로 해 볼래.'}`;
+    if (response && a.kind === 'event') s.story.completed.at(-1).response = response;
+    const text = `${response || choice.reply}${a.kind === 'date' ? ` 호감 +${s.affection-state.affection} · 신뢰 +${s.trust-state.trust}${kept ? ' · 산책 약속을 지켰어요.' : ''}` : ''}`;
+    s.story.last = { ...a, ...(response ? { response } : {}), affection: s.affection-state.affection, trust: s.trust-state.trust };
     s.story.active = null;
     s.journal.push({ day: s.day, type: a.kind === 'date' ? 'date' : 'story', title, text, money: 0, outfit: s.outfit });
     s.journal = s.journal.slice(-200);
@@ -342,7 +347,7 @@
     // The prologue once had 9 pages; older steps past the current end count as finished.
     if (s.intro !== undefined && s.intro !== null && (typeof s.intro !== 'object' || Array.isArray(s.intro) || !int(s.intro.step, 0, Math.max(N.intro.length, LEGACY_INTRO_PAGES)))) return null;
     const intro = s.intro == null ? null : { step: Math.min(s.intro.step, N.intro.length) };
-    if (intro && intro.step < N.intro.length && (s.day !== 1 || s.ap !== D.maxAp || s.energy !== 100 || s.totalEarned !== 0 || s.totalSpent !== 0 || s.journal.length || story.active || story.completed.length || story.dateCount || story.activities?.active)) return null;
+    if (intro && intro.step < N.intro.length && (s.day !== (story.route === 'campus2026' ? 2 : 1) || s.ap !== D.maxAp || s.energy !== 100 || s.totalEarned !== 0 || s.totalSpent !== 0 || s.journal.length || story.active || story.completed.length || story.dateCount || story.activities?.active)) return null;
     if (s.savedAt !== null && (typeof s.savedAt !== 'string' || !Number.isFinite(Date.parse(s.savedAt)))) return null;
     const growth = s.growth === undefined ? freshGrowth() : s.growth;
     if (!growth || !growth.stats || !Object.keys(statNames).every(k => int(growth.stats[k], 0, 100)) || !int(growth.mood, 0, 100) || !Array.isArray(growth.schedule) || growth.schedule.length > 3 || !growth.schedule.every(e => scheduleItem(e)) || growth.schedule.reduce((n,e) => n + scheduleItem(e).ap, 0) > 3) return null;
@@ -356,6 +361,13 @@
     const ngp = s.ngp === undefined ? null : s.ngp;
     if (ngp !== null && (!ngp || typeof ngp.applied !== 'boolean' || !Array.isArray(ngp.endings) || !ngp.endings.length || legacyList(ngp.endings).length !== ngp.endings.length || new Set(ngp.endings).size !== ngp.endings.length || !ngp.applied && !(intro && intro.step < N.intro.length))) return null;
     return copy({ version: VERSION, intro, lastWork, day: s.day, ap: s.ap, energy: s.energy, money: s.money, affection: s.affection, trust: s.trust, owned: s.owned, outfit: s.outfit, ownedAccessories, legwear, ownedNeckAccessories, neckAccessory, location, memories, datesToday: s.datesToday, journal: s.journal, totalEarned: s.totalEarned, totalSpent: s.totalSpent, expenseGoal: goal === null ? null : { type: goal.type, id: goal.id }, savedAt: s.savedAt, story, growth, week: { day: week.day, affection: week.affection, trust: week.trust, earned: week.earned, spent: week.spent, dates: week.dates, stories: week.stories }, lastWeek, ngp: ngp && { endings: [...ngp.endings], applied: ngp.applied } });
+  }
+  function advanceCampus(state) {
+    const C=window.LunaCampus, event=C?.active(state)&&C.next(state);
+    if (!event || introPending(state) || state.story.active || state.story.activities?.active || event.day<=state.day) return {state,error:'현재 이야기를 먼저 마쳐 주세요.'};
+    let s=state;
+    while(s.day<event.day){const r=act(s,'nextDay');if(r.error)return r;s=r.state;}
+    return {state:s,result:{title:'다음 약속이 있는 날',text:`${D.calendar(s.day).label} · ${event.title}. 수업과 통학을 하며 각자의 일상을 보냈어요. 근무 수입이나 만남 보상은 추가하지 않았어요.`}};
   }
   const storage = {
     read(key, fallback = null) { try { const v = localStorage.getItem(`aqualuna.v2.${key}`); return v === null ? fallback : JSON.parse(v); } catch { return fallback; } },
@@ -438,5 +450,5 @@
     return { state: s, result: { title, text, score: r.score, affection: s.affection - before.a, trust: s.trust - before.t, mood: s.growth.mood - before.m, reunion } };
   }
   function markMessagesSeen(state) { const s = copy(state); s.story.seen = (s.story.msgLog || []).length; return { state: s }; }
-  window.LunaEngine = { runAllSchedule, weekSummary, legacyBonus, ending, legacyList, bondCurve, trainGain, markMessagesSeen, talkTopics, talkPlan, talkScore, talkReason, finishTalk, giftReason, giveGift, replyMessage, makeState, introPending, moveIntro, act, reason, validate, storage, training, statNames, choiceReason, scheduleItem, setSchedule, runSchedule, planExpense, expenseProgress, dateWithOutfit, startStory, chooseStory };
+  window.LunaEngine = { advanceCampus, runAllSchedule, weekSummary, legacyBonus, ending, legacyList, bondCurve, trainGain, markMessagesSeen, talkTopics, talkPlan, talkScore, talkReason, finishTalk, giftReason, giveGift, replyMessage, makeState, introPending, moveIntro, act, reason, validate, storage, training, statNames, choiceReason, scheduleItem, setSchedule, runSchedule, planExpense, expenseProgress, dateWithOutfit, startStory, chooseStory };
 })();

@@ -132,7 +132,7 @@
   const locations = {
     pier: { name: '망원동 · 달빛 부두', image: 'assets/environment/moonlit-pier.png' },
     cafe: { name: '망원동 · 조용한 카페', image: 'assets/environment/cafe.png' },
-    practice: { name: '망원동 · 대여 연습실', image: 'assets/environment/practice.png' },
+    practice: { name: '교내 · 예약 연습실', image: 'assets/environment/practice.png' },
     concert: { name: '망원동 · 발라드 라이브 카페', image: 'assets/environment/acoustic-live.png' },
     rooftop: { name: '동네 건물 · 옥상 쉼터', image: 'assets/environment/rooftop.png' },
     cafeteria: { name: '교내 · 학생식당', image: 'assets/environment/cafe-day.png' }
@@ -191,10 +191,10 @@
     { id: 'spicy-snack', name: '매운 떡볶이 과자', cost: 2500, taste: 'disliked', icon: '✺', desc: '요즘 유행하는 아주 매운 과자.' },
     { id: 'perfume-sample', name: '진한 향수 샘플', cost: 7000, taste: 'disliked', icon: '❀', desc: '향이 오래 남는 진한 향수.' }
   ];
-  // School calendar: DAY 1 is Monday, 2 March 2026 (first day of spring term). Days keep running; the calendar only adds rhythm.
+  // School calendar: DAY 1 is Monday, 2 March 2026 (legacy epoch; new games start DAY 2, March 3 after the substitute holiday). Days keep running; the calendar only adds rhythm.
   const birthday = { month: 4, date: 17 };
   const termEvents = [
-    { from: [3, 2], to: [3, 6], id: 'start', name: '개강 주간' },
+    { from: [3, 3], to: [3, 6], id: 'start', name: '개강 주간' },
     { from: [4, 20], to: [4, 24], id: 'exam', name: '중간고사' },
     { from: [5, 20], to: [5, 22], id: 'festival', name: '봄 축제' },
     { from: [6, 15], to: [6, 19], id: 'exam', name: '기말고사' },
@@ -210,7 +210,7 @@
   function calendar(day) {
     const d = new Date(Date.UTC(2026, 2, 2 + day - 1)), month = d.getUTCMonth() + 1, date = d.getUTCDate(), md = month * 100 + date;
     const event = termEvents.find(e => md >= e.from[0] * 100 + e.from[1] && md <= e.to[0] * 100 + e.to[1]) || null;
-    const term = md >= 302 && md <= 619 ? 1 : md >= 901 && md <= 1218 ? 2 : 0;
+    const term = md >= 303 && md <= 619 ? 1 : md >= 901 && md <= 1218 ? 2 : 0;
     const termStart = term === 1 ? Date.UTC(d.getUTCFullYear(), 2, 2) : term === 2 ? Date.UTC(d.getUTCFullYear(), 8, 1) : 0;
     const week = term ? Math.floor((d - termStart) / 604800000) + 1 : 0;
     return { year: d.getUTCFullYear(), month, date, weekday: weekdayNames[d.getUTCDay()], event, term, week, birthday: month === birthday.month && date === birthday.date,

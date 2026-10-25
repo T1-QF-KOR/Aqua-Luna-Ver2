@@ -475,10 +475,10 @@
     disliked: [['아, 이건… 후후, 그래도 생일을 기억해 줬잖아요. 그걸로 됐어요.', '아, 이건… 후후, 그래도 생일 기억해 줬잖아. 그걸로 됐어.'], 'playful']
   };
   const birthdayGreeting = ['오늘…? 아, 아니에요. 그냥 기분 좋은 날이에요.', '오늘…? 아, 아니야. 그냥 기분 좋은 날이야.'];
-  const speechIndex = s => s.story.speech === 'casual' ? 1 : 0;
+  const speechIndex = () => 1;
   const messageText = (s, pair, place = '') => pair[speechIndex(s)].replace('{place}', place);
   function fresh() { return { revision: 1, completed: [], active: null, dateCount: 0, preference: null, promise: false, keptPromises: 0, boundary: null, music: null, relationship: 'acquaintances', considerAt: 0, commitAt: 0, last: null }; }
-  function done(s, id) { return s.story.completed.some(e => e.id === id); }
+  function done(s, id) { const aliases={hello:'p01',space:'p02',invite:'101',score:'102',boundary:'501r',session:'601',confession:'w01',revisit:'w02',casual:'w03',epilogue:'e01'}; if(s.story.route==='campus2026' && aliases[id]) id='uni-'+aliases[id]; return s.story.completed.some(e => e.id === id); }
   function script(kind, id) { return kind === 'date' ? (Object.hasOwn(dates,id) ? dates[id] : undefined) : events.find(e => e.id === id)?.nodes; }
   function available(s) { return s.story.active || s.story.activities?.active ? [] : events.filter(e => !done(s, e.id) && e.ready(s)); }
   function stage(s) { return ({ lovers: '친구에서 연인으로', friends: '소중한 친구', considering: '친구 이상의 마음을 알아가는 중' })[s.story.relationship] || (s.story.dateCount >= 3 ? '새로운 마음을 알아가는 친구' : '오래 알고 지낸 친구'); }
@@ -494,6 +494,8 @@
       if (!a || !['date','event'].includes(a.kind) || !snapshot(a) || !validChoices(a.kind,a.id,a.choices) || a.choices.length >= script(a.kind,a.id).length || a.day !== state.day || a.outfit !== state.outfit || a.legwear !== state.legwear || (a.neckAccessory || 'none') !== (state.neckAccessory || 'none') || (a.kind === 'event' && r.completed.some(e=>e.id===a.id)) || (a.kind === 'date' && state.datesToday[0] !== a.id)) return null;
     }
     if (r.last !== null && (!r.last || !['date','event'].includes(r.last.kind) || !validChoices(r.last.kind,r.last.id,r.last.choices) || r.last.choices.length !== script(r.last.kind,r.last.id).length || !snapshot(r.last) || !integer(r.last.affection,12) || !integer(r.last.trust,10))) return null;
+    if (r.route !== undefined && r.route !== 'campus2026') return null;
+    if ([r.last,...r.completed].some(x => x?.response !== undefined && (typeof x.response !== 'string' || x.response.length > 490))) return null;
     if (r.speech !== undefined && !['polite','casual'].includes(r.speech)) return null;
     if (r.carry !== undefined && (!r.carry || typeof r.carry !== 'object' || Array.isArray(r.carry) || Object.keys(r.carry).some(k => !['affection','trust'].includes(k)) || !Object.values(r.carry).every(v => integer(v, 99)))) return null;
     if ([r.lastMet, r.giftDay, r.workMet].some(v => v !== undefined && (!integer(v) || v < 1 || v > state.day))) return null;
