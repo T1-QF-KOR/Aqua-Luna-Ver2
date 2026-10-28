@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-28",
+  "passed": true,
+  "checks": [
+    "Academic calendar uses authored dates, holidays, vacations, and UTC-safe arithmetic",
+    "Thirty broadcasts preserve exact regular and special dates, including holiday Thursday",
+    "Map never leaks an unknown heroine or the concealed Thursday broadcaster",
+    "Daily talk respects heroine multipliers, integer minimum, scene caps, and existing progress",
+    "Drafts, canceling, and unscheduled weeks do not submit a letter or change anonymous affection",
+    "A sent letter freezes its actual subject, alias, and text; one per week",
+    "Broadcast reading occurs independently from player listening and settles rival reaction exactly once",
+    "Partial listening, finishing, repeated finishing, and replay produce distinct idempotent records",
+    "Hiatus emits a rerun without reading letters, counting a new broadcast, or granting clues",
+    "Anonymous heroine letters are recognized only from actual prior knowledge",
+    "Story priority, dates, broadcast gates, and knowledge-dependent choices follow the GDD",
+    "Fair fallback is a real meeting and festival never invents a message from an unknown heroine",
+    "Rainy work scene includes the third heroine only at her actual Wednesday evening location",
+    "Save restore preserves in-progress branches, charged costs, pending wages, and once-only effects",
+    "First-build checkpoint migrates into continued play without pretending the story ended",
+    "Gift transactions enforce money, inventory, actual meetings, seven days and birthday multipliers",
+    "Dates guard commitments and resources, rotate conversations, and settle an album entry only once",
+    "Nari refuses karaoke on two distinct invitations and Room 3 requires the actual river revelation",
+    "Jealousy is observer-specific, once daily, first awareness only below 55, and Nari speaks through the radio",
+    "Social save validation restores old saves with empty bags and rejects broken inventory and unfinished-date metadata",
+    "A seeded itinerary survives reload and repeated visits, never places one heroine in two places, and conceals Thursday",
+    "Encounter probabilities reflect shifts, absences and exams rather than guaranteed daily attendance",
+    "Older saves receive a stable itinerary seed and malformed seeds are rejected",
+    "Free conversations and gifts cannot teleport people by unlocking a new route in the same time slot",
+    "Clothes follow performance, rehearsal, dates and seasons while retaining an explicit scene selection"
+  ],
+  "scope": "Pure calendar, radio lifecycle, relationship rules, story conditions, and save contracts. Does not certify visual layout or full-game completion."
+}

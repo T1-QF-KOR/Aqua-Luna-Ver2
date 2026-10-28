@@ -21,7 +21,7 @@ static class Program
         var packaged = Path.Combine(AppContext.BaseDirectory, "game");
         if (File.Exists(Path.Combine(packaged, "index.html"))) return packaged;
         for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)
-            if (File.Exists(Path.Combine(dir.FullName, "index.html")) && File.Exists(Path.Combine(dir.FullName, "src", "app.js"))) return dir.FullName;
+            if (File.Exists(Path.Combine(dir.FullName, "index.html")) && File.Exists(Path.Combine(dir.FullName, "src", "campus-v2", "game.js"))) return dir.FullName;
         return null;
     }
 }

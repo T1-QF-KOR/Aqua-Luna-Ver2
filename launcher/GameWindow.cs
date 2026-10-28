@@ -27,7 +27,7 @@ sealed class GameWindow : Form
     public GameWindow(string gameRoot)
     {
         this.gameRoot = gameRoot;
-        Text = "Aqua Luna · 수련과 보내는 하루";
+        Text = "Aqua Luna · 한여울의 첫 학기";
         Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         BackColor = view.DefaultBackgroundColor;
         StartPosition = FormStartPosition.CenterScreen;
@@ -173,7 +173,7 @@ sealed class GameWindow : Form
         if (closeConfirmed || view.CoreWebView2 is null) { base.OnFormClosing(e); return; }
         e.Cancel = true;
         var unsaved = "false";
-        try { unsaved = await view.CoreWebView2.ExecuteScriptAsync("(s => !!s && !s.hidden)(document.getElementById('save-status'))"); }
+        try { unsaved = await view.CoreWebView2.ExecuteScriptAsync("(s => !!s && !s.hidden)(document.getElementById('save-warning'))"); }
         catch (Exception) { }
         if (unsaved == "true" && MessageBox.Show(this, "자동 저장이 막혀 아직 저장되지 않은 진행이 있어요.\n그래도 종료할까요? 게임 상단의 '파일로 보관'으로 먼저 백업할 수 있어요.", "Aqua Luna", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
         closeConfirmed = true;

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-28",
+  "passed": true,
+  "checks": [
+    "A new game opens with a dated intro, then enters the original move-in prologue without spending a day",
+    "An intro save resumes its current page; skipping bypasses only the intro and preserves the first story choice",
+    "The short intro advances automatically, pauses in menus and background, and respects reduced motion",
+    "Actual runtime keeps draft cancellation separate from sending, then reads and hears the letter exactly once",
+    "Saving and reloading the actual first-work scene preserves charged energy and pays pending wages once at completion",
+    "An actual heroine conversation returns to the same time and consumes its daily opportunity once",
+    "Ending daytime visits the mandatory festival first, and the unchosen heroine receives no invented reward",
+    "Canceling a paid activity keeps resources unchanged; manual slots restore a prior time and resources",
+    "June content checkpoint never masquerades as a completed full-game ending",
+    "The three-person work event commits one shift, one salary, and only the authored shared rewards",
+    "The location panel conceals people and previewing changes only the scenery until the player visits",
+    "Buying and giving a gift use separate confirmations, with no time charge and no duplicated item after reload",
+    "An actual paid date resumes mid-choice, advances exactly two slots, and adds its selected memory once",
+    "A mandatory evening prevents a date and a shared conversation uses both daily talks without jealousy"
+  ],
+  "runtime": "Node VM + DOM adapter; real production game handlers; no browser layout or native file picker"
+}

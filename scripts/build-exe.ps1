@@ -19,9 +19,13 @@ if ($LASTEXITCODE) { throw 'dotnet publish failed.' }
 $game = Join-Path $Output 'game'
 New-Item -ItemType Directory -Force $game | Out-Null
 Copy-Item -LiteralPath (Join-Path $root 'index.html') -Destination $game
-Copy-Item -LiteralPath (Join-Path $root 'src') -Destination $game -Recurse
-robocopy (Join-Path $root 'assets') (Join-Path $game 'assets') /E /XD live2d /NFL /NDL /NJH /NJS /NP | Out-Null
-if ($LASTEXITCODE -ge 8) { throw 'Copying assets failed.' }
+New-Item -ItemType Directory -Force (Join-Path $game 'src') | Out-Null
+Copy-Item -LiteralPath (Join-Path $root 'src\campus-v2') -Destination (Join-Path $game 'src') -Recurse
+# Copy runtime collections only. Retired art and authoring projects are not payload.
+foreach ($assetFolder in @('campus-v2', 'heroines', 'environment', 'fonts', 'ui')) {
+    robocopy (Join-Path $root "assets\$assetFolder") (Join-Path $game "assets\$assetFolder") /E /NFL /NDL /NJH /NJS /NP | Out-Null
+    if ($LASTEXITCODE -ge 8) { throw "Copying assets failed: $assetFolder" }
+}
 $global:LASTEXITCODE = 0
 
 $size = (Get-ChildItem -LiteralPath $Output -Recurse -File | Measure-Object Length -Sum).Sum / 1MB

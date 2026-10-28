@@ -1,70 +1,28 @@
 <!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101c2d"><meta name="description" content="Aqua Luna — 일상을 쌓고, 수련과 함께하는 시간을 만들어 가는 연애 시뮬레이션.">
-  <title>Aqua Luna · 수련과 보내는 하루</title>
-  <link rel="icon" href="assets/ui/moon.svg" type="image/svg+xml"><link rel="stylesheet" href="src/style.css"><link rel="stylesheet" href="src/reading.css"><link rel="stylesheet" href="src/wardrobe.css"><link rel="stylesheet" href="src/story.css">
-  <link rel="stylesheet" href="src/typography.css"><link rel="stylesheet" href="src/courses.css"><link rel="stylesheet" href="src/activities.css"><link rel="stylesheet" href="src/desktop.css">
-  <link rel="stylesheet" href="src/intro.css"><link rel="stylesheet" href="src/stage.css"><link rel="stylesheet" href="src/phone.css"><link rel="stylesheet" href="src/work.css">
-  <script defer src="src/data.js"></script><script defer src="src/story.js"></script><script defer src="src/courses.js"></script><script defer src="src/journeys.js"></script><script defer src="src/activities.js"></script><script defer src="src/campus.js"></script><script defer src="src/campus-dialogue.js"></script><script defer src="src/engine.js"></script><script defer src="src/work.js"></script><script defer src="src/app.js"></script>
-</head>
-<body>
-<main id="game" class="game title-mode">
-  <div class="scenery" aria-hidden="true"></div><div class="atmosphere" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
-  <img id="character" class="character" src="assets/characters/sulien.png" alt="차콜 후드와 헤드폰 차림의 수련"><div class="vignette" aria-hidden="true"></div>
-  <header class="masthead">
-    <button class="wordmark" id="brand" aria-label="Aqua Luna 타이틀로"><span class="moon-icon">☾</span><span>AQUA LUNA<small>수월 · 水月</small></span></button>
-    <div class="header-actions"><span class="edition">PC EDITION</span><button id="sound" class="icon-button" aria-label="배경음 켜기" aria-pressed="false">♫</button><button id="settings" class="icon-button" aria-label="설정">⚙</button></div>
-  </header>
-  <section id="title-screen" class="title-screen" aria-labelledby="game-title">
-    <div class="eyebrow"><span></span> A TEXT-BASED ROMANCE SIMULATION</div>
-    <h1 id="game-title">달빛 아래,<br>너와 나의 <em>하루</em><span class="title-star" aria-hidden="true">✧</span></h1>
-    <p class="tagline">같은 강의실에서 시작된 인연,<br>친구가 된 너와 나의 이야기.</p>
-    <nav class="title-menu" aria-label="메인 메뉴">
-      <button id="new-game" class="primary"><span>새로운 일상</span><span aria-hidden="true">↗</span></button>
-      <button id="continue-game" disabled><span>이어하기</span><span class="menu-note" id="continue-note">아직 저장된 하루가 없어요</span></button>
-      <button id="guide-button"><span>플레이 가이드</span><span class="menu-note">일상 · 의상 · 데이트</span></button>
-    </nav>
-    <p class="chapter-preview"><span>☾</span> 새로운 일상 · 우리가 친구가 되기까지</p>
-  </section>
-  <div id="title-caption" class="title-caption"><span class="fine-line"></span><p>수련 <span>水蓮</span></p><small>조용하지만, 분명하게.</small></div>
-  <footer id="title-footer" class="title-footer"><span>AQUA LUNA · BEFORE THE STAGE</span><span>입사 전, 친구였던 우리의 기록 <i>✦</i></span></footer>
-  <section id="intro-screen" class="intro-screen cinema" hidden aria-labelledby="intro-title">
-    <div class="cine-bg" aria-hidden="true"><div class="cine-layer"></div><div class="cine-layer"></div><div class="cine-tint"></div></div>
-    <div class="cine-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="cine-bars" aria-hidden="true"><span></span><span></span></div>
-    <div class="cine-card" id="intro-card" aria-hidden="true"><small id="intro-card-time"></small><strong id="intro-card-title"></strong><span id="intro-card-number"></span></div>
-    <div class="intro-top"><span class="eyebrow">PROLOGUE · 우리가 친구가 되기까지</span><div><button id="intro-auto" class="secondary" aria-pressed="true">자동 재생 ON</button><button id="intro-save" class="secondary">저장</button><button id="intro-home" class="secondary">타이틀</button><button id="intro-skip" class="secondary">인트로 건너뛰기</button></div></div>
-    <div class="intro-layout"><article class="intro-page"><p class="intro-heading"><span id="intro-time" class="intro-time"></span><span id="intro-title" tabindex="-1"></span></p><span id="intro-speaker" class="cine-speaker" hidden></span><div id="intro-lines" class="intro-lines" aria-live="polite"></div><nav class="intro-navigation" aria-label="인트로 장면 이동"><button id="intro-previous" class="secondary">← 이전 장면</button><span class="vn-hint">클릭 · SPACE로 넘기기</span><span id="intro-progress" role="status"></span><button id="intro-next" class="primary">다음 장면 →</button></nav></article></div>
-  </section>
-  <section id="play-screen" class="play-screen" hidden aria-label="하루 보내기">
-    <div class="day-info"><div class="eyebrow">AQUA LUNA · BEFORE THE STAGE</div><div class="day-title"><h2>수련과 보내는 하루</h2><p class="day-badge"><small>MY EVERYDAY</small><span>DAY <b id="day-number">01</b></span></p></div><p class="day-place"><span class="location-dot"></span><span id="location-name">망원동 · 달빛 부두</span><span class="weekday" id="weekday">월요일</span></p><p class="sulien-status" id="sulien-status" aria-live="polite"></p></div>
-    <div class="stage-hud">
-      <div class="resources" aria-label="현재 상태"><div class="wallet"><span>소지금</span><strong id="money">80,000<small>원</small></strong></div><div class="time"><span>남은 시간</span><strong id="ap" aria-label="3칸">◇ ◇ ◇</strong></div><div class="energy"><span>기력 <b id="energy-number">100</b></span><div class="meter"><i id="energy-bar"></i></div></div><button id="bond-button" class="bond"><span>수련 <small>SULIEN</small></span><span class="bond-detail"><i>♡</i> 호감 <b id="affection">0</b><i>◇</i> 신뢰 <b id="trust">0</b></span><span id="equipped-name" class="equipped-name">익숙한 차콜 후드</span></button></div>
-      <nav class="quick-menu" aria-label="게임 메뉴"><button id="budget-button" class="budget-button"><span>저축 목표</span><strong id="budget-summary">함께할 내일을 계획해요</strong><span id="budget-detail">의상 · 데이트 예산 설정 ↗</span><span class="budget-meter" aria-hidden="true"><i id="budget-bar"></i></span></button><button id="phone-button" class="phone-button">메시지 <i aria-hidden="true">●</i></button><button id="calendar-button">달력</button><button id="schedule-button">능력치·일정</button><button id="shop-button">상점</button><button id="album-button">앨범</button><button id="journal-button">기록</button><button id="save-button">저장</button><button id="load-button">불러오기</button><button id="home-button">타이틀</button></nav>
-    </div>
-    <button id="sulien-touch" class="sulien-touch" aria-label="수련에게 말 걸기"></button>
-    <div class="day-message dialogue-box" id="dialogue"><span class="speaker" id="speaker">SYSTEM</span><small class="dialogue-sub" id="dialogue-sub">DAY 01</small><h3 id="message-title">우리의 일상을 시작해 볼까요?</h3><p id="message-text">일해서 돈을 벌고, 수련과 함께할 시간을 계획해 보세요.</p><div class="dialogue-foot"><span>클릭하거나 SPACE를 눌러 계속하기</span><button id="dialogue-next" class="dialogue-next">CONTINUE <i aria-hidden="true">◇</i></button></div></div>
-    <aside id="phone" class="phone" hidden role="dialog" aria-label="휴대폰">
-      <div class="phone-status" aria-hidden="true"><span class="phone-clock">09:00</span><i class="phone-camera"></i><span>▂▄▆ ▰</span></div>
-      <header><button id="phone-back" class="phone-back" aria-label="뒤로" hidden>‹</button><span class="phone-avatar" id="phone-avatar" aria-hidden="true">☾</span><div><b id="phone-name">LUNA</b><small id="phone-time">나의 작은 일상</small></div><button id="phone-close" class="phone-close" aria-label="휴대폰 닫기">×</button></header>
-      <div id="phone-home" class="phone-home"><div class="phone-widget"><small>OUR EVERYDAY</small><strong id="phone-date"></strong><p>조금씩 쌓이는, 우리의 시간.</p></div><button id="phone-notification" class="phone-notification" hidden></button><div id="phone-apps" class="phone-apps" aria-label="휴대폰 앱"></div><p class="phone-home-note">AQUA LUNA · 나의 하루를 여는 곳</p></div>
-      <div id="phone-list" class="phone-list" hidden></div><div id="phone-thread" class="phone-thread" role="log" aria-live="polite" hidden></div><div id="phone-replies" class="phone-replies" hidden></div>
-      <button id="phone-home-button" class="phone-home-bar" aria-label="휴대폰 홈으로"><span></span></button>
-    </aside>
-    <section class="text-play choice-card" id="choice-card" hidden aria-labelledby="choice-title">
-      <div class="text-play-heading"><span>수련과 보내는 하루 · DAY <span id="log-day">01</span></span><small id="choice-time">아침</small></div>
-      <h3 id="choice-title">오늘은 무엇을 할까?</h3><p class="choice-desc" id="choice-desc">한 가지를 고르면 시간이 흐릅니다.</p>
-      <div id="activity-feed" class="activity-feed" role="log" aria-label="활동 결과"></div>
-      <aside class="daily-actions" aria-label="오늘의 활동"><button id="story-button" class="story-button">관계와 이야기 →</button><button id="work-button"><span class="action-icon">02</span><span>일하러 가기<small>함께할 내일을 위한 노력</small></span><span>↗</span></button><button id="date-button"><span class="action-icon">03</span><span>데이트 초대<small>둘이 보내는 조금 특별한 시간</small></span><span>↗</span></button><button id="wardrobe-button"><span class="action-icon">04</span><span>수련의 옷장<small>오늘의 분위기를 골라요</small></span><span>↗</span></button><button id="rest-button"><span class="action-icon">05</span><span>잠깐 쉬기<small>시간 1칸 · 기력 +35</small></span><span>↗</span></button><button id="talk-button"><span class="action-icon">06</span><span>잠깐 이야기하기<small>하루 한 번 · 화제 3개로 수련의 마음 읽기</small></span><span>…</span></button><button id="gift-button"><span class="action-icon">07</span><span>작은 선물 건네기<small>하루 한 번 · 수련의 취향을 알아 가요</small></span><span>♡</span></button><button id="next-day"><span class="action-icon">08</span><span>오늘은 여기까지<small>수련과 인사하고 다음 날로</small></span><span>→</span></button></aside>
-      <button id="choice-close" class="choice-close">장면으로 돌아가기 <kbd>Esc</kbd></button>
-    </section>
-  </section>
-  <div id="save-status" class="save-status" role="status" hidden><span>자동 저장이 막혔어요. 창을 닫기 전에 진행을 보관해 주세요.</span><button id="backup-button">파일로 보관</button></div>
-  <div id="toast" role="status" class="toast" hidden></div>
-  <dialog id="modal" aria-labelledby="modal-title"><div class="phone-status modal-phone-chrome" aria-hidden="true"><span class="phone-clock">09:00</span><i class="phone-camera"></i><span>▂▄▆ ▰</span></div><div class="modal-head"><div><span class="eyebrow">AQUA LUNA</span><h2 id="modal-title"></h2></div><button id="close-modal" class="icon-button" aria-label="닫기">×</button></div><div id="modal-body"></div><button id="modal-phone-home" class="phone-home-bar modal-phone-chrome" aria-label="휴대폰 홈으로"><span></span></button></dialog>
-  <noscript>이 게임을 실행하려면 브라우저에서 JavaScript를 허용해 주세요.</noscript>
-</main>
-</body>
-</html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101a2b"><title>Aqua Luna · 한여울의 첫 학기</title><link rel="icon" href="assets/ui/moon.svg"><link rel="stylesheet" href="src/campus-v2/game.css"><script defer src="src/campus-v2/world.js"></script><script defer src="src/campus-v2/encounters.js"></script><script defer src="src/campus-v2/wardrobe.js"></script><script defer src="src/campus-v2/radio.js"></script><script defer src="src/campus-v2/social.js"></script><script defer src="src/campus-v2/outings.js"></script><script defer src="src/campus-v2/state.js"></script><script defer src="src/campus-v2/scenes.js"></script><script defer src="src/campus-v2/semester.js"></script><script defer src="src/campus-v2/game.js"></script></head>
+<body><main id="game"><div id="backdrop" aria-hidden="true"></div><div class="shade" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div id="cast" aria-hidden="true"></div>
+<header class="topbar"><button id="home" class="brand" aria-label="타이틀로">☾ <span>AQUA LUNA<small>한여울의 첫 학기</small></span></button><div id="status" hidden><span id="date"></span><span id="term" class="term-label"></span><span class="divider"></span><span id="time"></span><span class="divider"></span><span id="energy"></span><span id="money"></span></div><nav><button id="phone" title="나의 휴대폰">휴대폰</button><button id="history" title="대사 기록">기록</button><button id="save" title="저장과 불러오기">저장</button><button id="settings" title="설정">설정</button></nav></header>
+<section id="title" class="title"><div class="title-copy"><p class="eyebrow">A CAMPUS ROMANCE STORY <span>✦</span></p><h1>AQUA<br><em>LUNA</em></h1><p class="subtitle">모두가 아는 노래,<br>아무도 모르는 목소리.</p><div class="title-rule"></div><p class="title-description">낯선 도시에서 시작된 첫해.<br>그해의 목요일 밤은, 조금 특별했다.</p><div class="title-buttons"><button id="start" class="main-button"><span>새로 시작</span><span>↗</span></button><button id="continue" class="ghost-button"><span>이어하기</span><span>→</span></button></div><p class="build-note">FIRST SEMESTER · 6월까지 플레이 가능한 개발 빌드</p></div><div class="title-side"><span>SEOUL, 2026</span><span>水月</span></div><footer>한여울대학교 · 심야 라디오 아쿠아 루나 <span>SPRING / EARLY SUMMER</span></footer></section>
+<section id="intro" class="intro" hidden aria-label="이야기의 시작" lang="ko">
+  <div class="intro-landscape" aria-hidden="true"></div><div class="intro-vignette" aria-hidden="true"></div>
+  <div class="intro-side" aria-hidden="true">AQUA LUNA / THE FIRST PAGE</div>
+  <div id="intro-card" class="intro-card" data-beat="0">
+    <p class="intro-eyebrow">PROLOGUE <span>✦</span> <span id="intro-chapter"></span></p>
+    <time class="intro-date" datetime="2026-03-02"><span>2026</span><strong>3월 2일</strong><small>서울 · 한여울대학교</small></time>
+    <div class="intro-rule" aria-hidden="true"></div><p id="intro-text" class="intro-text" aria-live="polite"></p>
+  </div>
+  <footer class="intro-controls"><button id="intro-skip">인트로 건너뛰기</button><span id="intro-progress">01 / 03</span><button id="intro-next">계속 →</button></footer>
+</section>
+<section id="scene" hidden aria-label="이야기"><div id="scene-label" class="scene-label"></div><div id="on-air" class="on-air" hidden><i></i> ON AIR <span>HYBS 23:00</span></div><div id="choices" class="choices" hidden></div><article id="dialogue" class="dialogue" tabindex="0"><div class="dialogue-top"><span id="speaker"></span><span id="scene-progress"></span></div><p id="line" aria-live="off"></p><div class="dialogue-bottom"><span>CLICK / SPACE / ENTER</span><button id="auto" aria-pressed="false">AUTO OFF</button><button id="next" aria-label="다음 대사">계속 읽기 <b>◇</b></button></div></article></section>
+<section id="map" hidden aria-label="장소 선택">
+  <article id="place-preview" class="place-preview" aria-live="polite">
+    <div class="place-copy"><p id="preview-eyebrow" class="eyebrow">HANYEOUL / AFTER CLASS</p><h2 id="preview-title">수업이 끝난 뒤</h2><p id="preview-desc"></p><div id="preview-details" hidden><p id="preview-cost" class="preview-cost"></p><button id="visit-place" class="main-button"><span id="visit-label">방문하기</span><span aria-hidden="true">→</span></button></div><p id="preview-hint" class="preview-hint">오른쪽에서 가고 싶은 곳을 골라 보자.</p></div>
+    <span id="preview-number" class="preview-number" aria-hidden="true">H / Y</span>
+  </article>
+  <aside class="location-panel" aria-label="오늘의 장소와 활동">
+    <div class="map-heading"><div class="panel-eyebrow"><p class="eyebrow">MY LITTLE CAMPUS</p><span id="map-weather"></span></div><h2 id="map-title"></h2><p id="map-desc"></p></div>
+    <div id="locations" class="locations" aria-label="장소 목록"></div>
+    <div class="map-bottom"><div id="stats"></div><button id="end-day" class="secondary">내 방으로 돌아가기 →</button><p class="radio-preview">☾ <span id="radio-preview"></span></p></div>
+  </aside>
+</section>
+<dialog id="modal" aria-labelledby="modal-title"><div class="modal-shell"><div class="modal-header"><div><p class="eyebrow">AQUA LUNA</p><h2 id="modal-title"></h2></div><button id="close" aria-label="닫기">×</button></div><div id="modal-content"></div></div></dialog><div id="save-warning" hidden role="status">자동 저장이 막혔어요. 진행을 파일로 보관해 주세요. <button id="backup-now">파일로 보관</button></div><div id="toast" role="status" hidden></div><noscript>게임을 실행하려면 JavaScript를 켜 주세요.</noscript></main></body></html>

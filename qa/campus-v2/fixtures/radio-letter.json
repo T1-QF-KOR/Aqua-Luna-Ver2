@@ -1,0 +1,61 @@
+{
+  "version": 2,
+  "date": "2026-04-06",
+  "slot": 3,
+  "money": 150000,
+  "energy": 100,
+  "knowledge": 20,
+  "fitness": 15,
+  "sensitivity": 20,
+  "name": "테스트",
+  "nickname": "물고기",
+  "club": null,
+  "met": [
+    "nari",
+    "daeun",
+    "seojin"
+  ],
+  "bond": {
+    "nari": 12,
+    "daeun": 20,
+    "seojin": 20
+  },
+  "flags": {
+    "heardLastSeason": true,
+    "knowsPick": true,
+    "daeunJoinedBand": true
+  },
+  "cards": [],
+  "melodies": [],
+  "letters": [],
+  "history": [],
+  "seen": [
+    "prologue",
+    "entrance",
+    "daeunMeet",
+    "fair",
+    "seojinMeet",
+    "firstRadio",
+    "crossDrum"
+  ],
+  "scene": null,
+  "completed": false,
+  "conversations": {},
+  "radio": {
+    "listened": [
+      "radio-2026-04-02"
+    ],
+    "aired": {
+      "radio-2026-04-02": {
+        "date": "2026-04-02",
+        "rerun": false,
+        "letterIds": []
+      }
+    },
+    "clues": {},
+    "anonymous": 0,
+    "honestCount": 0,
+    "hiatusUntil": null
+  },
+  "letterDraft": null
+}
