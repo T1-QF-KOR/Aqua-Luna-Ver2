@@ -2,13 +2,13 @@
   'use strict';
   const W = root.AquaWorld;
   function initial(name = '나', nickname = '물고기') {
-    return { version: 2, date: '2026-03-02', slot: 0, money: 150000, energy: 100,
+    return { version: 5, date: '2026-03-02', slot: 0, money: 150000, energy: 100,
       knowledge: 0, fitness: 0, sensitivity: 0, name, nickname, club: null,
-      met: [], bond: { nari: 0, daeun: 0, seojin: 0 }, flags: {}, cards: [],
+      readLines: {}, smallEvents: root.AquaSmallEvents.ensure({}), music: root.AquaComposition.ensure({}), messages: root.AquaMessages.ensure({}), relationships: root.AquaRelationships.ensure({}), dialogueHistory: {}, greetingCache: {}, growth: {}, equipment: [], giftClothes: {}, workDays: [], met: [], bond: { nari: 0, daeun: 0, seojin: 0 }, flags: {}, cards: [],
       melodies: [], letters: [], history: [], seen: [], scene: null, completed: false,
       conversations: {}, radio: { listened: [], aired: {}, clues: {}, anonymous: 0,
         honestCount: 0, hiatusUntil: null }, letterDraft: null, social: root.AquaSocial.initial(),
-      encounters: { seed: root.AquaEncounters.makeSeed() } };
+      encounters: { seed: root.AquaEncounters.makeSeed() }, dialogue: root.AquaDialogue.initial() };
   }
   function validLines(lines, depth = 0) {
     return depth < 6 && Array.isArray(lines) && lines.length <= 1000 && lines.every(line =>
@@ -17,7 +17,7 @@
           line.choice.every(option => typeof option.label === 'string' && validLines(option.lines || [], depth + 1)))));
   }
   function restore(input) {
-    if (!input || ![1, 2].includes(input.version) || !W.validDate(input.date) ||
+    if (!input || ![1, 2, 3, 4, 5].includes(input.version) || !W.validDate(input.date) ||
       input.date < '2026-03-02' || input.date > '2027-02-26' ||
       !Number.isInteger(input.slot) || input.slot < 0 || input.slot > 3 ||
       !Array.isArray(input.met) || input.met.some(id => !W.people[id]) ||
@@ -28,7 +28,7 @@
     if (Object.keys(W.people).some(id => !Number.isFinite(input.bond[id]) || input.bond[id] < 0 || input.bond[id] > 100)) return null;
     if (input.scene && (!validLines(input.scene.queue) || !Number.isInteger(input.scene.index) ||
       input.scene.index < 0 || input.scene.index >= input.scene.queue.length)) return null;
-    const state = { ...initial(), ...structuredClone(input), version: 2 };
+    const state = { ...initial(), ...structuredClone(input), version: 5 };
     state.encounters = input.encounters || { seed: root.AquaEncounters.legacySeed(input) };
     if (!state.encounters || !Number.isInteger(state.encounters.seed) || state.encounters.seed < 0 || state.encounters.seed > 4294967295) return null;
     const plan = state.encounters.plan;
@@ -40,8 +40,17 @@
     for (const key of ['cards', 'melodies', 'letters']) if (!Array.isArray(state[key])) return null;
     state.flags = state.flags && typeof state.flags === 'object' ? state.flags : {};
     state.conversations ||= {};
+    state.workDays ||= [];
+    if (!Array.isArray(state.workDays) || state.workDays.some(d => !W.validDate(d))) return null;
+    if (input.version < 3 && state.scene?.pendingReward?.money === 32000 && !state.workDays.includes(state.date)) state.workDays.push(state.date);
+    if (input.version < 3 && state.seen.includes('crossRain')) state.flags.crossRainDate ||= state.date;
     const social = { ...root.AquaSocial.initial(), ...(state.social || {}) };
     const object = value => value && typeof value === 'object' && !Array.isArray(value);
+    if (input.dialogue !== undefined && !object(input.dialogue)) return null;
+    state.dialogue = { ...root.AquaDialogue.initial(), ...(state.dialogue || {}) };
+    if (!object(state.dialogue.recent) || Object.values(state.dialogue.recent).some(date => !W.validDate(date) || date > state.date)) return null;
+    const session = state.dialogue.greetingSession;
+    if (session !== null && (!object(session) || !/^\d{4}-\d{2}-\d{2}:[0-3]$/.test(session.key) || !object(session.items) || Object.values(session.items).some(text => typeof text !== 'string' || text.length > 500))) return null;
     if (input.social !== undefined && !object(input.social)) return null;
     for (const key of ['inventory', 'lastGift', 'lastMet', 'knownBirthdays', 'jealousy', 'witnessGreeting']) if (!object(social[key])) return null;
     if (Object.entries(social.inventory).some(([id, count]) => !root.AquaSocial.gifts.some(g => g.id === id) || !Number.isInteger(count) || count < 0 || count > 99)) return null;
@@ -59,7 +68,7 @@
       new Set(social.album.map(a => a.key)).size !== social.album.length ||
       !Array.isArray(social.gifts) || social.gifts.some(g => !g || !W.people[g.person] || !W.validDate(g.date) || g.date > state.date || typeof g.birthday !== 'boolean' || !root.AquaSocial.gifts.some(item => item.id === g.item)) ||
       !Array.isArray(social.karaokeInvites) || social.karaokeInvites.some(date => !W.validDate(date) || date > state.date)) return null;
-    if (state.scene?.outing && (!validOuting(state.scene.outing) || state.scene.after !== 'date' || state.slot !== 1 || state.scene.outing.date !== state.date)) return null;
+    if (state.scene?.outing && (!validOuting(state.scene.outing) || !['date','activity'].includes(state.scene.after) || state.slot !== 1 || state.scene.outing.date !== state.date)) return null;
     state.social = social;
     state.radio = { ...initial().radio, ...(state.radio || {}) };
     if (!Array.isArray(state.radio.listened) || !state.radio.aired || !state.radio.clues) return null;
@@ -76,6 +85,7 @@
       state.radio.listened.push(episode.id);
       state.radio.aired[episode.id] = { date: episode.date, rerun: false, letterIds: [] };
     }
+    if (input.version < 3 || !input.relationships) root.AquaRelationships.migrate(state);
     state.history = state.history.filter(line => line && typeof line.text === 'string').slice(-120);
     return state;
   }

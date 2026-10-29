@@ -9,7 +9,7 @@ assert.equal(index, campus, 'Both supported entrypoints must load the same build
 const paths = new Set();
 for (const match of index.matchAll(/(?:src|href)="([^"]+)"/g)) paths.add(new URL(match[1], root));
 const scripts = [...index.matchAll(/<script defer src="([^"]+)">/g)].map(m => m[1]);
-assert.deepEqual(scripts.map(s => s.split('/').at(-1)), ['world.js', 'encounters.js', 'wardrobe.js', 'radio.js', 'social.js', 'outings.js', 'state.js', 'scenes.js', 'semester.js', 'game.js']);
+assert.deepEqual(scripts.map(s => s.split('/').at(-1)), ['world.js', 'encounters.js', 'wardrobe.js', 'radioEpisodes.js', 'radio.js', 'relationships.js', 'economy.js', 'social.js', 'dialogue.js', 'dialogue-compat.js', 'messages.js', 'composition.js', 'dateActivities.js', 'outings.js', 'peopleEvents.js', 'smallEvents.js', 'state.js', 'scenes.js', 'semester.js', 'audio.js', 'game.js']);
 assert.ok(scripts.every(s => s.startsWith('src/campus-v2/')));
 const cssURL = new URL('src/campus-v2/game.css', root), css = await fs.readFile(cssURL, 'utf8');
 for (const match of css.matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g)) paths.add(new URL(match[1], cssURL));

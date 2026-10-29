@@ -15,14 +15,14 @@ window.AQUA_SCENES = {
   {speaker:'민재',text:'오, 실음과. 그럼 내일 입학식 축하 무대 봐. 한나리라고, 노래 진짜 잘하는 선배가 있거든.'},
   {speaker:'민재',text:'근데 무대 내려오면 아무랑도 말 안 한대. 아, 난 민재. 한 살 많지만 그냥 말 놔.'},
   {text:'낯선 도시에서 처음 들은 이름이었다. 아직은 얼굴도 모르는.'},
-  {text:'밤. 짐을 대충 풀고 누웠다. 창문 틈으로 강 냄새가 들어왔다. 바다 냄새보다 조용했다.'},
+  {time:3,text:'밤. 짐을 대충 풀고 누웠다. 창문 틈으로 강 냄새가 들어왔다. 바다 냄새보다 조용했다.'},
   {text:'휴대폰에 학교 방송국 채널이 떴다. 「HYBS 심야 라디오 · 아쿠아 루나 — 4월 첫 방송 예정」'},
   {choice:[{label:'지난 시즌 마지막 회를 틀어 본다',effect:{flag:'heardLastSeason'},lines:[{text:'피아노. 그리고 낮고 단단한 목소리.'},{speaker:'루나 · 지난 시즌',text:'실패한 날에도 하루는 끝나요. 오늘은 그냥 끝내요.'},{text:'방송이 끝날 때까지 낯선 천장을 바라봤다. 알림 버튼을 눌러 두었다.'}]},{label:'알림만 켜 두고 잔다',lines:[{text:'물 위의 달. 이름이 예뻐서 알림 버튼을 눌러 두었다.'}]}]}
  ]},
  entrance:{title:'축하 무대',background:'concert',lines:[
   {text:'입학식. 강당에 신입생 천 명이 앉아 있었다. 총장님 축사가 끝나고 불이 꺼졌다.'},
   {text:'드럼 카운트. 기타. 그리고 목소리. 첫 소절에 강당이 조용해졌다.'},
-  {text:'분홍 브릿지가 있는 머리, 가죽 재킷. 무대 위의 그 사람은 강당 전체를 자기 것처럼 썼다.'},
+  {text:'분홍 브릿지가 있는 머리, 갈색 재킷. 무대 위의 그 사람은 강당 전체를 자기 것처럼 썼다.'},
   {speaker:'나리 · 무대 위',text:'안녕하세요, 한여울 밴드입니다! 입학 축하해요!'},
   {text:'한나리. 민재가 말한 그 사람.'},
   {text:'공연이 끝나고 길을 잘못 들어 무대 옆 철문을 열었다. 좁은 계단에 방금 그 사람이 쭈그려 앉아 있었다.'},
@@ -52,7 +52,7 @@ Object.assign(window.AQUA_SCENES, {
   {speaker:'나리',text:'고등학생 때는 이럴 때 라디오에 사연 보냈어. 별명이 피크였어. …아, 이건 왜 말했지.',cast:['nari'],effect:{flag:'knowsPick'}},
   {choice:[{label:'“이거 내가 들고 있을게. 손 좀 쉬겠지.”',effect:{bond:{nari:5},card:'떨리는 손의 피크'},lines:[{speaker:'나리',text:'…그런 방법이 있었네.',cast:['nari']},{text:'나리가 빈손을 쥐었다 폈다 했다. 떨림이 천천히 멎었다.',cast:['nari']}]},{label:'“무대 위의 너, 진짜 커 보여.”',effect:{bond:{nari:3}},lines:[{speaker:'나리',text:'그치? 근데 그게 진짜 나인지 모르겠어.',cast:['nari']}]}]}
  ]},
- daeunFirst:{title:'1순위 떡볶이',background:'cafe',lines:[
+ daeunFirst:{title:'1순위 떡볶이',background:'dining',lines:[
   {text:'점심시간. 학식 앞에서 다은이 손을 흔들었다.',cast:['daeun']},
   {speaker:'다은',text:'야! 학식 말고 떡볶이 먹으러 가자. 시장 안쪽 거. 내가 살게.',cast:['daeun']},
   {speaker:'나',text:'갑자기? 무슨 날이야?',cast:['daeun']},

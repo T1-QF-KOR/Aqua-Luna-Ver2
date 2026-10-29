@@ -2,7 +2,7 @@
 import fs from 'node:fs/promises';
 import vm from 'node:vm';
 const root = new URL('../', import.meta.url), context = { structuredClone }; context.window = context; vm.createContext(context);
-for (const name of ['world', 'encounters', 'wardrobe', 'radio', 'social', 'outings', 'state']) vm.runInContext(await fs.readFile(new URL(`src/campus-v2/${name}.js`, root), 'utf8'), context);
+for (const name of ['world', 'encounters', 'wardrobe', 'radio', 'social', 'dialogue', 'dialogue-compat', 'outings', 'state']) vm.runInContext(await fs.readFile(new URL(`src/campus-v2/${name}.js`, root), 'utf8'), context);
 const state = context.AquaState.initial('미리보기', '물고기');
 Object.assign(state, { date: '2026-04-03', slot: 1, met: ['nari', 'daeun', 'seojin'], bond: { nari: 30, daeun: 30, seojin: 40 },
   seen: ['intro', 'prologue', 'entrance', 'daeunMeet', 'fair', 'seojinMeet', 'firstRadio', 'nariShake', 'nariVolume', 'daeunFirst', 'daeunPhoto', 'seojinPlaylist', 'seojinCup'],

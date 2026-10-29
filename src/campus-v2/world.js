@@ -129,12 +129,13 @@
     crossDrum: ['nari', 'daeun'], crossThursday: ['daeun'], crossRain: ['seojin', 'daeun']
   };
   function clamp(value, max = 100) { return Math.max(0, Math.min(max, value)); }
-  function recurringBond(state, id, base) {
+  function recurringBond(state, id, base, source = 'recurring') {
     const count = state.seen.filter(scene => (routeOwners[scene] || []).includes(id)).length;
     const cap = Math.min(100, (id === 'nari' ? 15 : 20) + count * (id === 'nari' ? 6 : 8));
     const delta = Math.sign(base) * Math.max(base > 0 ? 1 : 0, Math.round(Math.abs(base * people[id].multiplier)));
     const before = state.bond[id];
-    state.bond[id] = delta < 0 ? clamp(before + delta) : Math.max(before, Math.min(cap, before + delta));
+    const next = delta < 0 ? clamp(before + delta) : Math.max(before, Math.min(cap, before + delta));
+    if(root.AquaRelationships) root.AquaRelationships.change(state,id,next-before,source); else state.bond[id]=next;
     return state.bond[id] - before;
   }
   function bondStage(state, id) {

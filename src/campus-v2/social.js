@@ -21,6 +21,7 @@
     { id: 'roof', name: '옥상 정원', price: 0, background: 'rooftop', place: 'roof', desc: '멀리 갈 필요 없는, 조용한 오후.' },
     { id: 'karaoke', name: '노래방', price: 16000, background: 'karaoke', place: 'karaoke', desc: '작은 방 하나와 마이크 두 개.' }
   ];
+  gifts.push(...root.AquaEconomy.clothes);
   const birthdays = { nari: '10-14', daeun: '07-28', seojin: '08-19' };
   function initial() {
     return { inventory: {}, lastGift: {}, gifts: [], album: [], lastMet: {},
@@ -39,6 +40,7 @@
   function giftReason(s, person, id, place) {
     const social = ensure(s);
     if (!present(s, person, place)) return '지금 같은 장소에서 만날 수 있는 사람에게 건네요.';
+    if (id && gifts.find(g=>g.id===id)?.person && gifts.find(g=>g.id===id).person !== person) return '그 사람을 위해 고른 옷이에요.';
     if (id && (!gifts.some(g => g.id === id) || !social.inventory[id])) return '가방에 없는 물건이에요.';
     if (social.lastGift[person] && s.date < W.addDays(social.lastGift[person], 7)) return '선물은 같은 사람에게 7일에 한 번 건넬 수 있어요.';
     return '';
@@ -52,6 +54,7 @@
     const gain = W.recurringBond(s, person, [-2, 1, 3, 6][rank] * (birthday ? 2 : 1));
     social.inventory[id]--; social.lastGift[person] = s.date; social.lastMet[person] = s.date;
     if (birthday) social.knownBirthdays[person] = true;
+    if(item.outfit) { s.giftClothes ||= {}; s.giftClothes[person]=item.outfit; }
     social.gifts.push({ date: s.date, person, item: id, birthday });
     return { ok: true, item, rank, gain, birthday };
   }
@@ -88,6 +91,7 @@
     if (!outing.routeId) W.recurringBond(s, outing.person, 3 + Math.max(2, Math.min(4, outing.bonus || 2)));
     if (outing.routeId && !s.seen.includes(outing.routeId)) s.seen.push(outing.routeId);
     social.album.push({ ...outing, key });
+    if(outing.appointmentId){const a=root.AquaMessages.ensure(s).appointments.find(a=>a.id===outing.appointmentId);if(a)a.status='done';}
     if (social.jealousy[outing.person]) social.jealousy[outing.person].upset = false;
     return true;
   }
@@ -107,7 +111,8 @@
       const text = id === 'nari' ? '나리가 피크 모서리를 엄지로 한 번 문지르고, 시선을 돌렸다.' :
         id === 'daeun' ? bond < 35 ? '다은의 웃음이 잠깐 멈췄다가 조금 크게 돌아왔다.' : record.upset ? '다은이 휴대폰을 뒤집었다. “아냐, 둘이 얘기해. 나 먼저 갈게. ㅋ.”' : '“야, 나도 좀 봐 줘. ㅋㅋ.” 다은은 웃고 나서 자기 말에 잠깐 놀란 듯했다.' :
         bond < 35 ? '서진이 빈 잔을 가지런히 맞추었다. 방금 닦았던 잔이었다.' : record.upset ? '서진의 인사가 짧아졌다. “먼저 갈게.”' : '서진의 손이 멎었다. 내 쪽을 보다가 다시 고개를 숙였다.';
-      lines.push({ text: witness ? `${W.people[id].name}와 잠깐 눈이 마주쳤다. ${text}` : text, cast: witness ? [selected, id] : [...new Set([selected, ...observers])] });
+      const varied = root.AquaDialogue.pick(s, `jealousy:${id}`, root.AquaDialogue.jealousy[id]);
+      lines.push({ expr:'jealous', text: witness ? `${W.people[id].name}와 잠깐 눈이 마주쳤다. ${varied}` : varied, cast: witness ? [selected, id] : [...new Set([selected, ...observers])] });
       if (id === 'nari' && bond >= 35) social.nariRadioPending = { date: s.date, witness };
       if (witness && bond >= 55) social.witnessGreeting[id] = true;
     }

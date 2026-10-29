@@ -21,7 +21,7 @@
   function exams(date) {
     return [['2026-04-20', '2026-04-24'], ['2026-06-15', '2026-06-19'], ['2026-10-19', '2026-10-23'], ['2026-12-14', '2026-12-18']].some(([a, b]) => date >= a && date <= b);
   }
-  function concealed(state, id) { return id === 'nari' && W.inTerm(state.date) && W.weekday(state.date) === 4 && state.slot === 2; }
+  function concealed(state, id) { return id === 'nari' && W.weekday(state.date) === 4 && state.slot === 2; }
   function routine(state, id) {
     if (state.slot === 3 || concealed(state, id)) return null;
     const schedule = { ...state, met: ids }, day = W.weekday(state.date), wet = weather(state) === 'rain';
@@ -79,6 +79,10 @@
     const plan = resolve(state);
     return state.met.filter(id => plan.locations[id] === place);
   }
+  // Map hints describe the already settled itinerary, never an undiscovered person.
+  function hints(state, place) {
+    return present(state, place).filter(id => !concealed(state, id) && W.scheduledAt(state, place).includes(id));
+  }
   function sceneAvailable(state, rule) { return resolve(state).scenes[rule.place] === rule.id; }
-  root.AquaEncounters = { makeSeed, legacySeed, weather, exams, resolve, ensurePlan, isAt, present, sceneAvailable };
+  root.AquaEncounters = { makeSeed, legacySeed, weather, exams, resolve, ensurePlan, isAt, present, hints, sceneAvailable };
 })(typeof window !== 'undefined' ? window : globalThis);

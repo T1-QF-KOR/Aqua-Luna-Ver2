@@ -17,7 +17,7 @@
       say('서진', '비 그칠 때까지 있어. 주문은 안 해도 돼.', ['seojin', 'daeun']),
       n('마감 시간이 다가왔다. 우산꽂이에는 비닐우산 하나뿐이었다.', ['seojin', 'daeun']),
       { choice: [
-        { label: '다은에게 우산을 빌려준다', effect: { bond: { daeun: 5, seojin: 1 } }, lines: [say('다은', '진짜? 너는? 아 몰라 내일 갖다줄게! 1순위로!', ['seojin', 'daeun']), say('서진', '너 그럼 어떻게 가. …바보. 기다려. 차 있어.')] },
+        { label: '다은에게 우산을 빌려준다', effect: { flag: 'umbrellaDaeun', bond: { daeun: 5, seojin: 1 } }, lines: [say('다은', '진짜? 너는? 아 몰라 내일 갖다줄게! 1순위로!', ['seojin', 'daeun']), say('서진', '너 그럼 어떻게 가. …바보. 기다려. 차 있어.')] },
         { label: '서진과 마감하고, 다은은 사장님 우산을 빌려 보낸다', effect: { bond: { seojin: 4, daeun: 2 } }, lines: [say('다은', '오 사장님 우산 트로트 가수 사진 있어ㅋㅋ 고맙습니다!', ['seojin', 'daeun']), n('서진과 둘이 의자를 올렸다. 카페 음악이 조금 느려졌다.', ['seojin']), say('서진', '그 애, 시끄럽다. …근데 좋은 애네.')] },
         { label: '함께 앉아 비가 그치기를 기다린다', effect: { bond: { seojin: 2, daeun: 2 } }, lines: [n('다은이 떠들고, 서진이 짧게 대꾸하고, 나는 웃었다. 비는 열한 시에 그쳤다.', ['seojin', 'daeun'])] }
       ] }
@@ -124,7 +124,7 @@
     ] },
     seojinRain: { title: '우산은 하나', background: 'cafe', lines: [
       n('마감 직후 장대비가 쏟아졌다. 우산꽂이에 남은 건 내 비닐우산 하나.', ['seojin']),
-      say('서진', '먼저 가. 나 비 맞는 거 괜찮아.'), say('나', '감기 걸려.', ['seojin']),
+      say('서진', '오늘은 차 안 가져왔어. 정류장까지만 가면 되는데.'), say('나', '감기 걸려.', ['seojin']),
       say('서진', '나 물에는 익숙해. 진짜로.'), n('농담 같지 않았다.', ['seojin']),
       { choice: [
         { label: '“정류장까지만 같이 쓰자. 반반.”', effect: { bond: { seojin: 6 } }, lines: [n('우산 아래 어깨가 자꾸 닿았다. 서진이 반 발 떨어졌다가 다시 가까워졌다.', ['seojin']), say('서진', '너 우산 내 쪽으로 너무 기울였어. 너 어깨 다 젖었잖아.'), say('나', '물에 익숙하다며. 나도 연습 좀 하려고.', ['seojin']), say('서진', '…바보.')] },
@@ -161,7 +161,7 @@
   const rules = [
     { id: 'crossRain', place: 'cafe', from: '2026-05-27', to: '2026-07-31', priority: 2, work: true, bond: { seojin: 15, daeun: 15 } },
     { id: 'crossDrum', place: 'club', from: '2026-03-12', to: '2026-03-31', priority: 2, seen: 'fair' },
-    { id: 'crossThursday', place: 'club', from: '2026-04-09', to: '2026-06-18', priority: 2, day: 4, slot: 2, club: 'band', bond: { daeun: 15 } },
+    { id: 'crossThursday', place: 'club', from: '2026-04-09', to: '2026-06-18', priority: 2, day: 4, slot: 2, club: 'band', bond: { daeun: 14 } },
     { id: 'nariShake', place: 'club', from: '2026-03-18', to: '2026-06-19', bond: { nari: 5 } },
     { id: 'nariVolume', place: 'club', from: '2026-03-23', to: '2026-04-30', bond: { nari: 5 } },
     { id: 'nariHabit', place: 'club', from: '2026-04-06', to: '2026-06-19', bond: { nari: 8 }, broadcasts: 1 },
@@ -169,12 +169,13 @@
     { id: 'nariDemo', place: 'studio', from: '2026-06-01', to: '2026-08-26', bond: { nari: 20 } },
     { id: 'daeunFirst', place: 'dining', from: '2026-03-11', to: '2026-06-19', bond: { daeun: 5 } },
     { id: 'daeunPhoto', place: 'dining', from: '2026-03-18', to: '2026-04-24', bond: { daeun: 5 } },
-    { id: 'daeunBike', place: 'river', from: '2026-04-25', to: '2026-06-19', bond: { daeun: 15 } },
+    { id: 'daeunBike', place: 'river', from: '2026-04-25', to: '2026-06-19', bond: { daeun: 14 } },
     { id: 'daeunChat', place: 'dining', from: '2026-06-01', to: '2026-06-30', bond: { daeun: 25 } },
     { id: 'seojinPlaylist', place: 'cafe', from: '2026-03-25', to: '2026-06-30', bond: { seojin: 8 } },
     { id: 'seojinCup', place: 'cafe', from: '2026-04-01', to: '2026-05-15', bond: { seojin: 8 } },
-    { id: 'seojinRain', place: 'cafe', from: '2026-05-27', to: '2026-07-31', bond: { seojin: 18 } }
+    { id: 'seojinRain', work: true, seen: 'crossRain', place: 'cafe', from: '2026-05-27', to: '2026-07-31', bond: { seojin: 18 } }
   ];
+  for (const gate of root.AquaRelationships.gates) { const rule=rules.find(r=>r.id===gate.id); rule.bond={[gate.person]:gate.value-1}; if (rule.to < '2026-06-30') rule.to='2026-06-30'; }
   function allowed(state, condition = {}) {
     return (!condition.flag || !!state.flags[condition.flag]) &&
       (!condition.notFlag || !state.flags[condition.notFlag]) &&
@@ -192,11 +193,13 @@
   }
   function eligible(state, place) {
     return [...rules].sort((a, b) => (b.priority || 0) - (a.priority || 0)).filter(rule =>
-      rule.place === place && state.date >= rule.from && state.date <= rule.to &&
+      rule.place === place &&
+      (!root.AquaRelationships.gates.some(g=>g.id===rule.id) || root.AquaRelationships.ready(state,root.AquaRelationships.gates.find(g=>g.id===rule.id))) && state.date >= rule.from && state.date <= rule.to &&
       (state.slot !== 3 || rule.slot === 3) &&
       !state.seen.includes(rule.id) && (rule.slot === undefined || rule.slot === state.slot) &&
       (rule.day === undefined || root.AquaWorld.weekday(state.date) === rule.day) &&
-      (!rule.work || [3, 5, 6].includes(root.AquaWorld.weekday(state.date))) && allowed(state, rule));
+      (!rule.work || ([1, 2].includes(state.slot) && !state.workDays?.includes(state.date) && [3, 5, 6].includes(root.AquaWorld.weekday(state.date)))) &&
+      (rule.id !== 'seojinRain' || (state.flags.crossRainDate && state.date > state.flags.crossRainDate)) && allowed(state, rule));
   }
   function available(state, place) {
     return eligible(state, place).filter(rule => !root.AquaEncounters || root.AquaEncounters.sceneAvailable(state, rule));
@@ -225,6 +228,14 @@
       });
     }
     data.lines = compile(data.lines);
+    const gate=root.AquaRelationships.gates.find(g=>g.id===id);
+    if(gate) {
+      // Expand existing GDD scenes with their original scene's beats, never invent a second rank event.
+      const extra={nariVolume:['나리가 케이블 끝을 놓쳤다가 다시 잡았다.','나는 문을 잡은 채 한 걸음 옆으로 비켰다.'],nariDemo:['이어폰 한쪽에서 의자가 삐걱거리는 소리가 들렸다.','나는 끝난 파일의 재생 막대를 바라봤다.','나리는 휴대폰을 뒤집지 않고 내 앞에 두었다.'],daeunBike:['편의점 앞 벤치에 자전거 두 대를 세웠다.','다은이 이온 음료를 한 번에 반 넘게 마셨다.','나는 돌아가는 길을 지도에서 다시 찾았다.','벤치 아래로 자전거 바퀴 그림자가 나란히 놓였다.'],daeunFirst:['나는 다은 맞은편에 가방을 내려놓았다.','다은이 내 앞으로 빈 접시를 밀었다.'],daeunChat:['나는 식판을 내려놓고 다은의 말을 기다렸다.','다은이 김 한 장을 집었다가 내려놓았다.'],seojinPlaylist:['나는 닦던 컵을 내려놓고 다음 곡을 기다렸다.','마감 표시를 뒤집자 카페가 조용해졌다.'],seojinCup:['나는 빈 쟁반을 선반 아래로 옮겼다.','서진이 잔의 손잡이를 다시 확인했다.'],seojinRain:['나는 우산을 펴서 비닐에 난 구멍을 확인했다.','정류장의 불빛이 젖은 길에 번졌다.']}[id]||[];
+      data.lines.splice(data.lines.findIndex(l=>l.choice),0,...extra.map(text=>({...n(text,[gate.person]),expr:'neutral'})));
+      if(gate.value===(gate.person==='nari'?45:gate.person==='daeun'?35:55)) data.lines.push({...say(root.AquaWorld.people[gate.person].short,root.AquaRelationships.rewardLines[gate.person]),expr:'smile'});
+    }
+    if (id === 'seojinRain' && state.flags.umbrellaDaeun) data.lines[0].text = '다은이 돌려준 비닐우산을 챙겨 출근했다. 마감 직후 다시 장대비가 쏟아졌다.';
     if (id === 'crossRain' && root.AquaWorld.weekday(state.date) === 3 && state.slot === 2 && root.AquaWorld.presentAt(state, 'cafe').includes('nari')) {
       const cast = ['seojin', 'daeun', 'nari'];
       data.lines.splice(6, 0, n('창가 끝자리에서 큰 후드를 쓴 사람이 고개를 더 깊이 숙였다. 다은은 알아보려다가 고개를 갸웃했다.', cast));

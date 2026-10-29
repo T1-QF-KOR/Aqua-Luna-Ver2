@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 import vm from 'node:vm';
 const root = new URL('../', import.meta.url);
 const html = await fs.readFile(new URL('campus.html', root), 'utf8');
-const sources = await Promise.all(['world', 'encounters', 'wardrobe', 'radio', 'social', 'outings', 'state', 'scenes', 'semester', 'game'].map(async name => [name, await fs.readFile(new URL(`src/campus-v2/${name}.js`, root), 'utf8')]));
+const sources = await Promise.all(['world', 'encounters', 'wardrobe', 'radioEpisodes', 'radio', 'relationships', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'peopleEvents', 'smallEvents', 'state', 'scenes', 'semester', 'audio', 'game'].map(async name => [name, await fs.readFile(new URL(`src/campus-v2/${name}.js`, root), 'utf8')]));
 const KEY = 'aqua-luna-campus-v2';
 class ClassList {
   values = new Set();
@@ -72,7 +72,7 @@ function mount(saved = new Map()) {
   const click = id => { const node = ids.get(id); assert.ok(node, `Missing #${id}`); node.click(); };
   const snapshot = () => JSON.parse(saved.get(KEY));
   function preview(id) { const node = ids.get('locations').children.find(n => n.dataset.location === id); assert.ok(node, `Missing location ${id}`); node.click(); }
-  function location(id) { preview(id); if (snapshot().slot !== 3) click('visit-place'); }
+  function location(id) { preview(id); if (snapshot().slot !== 3) click('visit-place'); if(snapshot().scene?.id.startsWith('approach-')) finishScene(); }
   function choose(index = 0) { const b = ids.get('choices').children[index]; assert.ok(b, `Missing choice ${index}`); b.click(); }
   function finishScene(choice = 0) {
     for (let i = 0; i < 100 && snapshot().scene; i++) {
@@ -90,6 +90,8 @@ function seed(change, requirements = {}) {
   Object.assign(state, { date: '2026-04-06', slot: 3, met: ['nari', 'daeun', 'seojin'],
     bond: { nari: 12, daeun: 20, seojin: 20 }, knowledge: 20, fitness: 15, sensitivity: 20,
     seen: ['prologue', 'entrance', 'daeunMeet', 'fair', 'seojinMeet', 'firstRadio'], flags: { heardLastSeason: true } }, change);
+  env.context.AquaRelationships.migrate(state);
+  state.smallEvents.visited=Object.keys(env.context.AquaSmallEvents.places);
   // Select a deterministic itinerary for this scenario, using the real encounter rules.
   let found = false;
   for (let candidate = 0; candidate < 10000; candidate++) {
@@ -177,6 +179,14 @@ test('Saving and reloading the actual first-work scene preserves charged energy 
   assert.equal(env.snapshot().money, 182000); assert.equal(env.snapshot().energy, 78); assert.equal(env.snapshot().slot, 2);
   env = mount(env.saved); env.click('continue'); assert.equal(env.snapshot().money, 182000);
 });
+test('An approaching heroine begins a scene once and returns to the encounter without affection gain', () => {
+  const env=seed({date:'2026-04-03',slot:1,bond:{nari:0,daeun:0,seojin:0}},{at:{nari:'roof'}}),before=env.snapshot();
+  env.preview('roof');env.click('visit-place');assert.ok(env.snapshot().scene.id.startsWith('approach-nari'));
+  assert.ok(Object.keys(env.snapshot().flags).some(k=>k.startsWith('approach:2026-04-03:nari:')));env.finishScene();
+  assert.equal(env.snapshot().bond.nari,before.bond.nari);assert.equal(env.snapshot().slot,before.slot);
+  assert.ok(env.ids.get('modal-content').querySelectorAll('[data-person]').some(b=>b.dataset.person==='nari'));env.click('cancel-action');env.location('roof');
+  assert.equal(env.snapshot().scene,null);assert.ok(env.ids.get('modal-content').querySelectorAll('[data-person]').some(b=>b.dataset.person==='nari'));
+});
 test('An actual heroine conversation returns to the same time and consumes its daily opportunity once', () => {
   const env = seed({ date: '2026-04-03', slot: 1, energy: 100 }, { at: { nari: 'roof' } });
   env.location('roof'); env.ids.get('modal-content').querySelectorAll('[data-person]')[0].click();
@@ -197,10 +207,10 @@ test('Ending daytime visits the mandatory festival first, and the unchosen heroi
   assert.equal(env.snapshot().money, 150000);
 });
 test('Canceling a paid activity keeps resources unchanged; manual slots restore a prior time and resources', () => {
-  const env = seed({ date: '2026-04-07', slot: 1 });
+  const env = seed({ date: '2026-04-07', slot: 1, met: [] });
   env.location('library'); env.click('activity-cancel'); assert.equal(env.snapshot().energy, 100);
   env.click('save'); env.ids.get('modal-content').querySelectorAll('[data-save]')[0].click(); env.click('close');
-  env.location('library'); env.click('activity-confirm'); assert.equal(env.snapshot().energy, 88); assert.equal(env.snapshot().slot, 2);
+  env.location('library'); env.click('activity-confirm'); if(env.snapshot().scene) env.finishScene(1); assert.equal(env.snapshot().energy, 88); assert.equal(env.snapshot().slot, 2);
   env.click('save'); env.ids.get('modal-content').querySelectorAll('[data-load]')[0].click();
   assert.equal(env.snapshot().slot, 1); assert.equal(env.snapshot().energy, 100); assert.equal(env.snapshot().knowledge, 20);
 });
@@ -224,18 +234,40 @@ const dataButton = (env, attribute, value) => {
   const button = env.ids.get('modal-content').querySelectorAll(`[data-${attribute}]`).find(b => b.dataset[attribute.replace(/-([a-z])/g, (_, a) => a.toUpperCase())] === value);
   assert.ok(button, `Missing ${attribute}=${value}`); return button;
 };
-test('The location panel conceals people and previewing changes only the scenery until the player visits', () => {
+test('A heroine-specific event card reaches the matching conversation and is consumed once', () => {
+  const env=seed({date:'2026-04-03',slot:1,smallEvents:{visited:Object.keys(mount().context.AquaSmallEvents.places),seen:['n01'],topic:'n01'}},{at:{nari:'roof'}});
+  env.location('roof');dataButton(env,'person','nari').click();env.click('next');
+  const card=env.ids.get('choices').children.findIndex(x=>x.innerHTML.includes('날아간 악보 이야기'));assert.ok(card>=0);env.choose(card);
+  assert.equal(env.snapshot().smallEvents.topic,null);assert.ok(env.snapshot().scene.queue.some(line=>line.text==='그날 악보 모서리 아직 접혀 있어. 펴지 말까 생각 중이야.'));
+  env.finishScene();assert.equal(env.snapshot().smallEvents.topic,null);
+});
+test('The location panel hints at known scheduled people and previewing changes only scenery', () => {
   const env = seed({ date: '2026-04-03', slot: 1 }, { at: { nari: 'roof' } });
   const before = env.snapshot();
   const labels = env.ids.get('locations').children.map(b => b.innerHTML).join('');
-  for (const name of ['한나리', '오다은', '백서진', '♪', '★']) assert.ok(!labels.includes(name));
+  assert.ok(labels.includes('♪'));assert.ok(labels.includes('한나리'));
   env.preview('roof'); assert.equal(env.ids.get('preview-title').textContent, '옥상 정원');
   assert.ok(env.ids.get('backdrop').dataset.path.endsWith('rooftop-day.png'));
   assert.equal(env.ids.get('modal').open, false); assert.deepEqual(env.snapshot(), before);
   assert.ok(!env.ids.get('preview-desc').textContent.includes('나리'));
   env.preview('cafe'); assert.equal(env.ids.get('preview-title').textContent, '강변 카페');
   assert.ok(env.ids.get('backdrop').dataset.path.endsWith('cafe-day.png')); assert.deepEqual(env.snapshot(), before);
-  env.preview('roof'); env.click('visit-place'); assert.equal(dataButton(env, 'person', 'nari').disabled, false);
+  env.preview('roof'); env.click('visit-place'); if(env.snapshot().scene?.id.startsWith('approach-')) env.finishScene(); assert.equal(dataButton(env, 'person', 'nari').disabled, false);
+});
+test('Map hides unmet people and shows a double star for an available cross scene', () => {
+  const unknown=seed({date:'2026-04-03',slot:1,met:[]});const labels=unknown.ids.get('locations').children.map(b=>b.innerHTML).join('');
+  assert.ok(!labels.includes('♪'));for(const name of ['한나리','오다은','백서진'])assert.ok(!labels.includes(name));
+  const env=seed({date:'2026-05-27',slot:2,energy:100},{at:{nari:'cafe'},scene:{cafe:'crossRain'}});
+  assert.ok(env.ids.get('locations').children.find(b=>b.dataset.location==='cafe').innerHTML.includes('★★'));
+});
+test('A pending relationship event cannot reveal its character through a location preview', () => {
+  const env = seed({ date: '2026-06-02', slot: 1, sensitivity: 0,
+    bond: { nari: 44, daeun: 20, seojin: 20 },
+    relationships: { pending: { nari: 'nariDemo' }, unlocked: [], chatGain: {}, decayWeeks: [], rewards: [] } },
+    { at: { nari: 'studio' } });
+  env.preview('studio');
+  assert.equal(env.ids.get('preview-hint').hidden, true);
+  assert.ok(!env.ids.get('preview-desc').textContent.includes('나리'));
 });
 test('Buying and giving a gift use separate confirmations, with no time charge and no duplicated item after reload', () => {
   let env = seed({ date: '2026-04-03', slot: 1 }, { at: { nari: 'roof' } });
@@ -259,13 +291,13 @@ test('An actual paid date resumes mid-choice, advances exactly two slots, and ad
   assert.equal(env.snapshot().money, 126000); assert.equal(env.snapshot().energy, 85); assert.equal(env.snapshot().social.album.length, 0);
   while (!env.snapshot().scene.queue[env.snapshot().scene.index]?.choice) env.click('next');
   env = mount(env.saved); env.click('continue'); env.choose(0);
-  const memory = env.snapshot().scene.outing.memory; assert.ok(memory.includes('나 여기'));
+  const memory = env.snapshot().scene.outing.memory; assert.ok(memory.includes('오다은'));
   env = mount(env.saved); env.click('continue'); env.finishScene();
-  let state = env.snapshot(); assert.equal(state.slot, 3); assert.equal(state.date, '2026-04-03'); assert.equal(state.bond.daeun, 27);
-  assert.equal(state.social.album.length, 1); assert.equal(state.social.album[0].memory, memory);
+  let state = env.snapshot(); assert.equal(state.slot, 3); assert.equal(state.date, '2026-04-03'); assert.equal(state.bond.daeun, 26);
+  assert.equal(state.social.album.length, 1); assert.equal(state.social.album[0].memory, '마지막 곡 얘기를 나누자.');
   env = mount(env.saved); env.click('continue'); state = env.snapshot();
-  assert.equal(state.money, 126000); assert.equal(state.energy, 85); assert.equal(state.bond.daeun, 27); assert.equal(state.social.album.length, 1);
-  env.click('phone'); dataButton(env, 'app', 'album').click(); assert.ok(env.ids.get('modal-content').innerHTML.includes(memory));
+  assert.equal(state.money, 126000); assert.equal(state.energy, 85); assert.equal(state.bond.daeun, 26); assert.equal(state.social.album.length, 1);
+  env.click('phone'); dataButton(env, 'app', 'album').click(); assert.ok(env.ids.get('modal-content').innerHTML.includes(state.social.album[0].memory));
 });
 test('A mandatory evening prevents a date and a shared conversation uses both daily talks without jealousy', () => {
   const blocked = seed({ date: '2026-05-20', slot: 1, bond: { nari: 30, daeun: 20, seojin: 20 } }, { at: { nari: 'studio' } });
@@ -276,6 +308,36 @@ test('A mandatory evening prevents a date and a shared conversation uses both da
   const state = env.snapshot(); assert.equal(state.slot, 2); assert.equal(state.energy, 100);
   assert.equal(state.conversations.nari.date, state.date); assert.equal(state.conversations.daeun.date, state.date);
   assert.deepEqual(state.social.jealousy, {}); assert.equal(dataButton(env, 'person', 'nari').disabled, true);
+});
+test('Skip stops at unread lines and retains read history across saves', () => {
+  const env = mount(); env.click('start'); env.click('begin'); env.click('intro-skip');
+  const before=env.snapshot(); assert.equal(before.scene.index,0); env.click('skip'); assert.equal(env.snapshot().scene.index,0);
+  env.click('next'); assert.equal(env.snapshot().scene.index,1); const saved=env.snapshot();
+  assert.ok(Object.keys(saved.readLines).length); saved.scene.index=0;
+  env.saved.set(KEY,JSON.stringify(saved)); const reloaded=mount(env.saved);reloaded.click('continue');reloaded.click('skip');
+  assert.equal(reloaded.snapshot().scene.index,1);
+});
+test('A balanced player completes March through June using actual game handlers', () => {
+  const env=mount();env.click('start');env.click('begin');env.click('intro-skip');
+  const days=new Set(),actions=new Set(),activities=['library','river','club'];let iterations=0;
+  while(iterations++<30000){const state=env.snapshot();days.add(state.date);
+    if(state.date==='2026-06-30'&&state.slot===3&&!state.scene)break;
+    if(state.scene){const line=state.scene.queue[state.scene.index];if(line?.choice){const index=env.ids.get('choices').children.findIndex(b=>!b.disabled);assert.ok(index>=0,`${state.date}: no available scene choice`);env.choose(index);}else env.click('next');continue;}
+    if(env.ids.get('modal').open){const children=env.ids.get('modal-content').children;const find=id=>children.find(x=>x.id===id);
+      const person=children.find(x=>x.dataset.person&&!x.disabled);
+      if(person){person.click();continue;}
+      const alone=find('alone');if(alone&&!alone.disabled){alone.click();continue;}
+      const confirm=find('activity-confirm');if(confirm){confirm.click();continue;}
+      const cancel=find('cancel-action')||find('activity-cancel');if(cancel){cancel.click();env.location('room');continue;}
+      throw new Error(`Unhandled modal at ${state.date} slot ${state.slot}: ${env.ids.get('modal-title').textContent}`);
+    }
+    if(state.slot===3){env.click('end-day');continue;}
+    const date=env.context.AquaWorld.dateObject(state.date),weekday=date.getUTCDay();
+    const work=state.date>='2026-03-11'&&[3,6].includes(weekday)&&state.slot===2&&!state.workDays.includes(state.date)&&state.energy>=22;
+    const place=state.energy<22?'room':work?'cafe':activities[(date.getUTCDate()+state.slot)%3];actions.add(place);env.location(place);
+  }
+  assert.ok(iterations<30000,'Autoplay reached the end without stalling');assert.equal(days.size,121);for(const place of ['cafe','club','library','river'])assert.ok(actions.has(place));
+  const final=env.snapshot();assert.equal(final.date,'2026-06-30');assert.equal(final.slot,3);assert.ok(final.seen.includes('festival'));assert.ok(final.workDays.length>0);
 });
 const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 await fs.writeFile(new URL('qa/campus-v2/runtime-results.json', root), JSON.stringify({ date, passed: true, checks, runtime: 'Node VM + DOM adapter; real production game handlers; no browser layout or native file picker' }, null, 2) + '\n');

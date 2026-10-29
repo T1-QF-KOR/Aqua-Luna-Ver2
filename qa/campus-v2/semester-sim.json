@@ -1,0 +1,1800 @@
+{
+  "date": "2026-10-29",
+  "seeds": [
+    5731,
+    191,
+    2026
+  ],
+  "results": [
+    {
+      "strategy": "balanced",
+      "seed": 5731,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 5,
+      "peopleScenes": 8,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 34,
+        "daeun": 16,
+        "seojin": 3
+      },
+      "stats": {
+        "knowledge": 18,
+        "fitness": 22,
+        "sensitivity": 19
+      },
+      "money": 1380000,
+      "workIncome": 1248000,
+      "bond": {
+        "nari": 54,
+        "daeun": 80,
+        "seojin": 58
+      },
+      "dialogue": {
+        "samples": 511,
+        "unique": 368,
+        "maxRepeat": 2,
+        "mostRepeated": [
+          [
+            "…벌써 어두워졌네.",
+            2
+          ],
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            2
+          ],
+          [
+            "…안녕. 잠깐 시간 있어?",
+            2
+          ],
+          [
+            "여기 앉아도 돼. 나도 막 쉬려던 참이야.",
+            2
+          ],
+          [
+            "이어폰 뺐어. 이제 들려.",
+            2
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 5.611111111111111,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 9
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 8
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 7
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 6
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 8
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 7
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": true,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": true,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "nari",
+      "seed": 5731,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 5,
+      "peopleScenes": 4,
+      "approaches": 51,
+      "approachPersons": {
+        "nari": 51,
+        "daeun": 0,
+        "seojin": 0
+      },
+      "stats": {
+        "knowledge": 14,
+        "fitness": 1,
+        "sensitivity": 40
+      },
+      "money": 132000,
+      "workIncome": 0,
+      "bond": {
+        "nari": 64,
+        "daeun": 54,
+        "seojin": 0
+      },
+      "dialogue": {
+        "samples": 211,
+        "unique": 129,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            3
+          ],
+          [
+            "여기 앉아도 돼. 나도 막 쉬려던 참이야.",
+            3
+          ],
+          [
+            "지우면 다른 글씨도 없어질 것 같아.",
+            3
+          ],
+          [
+            "잊기 전에 적었어. 고마워.",
+            3
+          ],
+          [
+            "지금 마지막 음 들었어? 어디서 난 걸까.",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 4.611111111111111,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 7
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 1
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": null,
+        "focusedStat": true,
+        "peopleScenes": true,
+        "voluntaryDates": true,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "money",
+      "seed": 5731,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 0,
+      "peopleScenes": 13,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 34,
+        "daeun": 14,
+        "seojin": 5
+      },
+      "stats": {
+        "knowledge": 7,
+        "fitness": 2,
+        "sensitivity": 1
+      },
+      "money": 1668000,
+      "workIncome": 1536000,
+      "bond": {
+        "nari": 44,
+        "daeun": 54,
+        "seojin": 53
+      },
+      "dialogue": {
+        "samples": 419,
+        "unique": 336,
+        "maxRepeat": 2,
+        "mostRepeated": [
+          [
+            "…벌써 어두워졌네.",
+            2
+          ],
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            2
+          ],
+          [
+            "…안녕. 잠깐 시간 있어?",
+            2
+          ],
+          [
+            "여기 앉아도 돼. 나도 막 쉬려던 참이야.",
+            2
+          ],
+          [
+            "이어폰 뺐어. 이제 들려.",
+            2
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 5.444444444444445,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 8
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 8
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 8
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 6
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 7
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 7
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": null,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": null,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": null,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "chat",
+      "seed": 5731,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 0,
+      "peopleScenes": 5,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 48,
+        "daeun": 4,
+        "seojin": 1
+      },
+      "stats": {
+        "knowledge": 21,
+        "fitness": 25,
+        "sensitivity": 24
+      },
+      "money": 182000,
+      "workIncome": 32000,
+      "bond": {
+        "nari": 24,
+        "daeun": 14,
+        "seojin": 14
+      },
+      "dialogue": {
+        "samples": 707,
+        "unique": 298,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "…벌써 어두워졌네.",
+            3
+          ],
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            3
+          ],
+          [
+            "살던 동네? …오늘은 다른 얘기 하자.",
+            3
+          ],
+          [
+            "…안녕. 잠깐 시간 있어?",
+            3
+          ],
+          [
+            "여기 앉아도 돼. 나도 막 쉬려던 참이야.",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 3.6666666666666665,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 3
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 3
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 3
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 0,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": true,
+        "balancedStats": null,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": null,
+        "messageCadence": true,
+        "invitations": null
+      }
+    },
+    {
+      "strategy": "balanced",
+      "seed": 191,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 5,
+      "peopleScenes": 9,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 34,
+        "daeun": 13,
+        "seojin": 6
+      },
+      "stats": {
+        "knowledge": 18,
+        "fitness": 21,
+        "sensitivity": 20
+      },
+      "money": 1348000,
+      "workIncome": 1216000,
+      "bond": {
+        "nari": 54,
+        "daeun": 79,
+        "seojin": 55
+      },
+      "dialogue": {
+        "samples": 501,
+        "unique": 359,
+        "maxRepeat": 2,
+        "mostRepeated": [
+          [
+            "…비 피해서 왔어? 어깨 좀 젖었네.",
+            2
+          ],
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            2
+          ],
+          [
+            "…안녕. 잠깐 시간 있어?",
+            2
+          ],
+          [
+            "지우면 다른 글씨도 없어질 것 같아.",
+            2
+          ],
+          [
+            "강바람 좋다! 너도 한 바퀴 걸어?",
+            2
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 5.666666666666667,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 9
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 8
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 8
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 8
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 3
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": true,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": true,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "nari",
+      "seed": 191,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 5,
+      "peopleScenes": 5,
+      "approaches": 49,
+      "approachPersons": {
+        "nari": 49,
+        "daeun": 0,
+        "seojin": 0
+      },
+      "stats": {
+        "knowledge": 14,
+        "fitness": 1,
+        "sensitivity": 40
+      },
+      "money": 132000,
+      "workIncome": 0,
+      "bond": {
+        "nari": 59,
+        "daeun": 54,
+        "seojin": 0
+      },
+      "dialogue": {
+        "samples": 203,
+        "unique": 130,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            3
+          ],
+          [
+            "지우면 다른 글씨도 없어질 것 같아.",
+            3
+          ],
+          [
+            "여기 앉아도 돼. 나도 막 쉬려던 참이야.",
+            3
+          ],
+          [
+            "지금 마지막 음 들었어? 어디서 난 걸까.",
+            3
+          ],
+          [
+            "잊기 전에 적었어. 고마워.",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 4.555555555555555,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 5
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 5
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 6
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 2
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 3
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": null,
+        "focusedStat": true,
+        "peopleScenes": true,
+        "voluntaryDates": true,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "money",
+      "seed": 191,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 0,
+      "peopleScenes": 12,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 34,
+        "daeun": 14,
+        "seojin": 5
+      },
+      "stats": {
+        "knowledge": 7,
+        "fitness": 2,
+        "sensitivity": 1
+      },
+      "money": 1668000,
+      "workIncome": 1536000,
+      "bond": {
+        "nari": 44,
+        "daeun": 54,
+        "seojin": 54
+      },
+      "dialogue": {
+        "samples": 399,
+        "unique": 322,
+        "maxRepeat": 2,
+        "mostRepeated": [
+          [
+            "…비 피해서 왔어? 어깨 좀 젖었네.",
+            2
+          ],
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            2
+          ],
+          [
+            "…안녕. 잠깐 시간 있어?",
+            2
+          ],
+          [
+            "지우면 다른 글씨도 없어질 것 같아.",
+            2
+          ],
+          [
+            "이어폰 뺐어. 이제 들려.",
+            2
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 5.388888888888889,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 9
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 9
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": null,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": null,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": null,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "chat",
+      "seed": 191,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 0,
+      "peopleScenes": 4,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 41,
+        "daeun": 9,
+        "seojin": 3
+      },
+      "stats": {
+        "knowledge": 21,
+        "fitness": 25,
+        "sensitivity": 24
+      },
+      "money": 182000,
+      "workIncome": 32000,
+      "bond": {
+        "nari": 24,
+        "daeun": 14,
+        "seojin": 14
+      },
+      "dialogue": {
+        "samples": 705,
+        "unique": 306,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "…비 피해서 왔어? 어깨 좀 젖었네.",
+            3
+          ],
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            3
+          ],
+          [
+            "과제는 여덟 마디래. 난 일단 네 마디만 썼어.",
+            3
+          ],
+          [
+            "…안녕. 잠깐 시간 있어?",
+            3
+          ],
+          [
+            "지우면 다른 글씨도 없어질 것 같아.",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 3.611111111111111,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 5
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 3
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 3
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 3
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 3
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 0,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": true,
+        "balancedStats": null,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": null,
+        "messageCadence": true,
+        "invitations": null
+      }
+    },
+    {
+      "strategy": "balanced",
+      "seed": 2026,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 5,
+      "peopleScenes": 9,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 23,
+        "daeun": 23,
+        "seojin": 7
+      },
+      "stats": {
+        "knowledge": 19,
+        "fitness": 21,
+        "sensitivity": 20
+      },
+      "money": 1348000,
+      "workIncome": 1216000,
+      "bond": {
+        "nari": 57,
+        "daeun": 76,
+        "seojin": 54
+      },
+      "dialogue": {
+        "samples": 469,
+        "unique": 360,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "이거 어제랑 시간 바뀐 거 맞지? 나만 헷갈리나?",
+            3
+          ],
+          [
+            "여기서 쉬면 다음이 더 신날 것 같지 않아?",
+            3
+          ],
+          [
+            "이러다 가방 안에서 물병이 공연하겠다ㅋㅋ",
+            3
+          ],
+          [
+            "먹어! 내가 혼자 다 먹었다고 나중에 말하기 없기다.",
+            3
+          ],
+          [
+            "아까 생각한 건데 까먹기 전에 한 번만 들어 줘!",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 5.611111111111111,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 9
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 8
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 7
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 6
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 7
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": true,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": true,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "nari",
+      "seed": 2026,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 4,
+      "peopleScenes": 6,
+      "approaches": 46,
+      "approachPersons": {
+        "nari": 46,
+        "daeun": 0,
+        "seojin": 0
+      },
+      "stats": {
+        "knowledge": 14,
+        "fitness": 1,
+        "sensitivity": 40
+      },
+      "money": 132000,
+      "workIncome": 0,
+      "bond": {
+        "nari": 64,
+        "daeun": 54,
+        "seojin": 0
+      },
+      "dialogue": {
+        "samples": 178,
+        "unique": 123,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            3
+          ],
+          [
+            "여기 앉아도 돼. 나도 막 쉬려던 참이야.",
+            3
+          ],
+          [
+            "지우면 다른 글씨도 없어질 것 같아.",
+            3
+          ],
+          [
+            "지금 마지막 음 들었어? 어디서 난 걸까.",
+            3
+          ],
+          [
+            "잊기 전에 적었어. 고마워.",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 4.388888888888889,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 6
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 1
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": null,
+        "focusedStat": true,
+        "peopleScenes": true,
+        "voluntaryDates": true,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "money",
+      "seed": 2026,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 0,
+      "peopleScenes": 14,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 24,
+        "daeun": 25,
+        "seojin": 4
+      },
+      "stats": {
+        "knowledge": 7,
+        "fitness": 3,
+        "sensitivity": 1
+      },
+      "money": 1668000,
+      "workIncome": 1536000,
+      "bond": {
+        "nari": 44,
+        "daeun": 54,
+        "seojin": 53
+      },
+      "dialogue": {
+        "samples": 397,
+        "unique": 324,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "이거 어제랑 시간 바뀐 거 맞지? 나만 헷갈리나?",
+            3
+          ],
+          [
+            "여기서 쉬면 다음이 더 신날 것 같지 않아?",
+            3
+          ],
+          [
+            "이러다 가방 안에서 물병이 공연하겠다ㅋㅋ",
+            3
+          ],
+          [
+            "먹어! 내가 혼자 다 먹었다고 나중에 말하기 없기다.",
+            3
+          ],
+          [
+            "아까 생각한 건데 까먹기 전에 한 번만 들어 줘!",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 5.5,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 8
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 8
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 7
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 9
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 6
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 5
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 8
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 5
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 6
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 6
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 4
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 11,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": null,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": null,
+        "balancedStats": null,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": null,
+        "messageCadence": true,
+        "invitations": true
+      }
+    },
+    {
+      "strategy": "chat",
+      "seed": 2026,
+      "period": "2026-03-02–2026-06-30",
+      "dates": 0,
+      "peopleScenes": 4,
+      "approaches": 53,
+      "approachPersons": {
+        "nari": 40,
+        "daeun": 11,
+        "seojin": 2
+      },
+      "stats": {
+        "knowledge": 21,
+        "fitness": 26,
+        "sensitivity": 24
+      },
+      "money": 182000,
+      "workIncome": 32000,
+      "bond": {
+        "nari": 24,
+        "daeun": 14,
+        "seojin": 14
+      },
+      "dialogue": {
+        "samples": 689,
+        "unique": 304,
+        "maxRepeat": 3,
+        "mostRepeated": [
+          [
+            "…비 피해서 왔어? 어깨 좀 젖었네.",
+            3
+          ],
+          [
+            "이 두 음 사이를 얼마나 쉴지 모르겠어.",
+            3
+          ],
+          [
+            "졸업해도 드럼은 계속 치고 싶어. 방음부터 해결해야겠지.",
+            3
+          ],
+          [
+            "으아 비! 너 우산 챙겼냐?",
+            3
+          ],
+          [
+            "일요일까지 출석이냐ㅋㅋ 반갑다!",
+            3
+          ]
+        ]
+      },
+      "weeks": {
+        "count": 18,
+        "average": 3.611111111111111,
+        "empty": 0,
+        "details": [
+          {
+            "week": "2026-03-02",
+            "scenes": 6
+          },
+          {
+            "week": "2026-03-09",
+            "scenes": 4
+          },
+          {
+            "week": "2026-03-16",
+            "scenes": 3
+          },
+          {
+            "week": "2026-03-23",
+            "scenes": 3
+          },
+          {
+            "week": "2026-03-30",
+            "scenes": 3
+          },
+          {
+            "week": "2026-04-06",
+            "scenes": 3
+          },
+          {
+            "week": "2026-04-13",
+            "scenes": 4
+          },
+          {
+            "week": "2026-04-20",
+            "scenes": 3
+          },
+          {
+            "week": "2026-04-27",
+            "scenes": 6
+          },
+          {
+            "week": "2026-05-04",
+            "scenes": 3
+          },
+          {
+            "week": "2026-05-11",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-18",
+            "scenes": 4
+          },
+          {
+            "week": "2026-05-25",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-01",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-08",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-15",
+            "scenes": 5
+          },
+          {
+            "week": "2026-06-22",
+            "scenes": 3
+          },
+          {
+            "week": "2026-06-29",
+            "scenes": 2
+          }
+        ]
+      },
+      "messages": 40,
+      "perWeek": 2.2222222222222223,
+      "invitations": 0,
+      "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
+      "checks": {
+        "dialogue": true,
+        "stories": true,
+        "workIncome": true,
+        "chatCap": true,
+        "balancedStats": null,
+        "focusedStat": null,
+        "peopleScenes": true,
+        "voluntaryDates": null,
+        "messageCadence": true,
+        "invitations": null
+      }
+    }
+  ],
+  "globalChecks": {
+    "authoredPeople": true,
+    "authoredStructure": true,
+    "topicCards": true,
+    "recentLines": true,
+    "workStories": true,
+    "firstContact": true,
+    "spending": true,
+    "mapAccuracy": true,
+    "tomorrowLines": true
+  },
+  "metrics": {
+    "personCount": {
+      "nari": 8,
+      "daeun": 8,
+      "seojin": 8
+    },
+    "chains": 5,
+    "spendOnce": 1511500,
+    "repeatPurchases": true,
+    "map": {
+      "shown": 794,
+      "accurate": 794,
+      "leaked": 0
+    }
+  }
+}

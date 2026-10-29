@@ -113,7 +113,7 @@
     radio.aired[episode.id] = record;
     return record;
   }
-  const lunar = text => ({ speaker: '루나', text, onAir: true });
+  const lunar = text => ({ speaker: '루나', text, onAir: true, expr:'neutral' });
   function build(state, episode, replay = false) {
     const radio = ensure(state);
     const record = replay ? radio.aired[episode.id] || { rerun: false, letterIds: [] } : air(state, episode.date);
@@ -126,6 +126,7 @@
     if (episode.number === 13 && state.seen.includes('nariSummer')) opening = '여름에 처음으로 무대 아닌 데서 노래했어요. 관객이 한 명이었는데, 그게 제일 떨렸어요.';
     const lines = [{ text: replay ? '보관해 둔 방송을 다시 틀었다.' : '목요일 밤 열한 시. 이어폰을 꽂자 잔잔한 피아노가 흘렀다.' },
       lunar('안녕하세요, 아쿠아 루나의 루나예요. 오늘 하루, 잘 끝내고 계신가요.'), lunar(opening)];
+    if (state.social?.nariDistanceWeek === W.weekKey(episode.date)) lines.push(lunar('요즘 연락 안 하는 사람 있으세요? 먼저 해 보세요. 저는 못 하지만.'));
     if (record.jealousy) lines.push(lunar(record.jealousy.witness ? '오늘은 같이 온 사람들이 눈에 띄더라고요. …저랑 상관없는 일인데요.' : '요즘 누가 누구랑 웃고 있는 걸 봤어요. 저랑 상관없는 일인데요.'));
     if (episode.number === 1) {
       lines.unshift({ speaker: '민재', text: '야! 학교 라디오 첫 방송 한다! 올해 루나 바뀌었나 봐. 한여울숲 지금 난리야.' });
@@ -153,11 +154,16 @@
     }
     if (episode.number === 18 && state.flags.nariHeardMelody) lines.push({ ...lunar('♪ …아. 마이크 켜져 있었네요.'), ...(effects ? { effect: { clue: 'myMelody' } } : {}) },
       { text: '내가 만든 멜로디였다. 세상에 나 혼자 알던, 가사 없는 여덟 마디가 라디오에서 흘러나왔다.' });
+    if(episode.number <= 12) {
+      const addition=root.AquaRadioEpisodes.episodes[episode.number-1];
+      const count=episode.number===1?1:[7,11].includes(episode.number)?2:4;
+      lines.push(...addition.slice(0,count).map(lunar));
+    }
     const clue = episode.number === 1 && state.flags.heardLastSeason ? 'changedVoice' :
       episode.number === 3 && state.flags.knowsPick ? 'pickListener' :
       episode.number === 8 && state.flags.festivalNari ? 'fadingFlowers' :
       episode.number === 13 && state.seen.includes('nariSummer') ? 'oneAudience' : null;
-    if (clue) lines.push({ text: clue === 'changedVoice' ? '목소리가 바뀌어도 마지막 말은 같았다. 루나는 한 사람의 이름이 아닐지도 모른다.' : '일상에서 들었던 말이 방송 속 문장에 겹쳤다. 아직은 단서로만 남겨 두기로 했다.', ...(effects ? { effect: { clue } } : {}) });
+    if (clue) lines.push({ text: clue === 'changedVoice' ? '목소리가 바뀌어도 마지막 말은 같았다. 루나는 한 사람의 이름이 아닐지도 모른다.' : '방송 속 문장이 귀에 남았다.', ...(effects ? { effect: { clue } } : {}) });
     lines.push(lunar(closings[episode.number] || '오늘은 그냥 끝내요. 실패한 날에도, 하루는 끝나니까.'));
     if (episode.number === 1 && effects) lines.push({ choice: [
       { label: '이어폰을 빼지 않고 끝까지 듣는다', effect: { anonymous: 1, card: '첫 방송의 목소리' }, lines: [{ text: '방송이 끝나고도 한참, 그 마지막 말이 귀에 남았다.' }] },

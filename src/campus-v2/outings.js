@@ -82,8 +82,9 @@
     const lines = [{ text: arrival[0], cast }, say(arrival[1])];
     if (reconciled) lines.push(say({ nari: '…오늘은 나야?', daeun: '오늘은 나랑 노네? ㅋ. …좋다고.', seojin: '오늘은 한가하네. …나도.' }[person]));
     lines.push({ text: topic.text, cast }, say(topic.speech), { choice: topic.choices.map(([label, response, bonus]) => ({
-      label: `“${label}”`, effect: { dateBonus: bonus, dateMemory: response }, lines: [say(response)]
+      label: `“${label}”`, effect: { dateBonus: bonus, dateMemory: label }, lines: [say(response)]
     })) }, { text: '돌아오는 길에는 해가 낮아져 있었다. 오늘 함께 보낸 시간은, 내 기록 속에 남겨 두기로 했다.', cast });
+    root.AquaDateActivities.augment(s,outing,lines);
     return { title: `${place.name} · ${topic.title}`, background: place.background, lines };
   }
   root.AquaOutings = { build };

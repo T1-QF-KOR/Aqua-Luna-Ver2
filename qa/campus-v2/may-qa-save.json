@@ -1,0 +1,193 @@
+{
+  "version": 5,
+  "date": "2026-05-15",
+  "slot": 1,
+  "money": 500000,
+  "energy": 100,
+  "knowledge": 15,
+  "fitness": 15,
+  "sensitivity": 15,
+  "name": "테스트",
+  "nickname": "물고기",
+  "club": "band",
+  "readLines": {},
+  "smallEvents": {
+    "visited": [
+      "class",
+      "library",
+      "dining",
+      "cafe",
+      "club",
+      "studio",
+      "radio",
+      "roof",
+      "river",
+      "concert",
+      "room"
+    ],
+    "seen": [],
+    "topic": null
+  },
+  "music": {
+    "songs": [
+      {
+        "id": "song-qa",
+        "title": "강변의 질문",
+        "date": "2026-05-14",
+        "score": {
+          "nari": 5,
+          "daeun": 6,
+          "seojin": 3
+        },
+        "words": [
+          "질문",
+          "박자",
+          "물"
+        ],
+        "heard": {}
+      }
+    ],
+    "fragments": 0,
+    "score": {
+      "nari": 0,
+      "daeun": 0,
+      "seojin": 0
+    },
+    "words": [],
+    "active": null,
+    "serial": 0
+  },
+  "messages": {
+    "inbox": [
+      {
+        "id": "msg-2026-05-15",
+        "person": "nari",
+        "date": "2026-05-15",
+        "text": "네가 없는 옆자리는 좀 넓네.",
+        "kind": "regular",
+        "reply": null
+      },
+      {
+        "id": "invite-2026-05-15",
+        "person": "nari",
+        "date": "2026-05-15",
+        "kind": "invite",
+        "text": "05/16 오후에 한강변에서 볼래? 이번엔 내가 챙길게.",
+        "reply": null
+      },
+      {
+        "id": "band-2026-05-11:late",
+        "date": "2026-05-15",
+        "kind": "band",
+        "text": "다은: 오늘 합주 끝나고 밥 먹을 사람! 나 배고픔!!\n태오: 케이블은 쓰고 제자리에. 지난번 거 아직 찾는다.\n나리: 🐱👍\n다은: 읽었으면 이모티콘이라도! 언니처럼ㅋㅋ",
+        "reply": "none"
+      }
+    ],
+    "appointments": [
+      {
+        "id": "invite-2026-05-15",
+        "person": "nari",
+        "date": "2026-05-16",
+        "slot": 1,
+        "place": "river",
+        "status": "offered",
+        "paid": true
+      }
+    ],
+    "lastMorning": "2026-05-15",
+    "lastRegular": "2026-05-15",
+    "lastInvite": "2026-05-15",
+    "rotation": 1,
+    "inviteRotation": 1,
+    "bandWeeks": [
+      "2026-05-11:late"
+    ],
+    "hintDate": null,
+    "hintLines": []
+  },
+  "relationships": {
+    "pending": {},
+    "unlocked": [
+      "daeunFirst",
+      "daeunBike",
+      "seojinPlaylist",
+      "nariVolume"
+    ],
+    "chatGain": {},
+    "decayWeeks": [],
+    "rewards": []
+  },
+  "dialogueHistory": {
+    "message:nari:1": {
+      "네가 없는 옆자리는 좀 넓네.": "2026-05-15"
+    }
+  },
+  "greetingCache": {},
+  "growth": {},
+  "equipment": [],
+  "giftClothes": {},
+  "workDays": [],
+  "met": [
+    "nari",
+    "daeun",
+    "seojin"
+  ],
+  "bond": {
+    "nari": 35,
+    "daeun": 40,
+    "seojin": 30
+  },
+  "flags": {},
+  "cards": [],
+  "melodies": [],
+  "letters": [],
+  "history": [],
+  "seen": [
+    "prologue",
+    "entrance",
+    "daeunMeet",
+    "fair",
+    "seojinMeet",
+    "firstRadio",
+    "nariShake",
+    "nariVolume",
+    "daeunFirst",
+    "daeunBike",
+    "seojinPlaylist"
+  ],
+  "scene": null,
+  "completed": false,
+  "conversations": {},
+  "radio": {
+    "listened": [],
+    "aired": {},
+    "clues": {},
+    "anonymous": 0,
+    "honestCount": 0,
+    "hiatusUntil": null
+  },
+  "letterDraft": null,
+  "social": {
+    "inventory": {},
+    "lastGift": {},
+    "gifts": [],
+    "album": [],
+    "lastMet": {
+      "nari": "2026-05-14",
+      "daeun": "2026-05-14",
+      "seojin": "2026-05-14"
+    },
+    "knownBirthdays": {},
+    "jealousy": {},
+    "witnessGreeting": {},
+    "nariRadioPending": null,
+    "karaokeInvites": []
+  },
+  "encounters": {
+    "seed": 4
+  },
+  "dialogue": {
+    "recent": {},
+    "greetingSession": null
+  }
+}

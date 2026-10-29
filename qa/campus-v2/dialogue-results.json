@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-29",
+  "passed": true,
+  "checks": [
+    "Recent event lines require actual recent records and survive preview without consumption",
+    "Each heroine has distinct options for every topic and relationship stage",
+    "The displayed greeting stays stable in the same encounter and a witness reaction survives reload",
+    "Conversation records survive old-save migration and reject invalid dates",
+    "Version 3 relationship progress migrates without awarding new rewards",
+    "Relationship gate deadlines retain existing summer story availability",
+    "Nari’s autumn answer acknowledges a difficult topic instead of continuing her spring dream dialogue",
+    "Everyday lines do not claim a melody or a walk was shared before it happened"
+  ],
+  "scope": "Dialogue selection and save contracts; not a full browser or story playthrough."
+}

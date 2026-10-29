@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "date": "2026-10-29",
+  "clothes": [
+    "clothes-nari-casual",
+    "clothes-nari-suede-mini",
+    "clothes-nari-utility-cargo",
+    "clothes-nari-mini-pleats",
+    "clothes-daeun-denim-mini",
+    "clothes-daeun-layered-denim",
+    "clothes-daeun-quarter-bermuda",
+    "clothes-seojin-shirt",
+    "clothes-seojin-knit",
+    "clothes-seojin-coat"
+  ],
+  "distinctImages": 10,
+  "scope": "Purchase, gift, date narration, save restore, seasonal selection, PNG headers and all expression source paths. Visual identity is reviewed separately."
+}

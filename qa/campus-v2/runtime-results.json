@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-28",
+  "date": "2026-10-29",
   "passed": true,
   "checks": [
     "A new game opens with a dated intro, then enters the original move-in prologue without spending a day",
@@ -7,15 +7,21 @@
     "The short intro advances automatically, pauses in menus and background, and respects reduced motion",
     "Actual runtime keeps draft cancellation separate from sending, then reads and hears the letter exactly once",
     "Saving and reloading the actual first-work scene preserves charged energy and pays pending wages once at completion",
+    "An approaching heroine begins a scene once and returns to the encounter without affection gain",
     "An actual heroine conversation returns to the same time and consumes its daily opportunity once",
     "Ending daytime visits the mandatory festival first, and the unchosen heroine receives no invented reward",
     "Canceling a paid activity keeps resources unchanged; manual slots restore a prior time and resources",
     "June content checkpoint never masquerades as a completed full-game ending",
     "The three-person work event commits one shift, one salary, and only the authored shared rewards",
-    "The location panel conceals people and previewing changes only the scenery until the player visits",
+    "A heroine-specific event card reaches the matching conversation and is consumed once",
+    "The location panel hints at known scheduled people and previewing changes only scenery",
+    "Map hides unmet people and shows a double star for an available cross scene",
+    "A pending relationship event cannot reveal its character through a location preview",
     "Buying and giving a gift use separate confirmations, with no time charge and no duplicated item after reload",
     "An actual paid date resumes mid-choice, advances exactly two slots, and adds its selected memory once",
-    "A mandatory evening prevents a date and a shared conversation uses both daily talks without jealousy"
+    "A mandatory evening prevents a date and a shared conversation uses both daily talks without jealousy",
+    "Skip stops at unread lines and retains read history across saves",
+    "A balanced player completes March through June using actual game handlers"
   ],
   "runtime": "Node VM + DOM adapter; real production game handlers; no browser layout or native file picker"
 }
