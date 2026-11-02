@@ -40,7 +40,23 @@ window.AQUA_SCENES = {
  nariRiver:{title:'혼잣말 원고',background:'river',lines:[{text:'해 지는 강변. 벤치에 이어폰 한쪽을 끼고 앉은 나리가 휴대폰을 보고 있었다.',cast:['nari']},{speaker:'나리',text:'…오늘 하루, 잘— 아니다. 다시.',cast:['nari']},{text:'나와 눈이 마주치자 화면을 꺼서 무릎 위에 엎었다.',cast:['nari']},{speaker:'나리',text:'…통화 아니야. 발음 연습. 실용음악과. 보컬. 그런 거.',cast:['nari']},{choice:[{label:'옆 벤치에 앉아 강만 본다',effect:{meet:'nari',bond:{nari:4},card:'혼잣말 원고'},lines:[{speaker:'나리',text:'강도 밤엔 괜찮아. 달 뜨면.',cast:['nari']}]},{label:'“방금 거, 라디오 디제이 같았어.”',effect:{meet:'nari',bond:{nari:1},flag:'riverClue',card:'혼잣말 원고'},lines:[{speaker:'나리',text:'…발음 연습이라니까.',cast:['nari']},{text:'그녀는 이어폰을 귀에 꽂고 가 버렸다.'}]}]}]},
  daeunMeet:{title:'새내기 배움터',background:'concert',lines:[{text:'새내기 배움터. 조 편성표 앞에서 다들 자기 이름을 찾느라 바빴다.',cast:['daeun']},{speaker:'다은',text:'야! 너 3조지? 나도 3조! 나 오다은. 드럼. 다은이라고 불러.',cast:['daeun']},{speaker:'다은',text:'한나리 선배 무대 봤어? 밴드 동아리 드러머 뽑는대. 나 무조건 갈 거야.',cast:['daeun']},{text:'쉬는 시간. 다은이 혼자 휴대폰을 보고 있었다. 알림이 하나도 없는 화면이었다.',cast:['daeun']},{choice:[{label:'“너 진짜 금방 친해진다. 부러워.”',effect:{meet:'daeun',bond:{daeun:4}},lines:[{speaker:'다은',text:'그치? 이게 내 유일한 재능이야. 아 드럼도. 두 개. …근데 너는 먼저 말 걸어 주네.',cast:['daeun']}]},{label:'“과 단톡방 만들자. 내가 도와줄게.”',effect:{meet:'daeun',bond:{daeun:3},flag:'groupChat'},lines:[{speaker:'다은',text:'오, 추진력! 좋아. 방장은 나, 부방장은 너.',cast:['daeun']}]},{label:'휴대폰을 내밀어 번호를 찍어 준다',effect:{meet:'daeun',bond:{daeun:3}},lines:[{speaker:'다은',text:'오, 말없이 번호부터. 너 은근 선수다?',cast:['daeun']}]}]},{text:'그날 밤 「26 실음 동기방」이 생겼다. 다은이 한 명씩 초대했다. 열여덟 명.'}]},
  fair:{title:'동아리 박람회',background:'concert',lines:[{text:'학생회관 앞 광장이 부스로 꽉 찼다. 사진, 등산, 보드게임, 방송국, 그리고 밴드.'},{speaker:'다은',text:'야! 왔어? 나 지금 드러머 지원한다. 봐 봐.',cast:['daeun']},{text:'무대에서 나리가 첫 소절을 내지르자 지나가던 사람들이 멈춰 섰다.'},{speaker:'이현',text:'HYBS 국장 강이현이에요. 엔지니어 자리가 비어요. 목소리가 아니어도 방송은 할 수 있어요.'},{speaker:'이현',text:'루나는 그만둘 때 다음 사람한테 이름을 넘겨요. 올해는 누가 받았을까요.'},{text:'부스를 다 돌고 나니 손에 신청서 세 장이 남았다.'},{choice:[{label:'밴드 동아리에 들어간다',effect:{club:'band',bond:{daeun:2}},lines:[{speaker:'다은',text:'야 대박! 너도? 우리 같이 붙자!',cast:['daeun']}]},{label:'방송국에 들어간다',effect:{club:'radio'},lines:[{speaker:'이현',text:'환영해요. 목요일 밤엔 바쁠 거예요. 방송국에서 본 건, 방송국 밖으로 안 나가요.'}]},{label:'아무 데도 들어가지 않는다',effect:{club:'none'},lines:[{text:'시간은 내 것으로 남겨 두기로 했다. 알바도, 공부도, 사람도.'}]}]},{text:'광장 끝, 나리가 조용히 손을 흔들었다.',cast:['nari'],effect:{meet:'nari',bond:{nari:1}}}]},
- seojinMeet:{title:'첫 출근',background:'cafe',lines:[{text:'강변 카페 ‘물결’. 첫 출근 날.'},{speaker:'사장님',text:'오늘은 서진이가 가르쳐 줄 거예요. 우리 조카인데, 제일 오래 일했어요.'},{speaker:'서진',text:'백서진. 휴학생이고 스물넷. 누나라고 하든 반말을 하든 편한 대로 해. 대신 컵은 깨지 마.',cast:['seojin']},{text:'서진은 라테 비율, 마감 순서, 단골 이름을 한 번씩만 설명했다.',cast:['seojin']},{text:'마감 시간. 서진이 컵을 닦다가 창밖 강을 오래 봤다.',cast:['seojin']},{choice:[{label:'“강 좋아해, 누나?”',effect:{meet:'seojin',bond:{seojin:4}},lines:[{speaker:'서진',text:'…좋아했지. 물 냄새가 나잖아.',cast:['seojin']},{text:'과거형이었다. 그녀는 대답 대신 행주를 내게 던졌다.',cast:['seojin']},{speaker:'서진',text:'마감 끝. 첫날치고 잘했어, 알바생.',cast:['seojin']}]},{label:'컵을 마저 닦는다',effect:{meet:'seojin',bond:{seojin:2}},lines:[{speaker:'서진',text:'말없이 일하는 거 좋다. 오래 가겠네.',cast:['seojin']}]}]}]},
+ seojinMeet:{title:'첫 출근',background:'cafe',lines:[
+  {text:'강변 카페 ‘물결’. 첫 출근 날.'},
+  {speaker:'사장님',text:'오늘은 서진이가 가르쳐 줄 거예요. 우리 조카인데, 제일 오래 일했어요.'},
+  {text:'검정 상의 위에 짙은 청록색 앞치마를 한 사람이 돌아봤다. 길게 묶은 흑갈색 머리 아래로 가는 금색 귀걸이가 흔들렸다. 올라간 눈꼬리와 시선이 마주쳤다.',cast:['seojin']},
+  {speaker:'서진',text:'백서진. 휴학생이고 스물넷. 누나라고 하든 반말을 하든 편한 대로 해. 대신 컵은 깨지 마.',cast:['seojin']},
+  {speaker:'서진',text:'구경은 쉬는 시간에. 지금은 내 손 봐. 한 번 해 줄게.',cast:['seojin']},
+  {text:'내가 시선을 내리자 서진의 입꼬리가 조금 올라갔다. 라테 비율, 마감 순서, 단골 이름. 설명도 손놀림도 군더더기가 없었다.',cast:['seojin']},
+  {text:'마감 시간. 서진이 컵을 닦다가 창밖 강을 오래 봤다. 아까처럼 먼저 말을 꺼내지는 않았다.',cast:['seojin']},
+  {choice:[
+   {label:'“강 좋아해, 누나?”',effect:{meet:'seojin',bond:{seojin:4}},lines:[
+    {speaker:'서진',text:'…좋아했지. 물 냄새가 나잖아.',cast:['seojin']},
+    {text:'과거형이었다. 서진은 잠깐 늦게 나를 봤다. 나는 더 묻지 않고 컵을 내려놓았다.',cast:['seojin']},
+    {speaker:'서진',text:'마감 끝. 첫날치고 잘했어, 알바생. 칭찬은 여기까지. 다음 근무 때 방심할까 봐.',cast:['seojin']}]},
+   {label:'컵을 마저 닦는다',effect:{meet:'seojin',bond:{seojin:2}},lines:[
+    {speaker:'서진',text:'눈치 빠르네. 오래 가겠어, 알바생.',cast:['seojin']},
+    {text:'서진이 내가 닦은 잔을 빛에 비춰 보고는 그대로 선반에 올렸다.',cast:['seojin']}]}]}
+ ]},
  firstRadio:{title:'물 위의 달',background:'room',lines:[{text:'목요일 밤 열한 시. 벽이 쿵쿵 울렸다.'},{speaker:'민재',text:'야! 학교 라디오 첫 방송 한다! 아쿠아 루나! 한여울숲 지금 난리야.'},{text:'알림이 동시에 울렸다. 이어폰을 꽂았다. 잔잔한 피아노. 그리고 목소리.'},{speaker:'루나',text:'안녕하세요, 아쿠아 루나의 루나예요. 오늘 하루, 잘 끝내고 계신가요.'},{text:'낯선 목소리였다. 그런데 어디선가 들은 것 같았다.'},{speaker:'루나',text:'이 방송은 여러분의 하루가 끝나는 곳이에요. 길었던 하루도, 별일 없던 하루도 괜찮아요.'},{speaker:'루나',text:'다음 주에는 여러분의 사연을 읽을게요. 익명이어도 좋고, 한 줄이어도 좋아요.'},{speaker:'루나',text:'오늘은 여기까지. 좋은 밤 보내세요.'},{text:'방송이 끝나고도 이어폰을 빼지 않았다. 창밖 강 위로 달이 떠 있었다.'}]}
 };
 Object.assign(window.AQUA_SCENES, {
@@ -63,9 +79,9 @@ Object.assign(window.AQUA_SCENES, {
  seojinPlaylist:{title:'마감 플레이리스트',background:'cafe',lines:[
   {text:'마감 30분 전이 되면 카페 음악이 바뀐다. 느리고, 물속처럼 먹먹한 노래들.',cast:['seojin']},
   {speaker:'나',text:'이 플레이리스트 누가 만든 거야? 좋다.',cast:['seojin']},
-  {speaker:'서진',text:'…사장님이.',cast:['seojin']},
+  {speaker:'서진',text:'누가 골랐으면 좋겠는데?',cast:['seojin']},
   {speaker:'사장님',text:'난 트로트밖에 몰라요.'},
-  {speaker:'서진',text:'아 진짜.',cast:['seojin']},
-  {choice:[{label:'“누나 취향 좋네. 하나 공유해 줘.”',effect:{bond:{seojin:5},flag:'playlist'},lines:[{speaker:'서진',text:'…링크 보낼게. 대신 아무한테도 말하지 마.',cast:['seojin']},{text:'그날 밤 링크가 왔다. 플레이리스트 제목은 ‘수심 3m’였다.'}]},{label:'모르는 척 노래를 듣는다',effect:{bond:{seojin:3},flag:'playlist'},lines:[{text:'노래가 끝날 때쯤 서진이 작게 말했다.',cast:['seojin']},{speaker:'서진',text:'다음 곡 제일 좋아해.',cast:['seojin']}]}]}
+  {speaker:'서진',text:'이모, 정답을 너무 빨리 알려 주네.',cast:['seojin']},
+  {choice:[{label:'“누나 취향 좋네. 하나 공유해 줘.”',effect:{bond:{seojin:5},flag:'playlist'},lines:[{speaker:'서진',text:'보내 줄게. 네가 어디까지 듣나 궁금하니까. 다 들으면 제일 좋았던 곡 하나 골라 와.',cast:['seojin']},{text:'그날 밤 링크가 왔다. 플레이리스트 제목은 ‘수심 3m’였다.'}]},{label:'모르는 척 노래를 듣는다',effect:{bond:{seojin:3},flag:'playlist'},lines:[{text:'서진은 내 반응을 잠깐 보다가 스피커 쪽으로 시선을 돌렸다.',cast:['seojin']},{speaker:'서진',text:'다음 곡 제일 좋아해. 지금처럼 끝까지 들어.',cast:['seojin']}]}]}
  ]}
 });

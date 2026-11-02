@@ -15,11 +15,11 @@
     return s[key] - before;
   }
   const clothes = [
-    ['nari','casual','큰 후드 · 와이드 팬츠',80000], ['nari','suede-mini','갈색 재킷 · 미니스커트 · 부츠',120000],
-    ['nari','utility-cargo','카키 야상 · 카고 팬츠',110000], ['nari','mini-pleats','버건디 니트 · 플리츠 미니',100000],
+    ['nari','casual','크림 카디건 · 라벤더 톱 · 데님 스커트',80000], ['nari','suede-mini','슬레이트 스웨이드 재킷 · 미니스커트 · 부츠',120000],
+    ['nari','utility-cargo','퍼프 블라우스 · 블랙 뷔스티에 원피스',110000], ['nari','mini-pleats','라벤더 그레이 니트 · 플리츠 미니',100000],
     ['daeun','denim-mini','회색 후드 집업 · 데님 미니',90000], ['daeun','layered-denim','니트 조끼 · 와이드 청바지',100000],
-    ['daeun','quarter-bermuda','크림 맨투맨 · 버뮤다 팬츠',80000], ['seojin','shirt','하늘색 셔츠 · 검정 슬랙스',110000],
-    ['seojin','knit','크림 니트 · 검정 바지',100000], ['seojin','coat','남색 롱코트 · 회색 목도리',120000]
+    ['daeun','quarter-bermuda','크림 맨투맨 · 버뮤다 팬츠',80000], ['seojin','shirt','차콜 블레이저 · 새틴 톱 · 슬랙스',110000],
+    ['seojin','knit','블랙 비대칭 니트 · 그레이 슬랙스',100000], ['seojin','coat','차콜 롱코트 · 블랙 하이넥 · 가죽 스커트',120000]
   ].map(([person, outfit, name, price]) => ({ id:`clothes-${person}-${outfit}`, person, outfit, name, price, symbol:'♧', taste:['nari','daeun','seojin'].map(id=>id===person?3:0) }));
   const equipment = [{id:'headphones',name:'작곡용 헤드폰',price:60000,symbol:'♫'}, {id:'keyboard',name:'중고 건반',price:180000,symbol:'▤'}, {id:'recorder',name:'휴대용 녹음기',price:120000,symbol:'◉'}];
   function buyEquipment(s,id) {

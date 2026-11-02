@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-29",
+  "date": "2026-11-02",
   "passed": true,
   "checks": [
     "Recent event lines require actual recent records and survive preview without consumption",

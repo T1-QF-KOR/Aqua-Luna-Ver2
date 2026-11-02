@@ -43,7 +43,7 @@
     '2026-09-01': '2학기 개강', '2026-10-19': '2학기 중간고사 시작',
     '2026-10-28': '가을 축제', '2026-12-14': '2학기 기말고사 시작',
     '2026-12-18': '2학기 종강', '2026-12-19': '겨울방학 시작',
-    '2027-02-26': '등록 마감'
+    '2027-02-13': '겨울 발표회', '2027-02-14': '밸런타인데이', '2027-02-26': '등록 마감'
   };
 
   function dateObject(date) { return new Date(`${date}T12:00:00Z`); }
@@ -132,13 +132,16 @@
   function recurringBond(state, id, base, source = 'recurring') {
     const count = state.seen.filter(scene => (routeOwners[scene] || []).includes(id)).length;
     const cap = Math.min(100, (id === 'nari' ? 15 : 20) + count * (id === 'nari' ? 6 : 8));
-    const delta = Math.sign(base) * Math.max(base > 0 ? 1 : 0, Math.round(Math.abs(base * people[id].multiplier)));
+    let delta = Math.sign(base) * Math.max(base > 0 ? 1 : 0, Math.round(Math.abs(base * people[id].multiplier)));
+    if (delta > 0 && root.AquaRomance) delta = Math.floor(delta * root.AquaRomance.repeatingFactor(state, id));
     const before = state.bond[id];
     const next = delta < 0 ? clamp(before + delta) : Math.max(before, Math.min(cap, before + delta));
     if(root.AquaRelationships) root.AquaRelationships.change(state,id,next-before,source); else state.bond[id]=next;
     return state.bond[id] - before;
   }
   function bondStage(state, id) {
+    const romantic = root.AquaRomance?.stage(state, id);
+    if (romantic) return romantic;
     const entries = id === 'nari' ? [[75, '고백 직전'], [60, '썸'], [45, '신경 쓰이는 사이'],
       [25, '친구'], [10, '인사하는 사이'], [0, '무대 위의 선배']] :
       [[75, '고백 직전'], [55, '썸'], [35, '신경 쓰이는 사이'], [15, '친구'], [0, '아는 사이']];

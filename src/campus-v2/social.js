@@ -91,11 +91,13 @@
     if (!outing.routeId) W.recurringBond(s, outing.person, 3 + Math.max(2, Math.min(4, outing.bonus || 2)));
     if (outing.routeId && !s.seen.includes(outing.routeId)) s.seen.push(outing.routeId);
     social.album.push({ ...outing, key });
+    root.AquaRomance?.noteDate(s, outing.person);
     if(outing.appointmentId){const a=root.AquaMessages.ensure(s).appointments.find(a=>a.id===outing.appointmentId);if(a)a.status='done';}
     if (social.jealousy[outing.person]) social.jealousy[outing.person].upset = false;
     return true;
   }
   function attention(s, selected, observers, witness = false) {
+    if (witness) root.AquaRomance?.witness(s, selected, observers);
     const social = ensure(s), lines = [];
     for (const id of [...new Set(observers)]) {
       if (id === selected || !s.met.includes(id) || s.bond[id] < (witness ? 35 : 15)) continue;
@@ -104,13 +106,13 @@
       record.date = s.date;
       const bond = s.bond[id];
       if (bond >= 55) {
-        s.bond[id] = W.clamp(bond - 3); record.upset = true;
+        s.bond[id] = W.clamp(bond - (s.romance?.mode === 'open' && root.AquaRomance.isLover(s,id) && root.AquaRomance.isLover(s,selected) ? 1.5 : 3)); record.upset = true;
       } else if (bond >= 35 && !record.aware) {
         record.aware = true; s.flags[`${id}Aware`] = true; s.bond[id] = W.clamp(bond + 3);
-      } else if (bond >= 35) { s.bond[id] = W.clamp(bond - 2); record.upset = true; }
+      } else if (bond >= 35) { s.bond[id] = W.clamp(bond - (s.romance?.mode === 'open' && root.AquaRomance.isLover(s,id) && root.AquaRomance.isLover(s,selected) ? 1 : 2)); record.upset = true; }
       const text = id === 'nari' ? '나리가 피크 모서리를 엄지로 한 번 문지르고, 시선을 돌렸다.' :
         id === 'daeun' ? bond < 35 ? '다은의 웃음이 잠깐 멈췄다가 조금 크게 돌아왔다.' : record.upset ? '다은이 휴대폰을 뒤집었다. “아냐, 둘이 얘기해. 나 먼저 갈게. ㅋ.”' : '“야, 나도 좀 봐 줘. ㅋㅋ.” 다은은 웃고 나서 자기 말에 잠깐 놀란 듯했다.' :
-        bond < 35 ? '서진이 빈 잔을 가지런히 맞추었다. 방금 닦았던 잔이었다.' : record.upset ? '서진의 인사가 짧아졌다. “먼저 갈게.”' : '서진의 손이 멎었다. 내 쪽을 보다가 다시 고개를 숙였다.';
+        bond < 35 ? '서진이 빈 잔을 가지런히 맞추었다. 방금 닦았던 잔이었다.' : record.upset ? '서진의 인사가 짧아졌다. “먼저 갈게.”' : '서진의 손이 멎었다. 나와 눈이 마주쳤지만 먼저 웃어 주지는 않았다.';
       const varied = root.AquaDialogue.pick(s, `jealousy:${id}`, root.AquaDialogue.jealousy[id]);
       lines.push({ expr:'jealous', text: witness ? `${W.people[id].name}와 잠깐 눈이 마주쳤다. ${varied}` : varied, cast: witness ? [selected, id] : [...new Set([selected, ...observers])] });
       if (id === 'nari' && bond >= 35) social.nariRadioPending = { date: s.date, witness };
@@ -123,9 +125,9 @@
     social.lastMet[id] = s.date;
     if (social.witnessGreeting[id]) {
       delete social.witnessGreeting[id];
-      return { nari: '…왔어. 오늘은 어디 가?', daeun: '그날 재밌었냐? ㅋ. 아냐, 그냥 물어봤어.', seojin: '바빴나 보네. 앞치마는 거기 있어.' }[id];
+      return { nari: '…왔어. 오늘은 어디 가?', daeun: '그날 재밌었냐? ㅋ. 아냐, 그냥 물어봤어.', seojin: '바빴나 보네. 오늘은 무슨 얘기 하려고 왔어?' }[id];
     }
-    return stage >= 35 ? { nari: '…너 올 것 같아서. 그냥, 잠깐 더 있었어.', daeun: '왔네! 너 안 오면 내가 먼저 부르려고 했지.', seojin: '왔어? 네 자리는 비워 뒀어.' }[id] :
+    return stage >= 35 ? { nari: '…너 올 것 같아서. 그냥, 잠깐 더 있었어.', daeun: '왔네! 너 안 오면 내가 먼저 부르려고 했지.', seojin: '네 자리 여기. 내가 먼저 봐 둔 건데, 앉을래?' }[id] :
       { nari: '…안녕. 오늘도 학교에 있었네.', daeun: '오! 여기서 보네. 잠깐 얘기할래?', seojin: '왔네. 잠깐은 괜찮아.' }[id];
   }
   root.AquaSocial = { gifts, destinations, birthdays, initial, ensure, buy, giftReason, give, dateReason, invite, finishDate, attention, greeting };

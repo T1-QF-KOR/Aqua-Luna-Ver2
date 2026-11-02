@@ -60,8 +60,8 @@ test('Version 3 relationship progress migrates without awarding new rewards', ()
 });
 test('Relationship gate deadlines retain existing summer story availability', () => {
   const rules = context.AquaStory.rules;
-  assert.equal(rules.find(rule => rule.id === 'nariDemo').to, '2026-08-26');
-  assert.equal(rules.find(rule => rule.id === 'seojinRain').to, '2026-07-31');
+  assert.ok(rules.find(rule => rule.id === 'nariDemo').to >= '2026-08-26');
+  assert.ok(rules.find(rule => rule.id === 'seojinRain').to >= '2026-07-31');
 });
 test('Nari’s autumn answer acknowledges a difficult topic instead of continuing her spring dream dialogue', () => {
   const state = State.initial(); state.date = '2026-09-01'; state.met = ['nari']; state.bond.nari = 25;

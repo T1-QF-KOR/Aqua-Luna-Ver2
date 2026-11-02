@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "reachableEncounters": [
+    "nariCard",
+    "nariStudio",
+    "nariAngry",
+    "nariBirthday",
+    "nariFright",
+    "nariFight",
+    "daeunAlone",
+    "daeunBack",
+    "seojinFight",
+    "seojinDream",
+    "crossRegular",
+    "lunaLeakAfter"
+  ],
+  "authoredScenes": [
+    "nariCard",
+    "nariStudio",
+    "nariAngry",
+    "nariBirthday",
+    "nariFright",
+    "nariFight",
+    "daeunAlone",
+    "daeunBack",
+    "seojinFight",
+    "seojinDream",
+    "crossRegular",
+    "chuseok",
+    "chuseokMorning",
+    "chuseokPacking",
+    "chuseokReturn",
+    "lunaLeakStart",
+    "lunaLeakExit",
+    "lunaLeakAfter",
+    "autumnFestival"
+  ],
+  "scope": "Production modules, seeded itinerary and conditional story compilation. Runtime flows are checked separately; no browser layout claim."
+}

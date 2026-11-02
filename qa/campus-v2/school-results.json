@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-30",
+  "passed": true,
+  "checks": [
+    "Both semesters contain sixteen authored weeks with 160 different daily beats and complete academic-calendar coverage",
+    "Classroom actors follow the saved attendance plan, exclude the café worker, and never introduce an unknown heroine",
+    "Location follow-ups need a completed school day, remain optional and actor-free, and never manufacture a visit or sound recording",
+    "A side story never summons a heroine whose itinerary says she is absent, including during a café shift"
+  ],
+  "authoredWeeks": 32,
+  "authoredDailyBeats": 160,
+  "schoolDays": 151,
+  "scope": "Production school and encounter rules; visual browser QA recorded separately."
+}

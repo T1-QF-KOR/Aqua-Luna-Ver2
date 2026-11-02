@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "reachableEncounters": [
+    "nariJanuary",
+    "seojinJanuary",
+    "daeunJanuary",
+    "nariFebruary",
+    "seojinFebruary",
+    "daeunFebruary",
+    "daeunFight",
+    "nariPaper",
+    "seojinCouple",
+    "seojinFriend",
+    "seojinPending",
+    "daeunCouple",
+    "daeunAfterAnswer"
+  ],
+  "scenes": [
+    "lastWeek",
+    "winterShowcase",
+    "winterPlans",
+    "nariFebruary",
+    "seojinFebruary",
+    "daeunFebruary",
+    "lunarNewYear",
+    "januaryStart",
+    "nariJanuary",
+    "seojinJanuary",
+    "daeunJanuary",
+    "daeunFight",
+    "nariRecord",
+    "nariPaper",
+    "seojinConfess",
+    "daeunConfess",
+    "winterTermEnd",
+    "seojinCouple",
+    "seojinFriend",
+    "seojinPending",
+    "daeunCouple",
+    "daeunAfterAnswer"
+  ],
+  "scope": "Production modules, relationship-specific reachability, confession gates and protected broadcast replay. Runtime and layout verified separately."
+}

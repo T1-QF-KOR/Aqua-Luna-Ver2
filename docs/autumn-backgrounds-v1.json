@@ -1,0 +1,31 @@
+{
+  "generator": "built-in image_gen",
+  "date": "2026-10-30",
+  "transparent_background": false,
+  "assets": [
+    {
+      "destination": "assets/campus-v2/campus-autumn-v1.png",
+      "reference": "assets/campus-v2/campus-spring-v1.png",
+      "prompt": "Use case: lighting-weather. Asset type: wide visual-novel background, 16:9 landscape. Edit target: supplied spring campus illustration. Change only the season to a clear late-October afternoon at the SAME fictional Seoul riverside university. Preserve the exact camera angle, descending central paved walkway, left glass-and-pale-stone music building with piano, benches and rails on the right, river, bridge, distant Seoul skyline and tower. Replace ALL pink cherry blossoms and spring flower beds with believable autumn foliage: the same large cherry trees have copper-red, ochre and muted amber leaves; a few crisp fallen leaves on the paving; lower shrubs are warm green-brown. No flowers or petals. Rich but restrained warm sunlight with cool clear blue autumn sky. Premium hand-painted Japanese anime game background, delicate clean architectural linework, soft painted shading; match the reference's illustration finish, never photorealistic or 3D. No people, characters, text, logos, UI, watermark or collage. Preserve usable open foreground for game characters and a bottom dialogue overlay. Full-bleed opaque landscape, ideally 1920x1080.",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-01861a54-5388-448b-b460-4d4a4cafade8.png"
+    },
+    {
+      "destination": "assets/campus-v2/hometown-day-v1.png",
+      "reference": "assets/campus-v2/room-night-v1.png (art style only)",
+      "prompt": "Use case: illustration-story. Asset type: production 16:9 visual-novel game background. Reference image is ART STYLE ONLY, not the same room or city. Create the protagonist's childhood family home in a small South Korean coastal town on a clear September Chuseok morning. Interior, eye-level medium-wide view across a modest sunlit bedroom with a slightly old wooden study desk, a school-years bookcase, simple floor bedding folded neatly by the wall, a travel backpack and a few closed reusable food containers beside it. A broad ordinary window looks onto low neighborhood roofs and the distant blue sea with a small red harbor beacon. This is a cared-for lived-in family home, not a luxury apartment. Warm pale-cream walls, natural wood, soft curtains, morning light across the floor. Premium Japanese anime / virtual visual-novel background illustration matching the supplied style's crisp delicate linework and soft painted shading; NOT photorealism, NOT 3D. Calm, intimate feeling of returning to a familiar room. Keep the center foreground uncluttered for dialogue. No people, no readable text, no posters with faces, no logos, no UI, no watermark, no collage. Opaque full-bleed wide image, ideally 1920x1080.",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-6c5cd2a1-fcc5-487c-9c2c-e2ac625344a6.png"
+    },
+    {
+      "destination": "assets/campus-v2/campus-summer-v1.png",
+      "reference": "assets/campus-v2/campus-spring-v1.png",
+      "prompt": "Use case: lighting-weather. Edit target: the supplied illustration of the fictional Seoul riverside university. Create a midsummer version of EXACTLY THE SAME scene and 16:9 camera framing. Preserve the left glass music building and visible piano, the central descending walkway, all stairs, benches, railing, river bridge, skyline and distant tower. Change only vegetation and seasonal light. All trees are full leafy GREEN canopies, with NO cherry blossoms, NO pink petals, NO autumn colors. Soft green shrubs in the planting beds, clear early summer sky, bright warm afternoon daylight, slightly deeper green shade under the trees. Premium Japanese anime visual-novel background with delicate clean architectural linework and soft painted shading matching the reference. Not photographic or 3D. No people, UI, letters, logos, watermark or collage. Open foreground for characters/dialogue. Full-bleed opaque wide image.",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-4b4bb3de-9db8-4f96-a78e-aab539318588.png"
+    },
+    {
+      "destination": "assets/campus-v2/hometown-night-v1.png",
+      "reference": "assets/campus-v2/hometown-day-v1.png",
+      "prompt": "Use case: lighting-weather. Edit target: the supplied childhood coastal bedroom illustration. Create the SAME room at night, changing ONLY the time, light and outside sky. Keep exactly the desk, chair, bookshelves, bedding and backpack on the right, food containers, cream walls, wood flooring, window shape and coastal-town view. The desk lamp now gives a small warm amber pool of light while the rest of the room has soft cool blue shadows. Outside the window is a quiet blue-black September night with a few stars, a modest moon behind thin cloud, scattered lit house windows and the faint red harbor beacon reflected on the distant sea. No bright daylight, no sunset, no change of geography, no city skyline, no additional furniture. Retain the premium hand-painted Japanese anime visual-novel background style and fine linework, not photorealistic or 3D. No people, UI, readable text, logos or watermark. Full-bleed opaque landscape matching the reference framing.",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-6bfae4d7-d308-45f7-bb43-dcf48e8e2298.png"
+    }
+  ]
+}

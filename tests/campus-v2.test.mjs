@@ -6,9 +6,9 @@ const root = new URL('../', import.meta.url);
 const context = { structuredClone, console };
 context.window = context;
 vm.createContext(context);
-for (const file of ['world', 'encounters', 'wardrobe', 'radioEpisodes', 'radio', 'relationships', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'smallEvents', 'state', 'scenes', 'semester']) {
-  vm.runInContext(await fs.readFile(new URL(`src/campus-v2/${file}.js`, root), 'utf8'), context, { filename: `${file}.js` });
-}
+const entry = await fs.readFile(new URL('campus.html', root), 'utf8');
+for (const [, path] of entry.matchAll(/<script defer src="([^"]+)">/g)) if (!path.endsWith('/game.js'))
+  vm.runInContext(await fs.readFile(new URL(path, root), 'utf8'), context, { filename: path });
 const { AquaWorld: W, AquaRadio: R, AquaState: State, AquaStory: Story, AquaSocial: S } = context;
 const checks = [];
 function test(name, fn) { fn(); checks.push(name); console.log(`PASS ${name}`); }
@@ -285,10 +285,10 @@ test('Clothes follow performance, rehearsal, dates and seasons while retaining a
   assert.equal(C.pick(s, 'seojin', { background: 'cafe' }), 'work');
   assert.equal(C.pick(s, 'seojin', { background: 'cafe', outing: {} }), 'offduty');
   s.date = '2026-06-08'; assert.equal(C.pick(s, 'seojin', { outing: {} }), 'summer');
-  assert.ok(C.source(s, 'nari', { wardrobe: { nari: 'stage' } }).endsWith('nari-stage-v2.png'));
+  assert.ok(C.source(s, 'nari', { wardrobe: { nari: 'stage' } }).endsWith('nari-stage-v6.png'));
 });
 for (const rule of Story.rules) assert.ok(context.AQUA_SCENES[rule.id], rule.id);
-for (const file of ['game', 'world', 'encounters', 'wardrobe', 'radioEpisodes', 'radio', 'relationships', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'smallEvents', 'state', 'scenes', 'semester']) new vm.Script(await fs.readFile(new URL(`src/campus-v2/${file}.js`, root), 'utf8'));
+for (const file of ['game', 'world', 'encounters', 'wardrobe', 'radioEpisodes', 'radio', 'relationships', 'romance', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'smallEvents', 'state', 'scenes', 'semester', 'summer']) new vm.Script(await fs.readFile(new URL(`src/campus-v2/${file}.js`, root), 'utf8'));
 const runDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 const report = { date: runDate, passed: true, checks, scope: 'Pure calendar, radio lifecycle, relationship rules, story conditions, and save contracts. Does not certify visual layout or full-game completion.' };
 await fs.mkdir(new URL('qa/campus-v2/', root), { recursive: true });

@@ -1,0 +1,140 @@
+{
+  "date": "2026-11-02",
+  "tool": "built-in image_gen",
+  "purpose": "장소 구조·계절·스토리 단서와 캐릭터 가독성을 유지하면서 배경 화풍 정리",
+  "assets": [
+    {
+      "id": "karaoke",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-f2f9ef8e-d07c-472a-a08c-db804740fd84.png",
+      "destination": "assets/campus-v2/bg-v2/karaoke.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/classroom-v1.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. For this new missing background use image 1 only as a STYLE reference; create a new location, do not reproduce the classroom. A modest cozy Korean neighborhood karaoke room, intimate upholstered sofa, low table with two microphones, song-selection remote and a screen displaying abstract soft lights without text, muted purple and teal ambient light, warm inviting visual novel mood. Empty room, space for characters."
+    },
+    {
+      "id": "river",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-6ea4b9a3-35b7-4cb6-b818-82e1a94be938.png",
+      "destination": "assets/campus-v2/bg-v2/river.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/environment/pier-evening.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A Han River promenade with a bench, safe railing and distant Seoul skyline and bridge, at a luminous restrained warm sunset fading into violet-blue; beautiful soft painted reflections, emotional visual-novel setting."
+    },
+    {
+      "id": "radio",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-e6f1b983-4525-43fe-bf59-ac59b476bbf3.png",
+      "destination": "assets/campus-v2/bg-v2/radio.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/classroom-v1.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. For this new missing background use image 1 only as a STYLE reference; create a new location, do not reproduce the classroom. A small Korean university radio station: soundproof broadcast booth visible through a glass window and partly drawn curtain to protect the DJ's identity; microphone, mixing desk, headphones, computer with an abstract blank screen, record shelves and a softly glowing red indicator without text. Moody indigo night with warm desk light, readable open central area."
+    },
+    {
+      "id": "rooftop",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-3eb5b5d7-a42d-464d-810b-02ec76b37f0a.png",
+      "destination": "assets/campus-v2/bg-v2/rooftop.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/environment/rooftop-day.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A quiet university rooftop garden with potted plants, a bench, safe parapet and distant Han River skyline; clear spring afternoon and gentle breeze, romantic but grounded, not a private laundry roof."
+    },
+    {
+      "id": "classroom",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-4dbca7cf-bf68-40ab-bec7-ae42b62cb6f8.png",
+      "destination": "assets/campus-v2/bg-v2/classroom.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/classroom-v1.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A Korean university practical-music classroom, with blackboard, upright piano and arranged student desks and windows; calm warm morning light and restrained blossoms. Keep functional music classroom."
+    },
+    {
+      "id": "concert",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-c1a1d902-dceb-4ad4-9b2c-380807de710a.png",
+      "destination": "assets/campus-v2/bg-v2/concert.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/environment/concert.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A cozy small university live-music venue viewed from audience, a clear stage with microphone stand, keyboard, drum kit and modest stage lights; deep indigo and warm amber light, atmospheric and believable. No people."
+    },
+    {
+      "id": "cafe",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-a657bf32-d478-4b52-a07e-4be3dc69437d.png",
+      "destination": "assets/campus-v2/bg-v2/cafe.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/environment/cafe-day.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A cozy independent riverside café called 물결, with practical counter/espresso machine, warm wooden chairs, window seating, books and plants. Soft afternoon light, inviting romantic everyday atmosphere. No lettering anywhere. Keep practical usable counter and windows."
+    },
+    {
+      "id": "library",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-56a5b2b1-98b2-4629-994b-0c8732f42de0.png",
+      "destination": "assets/campus-v2/bg-v2/library.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/library-v1.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A university library reading area, bookshelves and reading tables, warm wood and green reading lamps; inviting afternoon light through tall windows. Keep airy believable university library."
+    },
+    {
+      "id": "dining",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-388bfbb0-48fd-4c8c-ad93-e0e98d085ef5.png",
+      "destination": "assets/campus-v2/bg-v2/dining.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/dining-v1.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A modern welcoming Korean university student cafeteria, serving counter in background and natural tables and chairs, pale daylight and a few green plants. Keep empty central space and credible dining hall."
+    },
+    {
+      "id": "riverSnow",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-a0a9e26b-e474-4e33-8477-70f8ede0ab42.png",
+      "destination": "assets/campus-v2/bg-v2/riverSnow.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/river-first-snow-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. Same riverside bench, pier, bridge and Seoul skyline with the first delicate snow at twilight; warm reflections against a cool violet winter sky."
+    },
+    {
+      "id": "campus-winter",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-0ee42ead-4531-4504-83ec-1242793d787f.png",
+      "destination": "assets/campus-v2/bg-v2/campus-winter.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/campus-winter-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. Same university buildings, path, benches and river skyline as reference, quiet early winter, bare branches, soft traces of snow, crisp daylight."
+    },
+    {
+      "id": "practice",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-a39f025a-bc35-44eb-bd12-cbf05c7b5377.png",
+      "destination": "assets/campus-v2/bg-v2/practice.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/environment/practice-day.png",
+      "prompt": "Use case: premium 2D anime visual novel background, landscape 16:9. Image 1 is the reference location to faithfully redesign; preserve recognizable architecture, spatial layout, furniture and main story-relevant objects so it remains the same place. Replace photographic/3D realism with exceptionally high quality hand-painted cinematic Japanese/Korean animation environment art, polished visual-novel background that matches detailed anime character sprites: beautiful fine drawing, painterly surface textures, sophisticated color harmony, atmospheric depth, natural light and subtle bounce light, charming but believable Korean university setting. Layered background with clear center and lower foreground for compositing standing characters and a dialogue box, realistic perspective. Do not insert characters or people. No logos, signs with text, captions, watermarks, interface, random writing, photo collage, or 3D render. Crisp but not over-sharpened. User explicitly prefers animation rather than realism. A believable Korean university band practice room, with complete drum kit, microphone stand, piano or keyboard, amplifier, neatly placed guitars and music stands, acoustic wall treatment; warm afternoon light. No studio green screen or photography equipment. Preserve clear empty central area for characters."
+    },
+    {
+      "id": "room",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-babd798c-a4d5-4581-9716-d482a9aa7001.png",
+      "destination": "assets/campus-v2/bg-v2/room.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/room-night-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. The protagonist's modest Seoul student room at night, same bed, desk with keyboard, window skyline and belongings, warm lamp and moonlight. Intimate and believable."
+    },
+    {
+      "id": "campus-autumn",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-47f7604f-640c-4bae-a054-0e96f8d75ee9.png",
+      "destination": "assets/campus-v2/bg-v2/campus-autumn.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/campus-autumn-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. Same university buildings, path, benches and river skyline as reference, autumn maple leaves, warm copper foliage and gentle light."
+    },
+    {
+      "id": "night",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-7d7c6fac-4b70-4f0b-898b-18fd90c84728.png",
+      "destination": "assets/campus-v2/bg-v2/night.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/han-river-night-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. The Han River night promenade, same bridge, moon, bench, flowering branches and Seoul skyline; restrained moonlight and vivid water reflections."
+    },
+    {
+      "id": "campus-summer",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-177d3e56-a0ff-4dae-97fb-5cc7a82568a9.png",
+      "destination": "assets/campus-v2/bg-v2/campus-summer.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/campus-summer-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. Same university buildings, path, benches and river skyline as reference, lush green summer foliage, refreshing sunlit day."
+    },
+    {
+      "id": "home",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-d32d1d7c-27b0-4f1f-ace7-a46d3b1f1fc3.png",
+      "destination": "assets/campus-v2/bg-v2/home.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/hometown-day-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. The same protagonist's old bedroom in a southern Korean seaside town, familiar desk, window, bedding and harbor lighthouse, soft daylight."
+    },
+    {
+      "id": "campus-spring",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-03b7665c-e304-4aeb-b341-f93d21f07b1c.png",
+      "destination": "assets/campus-v2/bg-v2/campus-spring.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/campus-spring-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. Same university buildings, steps, riverside skyline and path as reference, cherry blossoms and drifting petals, spring afternoon, layered gentle sunlight."
+    },
+    {
+      "id": "homeNight",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-4bd88027-ab92-450b-8ac9-d16f635ab13e.png",
+      "destination": "assets/campus-v2/bg-v2/homeNight.png",
+      "ref": "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/hometown-night-v1.png",
+      "prompt": "Use case: high-end 2D anime visual-novel background, 16:9 landscape. Reference image is the actual in-game location: maintain the layout, identifying architectural features, story-relevant furnishings and the same time and season, so this still looks like the same place. Repaint it as an exceptionally polished hand-painted anime background matching premium Japanese/Korean romance visual novel sprites: refined detailed lines, tasteful painterly surfaces, atmospheric depth, cohesive colors and nuanced cinematic light. Beautiful believable Korean setting, preserve an open central region for character sprites and dialogue box. No people, logos, caption, text, UI, watermark, 3D or photo-real look. Same layout as reference, the protagonist's old seaside town bedroom at night, familiar desk, bedding and harbor lighthouse, gentle moonlight and warm lamp."
+    }
+  ]
+}

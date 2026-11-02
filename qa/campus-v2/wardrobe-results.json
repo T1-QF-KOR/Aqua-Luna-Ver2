@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "date": "2026-10-29",
+  "date": "2026-10-30",
   "clothes": [
     "clothes-nari-casual",
     "clothes-nari-suede-mini",
@@ -14,5 +14,5 @@
     "clothes-seojin-coat"
   ],
   "distinctImages": 10,
-  "scope": "Purchase, gift, date narration, save restore, seasonal selection, PNG headers and all expression source paths. Visual identity is reviewed separately."
+  "scope": "Purchase, gift, date narration, save restore, seasonal selection, PNG headers and all expression source paths, including the two user-requested Nari redesigns. Visual identity is reviewed separately."
 }

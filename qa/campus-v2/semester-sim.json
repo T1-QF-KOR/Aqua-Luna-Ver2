@@ -11,17 +11,17 @@
       "seed": 5731,
       "period": "2026-03-02–2026-06-30",
       "dates": 5,
-      "peopleScenes": 8,
+      "peopleScenes": 5,
       "approaches": 53,
       "approachPersons": {
         "nari": 34,
-        "daeun": 16,
-        "seojin": 3
+        "daeun": 14,
+        "seojin": 5
       },
       "stats": {
         "knowledge": 18,
-        "fitness": 22,
-        "sensitivity": 19
+        "fitness": 21,
+        "sensitivity": 20
       },
       "money": 1380000,
       "workIncome": 1248000,
@@ -31,8 +31,8 @@
         "seojin": 58
       },
       "dialogue": {
-        "samples": 511,
-        "unique": 368,
+        "samples": 519,
+        "unique": 371,
         "maxRepeat": 2,
         "mostRepeated": [
           [
@@ -59,7 +59,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 5.611111111111111,
+        "average": 5.444444444444445,
         "empty": 0,
         "details": [
           {
@@ -92,7 +92,7 @@
           },
           {
             "week": "2026-04-20",
-            "scenes": 7
+            "scenes": 6
           },
           {
             "week": "2026-04-27",
@@ -104,7 +104,7 @@
           },
           {
             "week": "2026-05-11",
-            "scenes": 6
+            "scenes": 5
           },
           {
             "week": "2026-05-18",
@@ -124,15 +124,15 @@
           },
           {
             "week": "2026-06-15",
-            "scenes": 7
-          },
-          {
-            "week": "2026-06-22",
             "scenes": 6
           },
           {
+            "week": "2026-06-22",
+            "scenes": 5
+          },
+          {
             "week": "2026-06-29",
-            "scenes": 2
+            "scenes": 3
           }
         ]
       },
@@ -158,7 +158,7 @@
       "seed": 5731,
       "period": "2026-03-02–2026-06-30",
       "dates": 5,
-      "peopleScenes": 4,
+      "peopleScenes": 5,
       "approaches": 51,
       "approachPersons": {
         "nari": 51,
@@ -206,16 +206,16 @@
       },
       "weeks": {
         "count": 18,
-        "average": 4.611111111111111,
+        "average": 4.666666666666667,
         "empty": 0,
         "details": [
           {
             "week": "2026-03-02",
-            "scenes": 7
+            "scenes": 6
           },
           {
             "week": "2026-03-09",
-            "scenes": 4
+            "scenes": 5
           },
           {
             "week": "2026-03-16",
@@ -267,7 +267,7 @@
           },
           {
             "week": "2026-06-08",
-            "scenes": 4
+            "scenes": 5
           },
           {
             "week": "2026-06-15",
@@ -309,8 +309,8 @@
       "approaches": 53,
       "approachPersons": {
         "nari": 34,
-        "daeun": 14,
-        "seojin": 5
+        "daeun": 13,
+        "seojin": 6
       },
       "stats": {
         "knowledge": 7,
@@ -325,8 +325,8 @@
         "seojin": 53
       },
       "dialogue": {
-        "samples": 419,
-        "unique": 336,
+        "samples": 427,
+        "unique": 341,
         "maxRepeat": 2,
         "mostRepeated": [
           [
@@ -452,12 +452,12 @@
       "seed": 5731,
       "period": "2026-03-02–2026-06-30",
       "dates": 0,
-      "peopleScenes": 5,
+      "peopleScenes": 3,
       "approaches": 53,
       "approachPersons": {
-        "nari": 48,
+        "nari": 47,
         "daeun": 4,
-        "seojin": 1
+        "seojin": 2
       },
       "stats": {
         "knowledge": 21,
@@ -472,8 +472,8 @@
         "seojin": 14
       },
       "dialogue": {
-        "samples": 707,
-        "unique": 298,
+        "samples": 709,
+        "unique": 299,
         "maxRepeat": 3,
         "mostRepeated": [
           [
@@ -500,7 +500,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 3.6666666666666665,
+        "average": 3.5555555555555554,
         "empty": 0,
         "details": [
           {
@@ -529,7 +529,7 @@
           },
           {
             "week": "2026-04-13",
-            "scenes": 5
+            "scenes": 4
           },
           {
             "week": "2026-04-20",
@@ -537,7 +537,7 @@
           },
           {
             "week": "2026-04-27",
-            "scenes": 4
+            "scenes": 3
           },
           {
             "week": "2026-05-04",
@@ -599,7 +599,7 @@
       "seed": 191,
       "period": "2026-03-02–2026-06-30",
       "dates": 5,
-      "peopleScenes": 9,
+      "peopleScenes": 4,
       "approaches": 53,
       "approachPersons": {
         "nari": 34,
@@ -609,18 +609,18 @@
       "stats": {
         "knowledge": 18,
         "fitness": 21,
-        "sensitivity": 20
+        "sensitivity": 19
       },
-      "money": 1348000,
-      "workIncome": 1216000,
+      "money": 1380000,
+      "workIncome": 1248000,
       "bond": {
         "nari": 54,
-        "daeun": 79,
+        "daeun": 76,
         "seojin": 55
       },
       "dialogue": {
-        "samples": 501,
-        "unique": 359,
+        "samples": 507,
+        "unique": 356,
         "maxRepeat": 2,
         "mostRepeated": [
           [
@@ -647,7 +647,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 5.666666666666667,
+        "average": 5.388888888888889,
         "empty": 0,
         "details": [
           {
@@ -660,7 +660,7 @@
           },
           {
             "week": "2026-03-16",
-            "scenes": 7
+            "scenes": 5
           },
           {
             "week": "2026-03-23",
@@ -684,11 +684,11 @@
           },
           {
             "week": "2026-04-27",
-            "scenes": 4
+            "scenes": 5
           },
           {
             "week": "2026-05-04",
-            "scenes": 4
+            "scenes": 3
           },
           {
             "week": "2026-05-11",
@@ -704,7 +704,7 @@
           },
           {
             "week": "2026-06-01",
-            "scenes": 8
+            "scenes": 7
           },
           {
             "week": "2026-06-08",
@@ -712,7 +712,7 @@
           },
           {
             "week": "2026-06-15",
-            "scenes": 6
+            "scenes": 5
           },
           {
             "week": "2026-06-22",
@@ -720,7 +720,7 @@
           },
           {
             "week": "2026-06-29",
-            "scenes": 3
+            "scenes": 2
           }
         ]
       },
@@ -896,9 +896,9 @@
       "peopleScenes": 12,
       "approaches": 53,
       "approachPersons": {
-        "nari": 34,
+        "nari": 33,
         "daeun": 14,
-        "seojin": 5
+        "seojin": 6
       },
       "stats": {
         "knowledge": 7,
@@ -913,8 +913,8 @@
         "seojin": 54
       },
       "dialogue": {
-        "samples": 399,
-        "unique": 322,
+        "samples": 403,
+        "unique": 327,
         "maxRepeat": 2,
         "mostRepeated": [
           [
@@ -962,7 +962,7 @@
           },
           {
             "week": "2026-03-30",
-            "scenes": 5
+            "scenes": 6
           },
           {
             "week": "2026-04-06",
@@ -982,7 +982,7 @@
           },
           {
             "week": "2026-05-04",
-            "scenes": 5
+            "scenes": 4
           },
           {
             "week": "2026-05-11",
@@ -1040,7 +1040,7 @@
       "seed": 191,
       "period": "2026-03-02–2026-06-30",
       "dates": 0,
-      "peopleScenes": 4,
+      "peopleScenes": 3,
       "approaches": 53,
       "approachPersons": {
         "nari": 41,
@@ -1088,7 +1088,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 3.611111111111111,
+        "average": 3.5555555555555554,
         "empty": 0,
         "details": [
           {
@@ -1129,7 +1129,7 @@
           },
           {
             "week": "2026-05-04",
-            "scenes": 4
+            "scenes": 3
           },
           {
             "week": "2026-05-11",
@@ -1187,12 +1187,12 @@
       "seed": 2026,
       "period": "2026-03-02–2026-06-30",
       "dates": 5,
-      "peopleScenes": 9,
+      "peopleScenes": 5,
       "approaches": 53,
       "approachPersons": {
-        "nari": 23,
-        "daeun": 23,
-        "seojin": 7
+        "nari": 22,
+        "daeun": 22,
+        "seojin": 9
       },
       "stats": {
         "knowledge": 19,
@@ -1207,7 +1207,7 @@
         "seojin": 54
       },
       "dialogue": {
-        "samples": 469,
+        "samples": 477,
         "unique": 360,
         "maxRepeat": 3,
         "mostRepeated": [
@@ -1228,14 +1228,14 @@
             3
           ],
           [
-            "아까 생각한 건데 까먹기 전에 한 번만 들어 줘!",
-            3
+            "…비 피해서 왔어? 어깨 좀 젖었네.",
+            2
           ]
         ]
       },
       "weeks": {
         "count": 18,
-        "average": 5.611111111111111,
+        "average": 5.388888888888889,
         "empty": 0,
         "details": [
           {
@@ -1248,7 +1248,7 @@
           },
           {
             "week": "2026-03-16",
-            "scenes": 6
+            "scenes": 5
           },
           {
             "week": "2026-03-23",
@@ -1256,11 +1256,11 @@
           },
           {
             "week": "2026-03-30",
-            "scenes": 8
+            "scenes": 9
           },
           {
             "week": "2026-04-06",
-            "scenes": 5
+            "scenes": 4
           },
           {
             "week": "2026-04-13",
@@ -1272,7 +1272,7 @@
           },
           {
             "week": "2026-04-27",
-            "scenes": 6
+            "scenes": 5
           },
           {
             "week": "2026-05-04",
@@ -1296,7 +1296,7 @@
           },
           {
             "week": "2026-06-08",
-            "scenes": 6
+            "scenes": 5
           },
           {
             "week": "2026-06-15",
@@ -1304,7 +1304,7 @@
           },
           {
             "week": "2026-06-22",
-            "scenes": 5
+            "scenes": 4
           },
           {
             "week": "2026-06-29",
@@ -1334,7 +1334,7 @@
       "seed": 2026,
       "period": "2026-03-02–2026-06-30",
       "dates": 4,
-      "peopleScenes": 6,
+      "peopleScenes": 4,
       "approaches": 46,
       "approachPersons": {
         "nari": 46,
@@ -1382,7 +1382,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 4.388888888888889,
+        "average": 4.277777777777778,
         "empty": 0,
         "details": [
           {
@@ -1395,7 +1395,7 @@
           },
           {
             "week": "2026-03-16",
-            "scenes": 7
+            "scenes": 6
           },
           {
             "week": "2026-03-23",
@@ -1419,7 +1419,7 @@
           },
           {
             "week": "2026-04-27",
-            "scenes": 6
+            "scenes": 5
           },
           {
             "week": "2026-05-04",
@@ -1481,12 +1481,12 @@
       "seed": 2026,
       "period": "2026-03-02–2026-06-30",
       "dates": 0,
-      "peopleScenes": 14,
+      "peopleScenes": 13,
       "approaches": 53,
       "approachPersons": {
-        "nari": 24,
-        "daeun": 25,
-        "seojin": 4
+        "nari": 23,
+        "daeun": 24,
+        "seojin": 6
       },
       "stats": {
         "knowledge": 7,
@@ -1501,8 +1501,8 @@
         "seojin": 53
       },
       "dialogue": {
-        "samples": 397,
-        "unique": 324,
+        "samples": 405,
+        "unique": 329,
         "maxRepeat": 3,
         "mostRepeated": [
           [
@@ -1529,7 +1529,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 5.5,
+        "average": 5.444444444444445,
         "empty": 0,
         "details": [
           {
@@ -1546,7 +1546,7 @@
           },
           {
             "week": "2026-03-23",
-            "scenes": 9
+            "scenes": 8
           },
           {
             "week": "2026-03-30",
@@ -1562,7 +1562,7 @@
           },
           {
             "week": "2026-04-20",
-            "scenes": 8
+            "scenes": 7
           },
           {
             "week": "2026-04-27",
@@ -1582,7 +1582,7 @@
           },
           {
             "week": "2026-05-25",
-            "scenes": 3
+            "scenes": 4
           },
           {
             "week": "2026-06-01",

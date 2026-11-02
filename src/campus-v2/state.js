@@ -2,13 +2,13 @@
   'use strict';
   const W = root.AquaWorld;
   function initial(name = '나', nickname = '물고기') {
-    return { version: 5, date: '2026-03-02', slot: 0, money: 150000, energy: 100,
+    return { version: 7, date: '2026-03-02', slot: 0, money: 150000, energy: 100,
       knowledge: 0, fitness: 0, sensitivity: 0, name, nickname, club: null,
       readLines: {}, smallEvents: root.AquaSmallEvents.ensure({}), music: root.AquaComposition.ensure({}), messages: root.AquaMessages.ensure({}), relationships: root.AquaRelationships.ensure({}), dialogueHistory: {}, greetingCache: {}, growth: {}, equipment: [], giftClothes: {}, workDays: [], met: [], bond: { nari: 0, daeun: 0, seojin: 0 }, flags: {}, cards: [],
       melodies: [], letters: [], history: [], seen: [], scene: null, completed: false,
       conversations: {}, radio: { listened: [], aired: {}, clues: {}, anonymous: 0,
         honestCount: 0, hiatusUntil: null }, letterDraft: null, social: root.AquaSocial.initial(),
-      encounters: { seed: root.AquaEncounters.makeSeed() }, dialogue: root.AquaDialogue.initial() };
+      encounters: { seed: root.AquaEncounters.makeSeed() }, dialogue: root.AquaDialogue.initial(), romance: root.AquaRomance.initial(), holidays: root.AquaHolidays.initial() };
   }
   function validLines(lines, depth = 0) {
     return depth < 6 && Array.isArray(lines) && lines.length <= 1000 && lines.every(line =>
@@ -17,7 +17,7 @@
           line.choice.every(option => typeof option.label === 'string' && validLines(option.lines || [], depth + 1)))));
   }
   function restore(input) {
-    if (!input || ![1, 2, 3, 4, 5].includes(input.version) || !W.validDate(input.date) ||
+    if (!input || ![1, 2, 3, 4, 5, 6, 7].includes(input.version) || !W.validDate(input.date) ||
       input.date < '2026-03-02' || input.date > '2027-02-26' ||
       !Number.isInteger(input.slot) || input.slot < 0 || input.slot > 3 ||
       !Array.isArray(input.met) || input.met.some(id => !W.people[id]) ||
@@ -28,7 +28,9 @@
     if (Object.keys(W.people).some(id => !Number.isFinite(input.bond[id]) || input.bond[id] < 0 || input.bond[id] > 100)) return null;
     if (input.scene && (!validLines(input.scene.queue) || !Number.isInteger(input.scene.index) ||
       input.scene.index < 0 || input.scene.index >= input.scene.queue.length)) return null;
-    const state = { ...initial(), ...structuredClone(input), version: 5 };
+    const state = { ...initial(), ...structuredClone(input), version: 7 };
+    if (!root.AquaRomance.valid(state, state.romance)) return null;
+    if (!root.AquaHolidays.valid(state, state.holidays)) return null;
     state.encounters = input.encounters || { seed: root.AquaEncounters.legacySeed(input) };
     if (!state.encounters || !Number.isInteger(state.encounters.seed) || state.encounters.seed < 0 || state.encounters.seed > 4294967295) return null;
     const plan = state.encounters.plan;
@@ -72,6 +74,19 @@
     state.social = social;
     state.radio = { ...initial().radio, ...(state.radio || {}) };
     if (!Array.isArray(state.radio.listened) || !state.radio.aired || !state.radio.clues) return null;
+    // Nari's garments were redesigned or recolored at the user's request. Keep a saved
+    // date's frozen narration consistent with the replacement illustration.
+    if (state.scene) {
+      const renamed = { '큰 후드 · 와이드 팬츠': 'clothes-nari-casual', '카키 야상 · 카고 팬츠': 'clothes-nari-utility-cargo',
+        '갈색 재킷 · 미니스커트 · 부츠': 'clothes-nari-suede-mini', '버건디 니트 · 플리츠 미니': 'clothes-nari-mini-pleats',
+        '하늘색 셔츠 · 검정 슬랙스':'clothes-seojin-shirt', '크림 니트 · 검정 바지':'clothes-seojin-knit', '남색 롱코트 · 회색 목도리':'clothes-seojin-coat' };
+      const text = value => typeof value === 'string' ? Object.entries(renamed).reduce((out, [old, id]) => out.replaceAll(old, root.AquaEconomy.clothes.find(item => item.id === id).name), value) : value;
+      const refresh = lines => lines.forEach(line => {
+        if (typeof line.text === 'string') line.text = text(line.text);
+        for (const choice of line.choice || []) { choice.label = text(choice.label); refresh(choice.lines || []); }
+      });
+      refresh(state.scene.queue);
+    }
     state.letters = state.letters.map(letter => {
       const topic = letter.topic === '마음속 고민' ? '고민' : letter.topic;
       const fallback = root.AquaRadio.draftFor(state, root.AquaRadio.topics.includes(topic) ? topic : root.AquaRadio.topics[0], letter.tone === 'plain' ? 'plain' : 'honest');

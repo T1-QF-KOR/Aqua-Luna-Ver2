@@ -22,13 +22,13 @@
   {prompt:'마이크 두 개를 소파 위에 나란히 둔다.',options:['같이 부를까?','이번엔 네가 편하게 불러.','내가 먼저 불러 볼게.']},
   {prompt:'화면에 점수 표시 버튼이 보인다.',options:['점수는 끄고 부르자.','점수 켜고 한 판 해 보자!','마지막 곡은 네가 정해.']}]
  };
- const answers={nari:['…응. 그게 좋겠다.','생각보다 괜찮네. 한 번 더 해 볼래?','네가 고른 거라 기억할게.'],daeun:['오케이! 그럼 바로 시작이다!','야, 그거 좋다ㅋㅋ','다음에도 이거 하자!'],seojin:['응. 천천히 하자.','괜찮네. 네가 골라서 더.','좋아. 나는 이쪽이 편해.']};
- const wrap={nari:{good:'…오늘, 다음 얘기가 또 생겼네. 좋다.',normal:'오늘 잘 왔어. 같이 있어서 괜찮았어.',poor:'조금 서툴렀지만 괜찮아. 다음에 다시 해 보자.'},daeun:{good:'야 오늘 진짜 좋았다! 다음 약속도 내가 잡을래!',normal:'같이 놀아서 좋았어. 다음엔 더 오래 있자!',poor:'오늘은 좀 엇갈렸지? 다음엔 서로 물어보자ㅋㅋ'},seojin:{good:'오늘은 마음 놓고 쉬었어. 같이 와 줘서 고마워.',normal:'괜찮은 하루였어. 같이 와서 좋았고.',poor:'조금 어색했지만 괜찮아. 다음엔 천천히 맞춰 보자.'}};
+ const answers={nari:['…응. 그게 좋겠다.','생각보다 괜찮네. 한 번 더 해 볼래?','네가 고른 거라 기억할게.'],daeun:['오케이! 그럼 바로 시작이다!','야, 그거 좋다ㅋㅋ','다음에도 이거 하자!'],seojin:['좋아. 그렇게 해 보자. 서두를 생각은 없지?','네가 고른 쪽이네. 어떤지 같이 확인해 보자.','좋아. 나는 이쪽. 네 생각도 듣고 싶고.']};
+ const wrap={nari:{good:'…오늘, 다음 얘기가 또 생겼네. 좋다.',normal:'오늘 잘 왔어. 같이 있어서 괜찮았어.',poor:'조금 서툴렀지만 괜찮아. 다음에 다시 해 보자.'},daeun:{good:'야 오늘 진짜 좋았다! 다음 약속도 내가 잡을래!',normal:'같이 놀아서 좋았어. 다음엔 더 오래 있자!',poor:'오늘은 좀 엇갈렸지? 다음엔 서로 물어보자ㅋㅋ'},seojin:{good:'오늘 꽤 좋았어. 나 이렇게 오래 쉬는 거 잘 안 하는데. 다음 약속은 내가 잡을게.',normal:'같이 온 건 잘했네. 너도 괜찮았으면 다음에 또 부르고.',poor:'오늘은 좀 엇갈렸네. 괜찮은 척은 말자. 다음엔 고르기 전에 서로 물어보고.'}};
  function score(person,stage,option){const preferred={nari:[1,1,2],daeun:[0,2,1],seojin:[2,1,0]}[person][stage];return option===preferred?3:option===(preferred+1)%3?1:0;}
  function augment(s,outing,lines){const {person,destination}=outing,cast=[person],say=text=>({speaker:root.AquaWorld.people[person].short,text,cast,expr:'smile'});
   const item=root.AquaEconomy.clothes.find(x=>x.person===person&&x.outfit===s.giftClothes?.[person]);
   const gifted=item&&root.AquaWardrobe.pick(s,person,{outing})===item.outfit;
-  if(gifted)lines.unshift({text:`${root.AquaWorld.people[person].short}가 내가 선물한 ${item.name} 차림으로 나왔다.`,cast,expr:'smile'});
+  if(gifted)lines.unshift({text:`${{nari:'나리가',daeun:'다은이',seojin:'서진이'}[person]} 내가 선물한 ${item.name} 차림으로 나왔다.`,cast,expr:'smile'});
   const out=[];activities[destination].forEach((step,stage)=>{out.push({text:step.prompt,cast,expr:'neutral'},{choice:step.options.map((label,index)=>({label,effect:{datePoints:score(person,stage,index),dateChoice:label},lines:[say(answers[person][index]),{text:'나는 그 말을 듣고 고개를 끄덕인다.',cast,expr:'neutral'}]}))});});
   out.push({dateResult:true,text:'오늘의 시간을 돌아본다.',cast,expr:'neutral'});
   lines.splice(Math.max(0,lines.length-1),0,...out);return lines;

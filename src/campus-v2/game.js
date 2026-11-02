@@ -4,14 +4,18 @@
   const W = window.AquaWorld, R = window.AquaRadio, Story = window.AquaStory, Social = window.AquaSocial;
   const $ = id => document.getElementById(id);
   const SAVE_KEY = 'aqua-luna-campus-v2', PREF_KEY = `${SAVE_KEY}-prefs`;
-  const CONTENT_END = '2026-06-30';
   const times = ['아침', '오후', '노을', '밤'];
-  const bg = { room: '../campus-v2/room-night-v1.png', concert: 'concert.png',
-    practice: 'practice-day.png', rooftop: 'rooftop-day.png', river: 'pier-evening.png',
-    cafe: 'cafe-day.png', campus: '../campus-v2/campus-spring-v1.png',
-    night: '../campus-v2/han-river-night-v1.png', karaoke: '../campus-v2/karaoke-v1.png',
-    classroom: '../campus-v2/classroom-v1.png', library: '../campus-v2/library-v1.png',
-    dining: '../campus-v2/dining-v1.png', radio: '../campus-v2/radio-v1.png' };
+  const bg = { room: '../campus-v2/bg-v2/room.png', concert: '../campus-v2/bg-v2/concert.png',
+    practice: '../campus-v2/bg-v2/practice.png', rooftop: '../campus-v2/bg-v2/rooftop.png', river: '../campus-v2/bg-v2/river.png',
+    cafe: '../campus-v2/bg-v2/cafe.png', campus: '../campus-v2/bg-v2/campus-spring.png',
+    campusSummer: '../campus-v2/bg-v2/campus-summer.png', campusAutumn: '../campus-v2/bg-v2/campus-autumn.png',
+    campusWinter: '../campus-v2/bg-v2/campus-winter.png', riverSnow: '../campus-v2/bg-v2/riverSnow.png',
+    nariChristmas: '../campus-v2/nari-christmas-cg-v2.png',
+    seojinFirstSnow: '../campus-v2/seojin-first-snow-cg-v2.png', daeunTermEnd: '../campus-v2/daeun-term-end-cg-v2.png',
+    home: '../campus-v2/bg-v2/home.png', homeNight: '../campus-v2/bg-v2/homeNight.png',
+    night: '../campus-v2/bg-v2/night.png', karaoke: '../campus-v2/bg-v2/karaoke.png',
+    classroom: '../campus-v2/bg-v2/classroom.png', library: '../campus-v2/bg-v2/library.png',
+    dining: '../campus-v2/bg-v2/dining.png', radio: '../campus-v2/bg-v2/radio.png' };
   const places = [
     { id: 'class', name: '강의실', desc: '복습', bg: 'classroom', energy: -8, knowledge: 2 },
     { id: 'library', name: '도서관', desc: '공부', bg: 'library', energy: -12, knowledge: 3 },
@@ -26,7 +30,11 @@
     { id: 'room', name: '내 방', desc: '쉬기', bg: 'room', energy: 30 }
   ];
   const statNames = { money: '소지금', energy: '기력', knowledge: '지식', fitness: '체력', sensitivity: '감수성' };
-  let s = null, toastTimer, typingTimer, autoTimer, fullText = '', ctx, mapSelection = null;
+  const illustrations = { nariChristmas: { person:'nari', flag:'sawNariChristmas', title:'대본을 접은 밤', date:'2026-12-24',
+    caption:'외워 둔 문장 대신, 오늘 고른 말.', alt:'성탄 전날 밤 강변 벤치에 앉아 라벤더 니트와 아이보리 코트를 입고 미소 짓는 나리' },
+    seojinFirstSnow:{person:'seojin',flag:'sawSeojinFirstSnow',title:'손바닥 위의 첫눈',date:'2026-11-25',caption:'바로 녹아도, 털어 내지 않은 마음.',alt:'긴 흑갈색 머리의 서진이 차콜 코트와 블랙 하이넥 차림으로 첫눈을 손바닥에 받는 강변 장면'},
+    daeunTermEnd:{person:'daeun',flag:'sawDaeunTermEnd',title:'숫자보다 먼저 본 얼굴',date:'2026-12-18',caption:'단톡방 밖에서, 너 한 사람에게.',alt:'겨울 강변 난간에서 주황색 더플코트를 입고 휴대폰을 내려둔 채 조용히 바라보는 다은'} };
+  let s = null, toastTimer, typingTimer, autoTimer, fullText = '', ctx, mapSelection = null, voicePosition = null;
   let prefs = { sfx: false, reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
     textSpeed: 26, textSize: 24, autoDelay: 2.5, showBond: false, skipUnread:false, bgmVolume:0.5 }, auto = false;
   try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREF_KEY) || '{}') }; } catch {}
@@ -56,6 +64,7 @@
   function modal(title, html) {
     pauseText();
     $('modal').classList.remove('calendar-modal');
+    $('modal').classList.remove('illustration-modal');
     if (s?.scene && !s.scene.queue[s.scene.index]?.choice) $('line').textContent = fullText;
     $('modal-title').textContent = title;
     $('modal-content').innerHTML = html;
@@ -66,6 +75,14 @@
     scheduleAuto();
   }
   function setBg(id) {
+    if (s && id === 'campus') {
+      const month = Number(s.date.slice(5, 7));
+      if (month >= 12 || month <= 2) id = 'campusWinter';
+      else if (month >= 10 && month <= 11) id = 'campusAutumn';
+      else if (s.date >= '2026-05-15' && s.date <= '2026-09-30') id = 'campusSummer';
+    }
+    if (s && id === 'river' && s.date === '2026-11-25') id = 'riverSnow';
+    if (s && (id === 'home' || (id === 'room' && window.AquaAutumn.away(s)))) id = (s.scene?.time ?? s.slot) === 3 ? 'homeNight' : 'home';
     const url = new URL(`assets/environment/${bg[id] || bg.campus}`, document.baseURI).href;
     if ($('backdrop').dataset.path !== url) {
       $('backdrop').style.backgroundImage = `url("${url}")`;
@@ -103,10 +120,14 @@
   }
   function apply(effect) {
     if (!effect) return;
+    const reactions = [];
     if (effect.smallTopic) window.AquaSmallEvents.ensure(s).topic = effect.smallTopic;
     if (effect.clearSmallTopic) window.AquaSmallEvents.ensure(s).topic = null;
     if (effect.meet && !s.met.includes(effect.meet)) s.met.push(effect.meet);
     if (effect.flag) s.flags[effect.flag] = true;
+    if (effect.selfChoice) s.flags.nariSelfChoice = (s.flags.nariSelfChoice || 0) + effect.selfChoice;
+    if (effect.romance) window.AquaRomance.apply(s, effect.romance);
+    if (effect.care) window.AquaRomance.touch(s, effect.care);
     if (effect.card && !s.cards.includes(effect.card)) { s.cards.push(effect.card); toast(`기억을 간직했다 · ${effect.card}`); }
     if (effect.club) s.club = effect.club;
     if (effect.bond) for (const [id, amount] of Object.entries(effect.bond)) window.AquaRelationships.change(s,id,amount);
@@ -114,6 +135,13 @@
     if (effect.stats) charge(effect.stats);
     if (effect.anonymous) s.radio.anonymous = W.clamp(s.radio.anonymous + effect.anonymous);
     if (effect.clue) s.radio.clues[effect.clue] = true;
+    if (effect.birthday) Social.ensure(s).knownBirthdays[effect.birthday] = true;
+    if (effect.radioBreak) {
+      const count = Number.isInteger(effect.radioBreak) ? Math.max(1, effect.radioBreak) : 1;
+      const upcoming = W.broadcasts.filter(episode => episode.date >= s.date && !episode.protected && !s.radio.aired[episode.id]);
+      const last = upcoming[Math.min(count, upcoming.length) - 1];
+      if (last && (!s.radio.hiatusUntil || last.date > s.radio.hiatusUntil)) s.radio.hiatusUntil = last.date;
+    }
     if (effect.keptIf && s.flags[effect.keptIf]) s.flags.keptAnonymousWords = (s.flags.keptAnonymousWords || 0) + 1;
     if (effect.heardLetter) {
       R.markHeard(s, effect.heardLetter);
@@ -134,12 +162,17 @@
     if (effect.datePoints !== undefined && s.scene?.outing) s.scene.outing.points = (s.scene.outing.points || 0) + effect.datePoints;
     if (effect.dateChoice && s.scene?.outing) s.scene.outing.memory = effect.dateChoice;
     if (effect.dateMemory && s.scene?.outing) s.scene.outing.memory = effect.dateMemory;
-    if (effect.attention) return Social.attention(s, effect.attention.person, effect.attention.observers);
+    if (effect.holiday) reactions.push(...window.AquaHolidays.apply(s, effect.holiday));
+    if (effect.schoolFocus) window.AquaSchool.commit(s, effect.schoolFocus);
+    if (effect.schoolObservation) window.AquaSchool.observe(s, effect.schoolObservation);
+    if (effect.attention) reactions.push(...Social.attention(s, effect.attention.person, effect.attention.observers));
+    return reactions;
   }
 
   function playScene(id, after, options = {}) {
     const data = options.data || Story.build(id, s);
     pauseText();
+    window.AquaAudio.stopVoice(); voicePosition = null;
     s.scene = { id, after, title: data.title, background: data.background, time: data.time ?? s.slot, queue: structuredClone(data.lines),
       index: 0, applied: [], logged: [], lastCast: [], pendingReward: options.reward || null,
       returnPlace: options.returnPlace || null, radioEpisode: data.radioEpisode || null, replay: !!data.replay,
@@ -167,6 +200,7 @@
     renderLine();
   }
   function renderCast(ids, speaker, expr = null) {
+    if (illustrations[s.scene?.illustration]) { $('cast').replaceChildren(); return; }
     const source = id => window.AquaWardrobe.source(s, id, s.scene || {}, speaker?.includes(W.people[id].short) ? expr : null);
     const current = [...$('cast').children].map(img => `${img.dataset.actor}:${img.dataset.outfit}`);
     if (current.join(',') !== ids.map(id => `${id}:${source(id)}`).join(',')) {
@@ -200,7 +234,7 @@
       }
       return;
     }
-    if (!auto || !s?.scene || $('modal').open || s.scene.queue[s.scene.index]?.choice || typingTimer) return;
+    if (!auto || !s?.scene || $('modal').open || s.scene.queue[s.scene.index]?.choice || typingTimer || window.AquaAudio.isVoicePlaying()) return;
     autoTimer = setTimeout(advance, Math.max(1.2, prefs.autoDelay) * 1000);
   }
   function typeLine(text) {
@@ -219,11 +253,22 @@
   function renderLine() {
     pauseText();
     const sc = s.scene, line = sc.queue[sc.index];
+    if (!voicePosition || voicePosition.scene !== sc || voicePosition.index !== sc.index) {
+      voicePosition = { scene: sc, index: sc.index };
+      if (line?.voiceId && !line.choice) window.AquaAudio.playVoice(line.voiceId, scheduleAuto);
+      else window.AquaAudio.stopVoice();
+    }
     if (line?.time !== undefined) sc.time = line.time;
     if (line?.background) sc.background = line.background;
+    if (line?.title) { sc.title=line.title; $('scene-label').textContent=`${W.dateLabel(s.date)}  ·  ${sc.title}`; }
+    if (line && Object.hasOwn(line, 'illustration')) sc.illustration = illustrations[line.illustration] ? line.illustration : null;
+    const art = illustrations[sc.illustration];
+    document.body.classList.toggle('illustration-mode', !!art);
+    $('scene-art').hidden = !art;
+    if (art) window.AquaAudio.play(sc.time===3?'night':'campus');
     document.body.classList.toggle('backstage', !!line?.backstage || (sc.id === 'entrance' && sc.index >= 5));
     document.body.classList.toggle('choosing', !!line?.choice);
-    setBg(sc.background); updateStatus();
+    setBg(art ? sc.illustration : sc.background); updateStatus();
     if (!line) { finishScene(); return; }
     if (line.dateResult && sc.outing) {line.text=window.AquaDateActivities.finishLine(sc.outing);line.speaker=W.people[sc.outing.person].short;line.expr='smile';sc.outing.result=window.AquaDateActivities.result(sc.outing);sc.outing.bonus={good:4,normal:3,poor:2}[sc.outing.result];}
     if (sc.presentation === 'intro') {
@@ -294,6 +339,7 @@
   }
   function finishScene() {
     pauseText();
+    window.AquaAudio.stopVoice(); voicePosition = null;
     const sc = s.scene;
     if (sc.pendingReward) charge(sc.pendingReward);
     if (sc.id === 'crossRain') s.flags.crossRainDate = s.date;
@@ -303,7 +349,8 @@
     if (sc.outing) Social.finishDate(s, sc.outing);
     s.scene = null; $('cast').replaceChildren();
     $('intro').hidden = true; document.body.classList.remove('intro-mode');
-    if (sc.after === 'intro') { playScene('prologue', 'prologue'); }
+    if (sc.after === 'ending') { s.completed = true; showEndingComplete(); }
+    else if (sc.after === 'intro') { playScene('prologue', 'prologue'); }
     else if (sc.after === 'visit') { showMap(); const p = places.find(place=>place.id===sc.returnPlace); if(p) locationAction(p); }
     else if (sc.after === 'prologue') { s.date = '2026-03-03'; s.slot = 0; prepare(); }
     else if (sc.after === 'encounter') {
@@ -311,6 +358,7 @@
       if (p) encounterMenu(p, W.presentAt(s, p.id));
     } else if (sc.after === 'date') { s.slot = 3; prepare(); }
     else if (sc.after === 'radio' || sc.after === 'replay') showMap();
+    else if (sc.after === 'stay') { if (s.slot === 3) R.air(s); showMap(); }
     else step();
     saveAuto();
   }
@@ -323,21 +371,39 @@
       s.date === '2026-05-20' && slot === 2 ? 'festival' :
       s.date === '2026-04-19' && slot === 1 ? 'common-exam' :
       s.date === '2026-06-19' && slot === 2 ? 'common-party' :
-      s.date === '2026-06-20' && slot === 1 ? 'common-vacation' : null;
+      s.date === '2026-06-20' && slot === 1 ? 'common-vacation' : window.AquaRomance.mandatory(s, slot) || window.AquaSummer.mandatory(s, slot) || window.AquaAutumn.mandatory(s, slot) || window.AquaWinter.mandatory(s, slot) || window.AquaHolidays.mandatory(s, slot);
     return event && !s.seen.includes(event) ? event : null;
   }
   function prepare() {
+    if (s.completed) { showEndingComplete(); return; }
+    if (s.date === '2027-02-26' && s.slot === 0) {
+      s.endingId ||= window.AquaEndings.select(s);
+      playScene(`ending-${s.endingId}`, 'ending', { data: window.AquaEndings.build(s, s.endingId) }); return;
+    }
+    window.AquaHolidays.morning(s);
     window.AquaRelationships.monday(s);
     window.AquaMessages.morning(s);
     const event = mandatoryAt(s.slot);
     if (event === 'firstRadio') {
       R.air(s); playScene('firstRadio', 'radio', { data: R.build(s, W.episodeOn(s.date)) }); return;
     }
+    if (['romanceTalk', 'romanceReview', 'romanceClash'].includes(event)) {
+      const build = { romanceTalk: 'buildTalk', romanceReview: 'buildReview', romanceClash: 'buildClash' }[event];
+      playScene(`${event}-${s.date}`, s.slot === 3 ? 'stay' : 'event', { data: window.AquaRomance[build](s) }); return;
+    }
+    if (event === 'recordingNight') { R.air(s); playScene(event, 'radio', { data: R.build(s, W.episodeOn(s.date)) }); return; }
+    if (event === 'lastBroadcast') { R.air(s); playScene(event, 'radio', { data: R.build(s, W.episodeOn(s.date)) }); return; }
+    if (event === 'holidayPromiseConflict') { playScene(event, 'event', { data: window.AquaHolidays.buildConflict(s) }); return; }
+    if (event === 'holidayXmasDay') { playScene(event, 'event', { data: window.AquaHolidays.buildDay(s) }); return; }
+    if (event === 'holidayXmasNight') { R.air(s); playScene(event, 'radio', { data: window.AquaHolidays.buildNight(s) }); return; }
+    if (event === 'winterValentine') { playScene(event, 'event', { data: window.AquaWinter.buildValentine(s) }); return; }
     if (event?.startsWith('common-')) {playScene(event,'event',{data:window.AquaSmallEvents.commonScene(s,event.slice(7))});return;}
     if (event) { playScene(event, 'event'); return; }
     if (s.slot === 0 && W.hasClass(s.date)) {
-      charge({ knowledge: 1, energy: -5 }); s.slot = 1;
-      toast('오전 수업 · 학습 기록을 쌓았다 · 기력 −5'); prepare(); return;
+      if (window.AquaSchool.available(s)) {
+        const data=window.AquaSchool.build(s); playScene(data.id,'event',{data}); return;
+      }
+      s.slot=1;prepare();return;
     }
     if (s.slot === 3) R.air(s);
     showMap();
@@ -348,16 +414,12 @@
     saveAuto();
   }
   function finishDay() {
+    if (s.completed) { showEndingComplete(); return; }
     if(s.music?.active){composeMenu();return;}
     // Finishing a day still visits its mandatory story slot before sleeping.
     for (let slot = s.slot; slot <= 3; slot++) if (mandatoryAt(slot)) { s.slot = slot; prepare(); return; }
     if (s.slot < 3) { s.slot = 3; prepare(); return; }
     R.air(s);
-    if (s.date >= CONTENT_END) {
-      showMap();
-      modal('여름으로 이어질 이야기', '<p class="modal-text">현재 플레이 가능한 이야기는 6월 말까지입니다. 여름 이후의 루트와 결말은 제작 중입니다. 지금까지의 기록은 저장해 두고 계속 살펴볼 수 있어요.</p><button class="option-button" id="checkpoint-save">현재 기록 저장하기</button>');
-      $('checkpoint-save').onclick = slots; return;
-    }
     s.date = W.addDays(s.date, 1); s.slot = 0; charge({ energy: 50 });
     prepare(); saveAuto();
   }
@@ -372,6 +434,7 @@
     return Story.available(s, place)[0] || null;
   }
   function canUse(p) {
+    if (window.AquaAutumn.away(s) && p.id !== 'room') return '고향에 머무는 동안에는 캠퍼스로 갈 수 없어요';
     if (p.id === 'cafe' && s.workDays.includes(s.date)) return '오늘 근무는 끝났어.';
     if (p.id === 'cafe' && ![1, 2].includes(s.slot)) return '오후 또는 노을에 근무할 수 있어요';
     if (p.id === 'cafe' && s.date < '2026-03-11') return '첫 출근은 3월 11일부터예요';
@@ -385,6 +448,7 @@
     return Object.keys(statNames).filter(key => p[key]).map(key => key === 'money' ? `${p[key] > 0 ? '+' : '−'}${Math.abs(p[key]).toLocaleString()}원` : window.AquaEconomy.stats.includes(key) ? `${statNames[key]} 연습` : `${statNames[key]} ${p[key] > 0 ? '+' : '−'}${Math.abs(p[key])}`).join(' · ');
   }
   function showMap() {
+    document.body.classList.remove('illustration-mode'); $('scene-art').hidden = true;
     window.AquaEncounters.ensurePlan(s);
     pauseText(); $('title').hidden = true; $('scene').hidden = true; $('map').hidden = false;
     $('intro').hidden = true; document.body.classList.remove('intro-mode');
@@ -392,10 +456,12 @@
     $('map').dataset.slot = String(s.slot);
     $('map').dataset.weather = window.AquaEncounters.weather(s);
     $('status').hidden = false; $('cast').replaceChildren();
-    setBg(s.slot === 3 ? 'room' : 'campus'); updateStatus(); window.AquaAudio.play(s.slot===3?'night':'campus');
-    $('map-title').textContent = s.slot === 3 ? '하루의 끝' : `${times[s.slot]}, 어디로 갈까?`;
-    $('map-desc').textContent = s.slot === 3 ? '내 방에서 보내는 작은 시간.' : '오늘의 남은 시간을 골라 보자.';
-    $('map-weather').textContent = { clear: '맑음', cloudy: '흐림', rain: '비' }[$('map').dataset.weather];
+    const away = window.AquaAutumn.away(s);
+    setBg(s.slot === 3 || away ? 'room' : 'campus'); updateStatus(); window.AquaAudio.play(s.slot===3?'night':'campus');
+    const afterSchool=s.slot===1&&W.hasClass(s.date);
+    $('map-title').textContent = s.slot === 3 ? '하루의 끝' : away ? '고향에서 보내는 연휴' : afterSchool?'수업이 끝나고, 어디로 갈까?':`${times[s.slot]}, 어디로 갈까?`;
+    $('map-desc').textContent = away ? '9월 26일까지 고향에 머무릅니다.' : s.slot === 3 ? '내 방에서 보내는 작은 시간.' : afterSchool?'오후와 노을, 장소를 먼저 둘러보고 오늘의 시간을 고르자.':'오늘의 남은 시간을 골라 보자.';
+    $('map-weather').textContent = { clear: '맑음', cloudy: '흐림', rain: '비', snow: '눈' }[$('map').dataset.weather];
     $('stats').innerHTML = ['knowledge', 'fitness', 'sensitivity'].map(key => `<span>${statNames[key]} <b>${s[key]}</b></span>`).join('');
     $('locations').replaceChildren();
     const list = s.slot === 3 ? [
@@ -403,14 +469,11 @@
       { id: 'listen', name: '아쿠아 루나', desc: radioStatus() },
       { id: 'notes', name: '나의 기록', desc: '관계 · 기억 · 멜로디 · 방송' },
       { id: 'sleep', name: '잠자기', desc: '내일로 · 기력 +50' }
-    ] : places;
+    ] : away ? [{ ...places.find(place => place.id === 'room'), name: '고향의 방', desc: '쉬면서 가족과 시간 보내기' }] : places;
     list.forEach((p, index) => {
       const button = document.createElement('button'); button.className = 'location';
-      const scene = possibleScene(p.id);
-      const visibleScene = scene && !['nariClass','nariRoof','nariRiver','seojinMeet'].includes(scene.id) && (W.routeOwners[scene.id] || []).every(id => s.met.includes(id));
-      const star = visibleScene ? (scene.id.startsWith('cross') ? ' ★★' : ' ★') : window.AquaMessages.due(s,p.id) ? ' ★' : '';
-      const notes = s.slot === 3 ? '' : window.AquaEncounters.hints(s,p.id).map(id => `<span style="color:${W.people[id].color}" title="${esc(W.people[id].name)}">♪</span>`).join('');
-      button.innerHTML = `<span class="location-number">${String(index + 1).padStart(2, '0')}</span><strong>${esc(p.name)} ${notes}${star}</strong><small>${esc(p.desc)}</small><span class="location-arrow" aria-hidden="true">↗</span>`;
+      // The user's explicit no-preview-of-people requirement supersedes older map-hint proposals.
+      button.innerHTML = `<span class="location-number">${String(index + 1).padStart(2, '0')}</span><strong>${esc(p.name)}</strong><small>${esc(p.desc)}</small><span class="location-arrow" aria-hidden="true">↗</span>`;
       button.dataset.location = p.id;
       button.setAttribute('aria-pressed', 'false');
       button.onclick = () => s.slot === 3 ? locationAction(p) : previewPlace(p); $('locations').append(button);
@@ -424,8 +487,8 @@
       mapSelection = null; $('preview-details').hidden = true; $('preview-hint').hidden = false;
       $('preview-number').textContent = s.slot === 3 ? '23:00' : 'H / Y';
       $('preview-eyebrow').textContent = s.slot === 3 ? 'A ROOM OF MY OWN' : 'HANYEOUL / AFTER CLASS';
-      $('preview-title').textContent = s.slot === 3 ? '오늘도, 여기까지.' : s.slot === 1 && W.hasClass(s.date) ? '수업이 끝난 뒤' : '나에게 남은 시간';
-      $('preview-desc').textContent = s.slot === 3 ? '창밖의 불빛이 하나둘 켜졌다.\n아직 잠들기엔 조금 이른 밤.' : s.slot === 1 && W.hasClass(s.date) ? '강의실 밖으로 나오자 익숙한 풍경이 조금 다르게 보였다.\n오늘은 어디에서 어떤 하루를 보내게 될까.' : '서두를 일 없이 풍경을 한 번 더 바라보았다.\n아직 정하지 않은 시간이 내 앞에 남아 있다.';
+      $('preview-title').textContent = away ? '돌아와서 생긴 이야기' : s.slot === 3 ? '오늘도, 여기까지.' : s.slot === 1 && W.hasClass(s.date) ? '수업이 끝난 뒤' : '나에게 남은 시간';
+      $('preview-desc').textContent = away ? '익숙한 방에 대학에서 쓰던 공책을 펼쳤다.\n서울의 이야기를 여기에서도 조금 더 쓸 수 있다.' : s.slot === 3 ? '창밖의 불빛이 하나둘 켜졌다.\n아직 잠들기엔 조금 이른 밤.' : s.slot === 1 && W.hasClass(s.date) ? '강의실 밖으로 나오자 익숙한 풍경이 조금 다르게 보였다.\n오늘은 어디에서 어떤 하루를 보내게 될까.' : '서두를 일 없이 풍경을 한 번 더 바라보았다.\n아직 정하지 않은 시간이 내 앞에 남아 있다.';
       $('preview-hint').textContent = s.slot === 3 ? '오른쪽에서 오늘의 마지막 일을 골라 보자.' : '오른쪽에서 가고 싶은 곳을 골라 보자.';
     }
     saveAuto();
@@ -435,7 +498,7 @@
     mapSelection = { key: `${s.date}:${s.slot}`, id: p.id };
     setBg(p.bg);
     $('preview-eyebrow').textContent = 'HANYEOUL / A PLACE FOR TODAY';
-    $('preview-title').textContent = p.name;
+    $('preview-title').textContent = window.AquaAutumn.away(s) && p.id === 'room' ? '고향의 방' : p.name;
     const descriptions = {
       class: '수업이 끝난 강의실.\n아직 정리하지 않은 악보와 조용한 오후가 남아 있다.',
       library: '책장을 넘기는 소리와 창문 너머의 빛.\n다음 페이지를 읽으며 잠깐 머물러도 좋겠다.',
@@ -449,7 +512,7 @@
       concert: '무대의 불이 켜지기 전, 객석은 조용하다.\n오늘은 누군가의 음악을 들어 보고 싶다.',
       room: '아직 조금 낯설고, 이제는 조금 익숙한 내 방.\n아무 일도 하지 않는 시간도 필요하다.'
     };
-    $('preview-desc').textContent = descriptions[p.id];
+    $('preview-desc').textContent = window.AquaAutumn.away(s) && p.id === 'room' ? '예전에 쓰던 책상과 창문.\n나가 보면 이야기를 나눌 가족이 있다.' : descriptions[p.id];
     $('preview-details').hidden = false; $('preview-hint').hidden = true;
     const reason = canUse(p);
     $('preview-cost').textContent = `${p.desc} · 시간 1칸\n${effectsLabel(p)}${reason ? `\n${reason}` : ''}`;
@@ -464,6 +527,10 @@
     if (p.id === 'notes') { showNotes(); return; }
     if (p.id === 'letter') { letterMenu(); return; }
     if (p.id === 'listen') { radioMenu(); return; }
+    if (window.AquaAutumn.away(s)) {
+      if (p.id === 'room') confirmActivity(p); else toast('고향에 머무는 동안에는 캠퍼스로 갈 수 없어요.');
+      return;
+    }
     const intro=window.AquaSmallEvents.first(s,p.id);
     if(intro){playScene('visit-'+p.id,'visit',{data:intro,returnPlace:p.id});return;}
     const appointment=window.AquaMessages.due(s,p.id);
@@ -487,7 +554,7 @@
     $('activity-cancel').onclick = closeModal;
     $('activity-confirm').onclick = () => {
       if (canUse(p)) return;
-      closeModal(); if (p.id === 'cafe') s.workDays.push(s.date); charge({...p, energy:p.energy+(p.id==='cafe'&&window.AquaRelationships.hasReward(s,'seojin')?6:p.id==='dining'&&window.AquaRelationships.hasReward(s,'daeun')?10:0)}); const small=window.AquaSmallEvents.maybe(s,p.id); if(small){playScene('small-'+small.id,'activity',{data:small});return;} step(); toast(`${p.desc} · ${effectsLabel(p)}`);
+      closeModal(); if (p.id === 'cafe') s.workDays.push(s.date); charge({...p, energy:p.energy+(p.id==='cafe'&&window.AquaRelationships.hasReward(s,'seojin')?6:p.id==='dining'&&window.AquaRelationships.hasReward(s,'daeun')?10:0)}); const small=window.AquaAutumn.away(s)?null:(window.AquaSmallEvents.maybe(s,p.id)||window.AquaSchool.field(s,p.id)); if(small){playScene('small-'+small.id,'activity',{data:small});return;} step(); toast(`${p.desc} · ${effectsLabel(p)}`);
     };
   }
 
@@ -536,7 +603,7 @@
     closeModal();
     playScene(`talk-${id}`, 'encounter', { returnPlace: p.id, data: {
       title: `${particle(W.people[id].name, '과', '와')} 잠깐`, background: p.bg,
-      lines: [{ speaker: W.people[id].short, text: { nari: '…무슨 얘기 할까.', daeun: '오, 너 먼저 말 거니까 좋다. 무슨 얘기?', seojin: '응. 듣고 있어.' }[id], cast: ids }, { choice: options }]
+      lines: [{ speaker: W.people[id].short, text: { nari: '…무슨 얘기 할까.', daeun: '오, 너 먼저 말 거니까 좋다. 무슨 얘기?', seojin: '그래. 오늘은 어떤 얘기로 내 시간 쓸래?' }[id], cast: ids }, { choice: options }]
     } });
   }
 
@@ -592,12 +659,12 @@
         const responses = {
           nari: ['…꽃은, 시드는 걸 보면 좀 그래. 그래도 가져갈게.', '…나 주는 거야? 고마워. 잘 쓸게.', '이런 거 생각하고 골랐어? …응, 마음에 들어.', '…이거 필요했는데. 어떻게 알았어? 아, 아니. 진짜 고마워.'],
           daeun: ['앗, 이건 내가 잘 안 쓰는데… 그래도 받아 둘게. 네가 고른 거니까.', '오, 선물? 고마워! 오늘 무슨 날이야?', '이거 나 좋아하는 거잖아. 야, 너 기억력 좋다?', '헐, 내 취향 정확히 맞혔네! 나 지금 표정 관리 안 된다. ㅋㅋ.'],
-          seojin: ['…이건 잘 안 쓰는데. 다음엔 네 거 사. 마음은 받았어.', '고마워. 잘 쓸게. 네 건 챙겼고?', '이런 걸 골랐네. …좋다. 고마워.', '…내가 이거 좋아하는 거, 기억했어? 오래 놔둬야겠다.']
+          seojin: ['고맙지만 이건 내 취향이 아니야. 다음엔 나한테 먼저 물어봐도 돼.', '나한테 주려고 골랐어? 고마워. 잘 쓸게.', '내 취향 꽤 잘 봤네. 마음에 들어. 고마워.', '이건 정확히 맞혔네. 좋아하는 걸 기억해 주는 사람, 난 꽤 오래 기억해.']
         };
         const reactions = Social.attention(s, id, ids);
         closeModal(); playScene(`gift-${id}`, 'encounter', { returnPlace: p.id, data: { title: `손에서 손으로 · ${item.name}`, background: p.bg,
           lines: [{ text: `${particle(item.name, '을', '를')} 건넸다. ${particle(W.people[id].short, '이', '가')} 내 손과 선물을 번갈아 보았다.`, cast: ids },
-            ...(result.birthday ? [{ speaker: W.people[id].short, text: '생일인 거… 기억해 줬네. 고마워.', cast: ids }] : []),
+            ...(result.birthday ? [{ speaker: W.people[id].short, text: id==='seojin'?'내 생일 챙기려고 준비했네. 오늘은 나도 대놓고 좋아할게. 고마워.':'생일인 거… 기억해 줬네. 고마워.', cast: ids }] : []),
             { speaker: W.people[id].short, text: responses[id][result.rank], cast: ids }, ...reactions ] } });
       };
     });
@@ -629,11 +696,20 @@
   }
   function albumMenu(person = null) {
     const entries = [...s.social.album].reverse().filter(a => !person || a.person === person);
-    modal('함께 보낸 날들', `<p class="modal-text">사진보다 오래 남겨 두고 싶은 말.</p><div class="album-tabs"><button data-album="all" ${!person ? 'aria-pressed="true"' : ''}>모두</button>${s.met.map(id => `<button data-album="${id}" ${person === id ? 'aria-pressed="true"' : ''}>${W.people[id].short}</button>`).join('')}</div><div class="album-grid">${entries.map(a => {
+    const art = Object.entries(illustrations).filter(([,item])=>s.flags[item.flag] && (!person || item.person===person));
+    const gallery = art.length ? `<div class="illustration-grid">${art.map(([id,item])=>`<button data-art="${id}" class="illustration-card"><img src="assets/environment/${bg[id]}" alt="${esc(item.alt)}"><span><small>${esc(W.dateLabel(item.date))} · ${W.people[item.person].short}</small><strong>${item.title}</strong><em>${item.caption}</em></span></button>`).join('')}</div>` : '';
+    modal('함께 보낸 날들', `<p class="modal-text">사진보다 오래 남겨 두고 싶은 말.</p><div class="album-tabs"><button data-album="all" ${!person ? 'aria-pressed="true"' : ''}>모두</button>${s.met.map(id => `<button data-album="${id}" ${person === id ? 'aria-pressed="true"' : ''}>${W.people[id].short}</button>`).join('')}</div>${gallery}<div class="album-grid">${entries.map(a => {
       const d = Social.destinations.find(place => place.id === a.destination);
       return `<article class="album-entry" style="--person-color:${W.people[a.person].color}"><small>${esc(W.dateLabel(a.date))} · ${d.name}${a.result ? ` · ${{good:'좋았음',normal:'보통',poor:'아쉬움'}[a.result]}` : ''}</small><h3>${particle(W.people[a.person].name, '과', '와')} 보낸 오후</h3><p>“${esc(a.memory || '같이 보낸 시간을 기억해 두기로 했다.')}”</p><span>OUR DAYS · ${String(s.social.album.indexOf(a) + 1).padStart(2, '0')}</span></article>`;
     }).join('') || '<p class="modal-text">아직 함께 보낸 오후가 없습니다. 친구가 되면 만났을 때 약속을 잡아 보세요.</p>'}</div>`);
     $('modal-content').querySelectorAll('[data-album]').forEach(button => button.onclick = () => albumMenu(button.dataset.album === 'all' ? null : button.dataset.album));
+    $('modal-content').querySelectorAll('[data-art]').forEach(button => button.onclick = () => illustrationMenu(button.dataset.art));
+  }
+
+  function illustrationMenu(id) {
+    const art=illustrations[id]; if(!art || !s?.flags[art.flag])return;
+    modal(art.title, `<figure class="illustration-view"><img src="assets/environment/${bg[id]}" alt="${esc(art.alt)}"><figcaption>${art.caption}</figcaption></figure>`);
+    $('modal').classList.add('illustration-modal');
   }
 
   function composeMenu() {
@@ -687,9 +763,20 @@
   }
 
   function showNotes() {
+    const love = window.AquaRomance.ensure(s);
+    const promise = love.talk ? `<p class="modal-text">${esc(W.dateLabel(love.talk.date))} ${times[love.talk.slot]} · 함께 관계를 이야기하기로 했다.</p>` : love.trial ? `<p class="modal-text">${esc(W.dateLabel(love.trial.until))}까지 시간을 나누고 다시 대답을 듣기로 했다.</p>${love.trial.people.filter(id => id !== love.trial.newPerson).map(id => `<p class="record-row">${W.people[id].short}와 따로 보낸 시간 · ${love.trial.counts[id]} / 2</p>`).join('')}` : '';
+    const disclosure = love.mode === 'hidden' && !love.talk && !love.trial ? '<p class="modal-text">서로에게 알리지 않은 교제가 있다.</p><button id="romance-disclose" class="option-button">숨긴 관계를 털어놓을 약속 잡기</button>' : '';
+    const holiday = window.AquaHolidays.ensure(s), inviteNames = { offered:'답하지 않은 초대', accepted:'약속함', declined:'이번에는 만나지 않기로 함', considering:'23일까지 답하기로 함', group:'다 같이 보내기로 동의함', missed:'답하지 못한 약속' };
+    const holidayNotes = s.date >= '2026-12-07' ? `<div class="notes-section"><h3>12월 24일의 약속</h3>${Object.entries(holiday.invites).filter(([id])=>s.met.includes(id)).map(([id,invite])=>`<p class="record-row">${W.people[id].short} · ${inviteNames[invite.status]}${s.date <= '2026-12-23' ? `<button data-holiday-reply="${id}" ${s.scene?'disabled':''}>${s.scene?'이야기를 마친 뒤 답장하기':'약속 대화 열기'}</button>`:''}</p>`).join('') || '<p class="modal-text">아직 나눈 성탄 약속이 없다.</p>'}</div>` : '';
     const cards = s.cards.map(card => `<article class="memory-card"><span>✧</span><h3>${esc(card)}</h3><small>내가 직접 겪은 순간</small></article>`).join('');
-    const clues = { changedVoice: '지난 시즌과 다른 목소리', pickListener: '작년의 청취자 피크', sameHabit: '동아리방에서 들은 말버릇', sameBreath: '같은 문장과 숨', thursdaySchedule: '비어 있는 목요일', thursdayRadio: '합주와 방송의 시간', fadingFlowers: '시드는 꽃다발', oneAudience: '관객 한 명', myMelody: '라디오에서 흘러나온 내 멜로디' };
-    modal('나의 기록', `<div class="notes-section"><h3>우리 사이</h3>${s.met.length ? s.met.map(id => `<p class="relationship-row" style="--person-color:${W.people[id].color}"><b>${W.people[id].name}</b><span>${W.bondStage(s, id)}${prefs.showBond ? ` · ${s.bond[id]}` : ''}</span></p>`).join('') : '<p class="modal-text">아직 만난 사람이 없다.</p>'}</div><div class="notes-section"><h3>기억 ${s.cards.length}</h3><div class="memory-grid">${cards || '<p class="modal-text">아직 간직한 기억이 없다.</p>'}</div></div><div class="notes-section"><h3>나의 멜로디 노트</h3>${window.AquaComposition.ensure(s).songs.map(song=>`<p class="record-row"><small>${esc(song.date)}</small>${esc(song.title)} · ${esc(song.words.join(' · '))}</p>`).join('') || (s.melodies.length ? `<p class="record-row">이전 멜로디 기록 ${s.melodies.length}개 보관 중</p>` : '<p class="modal-text">아직 완성한 곡이 없다.</p>')}</div><div class="notes-section"><h3>보낸 사연</h3>${s.letters.map(letter => `<article class="record-row"><small>${esc(W.dateLabel(letter.date))} · ${esc(letter.topic)}</small><p>${esc(letter.text || '이전 빌드에서 보낸 사연')}</p><span class="letter-state">전송 ✓ · 낭독 ${letter.read ? '✓' : '—'} · 직접 청취 ${letter.heard ? '✓' : '—'}</span></article>`).join('') || '<p class="modal-text">아직 보낸 사연이 없다.</p>'}</div><div class="notes-section"><h3>목요일의 메모</h3><p class="modal-text">끝까지 들은 정규 방송 ${s.radio.listened.length}회${prefs.showBond ? ` · 익명 마음 ${s.radio.anonymous}` : ''}</p>${Object.keys(s.radio.clues).map(key => `<p class="record-row">${esc(clues[key] || '방송에서 들은 작은 단서')}</p>`).join('') || '<p class="modal-text">아직 이어 붙이지 않은 문장들.</p>'}</div>`);
+    const clues = { changedVoice: '지난 시즌과 다른 목소리', pickListener: '작년의 청취자 피크', sameHabit: '동아리방에서 들은 말버릇', sameBreath: '같은 문장과 숨', thursdaySchedule: '비어 있는 목요일', thursdayRadio: '합주와 방송의 시간', fadingFlowers: '시드는 꽃다발', oneAudience: '관객 한 명', myMelody: '라디오에서 흘러나온 내 멜로디', recordingOwnVoice: '녹음이 끝난 뒤의 자기 목소리' };
+    modal('나의 기록', `<div class="notes-section"><h3>우리 사이</h3>${s.met.length ? s.met.map(id => `<p class="relationship-row" style="--person-color:${W.people[id].color}"><b>${W.people[id].name}</b><span>${W.bondStage(s, id)}${prefs.showBond ? ` · ${s.bond[id]}` : ''}</span></p>`).join('') : '<p class="modal-text">아직 만난 사람이 없다.</p>'}${promise}${disclosure}</div>${holidayNotes}<div class="notes-section"><h3>기억 ${s.cards.length}</h3><div class="memory-grid">${cards || '<p class="modal-text">아직 간직한 기억이 없다.</p>'}</div></div><div class="notes-section"><h3>나의 멜로디 노트</h3>${window.AquaComposition.ensure(s).songs.map(song=>`<p class="record-row"><small>${esc(song.date)}</small>${esc(song.title)} · ${esc(song.words.join(' · '))}</p>`).join('') || (s.melodies.length ? `<p class="record-row">이전 멜로디 기록 ${s.melodies.length}개 보관 중</p>` : '<p class="modal-text">아직 완성한 곡이 없다.</p>')}</div><div class="notes-section"><h3>보낸 사연</h3>${s.letters.map(letter => `<article class="record-row"><small>${esc(W.dateLabel(letter.date))} · ${esc(letter.topic)}</small><p>${esc(letter.text || '이전 빌드에서 보낸 사연')}</p><span class="letter-state">전송 ✓ · 낭독 ${letter.read ? '✓' : '—'} · 직접 청취 ${letter.heard ? '✓' : '—'}</span></article>`).join('') || '<p class="modal-text">아직 보낸 사연이 없다.</p>'}</div><div class="notes-section"><h3>목요일의 메모</h3><p class="modal-text">끝까지 들은 정규 방송 ${s.radio.listened.length}회${prefs.showBond ? ` · 익명 마음 ${s.radio.anonymous}` : ''}</p>${Object.keys(s.radio.clues).map(key => `<p class="record-row">${esc(clues[key] || '방송에서 들은 작은 단서')}</p>`).join('') || '<p class="modal-text">아직 이어 붙이지 않은 문장들.</p>'}</div>`);
+    if ($('romance-disclose')) $('romance-disclose').onclick = () => { if (window.AquaRomance.disclose(s)) { saveAuto(); showNotes(); } };
+    $('modal-content').querySelectorAll('[data-holiday-reply]').forEach(button=>button.onclick=()=>{
+      const id=button.dataset.holidayReply;
+      if(s.scene||s.date>'2026-12-23'||!s.met.includes(id)||!holiday.invites[id])return;
+      closeModal();playScene(`holidayReply-${id}-${s.date}`,'stay',{data:window.AquaHolidays.buildInvite(s,id,true)});
+    });
   }
   function calendarMenu(year, month) {
     const current = W.dateObject(s.date);
@@ -700,9 +787,10 @@
       const birthday = Object.keys(s.social.knownBirthdays).find(id => s.social.knownBirthdays[id] && s.met.includes(id) && Social.birthdays[id] === day.date.slice(5));
       const birthdayLabel = birthday ? `${W.people[birthday].short} 생일` : '';
       const appointments=window.AquaMessages.ensure(s).appointments.filter(a=>a.date===day.date&&s.met.includes(a.person)&&!['offered','declined'].includes(a.status));
+      const holidayPlans = day.date==='2026-12-24' ? Object.entries(window.AquaHolidays.ensure(s).invites).filter(([id,invite])=>s.met.includes(id)&&['accepted','group'].includes(invite.status)).map(([id,invite])=>`${W.people[id].short} · ${id==='nari'?'방송 뒤':'성탄 오후'}${invite.status==='group'?' · 함께':''}`) : [];
       const exam=window.AquaEncounters.exams(day.date)?'시험 기간':'';
-      const label = [exam,...appointments.map(a=>`${W.people[a.person].short} · 오후 약속${a.status==='missed'?' · 놓침':''}`),day.holiday, day.event, birthdayLabel, day.episode ? `아쿠아 루나 ${seenEpisode ? '· 청취 완료' : '· 23:00'}` : null].filter(Boolean).join(' · ');
-      return `<div class="calendar-day ${day.date === s.date ? 'today' : ''} ${day.holiday ? 'holiday' : ''}" aria-label="${esc(W.dateLabel(day.date) + (label ? ' · ' + label : ''))}"><b>${day.day}</b>${day.holiday ? `<small>${esc(day.holiday)}</small>` : ''}${day.event ? `<small>${esc(day.event)}</small>` : ''}${exam?`<small>${exam}</small>`:''}${appointments.map(a=>`<small>${W.people[a.person].short} · 오후${a.status==='missed'?' · 놓침':' 약속'}</small>`).join('')}${birthdayLabel ? `<small class="calendar-birthday">✧ ${birthdayLabel}</small>` : ''}${day.episode ? `<span class="calendar-radio">☾ ${seenEpisode ? '들음' : '23:00'}</span>` : ''}</div>`;
+      const label = [exam,...appointments.map(a=>`${W.people[a.person].short} · 오후 약속${a.status==='missed'?' · 놓침':''}`),...holidayPlans,day.holiday, day.event, birthdayLabel, day.episode ? `아쿠아 루나 ${seenEpisode ? '· 청취 완료' : '· 23:00'}` : null].filter(Boolean).join(' · ');
+      return `<div class="calendar-day ${day.date === s.date ? 'today' : ''} ${day.holiday ? 'holiday' : ''}" aria-label="${esc(W.dateLabel(day.date) + (label ? ' · ' + label : ''))}"><b>${day.day}</b>${day.holiday ? `<small>${esc(day.holiday)}</small>` : ''}${day.event ? `<small>${esc(day.event)}</small>` : ''}${exam?`<small>${exam}</small>`:''}${appointments.map(a=>`<small>${W.people[a.person].short} · 오후${a.status==='missed'?' · 놓침':' 약속'}</small>`).join('')}${holidayPlans.map(plan=>`<small class="calendar-promise">${esc(plan)}</small>`).join('')}${birthdayLabel ? `<small class="calendar-birthday">✧ ${birthdayLabel}</small>` : ''}${day.episode ? `<span class="calendar-radio">☾ ${seenEpisode ? '들음' : '23:00'}</span>` : ''}</div>`;
     };
     modal('나의 달력', `<div class="calendar-nav"><button id="prev-month" aria-label="이전 달" ${year === 2026 && month === 3 ? 'disabled' : ''}>←</button><h3>${year}년 ${month}월</h3><button id="next-month" aria-label="다음 달" ${year === 2027 && month === 2 ? 'disabled' : ''}>→</button></div><div class="calendar-week">${['일', '월', '화', '수', '목', '금', '토'].map(d => `<span>${d}</span>`).join('')}</div><div class="calendar-grid">${'<div class="calendar-empty"></div>'.repeat(offset)}${days.map(cell).join('')}</div><p class="modal-text">학사 일정과 방송 편성표입니다. 인물의 비밀이나 아직 알지 못한 생일은 표시하지 않습니다.</p>`);
     $('prev-month').onclick = () => calendarMenu(month === 1 ? year - 1 : year, month === 1 ? 12 : month - 1);
@@ -733,11 +821,19 @@
   }
 
   function showTitle() {
-    pauseText(); auto = false;
+    document.body.classList.remove('illustration-mode'); $('scene-art').hidden = true;
+    pauseText(); window.AquaAudio.stopVoice(); voicePosition = null; auto = false;
     $('intro').hidden = true; document.body.classList.remove('intro-mode');
     document.body.classList.remove('map-mode'); mapSelection = null;
     $('title').hidden = false; $('map').hidden = true; $('scene').hidden = true; $('status').hidden = true;
     $('cast').replaceChildren(); setBg('night'); $('continue').disabled = !readSave(SAVE_KEY);
+  }
+  function showEndingComplete() {
+    pauseText(); $('map').hidden = true; $('scene').hidden = true; $('intro').hidden = true;
+    $('status').hidden = true; $('title').hidden = true; $('cast').replaceChildren();
+    setBg('night');
+    modal('한여울의 첫해를 마치며', '<p class="modal-text">한 해의 이야기가 끝났습니다. 저장한 기록은 이어하기에서 다시 열 수 있습니다.</p><button class="option-button" id="ending-title">타이틀로 돌아가기</button>');
+    $('ending-title').onclick = () => { closeModal(); showTitle(); };
   }
   function startForm() {
     modal('내 이름', '<p class="modal-text">한여울대학교에서 보낼 새로운 한 해. 원하는 이름을 적어 주세요.</p><label for="player-name">이름 · 최대 6자</label><input class="modal-input" id="player-name" maxlength="6" placeholder="나"><label for="nickname">라디오 별명 · 최대 10자</label><input class="modal-input" id="nickname" maxlength="10" placeholder="물고기"><button class="option-button" id="begin">이야기 시작하기 →</button>');
@@ -748,7 +844,7 @@
   }
   function resume(state) {
     s = state; closeModal();
-    if (s.scene) showScene(); else prepare();
+    if (s.scene) showScene(); else if (s.completed) showEndingComplete(); else prepare();
     saveAuto();
   }
   function slots() {
@@ -787,7 +883,8 @@
     anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   function settingsMenu() {
-    modal('읽기와 연출', `<div class="form-row"><label for="text-size">대사 글자 크기</label><select id="text-size">${[20, 24, 28].map(v => `<option value="${v}" ${prefs.textSize === v ? 'selected' : ''}>${v}px</option>`).join('')}</select></div><div class="form-row"><label for="text-speed">대사가 나타나는 속도</label><select id="text-speed">${[[0, '바로 표시'], [26, '천천히'], [50, '빠르게']].map(([v, text]) => `<option value="${v}" ${prefs.textSpeed === v ? 'selected' : ''}>${text}</option>`).join('')}</select></div><div class="form-row"><label for="auto-delay">자동 진행 · 대사 표시 뒤 기다리는 시간</label><select id="auto-delay">${[1.5, 2.5, 4].map(v => `<option value="${v}" ${prefs.autoDelay === v ? 'selected' : ''}>${v}초</option>`).join('')}</select></div><div class="form-row"><label for="bgm-volume">배경 음악 음량</label><input id="bgm-volume" type="range" min="0" max="100" value="${Math.round(prefs.bgmVolume*100)}"></div><div class="modal-grid"><label class="check-row"><input id="skip-unread" type="checkbox" ${prefs.skipUnread ? 'checked' : ''}>읽지 않은 대사도 건너뛰기</label><label class="check-row"><input id="sfx-setting" type="checkbox" ${prefs.sfx ? 'checked' : ''}>선택 효과음</label><label class="check-row"><input id="motion-setting" type="checkbox" ${prefs.reduced ? 'checked' : ''}>움직임 줄이기 · 대사 바로 표시</label><label class="check-row"><input id="bond-setting" type="checkbox" ${prefs.showBond ? 'checked' : ''}>관계 노트에 마음 수치 표시</label><button id="apply-settings">설정 적용</button></div><p class="modal-text">Space / Enter · 대사 완성 또는 넘기기<br>숫자키 · 선택지 고르기 · Esc · 창 닫기</p>`);
+    modal('읽기와 연출', `<div class="form-row"><label for="text-size">대사 글자 크기</label><select id="text-size">${[20, 24, 28].map(v => `<option value="${v}" ${prefs.textSize === v ? 'selected' : ''}>${v}px</option>`).join('')}</select></div><div class="form-row"><label for="text-speed">대사가 나타나는 속도</label><select id="text-speed">${[[0, '바로 표시'], [26, '천천히'], [50, '빠르게']].map(([v, text]) => `<option value="${v}" ${prefs.textSpeed === v ? 'selected' : ''}>${text}</option>`).join('')}</select></div><div class="form-row"><label for="auto-delay">자동 진행 · 대사 표시 뒤 기다리는 시간</label><select id="auto-delay">${[1.5, 2.5, 4].map(v => `<option value="${v}" ${prefs.autoDelay === v ? 'selected' : ''}>${v}초</option>`).join('')}</select></div><div class="form-row"><label for="bgm-volume">배경 음악 음량</label><input id="bgm-volume" type="range" min="0" max="100" value="${Math.round(prefs.bgmVolume*100)}"></div><div class="modal-grid"><label class="check-row"><input id="skip-unread" type="checkbox" ${prefs.skipUnread ? 'checked' : ''}>읽지 않은 대사도 건너뛰기</label><label class="check-row"><input id="sfx-setting" type="checkbox" ${prefs.sfx ? 'checked' : ''}>선택 효과음</label><label class="check-row"><input id="motion-setting" type="checkbox" ${prefs.reduced ? 'checked' : ''}>움직임 줄이기 · 대사 바로 표시</label><label class="check-row"><input id="bond-setting" type="checkbox" ${prefs.showBond ? 'checked' : ''}>관계 노트에 마음 수치 표시</label><button id="apply-settings">설정 적용</button><button id="music-credits">음악 출처</button></div><p class="modal-text">Space / Enter · 대사 완성 또는 넘기기<br>숫자키 · 선택지 고르기 · Esc · 창 닫기</p>`);
+    $('music-credits').onclick = musicCredits;
     $('apply-settings').onclick = () => {
       prefs.textSize = Number($('text-size').value); prefs.textSpeed = Number($('text-speed').value);
       prefs.autoDelay = Number($('auto-delay').value); prefs.sfx = $('sfx-setting').checked;
@@ -795,6 +892,10 @@
       prefs.reduced = $('motion-setting').checked; prefs.showBond = $('bond-setting').checked;
       applyPrefs(); closeModal(); toast('읽기 설정을 적용했습니다.');
     };
+  }
+  function musicCredits() {
+    modal('음악 출처', `<p class="modal-text">Music by Tanner Helland · <a href="https://github.com/tannerhelland/free-music" target="_blank" rel="noopener noreferrer">원곡과 제작자</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></p><p class="modal-text">Familiar Roads · Leaving Millie (live piano) · A Memory Away</p><p class="modal-text">원본 음원의 파일명만 변경했으며 게임에서 반복 재생합니다. 상세 출처는 함께 제공되는 assets/audio/CREDITS.md에 있습니다.</p><button class="option-button" id="credits-back">설정으로 돌아가기</button>`);
+    $('credits-back').onclick = settingsMenu;
   }
   function historyMenu() {
     if (!s) { toast('아직 읽은 대사가 없어요.'); return; }
@@ -809,15 +910,23 @@
     if (s?.scene?.presentation === 'intro' && !$('modal').open) finishScene();
   };
   $('skip').onclick = event => {event.stopPropagation();skipRead();};
-  document.addEventListener('pointerdown',()=>{window.AquaAudio.unlock();if(s)window.AquaAudio.play(s.scene?.radioEpisode?'radio':s.slot===3?'night':'campus');},{once:true});
+  $('scene-art').onclick = event => { event.stopPropagation(); illustrationMenu(s?.scene?.illustration); };
+  let audioUnlocked = false;
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    audioUnlocked = true; window.AquaAudio.unlock();
+    if (s) window.AquaAudio.play(s.scene?.radioEpisode ? 'radio' : (s.scene?.time ?? s.slot) === 3 ? 'night' : 'campus');
+  }
+  document.addEventListener('pointerdown', unlockAudio, {once:true});
   $('auto').onclick = event => { event.stopPropagation(); auto = !auto; $('auto').textContent = `AUTO ${auto ? 'ON' : 'OFF'}`; $('auto').setAttribute('aria-pressed', String(auto)); scheduleAuto(); };
-  $('close').onclick = closeModal;
-  $('modal').addEventListener('cancel', () => { setTimeout(scheduleAuto, 0); });
+  $('close').onclick = () => { const ending = s?.completed && $('modal-title').textContent === '한여울의 첫해를 마치며'; closeModal(); if (ending) showTitle(); };
+  $('modal').addEventListener('cancel', event => { if (s?.completed && $('modal-title').textContent === '한여울의 첫해를 마치며') { event.preventDefault(); closeModal(); showTitle(); } else setTimeout(scheduleAuto, 0); });
   $('home').onclick = () => { saveAuto(); closeModal(); showTitle(); };
   $('save').onclick = slots; $('history').onclick = historyMenu; $('settings').onclick = settingsMenu;
   $('phone').onclick = phoneMenu; $('end-day').onclick = finishDay;
   $('backup-now').onclick = exportSave;
   document.addEventListener('keydown', event => {
+    unlockAudio();
     if ($('modal').open || !s?.scene || ($('scene').hidden && $('intro').hidden) || event.target.closest('input, select, textarea')) return;
     if (event.repeat) return;
     if (event.key === 'Control') { event.preventDefault(); skipRead(); }

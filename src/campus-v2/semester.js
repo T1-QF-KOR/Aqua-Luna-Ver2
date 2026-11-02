@@ -9,7 +9,7 @@
     crossRain: { title: '비 오는 카페의 셋', background: 'cafe', lines: [
       n('장대비였다. 손님은 하나도 없었다. 서진이 창밖을 보며 컵을 닦았다.', ['seojin']),
       say('다은', '으아아 비! 야! 너 여기서 일하는구나! 대박! 피신!', ['seojin', 'daeun']),
-      say('서진', '…손님, 바닥.', ['seojin', 'daeun']),
+      say('서진', '손님, 젖은 우산은 문 옆에. 바닥까지 뛰어오게 하진 말고.', ['seojin', 'daeun']),
       say('다은', '아 죄송해요! 근데 언니 진짜 키 크다. 얘가 맨날 컵 깨면 혼난다고—', ['seojin', 'daeun']),
       say('서진', '알바생, 아는 사람?', ['seojin', 'daeun']),
       say('나', '같은 과. 다은이.', ['seojin', 'daeun']),
@@ -17,8 +17,8 @@
       say('서진', '비 그칠 때까지 있어. 주문은 안 해도 돼.', ['seojin', 'daeun']),
       n('마감 시간이 다가왔다. 우산꽂이에는 비닐우산 하나뿐이었다.', ['seojin', 'daeun']),
       { choice: [
-        { label: '다은에게 우산을 빌려준다', effect: { flag: 'umbrellaDaeun', bond: { daeun: 5, seojin: 1 } }, lines: [say('다은', '진짜? 너는? 아 몰라 내일 갖다줄게! 1순위로!', ['seojin', 'daeun']), say('서진', '너 그럼 어떻게 가. …바보. 기다려. 차 있어.')] },
-        { label: '서진과 마감하고, 다은은 사장님 우산을 빌려 보낸다', effect: { bond: { seojin: 4, daeun: 2 } }, lines: [say('다은', '오 사장님 우산 트로트 가수 사진 있어ㅋㅋ 고맙습니다!', ['seojin', 'daeun']), n('서진과 둘이 의자를 올렸다. 카페 음악이 조금 느려졌다.', ['seojin']), say('서진', '그 애, 시끄럽다. …근데 좋은 애네.')] },
+        { label: '다은에게 우산을 빌려준다', effect: { flag: 'umbrellaDaeun', bond: { daeun: 5, seojin: 1 } }, lines: [say('다은', '진짜? 너는? 아 몰라 내일 갖다줄게! 1순위로!', ['seojin', 'daeun']), say('서진', '남의 우산은 멋있게 챙겼네. 넌 나랑 가. 차 가져왔어.')] },
+        { label: '서진과 마감하고, 다은은 사장님 우산을 빌려 보낸다', effect: { bond: { seojin: 4, daeun: 2 } }, lines: [say('다은', '오 사장님 우산 트로트 가수 사진 있어ㅋㅋ 고맙습니다!', ['seojin', 'daeun']), n('서진과 둘이 의자를 올렸다. 카페 음악이 조금 느려졌다.', ['seojin']), say('서진', '말은 빠른데 고맙다는 건 안 빼먹네. 괜찮은 친구 뒀다.')] },
         { label: '함께 앉아 비가 그치기를 기다린다', effect: { bond: { seojin: 2, daeun: 2 } }, lines: [n('다은이 떠들고, 서진이 짧게 대꾸하고, 나는 웃었다. 비는 열한 시에 그쳤다.', ['seojin', 'daeun'])] }
       ] }
     ] },
@@ -28,12 +28,12 @@
       n('세 곡이 끝나자 꽃다발을 든 남학생이 무대 앞으로 걸어 나왔다. “한나리 선배! 좋아합니다!”'),
       n('환호와 카메라 수십 대. 나리는 완벽한 무대 웃음으로 꽃을 받았다. 대답은 하지 않았다.'),
       n('조명이 꺼지고 사람들이 흩어졌다. 다은에게서는 뒤풀이에 오라는 메시지가 왔다.'),
-      { text: '서진에게서도 연락이 왔다. 「알바생. 축제라 손님 많아. 올 수 있으면 와. 아니면 말고.」', when: { met: 'seojin' } },
+      { text: '서진에게서도 연락이 왔다. 「알바생. 축제라 손님 많아. 도와줄 수 있어? 네 일정 먼저 보고 답 줘.」', when: { met: 'seojin' } },
       n('무대 뒤 계단 쪽은 어두웠다. 한 곳에만 갈 수 있었다.'),
       { choice: [
         { label: '무대 뒤 계단으로 간다', effect: { bond: { nari: 6 }, card: '시드는 꽃다발', flag: 'festivalNari' }, lines: [say('나리', '…왔네. 너 올 줄 알았어. 아니, 몰랐는데, 오면 좋겠다고 생각했어.'), say('나리', '꽃 싫은 거 아니야. 예뻐. 근데 집에 가서 시드는 걸 보면, 내가 받은 박수가 시드는 것 같아서.'), say('나리', '하나만 가져가. 그럼 다 시드는 거 안 봐도 되니까.'), n('나리가 꽃다발에서 한 송이를 빼 내게 내밀었다.', ['nari'])] },
         { label: '다은의 뒤풀이에 간다', effect: { bond: { daeun: 6 }, flag: 'festivalDaeun' }, lines: [say('다은', '왔다!! 내 첫 무대 봤지? 봤지? …근데 다들 나리 언니 얘기만 하더라. 나 맨 뒤라서 안 보였을걸.'), say('나', '보였어. 스틱 흔든 거.', ['daeun']), say('다은', '…봤어? 그거 너한테 한 건데.')] },
-        { label: '서진이 혼자 일하는 카페로 간다', when: { met: 'seojin' }, effect: { bond: { seojin: 6 }, flag: 'festivalSeojin' }, lines: [say('서진', '…축제 안 가고?'), say('나', '누나 혼자잖아.', ['seojin']), say('서진', '일당 안 쳐 준다.'), n('마감 뒤 서진이 플레이리스트에서 한 곡을 뺐다가 다시 넣었다. 내가 좋다고 했던 곡이었다.', ['seojin'])] }
+        { label: '서진이 혼자 일하는 카페로 간다', when: { met: 'seojin' }, effect: { bond: { seojin: 6 }, flag: 'festivalSeojin' }, lines: [say('서진', '축제 대신 이쪽을 골랐네. 정말 도와주러 온 거야?'), say('나', '누나 혼자잖아.', ['seojin']), say('서진', '일당은 이모한테 받아. 난 마감 뒤에 한 곡 골라 줄게.'), n('마감 뒤 서진이 플레이리스트에서 한 곡을 뺐다가 다시 넣었다. 내가 좋다고 했던 곡이었다.', ['seojin'])] }
       ] }
     ] },
     nariVolume: { title: '마이크를 끄고', background: 'practice', lines: [
@@ -115,11 +115,11 @@
     seojinCup: { title: '손잡이의 방향', background: 'cafe', lines: [
       n('서진이 머그잔 손잡이를 하나씩 오른쪽으로 돌려놓았다.', ['seojin']),
       say('서진', '이 손님은 왼손잡이. 그건 반대로.'), say('나', '다 외워?', ['seojin']),
-      say('서진', '매일 오니까. 네가 설탕 반 봉지만 넣는 것도 알고.'),
+      say('서진', '매일 오니까. 네가 설탕 반 봉지만 넣는 것도 알고. 내가 별생각 없이 보는 줄 알았어?'),
       n('높은 선반으로 팔을 올리던 서진이 잠깐 멈췄다. 잔이 아주 작게 달그락거렸다.', ['seojin']),
       { choice: [
-        { label: '“윗칸은 내가 할까?”', effect: { bond: { seojin: 4 }, flag: 'seojinAskedHelp' }, lines: [say('서진', '응. 그럼 나는 아래.'), n('설명할 필요 없는 일처럼 잔이 자리를 바꿨다.', ['seojin']), say('서진', '물어보고 하는 거, 괜찮네.')] },
-        { label: '잔을 내려놓을 자리를 비워 둔다', effect: { bond: { seojin: 3 } }, lines: [say('서진', '잠깐만 쉬자. 커피 내릴게.'), n('그녀가 먼저 휴식을 말한 건 처음이었다.', ['seojin'])] }
+        { label: '“윗칸은 내가 할까?”', effect: { bond: { seojin: 4 }, flag: 'seojinAskedHelp' }, lines: [say('서진', '좋아. 윗칸은 맡길게. 나는 아래. 바꾸고 싶으면 먼저 말하고.'), n('설명할 필요 없는 일처럼 잔이 자리를 바꿨다.', ['seojin']), say('서진', '먼저 물어보네. 그런 건 꽤 마음에 들어.')] },
+        { label: '잔을 내려놓을 자리를 비워 둔다', effect: { bond: { seojin: 3 } }, lines: [say('서진', '잠깐 쉬자. 커피는 내가 내릴게. 네가 대신할 거 있나 찾지는 말고.'), n('그녀가 먼저 휴식을 말한 건 처음이었다.', ['seojin'])] }
       ] }
     ] },
     seojinRain: { title: '우산은 하나', background: 'cafe', lines: [
@@ -127,7 +127,7 @@
       say('서진', '오늘은 차 안 가져왔어. 정류장까지만 가면 되는데.'), say('나', '감기 걸려.', ['seojin']),
       say('서진', '나 물에는 익숙해. 진짜로.'), n('농담 같지 않았다.', ['seojin']),
       { choice: [
-        { label: '“정류장까지만 같이 쓰자. 반반.”', effect: { bond: { seojin: 6 } }, lines: [n('우산 아래 어깨가 자꾸 닿았다. 서진이 반 발 떨어졌다가 다시 가까워졌다.', ['seojin']), say('서진', '너 우산 내 쪽으로 너무 기울였어. 너 어깨 다 젖었잖아.'), say('나', '물에 익숙하다며. 나도 연습 좀 하려고.', ['seojin']), say('서진', '…바보.')] },
+        { label: '“정류장까지만 같이 쓰자. 반반.”', effect: { bond: { seojin: 6 } }, lines: [n('우산 아래 어깨가 자꾸 닿았다. 서진은 우산 손잡이를 가리키며 나를 봤다.', ['seojin']), say('서진', '너 우산 내 쪽으로 너무 기울였어. 너 어깨 다 젖었잖아.'), say('나', '물에 익숙하다며. 나도 연습 좀 하려고.', ['seojin']), say('서진', '핑계는 괜찮네. 그럼 이쪽으로 와. 반반이라며.')] },
         { label: '우산을 쥐여 주고 먼저 뛴다', effect: { bond: { seojin: 4 } }, lines: [say('나', '이거 써! 나 뛰면 3분이야!', ['seojin']), n('등 뒤에서 서진이 뭐라고 외쳤다. 빗소리에 묻혔지만 웃는 목소리였다.')] }
       ] }
     ] },
@@ -179,9 +179,17 @@
   function allowed(state, condition = {}) {
     return (!condition.flag || !!state.flags[condition.flag]) &&
       (!condition.notFlag || !state.flags[condition.notFlag]) &&
+      (!condition.all || condition.all.every(branch => allowed(state, branch))) &&
       (!condition.any || condition.any.some(branch => allowed(state, branch))) &&
       (!condition.metAll || condition.metAll.every(id => state.met.includes(id))) &&
       (!condition.met || state.met.includes(condition.met)) &&
+      (!condition.noLovers || !root.AquaRomance.lovers(state).length) &&
+      (!condition.hasLovers || !!root.AquaRomance.lovers(state).length) &&
+      (!condition.openRomance || root.AquaRomance.ensure(state).mode === 'open') &&
+      (!condition.lover || root.AquaRomance.isLover(state, condition.lover)) &&
+      (!condition.romance || Object.entries(condition.romance).every(([id, status]) => root.AquaRomance.ensure(state).status[id] === status && state.met.includes(id))) &&
+      (!condition.ignoredMessage || state.messages?.inbox.some(message => message.person === condition.ignoredMessage && message.reply === 'none')) &&
+      (!condition.notHolidayInvite || !root.AquaHolidays.invited(state, condition.notHolidayInvite)) &&
       (!condition.seen || state.seen.includes(condition.seen)) &&
       (!condition.club || state.club === condition.club) &&
       (!condition.notClub || state.club !== condition.notClub) &&
@@ -244,6 +252,8 @@
       choice.lines = [n('다은이 떠들고, 서진이 짧게 대꾸하고, 나는 웃었다. 창가의 나리도 조용히 같은 비를 기다렸다.', cast),
         n('비가 그치자 나리가 먼저 나갔다. 테이블에 지운 자국이 많은 종이 한 장이 남았다. 서진이 버리지 않고 접어 두었다.')];
     }
+    root.AquaWinter?.decorate(id, state, data);
+    root.AquaHolidays?.decorate(id, state, data);
     return data;
   }
   root.AquaStory = { rules, allowed, eligible, available, build };

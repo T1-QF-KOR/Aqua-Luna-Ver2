@@ -14,6 +14,7 @@
   function legacySeed(state) { return hash(`campus:${state.name}:${state.nickname}`); }
   function roll(state, key) { return hash(`${state.encounters?.seed ?? legacySeed(state)}:${state.date}:${key}`) / 4294967296; }
   function weather(state) {
+    if (state.date === '2026-11-25') return 'snow';
     const summer = state.date >= '2026-06-20' && state.date <= '2026-08-31';
     const r = roll(state, 'weather');
     return r < (summer ? .36 : .23) ? 'rain' : r < .58 ? 'cloudy' : 'clear';
@@ -33,7 +34,12 @@
       // A shift is more predictable than a student's free afternoon; neither is guaranteed.
       if (id === 'seojin' || roll(state, `${state.slot}:${id}:follow-plan`) < (exam ? .48 : .8)) return planned;
     }
-    if (id === 'seojin') return wet ? (day === 0 || [3, 5, 6].includes(day) ? 'cafe' : null) : state.slot === 2 ? 'river' : null;
+    if (id === 'seojin') {
+      // A leave-of-absence student still borrows books on an off-shift afternoon.
+      // Attendance was already rolled above; this is never a guaranteed meeting.
+      if (!W.holidays[state.date] && state.slot===1 && [1,2,4].includes(day) && roll(state,'seojin:off-shift-library')<.65) return 'library';
+      return wet ? (day === 0 || [3, 5, 6].includes(day) ? 'cafe' : null) : state.slot === 2 ? 'river' : null;
+    }
     if (W.holidays[state.date]) return wet ? null : (roll(state, `${state.slot}:${id}:holiday`) < .5 ? 'river' : 'concert');
     if (exam) return 'library';
     const pool = vacation ? (wet ? ['club', 'studio'] : ['club', 'river', 'concert']) :
@@ -68,10 +74,11 @@
     return { locations, scenes };
   }
   function resolve(state) {
+    if (root.AquaAutumn?.away(state)) return { locations: Object.fromEntries(ids.map(id => [id, null])), scenes: {} };
     return state.encounters?.plan?.key === `${state.date}:${state.slot}` ? state.encounters.plan : compute(state);
   }
   function ensurePlan(state) {
-    if (state.encounters.plan?.key !== `${state.date}:${state.slot}`) state.encounters.plan = { key: `${state.date}:${state.slot}`, ...compute(state) };
+    if (root.AquaAutumn?.away(state) || state.encounters.plan?.key !== `${state.date}:${state.slot}`) state.encounters.plan = { key: `${state.date}:${state.slot}`, ...resolve(state) };
     return state.encounters.plan;
   }
   function isAt(state, id, place) { return resolve(state).locations[id] === place; }

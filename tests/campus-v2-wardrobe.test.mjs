@@ -25,10 +25,19 @@ for (const item of Economy.clothes) {
   const scene = { id: `date-${id}-river`, title: data.title, background: data.background,
     queue: data.lines, index: 0, after: 'date', outing: dated.outing, wardrobe: { [id]: Wardrobe.pick(s, id, { outing: dated.outing }) } };
   s.scene = scene;
+  const oldName = { 'clothes-nari-casual': '큰 후드 · 와이드 팬츠', 'clothes-nari-utility-cargo': '카키 야상 · 카고 팬츠',
+    'clothes-nari-suede-mini': '갈색 재킷 · 미니스커트 · 부츠', 'clothes-nari-mini-pleats': '버건디 니트 · 플리츠 미니',
+    'clothes-seojin-shirt':'하늘색 셔츠 · 검정 슬랙스', 'clothes-seojin-knit':'크림 니트 · 검정 바지', 'clothes-seojin-coat':'남색 롱코트 · 회색 목도리' }[item.id];
+  if (oldName) s.scene.queue[0].text = `${id==='seojin'?'서진이':'나리가'} 내가 선물한 ${oldName} 차림으로 나왔다.`;
   const restored = State.restore(JSON.parse(JSON.stringify(s))); assert.ok(restored, `${item.id}: date save restores`);
+  if (oldName) { assert.ok(restored.scene.queue[0].text.includes(item.name)); assert.ok(!restored.scene.queue[0].text.includes(oldName)); }
   assert.equal(restored.giftClothes[id], item.outfit);
   const path = Wardrobe.source(restored, id, restored.scene);
-  assert.equal(path, `assets/heroines/${id}-${item.outfit}-v3.png`);
+  const redesign = { 'nari-casual': 'nari-cardigan-v6.png', 'nari-utility-cargo': 'nari-pinafore-v6.png',
+    'nari-suede-mini': 'nari-slate-jacket-v6.png', 'nari-mini-pleats': 'nari-lavender-knit-v6.png',
+    'seojin-shirt':'seojin-blazer-v5.png','seojin-knit':'seojin-asymmetric-knit-v5.png','seojin-coat':'seojin-city-coat-v5.png',
+    'daeun-denim-mini':'daeun-denim-mini-v7.png','daeun-layered-denim':'daeun-layered-denim-v7.png','daeun-quarter-bermuda':'daeun-quarter-bermuda-v7.png' };
+  assert.equal(path, `assets/heroines/${redesign[`${id}-${item.outfit}`] || `${id}-${item.outfit}-v3.png`}`);
   for (const expression of ['neutral','smile','happy','shy','sad','surprised','jealous','stage']) {
     const rendered = Wardrobe.source(restored, id, restored.scene, expression);
     assert.ok((await fs.stat(new URL(rendered, root))).size > 0, `Missing rendered image: ${rendered}`);
@@ -48,6 +57,14 @@ for (const [person,outfit,date] of [['seojin','coat','2026-07-10'], ['daeun','qu
   assert.ok(!data.lines.some(line => line.text?.includes(item.name)), 'Narration never claims a different outfit from the image');
 }
 const older = State.initial(); older.giftClothes.nari = 'unavailable-outfit';
-assert.equal(Wardrobe.source(older, 'nari', { outing: { person: 'nari' }, wardrobe: { nari: 'unavailable-outfit' } }), 'assets/heroines/nari-campus-v2.png');
-await fs.writeFile(new URL('qa/campus-v2/wardrobe-results.json', root), JSON.stringify({ passed: true, date: '2026-10-29', clothes: checked, distinctImages: digests.size, scope: 'Purchase, gift, date narration, save restore, seasonal selection, PNG headers and all expression source paths. Visual identity is reviewed separately.' }, null, 2) + '\n');
+const winterDaeun = State.initial(); winterDaeun.date = '2026-12-18';
+assert.equal(Wardrobe.pick(winterDaeun, 'daeun', { id: 'daeunConfess' }), 'winter', 'Confession sprite matches its coat and CG');
+assert.equal(Wardrobe.pick(winterDaeun, 'daeun', { returnPlace: 'river' }), 'winter', 'Winter outings have warm clothes');
+assert.equal(Wardrobe.pick(winterDaeun, 'daeun', { returnPlace: 'club' }), 'rehearsal', 'Indoor band practice keeps rehearsal clothes');
+assert.equal(Wardrobe.source(older, 'nari', { outing: { person: 'nari' }, wardrobe: { nari: 'unavailable-outfit' } }), 'assets/heroines/nari-campus-v6.png');
+assert.ok(Economy.clothes.find(item => item.id === 'clothes-nari-casual').name.includes('라벤더'));
+assert.ok(Economy.clothes.find(item => item.id === 'clothes-nari-utility-cargo').name.includes('뷔스티에'));
+assert.ok(Economy.clothes.find(item => item.id === 'clothes-nari-suede-mini').name.includes('슬레이트'));
+assert.ok(Economy.clothes.find(item => item.id === 'clothes-nari-mini-pleats').name.includes('라벤더 그레이'));
+await fs.writeFile(new URL('qa/campus-v2/wardrobe-results.json', root), JSON.stringify({ passed: true, date: '2026-10-30', clothes: checked, distinctImages: digests.size, scope: 'Purchase, gift, date narration, save restore, seasonal selection, PNG headers and all expression source paths, including the two user-requested Nari redesigns. Visual identity is reviewed separately.' }, null, 2) + '\n');
 console.log(`PASS ${checked.length} gifted outfits: purchase, date, reload, valid images, seasonal exclusions`);

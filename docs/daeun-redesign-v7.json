@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-30",
+  "tool": "built-in image_gen",
+  "direction": "성인 대학생 드러머, 청순하고 순수한 분위기와 은은한 햄스터상; 인간 얼굴, 동물 귀 없음",
+  "base_design": {"source":"/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-570622cf-cceb-43f8-9951-569f620a80ac.png","prompt":"Use case: stylized-concept; premium Japanese/Korean anime and VTuber visual-novel character sprite. Input 1 provides ONLY the game's polished illustration quality; do not copy her character, hair, face, pose or clothing. Create a wholly redesigned character, Daeun: an adult 20-year-old university student and enthusiastic band drummer, kind, sincere, innocent-hearted, naturally clear and pure in atmosphere, cheerful and approachable. She is distinct from a cool sophisticated fox-eyed woman: soft rounded almond-shaped warm honey-brown eyes with gentle eye corners and open curious gaze, delicate rounded cheeks and softly oval face, a fresh relaxed natural genuine closed-mouth smile, very subtle blush, gentle eyebrows, no beauty mark; no sharp upturned fox eyes, no seductive gaze, no mature glamorous styling. A healthy natural lightly athletic adult build with realistic ordinary proportions, neither exaggerated nor childlike. Warm chestnut brown hair with soft airy bangs and a naturally tousled shoulder-length layered cut, a few loose strands and a small ivory hair clip, no high ponytail, no black hair, no pink streak. Outfit suitable for a sweet everyday university drummer: a pale powder-blue lightweight zip hoodie worn open over a simple soft ivory crewneck shirt, high-waisted relaxed straight medium-blue jeans, an understated orange fabric wristband as her drummer accent, simple white canvas shoulder bag. Comfortable modern college clothing, clean and naturally charming; no exposed midriff, no revealing garments, no glamour. Soft colors balanced with a little warm apricot/orange detail, no logos or text. Natural relaxed front-facing pose, one hand makes a small friendly greeting wave and the other lightly holds the bag strap at her side, anatomical hands with five fingers. One adult character, entire head and hands within image, thigh-up framing and consistent scale for a dialogue sprite. High-end finely rendered 2D anime / VTuber style, luminous amber eyes, beautiful textured hair, delicately detailed fabric, refined line work and subtle cel shading matching the input's finish. GENUINE transparent RGBA background, fully isolated character only, no scenic background, no vignette, no shadow, no halo, no text, no watermark. This is a NEW face, physique, hairstyle and styling, not a mere upscale."},
+  "assets": [
+    {
+      "variant": "campus",
+      "destination": "assets/heroines/daeun-campus-v7.png",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-9c68053d-b111-4fdc-a46f-c502cf12c1ff.png",
+      "prompt": "Use case: identity-preserve / precise character design edit. Input is the new character Daeun, an adult 20-year-old university student and enthusiastic drummer. Keep her warm chestnut shoulder-length tousled layered hair, wispy bangs, small ivory hair clip, warm honey-brown eye color, healthy natural adult proportions, powder-blue hoodie, ivory tee, straight blue jeans, orange wristband, cream canvas bag, friendly pose and exact transparent background. Refine ONLY the facial design subtly to suggest a charming hamster-like human face: slightly rounder and softly fuller cheeks, a softly rounded oval jaw, large warm round almond eyes with gently lowered outer corners rather than fox eyes, a petite natural human nose and a small cheerful closed-mouth smile. Aim for innocent, clear, wholesome and naturally lovable, a little like a friendly hamster in facial impression, but entirely human and adult. NO animal ears, whiskers, nose, buck teeth, tail, costumes, exaggerated chibi features or childlike body. Avoid sharp fox eyes and mature seductive styling. Finely rendered polished 2D anime / virtual-idol visual-novel illustration at the same premium finish, head-to-mid-thigh framing and scale, correct hands. Genuinely transparent RGBA background; no backdrop, vignette, halo, shadow, text or watermark."
+    },
+    {
+      "variant": "layered-denim",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-13c73713-3d8f-43cb-aae2-86e8adc8d344.png",
+      "destination": "assets/heroines/daeun-layered-denim-v7.png",
+      "prompt": "Use case: identity-preserve, anime visual-novel sprite wardrobe variant. Reference image is canonical newly designed Daeun, an adult 20-year-old university drummer. Preserve her EXACT distinctive human face: softly rounded fuller cheeks, rounded oval jaw, warm honey-brown rounded almond eyes with gentle corners, small natural nose, fresh innocent pure-hearted friendly expression with a slightly hamster-like human impression. No animal ears, whiskers, teeth or tails. Preserve the same warm chestnut shoulder-length softly tousled layered hair, airy bangs and small ivory hair clip, same natural healthy adult proportions. No fox eyes, beauty mark or mature glamorous styling. Preserve the polished premium 2D anime / VTuber visual-novel detail, fine hair and delicate linework, luminous cel shading. One person, same head-to-mid-thigh framing and sprite scale, entire head and hands visible, correct five-finger natural hands. Genuine transparent RGBA background, isolated character only, no scenery, vignette, shadows, halo, text, logos or watermark. Replace entire existing outfit and bag with: a softly textured ivory cable-knit V-neck sweater vest layered over a white short-sleeve crewneck T-shirt, relaxed straight blue denim jeans and an orange wristband. Sweet fresh university outfit. Natural friendly pose. No bag, no drumsticks.",
+      "refs": [
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/heroines/daeun-campus-v7.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "variant": "summer",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-03d700a6-ff1a-4ba9-b39d-fa3ab2043d14.png",
+      "destination": "assets/heroines/daeun-summer-v7.png",
+      "prompt": "Use case: identity-preserve, anime visual-novel sprite wardrobe variant. Reference image is canonical newly designed Daeun, an adult 20-year-old university drummer. Preserve her EXACT distinctive human face: softly rounded fuller cheeks, rounded oval jaw, warm honey-brown rounded almond eyes with gentle corners, small natural nose, fresh innocent pure-hearted friendly expression with a slightly hamster-like human impression. No animal ears, whiskers, teeth or tails. Preserve the same warm chestnut shoulder-length softly tousled layered hair, airy bangs and small ivory hair clip, same natural healthy adult proportions. No fox eyes, beauty mark or mature glamorous styling. Preserve the polished premium 2D anime / VTuber visual-novel detail, fine hair and delicate linework, luminous cel shading. One person, same head-to-mid-thigh framing and sprite scale, entire head and hands visible, correct five-finger natural hands. Genuine transparent RGBA background, isolated character only, no scenery, vignette, shadows, halo, text, logos or watermark. Replace entire existing outfit and bag with: a light apricot short-sleeve open shirt over an ivory T-shirt with understated navy sleeve stripes, comfortable mid-blue denim shorts and a simple cream canvas tote. Wholesome naturally charming relaxed student outfit. One hand holds the tote strap and the other makes a small greeting, orange wristband.",
+      "refs": [
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/heroines/daeun-campus-v7.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "variant": "term-end-cg",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-b85c7474-2c9e-40f5-9b62-ed20f734a3a4.png",
+      "destination": "assets/campus-v2/daeun-term-end-cg-v2.png",
+      "prompt": "Use case: identity-preserve, narrative illustration edit. Image 1 is the event CG to edit: preserve its horizontal cinematic composition, Han River at evening, railing, city lights, season, pose and emotionally sincere mood. Image 2 is the NEW Daeun design and EXACT character identity to use, an adult 20-year-old university drummer: softly rounded fuller cheeks, rounded oval jaw, gentle round honey-brown eyes, chestnut shoulder-length softly tousled layered hair with airy bangs and a small ivory hair clip; she looks pure-hearted and softly hamster-like in her human facial impression, naturally healthy adult physique. No animal ears or whiskers, no sharp fox eyes, beauty mark or mature glamorous style. Replace image 1's old short-bob face/hair with image 2's new person. She wears a cozy muted orange hooded duffle coat with dark toggle fastenings over an ivory cable-knit vest, white crewneck T-shirt and blue jeans, orange wristband. Keep her hands and phone, leaning by riverside railing, look honestly toward viewer with a small soft smile, no tears. High-quality coherent anime/VTuber visual-novel illustration, gentle cinematic winter sunset, luminous water reflections, clear hands, no text, no watermark.",
+      "refs": [
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/campus-v2/daeun-term-end-cg-v1.png",
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/heroines/daeun-campus-v7.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "variant": "denim-mini",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-32c4e2f8-900d-458d-b236-4bbdb2b682ab.png",
+      "destination": "assets/heroines/daeun-denim-mini-v7.png",
+      "prompt": "Use case: identity-preserve, anime visual-novel sprite wardrobe variant. Reference image is canonical newly designed Daeun, an adult 20-year-old university drummer. Preserve her EXACT distinctive human face: softly rounded fuller cheeks, rounded oval jaw, warm honey-brown rounded almond eyes with gentle corners, small natural nose, fresh innocent pure-hearted friendly expression with a slightly hamster-like human impression. No animal ears, whiskers, teeth or tails. Preserve the same warm chestnut shoulder-length softly tousled layered hair, airy bangs and small ivory hair clip, same natural healthy adult proportions. No fox eyes, beauty mark or mature glamorous styling. Preserve the polished premium 2D anime / VTuber visual-novel detail, fine hair and delicate linework, luminous cel shading. One person, same head-to-mid-thigh framing and sprite scale, entire head and hands visible, correct five-finger natural hands. Genuine transparent RGBA background, isolated character only, no scenery, vignette, shadows, halo, text, logos or watermark. Replace entire existing outfit and bag with: a soft gray zip-up hoodie over a simple ivory T-shirt and a comfortable blue denim mini skirt, modest proportions, with an understated orange wristband. Gentle lively friendly pose. No bag, no drumsticks.",
+      "refs": [
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/heroines/daeun-campus-v7.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "variant": "rehearsal",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-26bfd017-d62a-4156-80b6-040a7f6b9985.png",
+      "destination": "assets/heroines/daeun-rehearsal-v7.png",
+      "prompt": "Use case: identity-preserve, anime visual-novel sprite wardrobe variant. Reference image is canonical newly designed Daeun, an adult 20-year-old university drummer. Preserve her EXACT distinctive human face: softly rounded fuller cheeks, rounded oval jaw, warm honey-brown rounded almond eyes with gentle corners, small natural nose, fresh innocent pure-hearted friendly expression with a slightly hamster-like human impression. No animal ears, whiskers, teeth or tails. Preserve the same warm chestnut shoulder-length softly tousled layered hair, airy bangs and small ivory hair clip, same natural healthy adult proportions. No fox eyes, beauty mark or mature glamorous styling. Preserve the polished premium 2D anime / VTuber visual-novel detail, fine hair and delicate linework, luminous cel shading. One person, same head-to-mid-thigh framing and sprite scale, entire head and hands visible, correct five-finger natural hands. Genuine transparent RGBA background, isolated character only, no scenery, vignette, shadows, halo, text, logos or watermark. Replace entire existing outfit and bag with: a comfortable soft ivory oversized hoodie and medium-blue relaxed straight jeans, subtle orange fabric wristband. She is a university band drummer, holding exactly two simple wooden drumsticks, one in each hand, comfortably at chest height; gentle bright smile, natural anatomy, sticks within frame. No bag.",
+      "refs": [
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/heroines/daeun-campus-v7.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "variant": "winter",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-534e7b72-df39-4201-9292-f56d24a6ba54.png",
+      "destination": "assets/heroines/daeun-winter-v7.png",
+      "prompt": "Use case: identity-preserve, anime visual-novel sprite wardrobe variant. Reference image is canonical newly designed Daeun, an adult 20-year-old university drummer. Preserve her EXACT distinctive human face: softly rounded fuller cheeks, rounded oval jaw, warm honey-brown rounded almond eyes with gentle corners, small natural nose, fresh innocent pure-hearted friendly expression with a slightly hamster-like human impression. No animal ears, whiskers, teeth or tails. Preserve the same warm chestnut shoulder-length softly tousled layered hair, airy bangs and small ivory hair clip, same natural healthy adult proportions. No fox eyes, beauty mark or mature glamorous styling. Preserve the polished premium 2D anime / VTuber visual-novel detail, fine hair and delicate linework, luminous cel shading. One person, same head-to-mid-thigh framing and sprite scale, entire head and hands visible, correct five-finger natural hands. Genuine transparent RGBA background, isolated character only, no scenery, vignette, shadows, halo, text, logos or watermark. Replace entire existing outfit and bag with: a cozy muted orange hooded duffle coat with dark toggle fastenings, open over an ivory cable-knit V-neck vest and white crewneck top with blue straight jeans, orange wristband. Genuine, tender, slightly quiet closed-mouth smile. Wholesome winter outfit. No bag, no drumsticks.",
+      "refs": [
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/heroines/daeun-campus-v7.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "variant": "quarter-bermuda",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-c4d9cd1a-32b3-4203-a905-3c642996cf7a.png",
+      "destination": "assets/heroines/daeun-quarter-bermuda-v7.png",
+      "prompt": "Use case: identity-preserve, anime visual-novel sprite wardrobe variant. Reference image is canonical newly designed Daeun, an adult 20-year-old university drummer. Preserve her EXACT distinctive human face: softly rounded fuller cheeks, rounded oval jaw, warm honey-brown rounded almond eyes with gentle corners, small natural nose, fresh innocent pure-hearted friendly expression with a slightly hamster-like human impression. No animal ears, whiskers, teeth or tails. Preserve the same warm chestnut shoulder-length softly tousled layered hair, airy bangs and small ivory hair clip, same natural healthy adult proportions. No fox eyes, beauty mark or mature glamorous styling. Preserve the polished premium 2D anime / VTuber visual-novel detail, fine hair and delicate linework, luminous cel shading. One person, same head-to-mid-thigh framing and sprite scale, entire head and hands visible, correct five-finger natural hands. Genuine transparent RGBA background, isolated character only, no scenery, vignette, shadows, halo, text, logos or watermark. Replace entire existing outfit and bag with: a lightweight cream crewneck sweatshirt and comfortable navy blue bermuda shorts with an orange drawstring, orange wristband, soft realistic fabric. Bright natural modest outfit for walking or rehearsing. No bag, no drumsticks.",
+      "refs": [
+        "/Users/junmoyang/Documents/GitHub/Aqua-Luna-Ver2/assets/heroines/daeun-campus-v7.png"
+      ],
+      "transparent_background": true
+    }
+  ]
+}

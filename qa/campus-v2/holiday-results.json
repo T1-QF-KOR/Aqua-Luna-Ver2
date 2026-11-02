@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": [
+    "Old saves migrate without inventing Christmas appointments and malformed invitations are rejected",
+    "Invitation replies preserve real commitments, never farm rewards, and can be revised remotely",
+    "Unanswered invitations cost affection once on the deadline and are no longer a promise",
+    "Only memories actually owned and protected words already kept can change Nari’s decision",
+    "Nari remembers when the player pressed or peeked instead of inventing patience",
+    "Other unresolved hearts make Nari withdraw while friend and deferred answers remain distinct",
+    "Nari’s own request to wait has no player-delay penalty and resolves on New Year’s Day",
+    "An exclusive partner and Nari’s night appointment require separate, honest decisions",
+    "Every existing lover must agree to the group Christmas; Nari remains a proposal until January’s consent",
+    "A hidden relationship reaches Christmas’s real clash without requiring a fabricated witness",
+    "The Christmas broadcast freezes shared history at airtime and replay never includes a second confession",
+    "All invitation scenes are reachable through actual seeded itineraries and keep unmet people hidden"
+  ],
+  "scope": "Production holiday decisions, save restore, seeded invitation encounters and broadcast provenance; runtime and browser layout are separate checks."
+}

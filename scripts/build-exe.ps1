@@ -22,7 +22,7 @@ Copy-Item -LiteralPath (Join-Path $root 'index.html') -Destination $game
 New-Item -ItemType Directory -Force (Join-Path $game 'src') | Out-Null
 Copy-Item -LiteralPath (Join-Path $root 'src\campus-v2') -Destination (Join-Path $game 'src') -Recurse
 # Copy runtime collections only. Retired art and authoring projects are not payload.
-foreach ($assetFolder in @('campus-v2', 'heroines', 'environment', 'fonts', 'ui')) {
+foreach ($assetFolder in @('campus-v2', 'heroines', 'environment', 'fonts', 'ui', 'audio')) {
     robocopy (Join-Path $root "assets\$assetFolder") (Join-Path $game "assets\$assetFolder") /E /NFL /NDL /NJH /NJS /NP | Out-Null
     if ($LASTEXITCODE -ge 8) { throw "Copying assets failed: $assetFolder" }
 }

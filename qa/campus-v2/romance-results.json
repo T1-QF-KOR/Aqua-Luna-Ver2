@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": [
+    "Version 5 saves migrate without inventing lovers; invalid agreements and dates are rejected",
+    "Affection never overrides a friend answer, and a pending answer halves recurring gains for fourteen days",
+    "A second disclosure remains a proposal until the actual group conversation grants consent",
+    "Conditional consent counts two completed dates once each and waits for an explicit review",
+    "A missed trial deadline offers a real decision instead of silently approving the new relationship",
+    "A refused agreement cannot be forced by an affection value or a scene choice",
+    "Hidden relationships can be disclosed; only a real lover witnessing a date schedules a clash",
+    "Being honest after a clash uses the higher consent threshold and never treats an apology as consent",
+    "Lovers have a seven-day absence boundary, while ordinary friends retain fourteen days"
+  ],
+  "scope": "Production relationship, migration, social date, witness and greeting modules; browser layout checked separately."
+}

@@ -1,0 +1,24 @@
+{
+  "generator": "built-in image_gen",
+  "date": "2026-10-30",
+  "transparent_background": true,
+  "request": "The user likes both clothing designs and requested colors that fit Nari. Preserve garment construction and change the palette only.",
+  "assets": [
+    {
+      "legacyOutfitKey": "mini-pleats",
+      "supersedes": "assets/heroines/nari-mini-pleats-v3.png",
+      "destination": "assets/heroines/nari-lavender-knit-v4.png",
+      "name": "라벤더 그레이 니트 · 플리츠 미니",
+      "prompt": "Use case: precise-object-edit / clothing color correction. This is an approved clothing DESIGN on Nari, an ADULT university-age anime visual-novel character. The user likes the garment design and asks ONLY for a better color palette. Keep the exact existing outfit type, silhouette, fit, length, seams, folds, texture, neckline, sleeve shape, skirt and hosiery. Preserve her exact face, eye color, dark violet wavy hair, pink streak and pins, expression, body proportions, pose, hands, existing jewelry and portrait crop. Do not add or remove any accessory. Preserve the original premium Japanese anime / VTuber illustration style, delicate linework and shading. Do not apply a global color filter to the character. Change ONLY the burgundy sweater's yarn color to a soft, desaturated lavender grey, approximately #A99BB9 in its midtones, with cool mauve-grey shadow folds and gentle pale lilac highlights. The knit should harmonize with her violet eyes and muted pink hair streak, feel soft and moonlit rather than bright purple or reddish wine. Keep the existing dark charcoal pleated miniskirt and dark knee socks exactly their current colors. Keep the pink pick pendant, skin and hair exactly as they are. No redesign, no different garment, no extra layers, no added decorations, no body or face change. Same 1024x1536 portrait and framing. One character on a genuinely transparent RGBA background, with opaque clothing and skin. No backdrop, no glow, no colored halo, no vignette, no text, no logos, no watermark. Keep all existing transparency.",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-3cfd6aa9-f302-4776-8838-9c7fb2b680b3.png"
+    },
+    {
+      "legacyOutfitKey": "suede-mini",
+      "supersedes": "assets/heroines/nari-suede-mini-v3.png",
+      "destination": "assets/heroines/nari-slate-jacket-v4.png",
+      "name": "슬레이트 스웨이드 재킷 · 미니스커트 · 부츠",
+      "prompt": "Use case: precise-object-edit / clothing color correction. This is an approved clothing DESIGN on Nari, an ADULT university-age anime visual-novel character. The user likes the garment design and asks ONLY for a better color palette. Keep the exact existing outfit type, silhouette, fit, length, seams, folds, texture, neckline, sleeve shape, skirt and hosiery. Preserve her exact face, eye color, dark violet wavy hair, pink streak and pins, expression, body proportions, pose, hands, existing jewelry and portrait crop. Do not add or remove any accessory. Preserve the original premium Japanese anime / VTuber illustration style, delicate linework and shading. Do not apply a global color filter to the character. Change ONLY the warm brown suede jacket color to a cool medium slate-charcoal with a faint blue-violet undertone, approximately #5B5D72 in its midtones. Retain its soft matte suede texture, same cropped biker-jacket construction, lapels, silver zips and studs. Keep enough tonal separation from the existing near-black crew-neck top and charcoal pleated skirt, so the jacket reads as slate rather than flat black. The cool jacket should frame and complement her pink hair streak and violet eyes. Keep the black inner top, skirt, tights, silver hardware, skin and hair their original colors. No redesign, no different garment, no extra layers, no added decorations, no body or face change. Same 1024x1536 portrait and framing. One character on a genuinely transparent RGBA background, with opaque clothing and skin. No backdrop, no glow, no colored halo, no vignette, no text, no logos, no watermark. Keep all existing transparency.",
+      "source": "/Users/junmoyang/.codex/generated_images/01a17d89-5f66-7d73-9c5e-fef5b462412a/exec-20f2862f-f4ae-42ca-92f7-381bca443d97.png"
+    }
+  ]
+}
