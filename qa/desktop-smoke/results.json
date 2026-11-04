@@ -1,7 +1,0 @@
-{
-  "status": "failed",
-  "checks": [],
-  "errors": [],
-  "network": [],
-  "error": "Error: Timed out waiting for packaged app"
-}

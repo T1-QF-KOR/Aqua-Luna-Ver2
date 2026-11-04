@@ -39,3 +39,4 @@
 - 12:30 밸런스 메모 정리(Claude): 실제 핸들러 1년 시뮬레이션에서 다은에게 말을 걸지 않으면 최종 호감 13(첫 만남·박람회·공동 행사), 아무와도 안 엮이면 0. '대화 없이 54'는 재현 안 됨 → 보류 항목 종료.
 - **12:32 본편 최신 후보 v18(Claude):** `output/AquaLuna-Windows-candidate-2026-11-04-v18/` — v17 + 표정 로드 후 교체, 대화창 숨기기(H·우클릭), 계절 제목 카드, 낮 방 배경(roomDay, 아침~노을). verify PASS 130. 체험판에도 같은 변경 반영(smoke 48 PASS).
 - **13:38 본편 최신 후보 v19(Claude):** `output/AquaLuna-Windows-candidate-2026-11-04-v19/` — v18 + 겨울 낮 방 배경(roomDayWinter, 12~2월 아침~노을). verify PASS 131. v18은 Codex 검증 통과(계절 카드·방 낮밤). 체험판·`Aqua-Luna-Demo/AquaLuna-Demo-Windows.zip`도 같은 내용으로 다시 묶음(132개 항목).
+- **14:00 정리(Claude, 사용자 지시):** 게임이 쓰지 않는 파일은 `/Users/junmoyang/Documents/GitHub/Aqua-Luna-Archive`(별도 git, 원래 경로 그대로)로 옮김: assets/미사용, 옛 배경 21장, archive/, 옛 src·tests·scripts, qa(campus-v2 제외), docs, reports(bridge 제외), trailer, output/poster. Windows 후보 v1~v18과 launcher/bin·obj는 삭제, v19만 남음. campus-v2 테스트·나리 대본 검사·v19 verify 통과. 옛 경로를 찾을 땐 Archive 쪽을 볼 것.

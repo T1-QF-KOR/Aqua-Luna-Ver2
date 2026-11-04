@@ -1,4 +1,0 @@
-PASS Unavailable storage retains session and leaves persistent notice
-PASS Storage recovers without losing unsaved progress
-PASS Import rejects malformed file without replacing play state
-PASS Closing import dialog cancels pending file read

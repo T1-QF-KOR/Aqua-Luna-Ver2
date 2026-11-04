@@ -21,13 +21,13 @@
 - [게임 개요](GDD/01_게임_개요.md) · [세계관과 인물](GDD/02_세계관_인물.md) · [하렘 · 교차 · 질투](GDD/08_하렘_교차_질투.md)
 - [1년 스토리라인](GDD/시나리오/01_스토리라인.md) · [장면표 84편](GDD/시나리오/02_장면표.md) · [결말 14종](GDD/시나리오/08_엔딩.md)
 
-> **현재 상태 (2026-10-30)**: 현재 플레이 구간은 **3월 2일부터 다음 해 2월 26일 결말까지**입니다. 여름·가을·겨울에 이어 나리의 성탄 대화와 새해의 대답, 성탄 약속 변경, 세 히로인의 겨울 CG·앨범 감상을 연결했습니다. 등교일에는 학교 이야기를 먼저 보고 수업 뒤 장소를 선택합니다. 나리의 지정 의상 두 벌은 새 디자인으로, 나머지 두 벌은 어울리는 색으로 교체했습니다. **결말의 첫 구현을 포함한 개발 빌드이며, 전 분기 플레이 검증과 완성도 개선이 남아 있습니다.** [현재 개발 방향](docs/CURRENT_GAME_DIRECTION.md) · [학교 흐름·Steam 조사 반영](GDD/스팀_미연시_제작자료/11_학교흐름과_겨울_실제반영.md) · [여름 구현](reports/CAMPUS_SUMMER_2026-10-30.md) · [가을 구현](reports/CAMPUS_AUTUMN_2026-10-30.md) · [고백과 첫 겨울](reports/CAMPUS_FIRST_WINTER_2026-10-30.md)
+> **현재 상태 (2026-10-30)**: 현재 플레이 구간은 **3월 2일부터 다음 해 2월 26일 결말까지**입니다. 여름·가을·겨울에 이어 나리의 성탄 대화와 새해의 대답, 성탄 약속 변경, 세 히로인의 겨울 CG·앨범 감상을 연결했습니다. 등교일에는 학교 이야기를 먼저 보고 수업 뒤 장소를 선택합니다. 나리의 지정 의상 두 벌은 새 디자인으로, 나머지 두 벌은 어울리는 색으로 교체했습니다. **결말의 첫 구현을 포함한 개발 빌드이며, 전 분기 플레이 검증과 완성도 개선이 남아 있습니다.** 현재 개발 방향(별도 저장소 Aqua-Luna-Archive의 `docs/CURRENT_GAME_DIRECTION.md`) · [학교 흐름·Steam 조사 반영](GDD/스팀_미연시_제작자료/11_학교흐름과_겨울_실제반영.md) · 여름 구현(별도 저장소 Aqua-Luna-Archive의 `reports/CAMPUS_SUMMER_2026-10-30.md`) · 가을 구현(별도 저장소 Aqua-Luna-Archive의 `reports/CAMPUS_AUTUMN_2026-10-30.md`) · 고백과 첫 겨울(별도 저장소 Aqua-Luna-Archive의 `reports/CAMPUS_FIRST_WINTER_2026-10-30.md`)
 
-선물 가게·전달, 5장소 데이트·앨범, 셋이 대화하기, 기본 질투·목격과 라디오 반응을 추가했습니다. [관계 활동 구현과 검증](reports/CAMPUS_RELATIONSHIP_ACTIVITIES_2026-10-28.md).
+선물 가게·전달, 5장소 데이트·앨범, 셋이 대화하기, 기본 질투·목격과 라디오 반응을 추가했습니다. 관계 활동 구현과 검증(별도 저장소 Aqua-Luna-Archive의 `reports/CAMPUS_RELATIONSHIP_ACTIVITIES_2026-10-28.md`).
 
 ## 실행
 
-**출시 방향: PC 전용 · Steam.** 모바일·태블릿 버전은 개발하지 않습니다. [PC 지원 범위와 Steam 출시 준비](docs/PC_STEAM_RELEASE.md)
+**출시 방향: PC 전용 · Steam.** 모바일·태블릿 버전은 개발하지 않습니다. PC 지원 범위와 Steam 출시 준비(별도 저장소 Aqua-Luna-Archive의 `docs/PC_STEAM_RELEASE.md`)
 
 **데스크톱 앱(브라우저 없이 실행):** `powershell -ExecutionPolicy Bypass -File scripts/build-exe.ps1`을 실행하면 `dist/AquaLuna/AquaLuna.exe`가 만들어집니다. 더블클릭으로 바로 실행되며, `dist/AquaLuna` 폴더째 옮기거나 배포하면 됩니다(.NET 10 SDK는 빌드할 때만 필요). F11 또는 Alt+Enter로 전체 화면을 전환합니다. 앱의 저장은 `%LOCALAPPDATA%\AquaLuna`에 남습니다. 실행기 코드는 `launcher/`(WebView2)에 있습니다.
 

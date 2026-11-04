@@ -1,1 +1,0 @@
-﻿{"focus":"close-modal","modal":true,"title":"하루를 저장하기","ready":"complete"}

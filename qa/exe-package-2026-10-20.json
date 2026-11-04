@@ -1,9 +1,0 @@
-﻿{
-    "builtAt":  "2026-10-20T02:07:29.6077681+09:00",
-    "executable":  "dist/AquaLuna/AquaLuna.exe",
-    "payloadFilesVerified":  597,
-    "deploymentFilesVerified":  598,
-    "executableSHA256":  "975DA1A44FF58D7214C7C763BB24DC503F18DF0ACFA2E86D798FF1202B8F9A3B",
-    "packageBytes":  438791080,
-    "status":  "published-and-hashes-verified"
-}
