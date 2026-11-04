@@ -27,7 +27,7 @@ sealed class GameWindow : Form
     public GameWindow(string gameRoot)
     {
         this.gameRoot = gameRoot;
-        Text = "Aqua Luna · 한여울의 첫 학기";
+        Text = "Aqua Luna · 한여울의 첫해";
         Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         BackColor = view.DefaultBackgroundColor;
         StartPosition = FormStartPosition.CenterScreen;
@@ -167,7 +167,7 @@ sealed class GameWindow : Form
         }
     }
 
-    // The game shows #save-status when autosave failed; closing then would lose progress, as the browser's beforeunload warned.
+    // The game shows #save-warning when autosave failed; closing then would lose progress, as the browser's beforeunload warned.
     protected override async void OnFormClosing(FormClosingEventArgs e)
     {
         if (closeConfirmed || view.CoreWebView2 is null) { base.OnFormClosing(e); return; }

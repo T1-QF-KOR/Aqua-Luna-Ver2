@@ -13,6 +13,11 @@
     ['seojinPool','강변의 주차선 아래에는 오래된 수영장의 기억이 있었다.'],
     ['winterShowcase','겨울 공연장에는 끝나지 않은 곡을 위한 자리가 있었다.']
   ];
+  // Listed in gallery order: each heroine's routes, shared routes, then the quieter years.
+  const titles={'nari-true':'진짜 달','nari-love':'다른 강, 같은 달','nari-friend':'친구의 목소리',
+    'daeun-love':'너의 1순위','daeun-friend':'단톡방 맨 위','seojin-love':'물 냄새가 나는 봄','seojin-friend':'마감 뒤의 커피',
+    full:'만석',pair:'두 자리',together:'함께 남겨 둔 자리',fair:'공정위원회',reflection:'물에 비친 달',
+    solo:'혼자 걷는 강변',far:'닿지 않은 거리',unresolved:'아직 정하지 않은 말',empty:'빈 객석'};
   function select(s) {
     const r=L.ensure(s), lovers=L.lovers(s), flags=s.flags, cards=s.cards;
     if(r.clashes.length>=2 || flags.equivocated) return 'empty';
@@ -37,9 +42,6 @@
     const f=s.flags, lovers=L.lovers(s), lines=[];
     const add=(...items)=>lines.push(...items);
     const identity = !!f.nariIdentityShared;
-    const titles={empty:'빈 객석',unresolved:'아직 정하지 않은 말',full:'만석',pair:'두 자리',together:'함께 남겨 둔 자리',fair:'공정위원회',
-      'daeun-love':'너의 1순위','seojin-love':'물 냄새가 나는 봄','nari-true':'진짜 달','nari-love':'다른 강, 같은 달',
-      'nari-friend':'친구의 목소리',reflection:'물에 비친 달','daeun-friend':'단톡방 맨 위','seojin-friend':'마감 뒤의 커피',far:'닿지 않은 거리',solo:'혼자 걷는 강변'};
     if(!titles[id]) throw new Error(`Unknown ending: ${id}`);
     let background='river';
     // Recall only moments the player actually experienced, never a promised seat
@@ -86,14 +88,24 @@
         say('daeun',id==='daeun-love'?'공강 하나 맞췄다! 애인이라고 자동으로 맞는 건 아니더라ㅋㅋ':'첫 모임 공지 올리기 전에 너한테 먼저 물어보러 왔다. 친구 특전임ㅋㅋ'),
         say('daeun','나 불안할 때 숫자부터 보는 버릇 아직 있어. 대신 이제는 그렇다고 말해 보려고.'),
         ...(f.daeunReconciled?[say('daeun','그날 나가지 말고 말하라고 했잖아. 나 아직 연습 중이야.')]:[]),
+        ...(f.daeunWinterSpace?[say('daeun','겨울 합주 때 빈 마디 남겼잖아. 안 채워도 다음 박자가 오더라. 그게 아직 생각나.')]:
+          f.backRowKept?[say('daeun','가을에 맨 뒤에서 손 흔든 거 기억하지? 나 무대에서 진짜 다 봤다니까.')]:
+          f.daeunQuietTogether?[say('daeun','강변에서 너랑 조용히 앉아 있었던 날 있지. 나 그때 아무 말 안 해도 괜찮았어.')]:[]),
         n('다은은 휴대폰을 내리고 내 대답을 기다렸다. 나는 오늘 비는 시간을 먼저 알려 줬다.',['daeun']),
-        say('daeun','좋아. 그럼 이 약속은 둘 다 알고 있는 거다.'));
+        say('daeun','좋아. 그럼 이 약속은 둘 다 알고 있는 거다.'),
+        n('다은이 내 시간표의 빈칸을 손가락으로 짚었다가 펜을 내려놓았다.',['daeun']),
+        say('daeun',id==='daeun-love'?'여기 뭐 할지는 같이 정하자. 밥은 내가 먼저 고를래!':'그날 시간 되면 같이 밥 먹자. 못 오면 말해 줘. 나도 내 거 하고 있을게.'),
+        n('나는 고개를 끄덕였다. 다은은 공지 대신 우리 둘의 약속을 달력에 적었다.',['daeun']));
     } else if(id==='seojin-love' || id==='seojin-friend') {
       background='cafe'; add(n('카페 물결. 서진이 마감 표시판을 뒤집고 내 앞에 잔을 놓았다.',['seojin']),
         ...(f.seojinHired?[say('seojin','수영 수업은 계속할 거야. 아이들 이름도 이제 거의 다 외웠고.')]:f.seojinApplied?[say('seojin','수영장 쪽 대답은 아직 기다리는 중이야. 안 정해진 걸 정해졌다고 말하진 않을게.')]:[say('seojin','수영장에 다시 가 보고 싶어. 지원은 아직 안 했어. 내가 정하면 직접 말할게.')]),
         ...(f.seojinWinterProgress?[say('seojin','그 메모 기억나? 물 쪽으로 갔다고 적은 거. 아직 주머니에 있어.')]:[]),
+        ...(f.seojinPoolWaited?[say('seojin','그 주차장에서 5번 레인 자리에 같이 섰던 날 있지. 지금은 거기서부터 다른 길도 보이네.')]:
+          s.seen.includes('seojinPlaylist')?[say('seojin','처음엔 마감 음악 한 곡만 알려 줬는데. 이제는 네가 고를 차례도 많아졌네.')]:[]),
         say('seojin',id==='seojin-love'?'봄에 시간 맞으면 물 보러 가자. 네 손 잡고 걷는 쪽이 마음에 드니까.':'가끔 들러. 커피는 다음엔 네가 골라. 친구라고 봐주는 건 없어.'),
-        n('서진은 내 잔을 가리키고 자리에 앉았다. 마감 뒤의 음악이 낮게 흘렀다.',['seojin']));
+        n('서진은 내 잔을 가리키고 자리에 앉았다. 마감 뒤의 음악이 낮게 흘렀다.',['seojin']),
+        say('seojin','오늘 마지막 곡은 네가 골라. 다 듣고 나서 어디 갈지도 얘기하자.'),
+        n('나는 곡 목록을 넘겼다. 서진은 앞치마를 벗은 채 내 옆에서 첫 음이 시작되기를 기다렸다.',['seojin']));
     } else if(id==='nari-friend') {
       add(n('나리가 등록 안내를 접어 가방에 넣었다.',['nari']),say('nari','다음 학기에도 만나면 내 노래 들어 줘. 친구한테 부탁하는 거야.'),
         say('nari','대답이 다르다고 그때 했던 얘기까지 없어지는 건 아니잖아.'),
@@ -112,7 +124,7 @@
       add(n(id==='empty'?'숨긴 말과 미뤄 둔 대답이 남아 있었다. 나는 누군가가 곁에 있는 결말을 혼자 정할 수 없었다.':'아직 서로에게 확인하지 못한 말이 남아 있었다. 합의하지 않은 관계에 이름을 붙이지 않기로 했다.'),
         n('강변 벤치에 앉아 보낼 말을 적었다. 이번에는 답을 받기 전에 다음 문장을 미리 정하지 않았다.'));
     } else if(id==='reflection') {
-      add(n('어젯밤 라디오의 목소리가 오래 남았다. 그 사람이 누구인지와 별개로, 나는 얼굴 없는 목소리에 내 이야기를 보냈다.'),
+      add(n(s.letters.length ? '어젯밤 라디오의 목소리가 오래 남았다. 그 사람이 누구인지와 별개로, 나는 얼굴 없는 목소리에 내 이야기를 보냈다.' : '어젯밤 라디오의 목소리가 오래 남았다. 그 사람이 누구인지와 별개로, 나는 얼굴 없는 목소리에 귀를 기울였다.'),
         n('이어폰을 빼자 강물 위에 달이 비쳤다. 이름을 모르는 채로도 함께 보낸 시간은 있었다.'));
     } else if(id==='far') {
       add(n('학교 라디오의 시즌이 끝났다. 무대 위에서 본 목소리와 방송 속 목소리가 내게는 각기 다른 기억으로 남았다.'),
@@ -128,5 +140,5 @@
     add(n('AQUA LUNA · 한여울의 첫해'), n('끝까지 함께해 주셔서 감사합니다.'));
     return {id,title:titles[id],background,time:0,lines};
   }
-  root.AquaEndings={select,build};
+  root.AquaEndings={select,build,titles};
 })(typeof window!=='undefined'?window:globalThis);

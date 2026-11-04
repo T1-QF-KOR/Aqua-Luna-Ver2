@@ -35,6 +35,21 @@
  }
  const band=[['다은','오늘 합주 끝나고 밥 먹을 사람! 나 배고픔!!'],['태오','케이블은 쓰고 제자리에. 지난번 거 아직 찾는다.'],['나리','🐱👍'],['다은','읽었으면 이모티콘이라도! 언니처럼ㅋㅋ']];
  function ensure(s){return s.messages ||= {inbox:[],appointments:[],lastMorning:null,lastRegular:null,lastInvite:null,rotation:0,inviteRotation:0,bandWeeks:[],hintDate:null,hintLines:[]};}
+ function invitationDate(s){
+  const busyDates=['2026-03-05','2026-03-10','2026-04-19','2026-05-20','2026-06-19','2026-06-20'];
+  // The Chuseok destination is chosen later; do not offer a campus date during
+  // those days before the player has decided whether to travel home.
+  for(let delta=1;delta<=7;delta++){
+   const date=W.addDays(s.date,delta);if(date>'2027-02-25')return null;
+   if(busyDates.includes(date)||(date>='2026-09-24'&&date<='2026-09-27'))continue;
+   const probe=structuredClone(s);probe.date=date;
+   if(root.AquaAutumn?.away(probe))continue;
+   const systems=[root.AquaRomance,root.AquaSummer,root.AquaAutumn,root.AquaWinter,root.AquaHolidays];
+   if([1,2].some(slot=>{probe.slot=slot;return systems.some(system=>system?.mandatory(probe,slot));}))continue;
+   return date;
+  }
+  return null;
+ }
  function morning(s){const m=ensure(s);if(m.lastMorning===s.date)return;m.lastMorning=s.date;
   for(const a of m.appointments)if(a.status==='accepted'&&a.date<s.date){a.status='missed';B.change(s,a.person,-3);s.social.missedGreeting ||= {};s.social.missedGreeting[a.person]=true;m.inbox.push({id:`miss-${a.id}`,person:a.person,date:s.date,text:missed[a.person],kind:'missed',reply:'none'});}
   if(s.met.length&&(!m.lastRegular||W.addDays(m.lastRegular,3)<=s.date)){
@@ -43,9 +58,9 @@
   }
   const friends=s.met.filter(id=>s.bond[id]>=(id==='nari'?25:15));
   if(friends.length&&(!m.lastInvite||W.addDays(m.lastInvite,10)<=s.date)){
-   const person=friends[m.inviteRotation++%friends.length],places=['river','cafe','roof'],place=places[(m.inviteRotation-1)%3];
-   let date=W.addDays(s.date,1);if(['2026-03-05','2026-03-10'].includes(date))date=W.addDays(date,1);
-   if(date<='2026-06-30'){const appointment={id:`invite-${s.date}`,person,date,slot:1,place,status:'offered',paid:m.inviteRotation%2===1};
+   const date=invitationDate(s);
+   if(date){const person=friends[m.inviteRotation++%friends.length],places=['river','cafe','roof'],place=places[(m.inviteRotation-1)%3];
+    const appointment={id:`invite-${s.date}`,person,date,slot:1,place,status:'offered',paid:m.inviteRotation%2===1};
     m.appointments.push(appointment);m.inbox.push({id:appointment.id,person,date:s.date,kind:'invite',text:person==='seojin'?`${date.slice(5).replace('-','/')} 오후, ${{river:'한강변',cafe:'카페',roof:'옥상 정원'}[place]}에서 볼래? 네 시간 좀 쓰고 싶어서.${appointment.paid?' 이번엔 내가 살게.':''}`:`${date.slice(5).replace('-','/')} 오후에 ${{river:'한강변',cafe:'카페',roof:'옥상 정원'}[place]}에서 볼래?${appointment.paid?' 이번엔 내가 챙길게.':''}`,reply:null});m.lastInvite=s.date;}
   }
   const bandKey=`${W.weekKey(s.date)}:${W.weekday(s.date)>=4?'late':'early'}`;

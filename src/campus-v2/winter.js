@@ -63,7 +63,7 @@
     ] },
     seojinFebruary: { title: '첫 칸의 이름', background: 'cafe', lines: [
       n('서진이 계산대에 접힌 메모를 놓았다. 귀퉁이가 물에 젖어 글씨가 조금 번졌다.', ['seojin']),
-      say('서진', '첫 수업 끝났어. 한 명이 물에 얼굴 대고 나오더니 자기가 해냈대.', undefined, { when: { flag: 'seojinHired' } }),
+      say('서진', '오늘 수업 끝났어. 한 명이 물에 얼굴 대고 나오더니 자기가 해냈대.', undefined, { when: { flag: 'seojinHired' } }),
       say('서진', '지원한 곳에서 참관해 보라고 연락 왔어. 아직 채용은 정해진 거 없어.', undefined, { when: { all: [{ flag: 'seojinApplied' }, { notFlag: 'seojinHired' }] } }),
       say('서진', '구민 수영장 강사 모집 공고를 봤어. 아직 지원은 안 했고, 먼저 가서 물어보려고.', undefined, { when: { notFlag: 'seojinApplied' } }),
       say('서진', '네가 첫 칸에 뭘 쓸 거냐고 물었지. 아직도 이름부터 적고 있어.', undefined, { when: { flag: 'seojinJanuaryAsked' } }),
@@ -111,7 +111,7 @@
     ] },
     seojinJanuary: { title: '수심 1m', background: 'cafe', lines: [
       n('마감 전 카페. 서진은 영수증 뒷면에 네모난 칸들을 그리고 있었다.', ['seojin']),
-      say('서진', '첫 수업 계획이야. 깊은 물에 들어가기 전에 물에 얼굴 대는 것부터.', undefined, { when: { flag: 'seojinHired' } }),
+      say('서진', '다음 수업 계획이야. 깊은 물에 들어가기 전에 물에 얼굴 대는 것부터.', undefined, { when: { flag: 'seojinHired' } }),
       say('서진', '지원한 곳에서 연락 기다리는 중이야. 수업 계획은 미리 써 보고 있어.', undefined, { when: { all: [{ flag: 'seojinApplied' }, { notFlag: 'seojinHired' }] } }),
       say('서진', '아직 지원한 건 아니야. 내가 어떤 수업을 하고 싶은지 먼저 적어 보는 중.', undefined, { when: { notFlag: 'seojinApplied' } }),
       say('서진', '나도 처음부터 깊은 데 들어간 건 아니었거든. 누가 내 속도를 기다려 준 적이 있어.'),
@@ -220,7 +220,7 @@
     seojinCouple: { title: '마감이 아닌 약속', background: 'river', lines: [
       n('서진이 앞치마 없이 약속 장소에 왔다. 손을 흔들까 고민하는 사이 그녀가 먼저 내 손목을 가볍게 잡았다.', ['seojin']),
       say('서진', '오늘은 알바생이라고 안 부를게. 일하러 온 거 아니니까.'),
-      say('서진', '처음 수업 들어가는 날엔 애들 이름부터 외우려고. 기록 말고.', undefined, { when: { flag: 'seojinHired' } }),
+      say('서진', '수업에 들어가면 애들 이름부터 부를 거야. 기록 말고.', undefined, { when: { flag: 'seojinHired' } }),
       say('서진', '아직 정하지 못한 것도 있는데, 네가 물어봐 주는 건 괜찮아.', undefined, { when: { notFlag: 'seojinHired' } }),
       choose(
         option('“오늘은 누나가 가고 싶은 쪽으로 걸을까?”', { bond: { seojin: 4 }, card: '마감이 아닌 약속', care: 'seojin' }, [

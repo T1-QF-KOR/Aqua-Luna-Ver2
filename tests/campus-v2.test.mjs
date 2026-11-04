@@ -288,7 +288,7 @@ test('Clothes follow performance, rehearsal, dates and seasons while retaining a
   assert.ok(C.source(s, 'nari', { wardrobe: { nari: 'stage' } }).endsWith('nari-stage-v6.png'));
 });
 for (const rule of Story.rules) assert.ok(context.AQUA_SCENES[rule.id], rule.id);
-for (const file of ['game', 'world', 'encounters', 'wardrobe', 'radioEpisodes', 'radio', 'relationships', 'romance', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'smallEvents', 'state', 'scenes', 'semester', 'summer']) new vm.Script(await fs.readFile(new URL(`src/campus-v2/${file}.js`, root), 'utf8'));
+for (const file of ['game', 'world', 'encounters', 'wardrobe', 'moods', 'radioEpisodes', 'radio', 'relationships', 'romance', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'smallEvents', 'state', 'scenes', 'semester', 'summer']) new vm.Script(await fs.readFile(new URL(`src/campus-v2/${file}.js`, root), 'utf8'));
 const runDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 const report = { date: runDate, passed: true, checks, scope: 'Pure calendar, radio lifecycle, relationship rules, story conditions, and save contracts. Does not certify visual layout or full-game completion.' };
 await fs.mkdir(new URL('qa/campus-v2/', root), { recursive: true });

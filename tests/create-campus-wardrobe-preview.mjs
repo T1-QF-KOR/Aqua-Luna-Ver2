@@ -50,6 +50,13 @@ for(const date of ['2026-03-09','2026-09-07']) {
   if(!C.AquaState.restore(s))throw new Error(`Invalid school preview ${date}`);
   fixtures[`scene-school-${date}`]=s;
 }
+{
+ const s=C.AquaState.initial('미리보기','물고기');
+ Object.assign(s,{date:'2026-03-09',slot:1,met:['nari','daeun'],bond:{nari:25,daeun:30,seojin:0},seen:['prologue','entrance','daeunMeet','school-2026-03-09']});
+ C.AquaRelationships.migrate(s);
+ if(!C.AquaState.restore(s))throw new Error('Invalid after-school map preview');
+ fixtures['scene-afterSchoolMap']=s;
+}
 for (const [id,date,slot] of [['lastBroadcast','2027-02-25',3],['winterValentine','2027-02-14',0],['holidayXmasNight','2026-12-24',3],['nariNewYear','2027-01-01',1]]) {
   const s=C.AquaState.initial('미리보기','물고기');
   Object.assign(s,{date,slot,met:['nari','daeun','seojin'],bond:{nari:82,daeun:25,seojin:25},knowledge:45,fitness:45,sensitivity:45,cards:['가사 없는 악보','관객 한 명'],seen:['prologue','entrance','firstRadio','nariClass','nariSummer']});
@@ -74,6 +81,8 @@ for (const [id,date,slot] of [['lastBroadcast','2027-02-25',3],['winterValentine
  C.AquaRelationships.migrate(s);s.endingId=C.AquaEndings.select(s);const data=C.AquaEndings.build(s,s.endingId);
  s.scene={id:`ending-${s.endingId}`,title:data.title,background:data.background,time:0,queue:data.lines,index:0,after:'ending',wardrobe:{seojin:C.AquaWardrobe.pick(s,'seojin',{id:`ending-${s.endingId}`})}};
  if(!C.AquaState.restore(s))throw new Error('Invalid ending preview');fixtures['scene-endingSeojin']=s;
+ const complete=structuredClone(s);complete.scene=null;complete.completed=true;complete.met.push('nari');complete.flags.sawNariChristmas=true;
+ if(!C.AquaState.restore(complete))throw new Error('Invalid completed-game preview');fixtures['scene-completedAlbum']=complete;
 }
 const bootstrap = `/* QA only: no access to the player's persistent saves. */
 const wardrobeFixtures = ${JSON.stringify(fixtures)};

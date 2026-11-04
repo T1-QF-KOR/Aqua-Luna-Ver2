@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 import vm from 'node:vm';
 const root = new URL('../', import.meta.url);
 const html = await fs.readFile(new URL('campus.html', root), 'utf8');
-const sources = await Promise.all(['world', 'encounters', 'wardrobe', 'radioEpisodes', 'radio', 'relationships', 'romance', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'peopleEvents', 'smallEvents', 'state', 'scenes', 'semester', 'school', 'summer', 'autumn', 'winter', 'holidays', 'endings', 'audio', 'game'].map(async name => [name, await fs.readFile(new URL(`src/campus-v2/${name}.js`, root), 'utf8')]));
+const sources = await Promise.all(['world', 'encounters', 'wardrobe', 'moods', 'radioEpisodes', 'radio', 'relationships', 'romance', 'economy', 'social', 'dialogue', 'dialogue-compat', 'messages', 'composition', 'dateActivities', 'outings', 'peopleEvents', 'smallEvents', 'state', 'scenes', 'semester', 'school', 'summer', 'autumn', 'winter', 'holidays', 'endings', 'audio', 'game'].map(async name => [name, await fs.readFile(new URL(`src/campus-v2/${name}.js`, root), 'utf8')]));
 const KEY = 'aqua-luna-campus-v2';
 class ClassList {
   values = new Set();
@@ -48,6 +48,7 @@ function mount(saved = new Map()) {
     close() { this.open = false; }
     closest() { return null; }
     click() { if (!this.disabled) this.onclick?.({ stopPropagation() {} }); }
+    focus() { document.activeElement = this; }
     querySelectorAll(selector) {
       const attr = selector.match(/^\[data-([^\]]+)\]$/)?.[1]?.replace(/-([a-z])/g, (_, a) => a.toUpperCase());
       return attr ? this.children.filter(child => child.dataset[attr] !== undefined) : [];
@@ -83,8 +84,13 @@ function mount(saved = new Map()) {
   const runTimer = delay => { const entry = [...timers].find(([, t]) => t.delay === delay); assert.ok(entry, `Missing ${delay}ms timer`); timers.delete(entry[0]); entry[1].fn(); };
   const hasTimer = delay => [...timers.values()].some(t => t.delay === delay);
   const visibility = hidden => { document.hidden = hidden; listeners.get('visibilitychange')(); };
-  const key = value => listeners.get('keydown')({key:value,repeat:false,preventDefault(){},target:{closest(){return null;}}});
-  return { context, ids, saved, click, snapshot, preview, location, choose, finishScene, runTimer, hasTimer, visibility, key };
+  const key = (value, focusedControl = false) => {
+    let prevented = false;
+    listeners.get('keydown')({key:value,repeat:false,preventDefault(){prevented = true;},
+      target:{closest(selector){return focusedControl && selector.includes('button, a') ? {} : null;}}});
+    return prevented;
+  };
+  return { context, document, ids, saved, click, snapshot, preview, location, choose, finishScene, runTimer, hasTimer, visibility, key };
 }
 function seed(change, requirements = {}) {
   const env = mount(), state = env.context.AquaState.initial('테스트', '물고기');
@@ -113,6 +119,45 @@ const dataButton = (env, attribute, value) => {
 const checks = [];
 function test(name, fn) { fn(); checks.push(name); console.log(`PASS ${name}`); }
 
+test('Manual saves protect occupied and unreadable slots until overwrite is confirmed', () => {
+  const env = seed({ date: '2026-04-06', slot: 1 });
+  const first = `${KEY}-slot-1`, broken = `${KEY}-slot-2`;
+  env.click('save');
+  dataButton(env, 'save', '1').click();
+  const original = env.saved.get(first);
+  assert.ok(original, 'empty slot saves immediately');
+  env.saved.set(broken, '{unreadable');
+  dataButton(env, 'save', '1').click();
+  assert.equal(env.saved.get(first), original);
+  assert.ok(env.ids.get('modal-content').innerHTML.includes('이 슬롯을 덮어쓸까요?'));
+  assert.equal(env.document.activeElement, dataButton(env, 'cancel-save', '1'));
+  dataButton(env, 'cancel-save', '1').click();
+  assert.equal(env.saved.get(first), original);
+  dataButton(env, 'save', '2').click();
+  assert.equal(env.saved.get(broken), '{unreadable');
+  dataButton(env, 'confirm-save', '2').click();
+  assert.equal(JSON.parse(env.saved.get(broken)).date, '2026-04-06');
+  dataButton(env, 'save', '1').click();
+  dataButton(env, 'confirm-save', '1').click();
+  assert.equal(JSON.parse(env.saved.get(first)).date, '2026-04-06');
+});
+test('Starting a new game preserves existing autosaves until explicitly confirmed', () => {
+  const source = mount(), existing = source.context.AquaState.initial('기존', '별명');
+  existing.date = '2026-06-10'; existing.slot = 2;
+  const original = JSON.stringify(existing), saved = new Map([[KEY, original], [`${KEY}-slot-1`, original]]);
+  const env = mount(saved); env.click('start'); env.ids.get('player-name').value = '새 이름';
+  env.click('begin');
+  assert.equal(env.saved.get(KEY), original); assert.equal(env.ids.get('new-game-confirm').hidden, false);
+  assert.equal(env.document.activeElement, env.ids.get('new-game-cancel'));
+  env.click('new-game-cancel'); assert.equal(env.saved.get(KEY), original);
+  assert.equal(env.ids.get('player-name').value, '새 이름');
+  env.click('begin'); env.click('new-game-proceed');
+  assert.equal(env.snapshot().name, '새 이름'); assert.equal(env.snapshot().scene.id, 'intro');
+  assert.equal(env.saved.get(`${KEY}-slot-1`), original);
+  const damaged = mount(new Map([[KEY, '{broken']])); damaged.click('start'); damaged.click('begin');
+  assert.equal(damaged.saved.get(KEY), '{broken'); assert.equal(damaged.ids.get('new-game-confirm').hidden, false);
+});
+
 test('Soundtrack attribution opens from settings and returns without changing progress', () => {
   const env=seed({date:'2026-04-06',slot:1});const before=env.snapshot();
   env.click('settings');env.click('music-credits');
@@ -122,10 +167,40 @@ test('Soundtrack attribution opens from settings and returns without changing pr
   env.click('credits-back');assert.equal(env.ids.get('modal-title').textContent,'읽기와 연출');
   assert.equal(env.snapshot().date,before.date);assert.equal(env.snapshot().slot,before.slot);
 });
+test('The in-game guide explains the daily loop and returns without changing progress', () => {
+  const env = seed({ date:'2026-04-06', slot:1 }); const before = env.snapshot();
+  env.click('settings'); env.click('game-guide');
+  assert.equal(env.ids.get('modal-title').textContent, '한여울에서 보내는 하루');
+  assert.ok(env.ids.get('modal-content').innerHTML.includes('방문하기 전에는 만날 사람을 표시하지 않습니다'));
+  env.click('guide-back'); assert.equal(env.ids.get('modal-title').textContent, '읽기와 연출');
+  assert.deepEqual(env.snapshot(), before);
+});
+test('Voice volume appears only with a registered voice and persists independently of music', () => {
+  const env=seed({date:'2026-04-06',slot:1});
+  env.click('settings');assert.equal(env.ids.has('voice-volume'),false);
+  env.context.AquaAudio.voiceTracks.sample='assets/audio/voice/sample.ogg';env.click('settings');
+  const control=env.ids.get('voice-volume');assert.ok(control);control.value='25';env.ids.get('bgm-volume').value='35';
+  let voiceVolume;env.context.AquaAudio.setVoiceVolume=value=>{voiceVolume=value;};env.click('apply-settings');
+  const prefs=JSON.parse(env.saved.get(`${KEY}-prefs`));assert.equal(prefs.voiceVolume,.25);assert.equal(prefs.bgmVolume,.35);assert.equal(voiceVolume,.25);
+  env.click('settings');assert.equal(env.ids.get('voice-volume').value,'25');
+});
 test('Keyboard interaction unlocks soundtrack without requiring a mouse', () => {
   const env=seed({date:'2026-04-06',slot:1});let unlocks=0;
   env.context.AquaAudio.unlock=()=>{unlocks++;};env.context.AquaAudio.play=()=>{};
   env.key('Tab');env.key('Tab');assert.equal(unlocks,1);
+});
+test('Enter and Space activate focused controls without advancing the scene globally', () => {
+  const setup = mount(), state = setup.context.AquaState.initial('테스트', '물고기');
+  state.date = '2026-04-06'; state.slot = 1;
+  state.scene = { id:'keyboard-check', title:'키보드', background:'campus', time:1, after:'event', index:0,
+    queue:[{text:'첫 문장'}, {text:'다음 문장'}], applied:[], logged:[] };
+  const env = mount(new Map([[KEY, JSON.stringify(state)]])); env.click('continue');
+  for (const input of ['Enter', ' ']) {
+    assert.equal(env.key(input, true), false, 'native control activation must not be cancelled');
+    assert.equal(env.snapshot().scene.index, 0, 'focused control must not advance dialogue');
+  }
+  assert.equal(env.key('Enter'), true);
+  assert.equal(env.snapshot().scene.index, 1, 'dialogue shortcut remains available outside controls');
 });
 test('Registered voice follows the displayed line and automatic reading waits until it finishes', () => {
   const setup=mount(),state=setup.context.AquaState.initial('테스트','물고기');
@@ -135,11 +210,14 @@ test('Registered voice follows the displayed line and automatic reading waits un
       {text:'나리는 손을 폈다.',cast:['nari']}],applied:[],logged:[],lastCast:[]};
   assert.ok(setup.context.AquaState.restore(structuredClone(state)));
   const env=mount(new Map([[KEY,JSON.stringify(state)]])),instances=[];
-  env.context.Audio=class { constructor(url){this.url=url;instances.push(this);} play(){return Promise.resolve();} pause(){this.paused=true;} };
+  env.context.Audio=class { constructor(url){this.url=url;instances.push(this);} play(){this.paused=false;this.plays=(this.plays||0)+1;return Promise.resolve();} pause(){this.paused=true;} };
   env.context.AquaAudio.voiceTracks['test-cue']='assets/audio/voice/test-cue.ogg';
   env.context.AquaAudio.unlock();env.click('continue');
   const voice=instances.find(item=>item.url.endsWith('/test-cue.ogg'));assert.ok(voice);
   env.click('auto');assert.equal(env.hasTimer(2500),false,'automatic reading must wait for voice');
+  env.click('settings');assert.ok(voice.paused,'opening a menu pauses the current voice');
+  env.visibility(true);env.click('close');assert.ok(voice.paused,'closing a menu in the background must not resume voice');
+  assert.equal(env.hasTimer(2500),false);env.visibility(false);assert.equal(voice.paused,false);assert.equal(voice.plays,2);
   voice.onended();assert.equal(env.hasTimer(2500),true,'automatic reading resumes when voice ends');
   env.runTimer(2500);assert.equal(env.snapshot().scene.index,1);
   assert.equal(env.context.AquaAudio.isVoicePlaying(),false);
@@ -249,8 +327,21 @@ test('Canceling a paid activity keeps resources unchanged; manual slots restore 
   env.click('save'); env.ids.get('modal-content').querySelectorAll('[data-save]')[0].click(); env.click('close');
   env.location('library'); env.click('activity-confirm'); if(env.snapshot().scene) env.finishScene(1); assert.equal(env.snapshot().energy, 88); assert.equal(env.snapshot().slot, 2);
   env.click('save'); env.ids.get('modal-content').querySelectorAll('[data-load]')[0].click();
+  assert.equal(env.snapshot().slot, 2); assert.equal(env.document.activeElement, env.ids.get('load-cancel'));
+  env.click('load-cancel'); assert.equal(env.snapshot().slot, 2);
+  env.ids.get('modal-content').querySelectorAll('[data-load]')[0].click(); env.click('load-confirm');
   assert.equal(env.snapshot().slot, 1); assert.equal(env.snapshot().energy, 100); assert.equal(env.snapshot().knowledge, 20);
 });
+{
+  const env = seed({ date:'2026-04-07', slot:2 }), oldAuto = env.saved.get(KEY);
+  const imported = env.context.AquaState.initial('파일', '별명'); imported.date = '2026-04-08'; imported.slot = 1;
+  const file = { size:100, text:async () => JSON.stringify(imported) };
+  const pick = async () => { const input = env.ids.get('save-file'); await input.onchange({target:{files:[file],value:'chosen'}}); };
+  env.click('save'); await pick(); assert.equal(env.saved.get(KEY), oldAuto);
+  env.click('load-cancel'); assert.equal(env.saved.get(KEY), oldAuto);
+  await pick(); env.click('load-confirm'); assert.equal(env.snapshot().name, '파일'); assert.equal(env.snapshot().date, '2026-04-08');
+  console.log('PASS Imported save waits for confirmation and cancellation preserves the current autosave');
+}
 test('The last broadcast proceeds into an ending that stays complete after reload', () => {
   let env=seed({date:'2027-02-25',slot:3,seen:['lastBroadcast'],met:[],bond:{nari:0,daeun:0,seojin:0}});
   env.click('end-day');assert.equal(env.snapshot().date,'2027-02-26');assert.equal(env.snapshot().scene.id,'ending-far');
@@ -259,6 +350,74 @@ test('The last broadcast proceeds into an ending that stays complete after reloa
   assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
   env=mount(env.saved);env.click('continue');assert.equal(env.snapshot().completed,true);assert.equal(env.snapshot().scene,null);
   assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
+  env.click('ending-album');assert.equal(env.ids.get('modal-title').textContent,'함께 보낸 날들');
+  env.click('album-ending-back');assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
+  const before=env.snapshot();env.click('ending-replay');assert.equal(env.snapshot().scene.id,'ending-far');
+  env=mount(env.saved);env.click('continue');assert.equal(env.snapshot().scene.id,'ending-far');env.finishScene();
+  const after=env.snapshot();assert.equal(after.completed,true);assert.deepEqual(after.bond,before.bond);
+  assert.deepEqual(after.flags,before.flags);assert.deepEqual(after.cards,before.cards);assert.equal(after.seen.filter(id=>id==='ending-far').length,1);
+  assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
+});
+test('Seen endings accumulate in a gallery that survives new games and replays without touching the autosave', () => {
+  const GALLERY=`${KEY}-endings`, title=env=>env.ids.get('modal-title').textContent;
+  const cards=env=>env.ids.get('modal-content').querySelectorAll('[data-ending]').map(b=>b.dataset.ending);
+  let env=seed({date:'2027-02-25',slot:3,seen:['lastBroadcast'],met:[],bond:{nari:0,daeun:0,seojin:0}});
+  env.click('end-day');env.finishScene();assert.deepEqual(Object.keys(JSON.parse(env.saved.get(GALLERY))),['far']);
+  env.click('ending-gallery');assert.equal(title(env),'추억 갤러리');assert.deepEqual(cards(env),['far']);
+  assert.ok(env.ids.get('modal-content').innerHTML.includes('1 / 16'));assert.ok(env.ids.get('modal-content').innerHTML.includes('아직 보지 못한 결말'));
+  env.click('gallery-ending-back');assert.equal(title(env),'한여울의 첫해를 마치며');
+  const book=env.saved.get(GALLERY);
+  env=seed({date:'2027-02-25',slot:3,seen:['lastBroadcast'],met:['nari'],bond:{nari:30,daeun:0,seojin:0}});env.saved.set(GALLERY,book);
+  env.click('end-day');const second=env.snapshot().endingId;assert.notEqual(second,'far');env.finishScene();
+  assert.deepEqual(Object.keys(JSON.parse(env.saved.get(GALLERY))).sort(),['far',second].sort());
+  env.click('ending-title');env.click('start');env.click('begin');env.click('new-game-proceed');assert.equal(env.snapshot().scene.id,'intro');
+  env.click('home');const autosave=env.saved.get(KEY);
+  env=mount(env.saved);env.click('gallery');assert.deepEqual(cards(env).sort(),['far',second].sort());
+  dataButton(env,'ending','far').click();assert.equal(env.ids.get('modal').open,false);assert.equal(env.ids.get('scene').hidden,false);
+  env.click('save');assert.equal(env.ids.get('modal').open,false);
+  for(let i=0;i<100&&!env.ids.get('modal').open;i++)env.click('next');
+  assert.equal(title(env),'추억 갤러리');assert.equal(env.saved.get(KEY),autosave);
+  env.click('close');assert.equal(env.ids.get('modal').open,false);assert.equal(env.ids.get('title').hidden,false);
+  env.click('continue');assert.equal(env.snapshot().scene.id,'intro');assert.equal(env.snapshot().completed,false);
+});
+test('The room shows daylight until night, when the moonlit window returns', () => {
+  const env=seed({date:'2026-07-01',slot:0,seen:['prologue','entrance','daeunMeet','fair','seojinMeet','firstRadio','common-exam','festival','common-party','common-vacation']});
+  assert.equal(env.snapshot().scene.id,'summerStart');assert.match(env.ids.get('backdrop').dataset.path,/bg-v2\/roomDay\.png$/);
+  const night=mount();night.click('start');night.click('begin');night.click('intro-skip');
+  assert.match(night.ids.get('backdrop').dataset.path,/bg-v2\/roomDay\.png$/,'Moving-in day starts in daylight');
+  for(let i=0;i<20&&!night.ids.get('line').textContent.startsWith('밤.');i++)night.click('next');
+  assert.match(night.ids.get('backdrop').dataset.path,/bg-v2\/room\.png$/,'The prologue night returns to the moonlit room');
+  const winter=seed({date:'2027-01-04',slot:0,seen:['prologue','entrance','daeunMeet','fair','seojinMeet','firstRadio','common-exam','festival','common-party','common-vacation','summerStart','summerPostcard','summerReturn','autumnReturn','chuseok','lunaLeakStart','lunaLeakExit','autumnFestival','holidayXmasDay','holidayXmasNight','newYearMorning']});
+  assert.equal(winter.snapshot().scene.id,'januaryStart');assert.match(winter.ids.get('backdrop').dataset.path,/bg-v2\/roomDayWinter\.png$/,'Winter mornings show a winter window');
+});
+test('H hides the reading window without advancing, and the next key only brings it back', () => {
+  const env=seed({date:'2026-03-05',slot:1,seen:['prologue','entrance'],met:[]});const index=env.snapshot().scene.index;
+  assert.equal(env.key('h'),false);assert.ok(env.document.body.classList.contains('ui-hidden'));
+  assert.equal(env.key('Enter'),true);assert.ok(!env.document.body.classList.contains('ui-hidden'));assert.equal(env.snapshot().scene.index,index);
+  env.key('Enter');assert.equal(env.snapshot().scene.index,index+1);
+});
+test('An earned illustration stays in the gallery after starting over and opens from the title', () => {
+  const setup=mount(),state=setup.context.AquaState.initial('예전');state.date='2026-12-26';state.flags.sawNariChristmas=true;
+  let env=mount(new Map([[KEY,JSON.stringify(state)]]));env.click('continue');assert.deepEqual(JSON.parse(env.saved.get(`${KEY}-art`)),['nariChristmas']);
+  env.click('home');env.click('start');env.click('begin');env.click('new-game-proceed');env.click('home');
+  env=mount(env.saved);env.click('gallery');assert.equal(env.ids.get('modal-title').textContent,'추억 갤러리');
+  assert.ok(env.ids.get('modal-content').innerHTML.includes('1 / 3'));dataButton(env,'gallery-art','nariChristmas').click();
+  assert.ok(env.ids.get('modal-content').innerHTML.includes('대본을 접은 밤'));env.click('gallery-art-back');assert.equal(env.ids.get('modal-title').textContent,'추억 갤러리');
+});
+test('A save finished before the gallery existed registers its ending when continued', () => {
+  const setup=mount(),state=setup.context.AquaState.initial('예전');state.date='2027-02-26';state.completed=true;state.endingId='solo';
+  const env=mount(new Map([[KEY,JSON.stringify(state)]]));env.click('continue');
+  const entry=JSON.parse(env.saved.get(`${KEY}-endings`)).solo;assert.equal(entry.name,'예전');assert.equal(entry.data.id,'solo');
+});
+test('Completed game opens an earned illustration and returns through its album', () => {
+  const setup=mount(),state=setup.context.AquaState.initial();state.date='2027-02-26';state.slot=0;
+  state.met=['nari'];state.flags.sawNariChristmas=true;state.completed=true;state.endingId='solo';
+  assert.ok(setup.context.AquaState.restore(structuredClone(state)));
+  const env=mount(new Map([[KEY,JSON.stringify(state)]]));env.click('continue');env.click('ending-album');
+  dataButton(env,'art','nariChristmas').click();assert.equal(env.ids.get('modal-title').textContent,'대본을 접은 밤');
+  env.click('illustration-album-back');assert.equal(env.ids.get('modal-title').textContent,'함께 보낸 날들');
+  env.click('close');assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
+  assert.equal(env.snapshot().completed,true);
 });
 test('An old January checkpoint continues into the new winter story and preserves the choice after reload', () => {
   let env = seed({ date: '2027-01-03', slot: 3, money: 234567 });
@@ -376,7 +535,7 @@ test('Seojin’s January encounter respects her application history and persists
   let env = seed({ date: '2027-01-06', slot: 1, bond: { nari: 12, daeun: 20, seojin: 50 }, flags: {} }, { scene: { cafe: 'seojinJanuary' } });
   env.location('cafe'); assert.equal(env.snapshot().scene.id, 'seojinJanuary');
   const text = env.snapshot().scene.queue.map(line => line.text || '').join(' ');
-  assert.ok(text.includes('아직 지원한 건 아니야')); assert.ok(!text.includes('첫 수업 계획이야'));
+  assert.ok(text.includes('아직 지원한 건 아니야')); assert.ok(!text.includes('다음 수업 계획이야'));
   while (!env.snapshot().scene.queue[env.snapshot().scene.index]?.choice) env.click('next');
   env.choose(0); const bond = env.snapshot().bond.seojin;
   env = mount(env.saved); env.click('continue'); env.finishScene();
@@ -667,7 +826,18 @@ test('The location panel conceals people and previewing changes only scenery', (
   assert.ok(!env.ids.get('preview-desc').textContent.includes('나리'));
   env.preview('cafe'); assert.equal(env.ids.get('preview-title').textContent, '강변 카페');
   assert.ok(env.ids.get('backdrop').dataset.path.endsWith('bg-v2/cafe.png')); assert.deepEqual(env.snapshot(), before);
+  assert.ok(env.ids.get('preview-cost').textContent.includes('기본 활동: 알바하기 · 시간 1칸'));
+  assert.ok(env.ids.get('preview-cost').textContent.includes('방문 후 상황에 따라 다른 선택이 열릴 수 있어요.'));
+  for (const hidden of ['한나리', '오다은', '백서진']) assert.ok(!env.ids.get('preview-cost').textContent.includes(hidden));
   env.preview('roof'); env.click('visit-place'); if(env.snapshot().scene?.id.startsWith('approach-')) env.finishScene(); assert.equal(dataButton(env, 'person', 'nari').disabled, false);
+});
+test('Unavailable basic work does not imply the cafe itself is closed to visitors', () => {
+  const env = seed({ date: '2026-04-06', slot: 1 });
+  const before = env.snapshot();
+  env.preview('cafe');
+  assert.ok(env.ids.get('preview-cost').textContent.includes('기본 활동 안내: 수·금·토에 근무할 수 있어요'));
+  assert.ok(!env.ids.get('visit-place').disabled);
+  assert.deepEqual(env.snapshot(), before);
 });
 test('Map conceals known and unknown people even when a cross scene is available', () => {
   const unknown=seed({date:'2026-04-03',slot:1,met:[]});const labels=unknown.ids.get('locations').children.map(b=>b.innerHTML).join('');
@@ -698,6 +868,50 @@ test('Buying and giving a gift use separate confirmations, with no time charge a
   env = mount(env.saved); env.click('continue'); env.finishScene();
   assert.equal(env.snapshot().money, 142000); assert.equal(env.snapshot().slot, 1); assert.equal(env.snapshot().energy, 100);
   assert.equal(env.snapshot().social.gifts.length, 1); assert.equal(dataButton(env, 'gift-person', 'nari').disabled, true);
+});
+test('An autumn invitation can be accepted through the phone and fulfilled the next day', () => {
+  const env=seed({date:'2026-10-09',slot:3,met:['daeun'],bond:{nari:0,daeun:40,seojin:0}});
+  const invite=env.snapshot().messages.appointments.find(item=>item.status==='offered');
+  assert.equal(invite.date,'2026-10-10'); assert.equal(invite.place,'river');
+  env.click('phone');dataButton(env,'app','calendar').click();
+  assert.ok(!env.ids.get('modal-content').innerHTML.includes('다은 · 한강변 산책 · 오후 약속'));
+  env.click('close');
+  env.click('phone');dataButton(env,'app','messages').click();dataButton(env,'reply',`${invite.id}:accept`).click();
+  assert.equal(env.snapshot().messages.appointments.find(item=>item.id===invite.id).status,'accepted');
+  env.click('close');env.click('phone');dataButton(env,'app','calendar').click();
+  assert.ok(env.ids.get('modal-content').innerHTML.includes('다은 · 한강변 산책 · 오후 약속'));
+  env.click('close');env.click('end-day');
+  assert.equal(env.snapshot().date,'2026-10-10');assert.equal(env.snapshot().slot,0);
+  env.location('room');env.click('activity-confirm');if(env.snapshot().scene)env.finishScene();
+  assert.equal(env.snapshot().slot,1);env.preview('river');env.click('visit-place');
+  assert.equal(env.snapshot().scene.id,`appointment-${invite.id}`);
+  env.finishScene();
+  assert.equal(env.snapshot().slot,3);assert.equal(env.snapshot().messages.appointments.find(item=>item.id===invite.id).status,'done');
+  assert.equal(env.snapshot().social.album.filter(item=>item.appointmentId===invite.id).length,1);
+  env.click('phone');dataButton(env,'app','calendar').click();
+  assert.ok(env.ids.get('modal-content').innerHTML.includes('다은 · 한강변 산책 · 오후 완료'));
+});
+test('Message dates occupy the afternoon and sunset; old conflicting appointments still reach the mandatory event', () => {
+  for (const [date, expectedScene, expectedSlot, legacy] of [
+    ['2026-04-07', null, 3, false], ['2026-05-20', 'festival', 2, false], ['2026-10-10', null, 3, false],
+    ['2026-04-07', null, 3, true], ['2026-05-20', 'festival', 2, true]
+  ]) {
+    const base = seed({date, slot:1, met:['daeun'], bond:{nari:0,daeun:40,seojin:0}});
+    const state = base.snapshot();
+    state.messages.appointments.push({id:'test-invite',person:'daeun',date,slot:1,place:'river',status:'accepted',paid:true});
+    const env = mount(new Map([[KEY, JSON.stringify(state)]])); env.click('continue');
+    env.preview('river'); env.click('visit-place');
+    assert.equal(env.snapshot().scene.id, 'appointment-test-invite');
+    const saved=env.snapshot(); if(legacy) saved.scene.after='activity';
+    const reload=mount(new Map([[KEY,JSON.stringify(saved)]])); reload.click('continue');
+    for(let i=0;i<60 && reload.snapshot().scene?.id==='appointment-test-invite';i++) {
+      if(reload.snapshot().scene.queue[reload.snapshot().scene.index]?.choice) reload.choose(); else reload.click('next');
+    }
+    assert.equal(reload.snapshot().slot, expectedSlot);
+    assert.equal(reload.snapshot().scene?.id || null, expectedScene);
+    assert.equal(reload.snapshot().messages.appointments.find(a=>a.id==='test-invite').status,'done');
+    assert.equal(reload.snapshot().social.album.filter(a=>a.appointmentId==='test-invite').length,1);
+  }
 });
 test('An actual paid date resumes mid-choice, advances exactly two slots, and adds its selected memory once', () => {
   let env = seed({ date: '2026-04-03', slot: 1 }, { at: { daeun: 'river' } });
@@ -775,6 +989,22 @@ test('A known holiday invitation can be answered from notes without spending a s
   env.click('phone');dataButton(env,'app','notes').click();dataButton(env,'holidayReply','nari').click();env.finishScene();
   assert.equal(env.snapshot().bond.nari,bond);assert.equal(env.snapshot().slot,3);
   assert.ok(!env.ids.get('locations').children.some(b=>/나리|다은|서진/.test(b.textContent+b.innerHTML)));
+});
+test('Daeun’s introduction switches expression in place and restores it after reload', () => {
+  let env = seed({ date: '2026-03-05', slot: 1, seen: ['prologue', 'entrance'], met: [] });
+  assert.equal(env.snapshot().scene.id, 'daeunMeet');
+  assert.equal(env.snapshot().scene.background, 'classroom', 'The afternoon orientation uses a daytime campus setting');
+  const portrait = env.ids.get('cast').children[0];
+  assert.equal(portrait.dataset.outfit, 'assets/heroines/daeun-campus-v7.png');
+  env.click('next');
+  assert.equal(env.ids.get('cast').children[0], portrait, 'Expression does not replay the entry animation');
+  assert.equal(portrait.dataset.outfit, 'assets/heroines/daeun-campus-happy-v8.png');
+  env = mount(env.saved); env.click('continue');
+  assert.equal(env.ids.get('cast').children[0].dataset.outfit, 'assets/heroines/daeun-campus-happy-v8.png');
+  env.click('next');
+  assert.equal(env.ids.get('cast').children[0].dataset.outfit, 'assets/heroines/daeun-campus-happy-v8.png', 'An untagged cheerful line takes its face from the mood table');
+  env.click('next');
+  assert.equal(env.ids.get('cast').children[0].dataset.outfit, 'assets/heroines/daeun-campus-v7.png', 'Narration returns to the base face');
 });
 test('A school day starts with its authored chapter, charges class once across reload, and opens the full location panel in the afternoon', () => {
   let env=seed({date:'2026-03-09',slot:0},{at:{daeun:'class',nari:null}});

@@ -9,7 +9,7 @@ assert.equal(index, campus, 'Both supported entrypoints must load the same build
 const paths = new Set();
 for (const match of index.matchAll(/(?:src|href)="([^"]+)"/g)) paths.add(new URL(match[1], root));
 const scripts = [...index.matchAll(/<script defer src="([^"]+)">/g)].map(m => m[1]);
-assert.deepEqual(scripts.map(s => s.split('/').at(-1)), ['world.js', 'encounters.js', 'wardrobe.js', 'radioEpisodes.js', 'radio.js', 'relationships.js', 'romance.js', 'economy.js', 'social.js', 'dialogue.js', 'dialogue-compat.js', 'messages.js', 'composition.js', 'dateActivities.js', 'outings.js', 'peopleEvents.js', 'smallEvents.js', 'state.js', 'scenes.js', 'semester.js', 'school.js', 'summer.js', 'autumn.js', 'winter.js', 'holidays.js', 'endings.js', 'audio.js', 'game.js']);
+assert.deepEqual(scripts.map(s => s.split('/').at(-1)), ['world.js', 'encounters.js', 'wardrobe.js', 'moods.js', 'radioEpisodes.js', 'radio.js', 'relationships.js', 'romance.js', 'economy.js', 'social.js', 'dialogue.js', 'dialogue-compat.js', 'messages.js', 'composition.js', 'dateActivities.js', 'outings.js', 'peopleEvents.js', 'smallEvents.js', 'state.js', 'scenes.js', 'semester.js', 'school.js', 'summer.js', 'autumn.js', 'winter.js', 'holidays.js', 'endings.js', 'audio.js', 'game.js']);
 assert.ok(scripts.every(s => s.startsWith('src/campus-v2/')));
 const cssURL = new URL('src/campus-v2/game.css', root), css = await fs.readFile(cssURL, 'utf8');
 for (const match of css.matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g)) paths.add(new URL(match[1], cssURL));
@@ -22,6 +22,7 @@ for (const script of scripts.filter(s => !s.endsWith('/game.js'))) vm.runInConte
 for (const file of Object.values(context.AquaAudio.tracks)) paths.add(new URL(file, root));
 paths.add(new URL('assets/audio/CREDITS.md', root));
 for (const outfits of Object.values(context.AquaWardrobe.catalog)) for (const file of Object.values(outfits)) paths.add(new URL(`assets/heroines/${file}`, root));
+for (const outfits of Object.values(context.AquaWardrobe.expressions)) for (const expressions of Object.values(outfits)) for (const file of Object.values(expressions)) paths.add(new URL(`assets/heroines/${file}`, root));
 for (const [id, scene] of Object.entries(context.AQUA_SCENES)) assert.ok(backgrounds[scene.background], `Unknown background in ${id}`);
 for (const person of Object.keys(context.AquaWorld.people)) for (const destination of context.AquaSocial.destinations) for (let variant = 0; variant < 4; variant++) {
   const data = context.AquaOutings.build(context.AquaState.initial(), { person, destination: destination.id, variant });

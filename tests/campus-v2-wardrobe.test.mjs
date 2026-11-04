@@ -58,6 +58,14 @@ for (const [person,outfit,date] of [['seojin','coat','2026-07-10'], ['daeun','qu
 }
 const older = State.initial(); older.giftClothes.nari = 'unavailable-outfit';
 const winterDaeun = State.initial(); winterDaeun.date = '2026-12-18';
+const campusDaeun = State.initial(); campusDaeun.date = '2026-03-10';
+assert.equal(Wardrobe.source(campusDaeun, 'daeun', { id: 'daeunMeet' }, 'happy'), 'assets/heroines/daeun-campus-happy-v8.png');
+assert.equal(Wardrobe.source(campusDaeun, 'daeun', { id: 'daeunMeet' }, 'sad'), 'assets/heroines/daeun-campus-sad-v8.png');
+assert.equal(Wardrobe.source(campusDaeun, 'daeun', { id: 'daeunMeet' }, 'jealous'), 'assets/heroines/daeun-campus-v7.png', 'A face without art keeps the base sprite');
+assert.equal(Wardrobe.source(campusDaeun, 'daeun', { id: 'fair' }, 'happy'), 'assets/heroines/daeun-rehearsal-v7.png');
+assert.ok(C.AQUA_SCENES.daeunMeet.lines.some(line => line.speaker === '다은' && line.expr === 'happy'));
+const smileImage = await fs.readFile(new URL('assets/heroines/daeun-campus-happy-v8.png', root));
+assert.equal(smileImage.readUInt32BE(16), 1024); assert.equal(smileImage.readUInt32BE(20), 1536); assert.equal(smileImage[25], 6, 'Expression is an RGBA PNG');
 assert.equal(Wardrobe.pick(winterDaeun, 'daeun', { id: 'daeunConfess' }), 'winter', 'Confession sprite matches its coat and CG');
 assert.equal(Wardrobe.pick(winterDaeun, 'daeun', { returnPlace: 'river' }), 'winter', 'Winter outings have warm clothes');
 assert.equal(Wardrobe.pick(winterDaeun, 'daeun', { returnPlace: 'club' }), 'rehearsal', 'Indoor band practice keeps rehearsal clothes');

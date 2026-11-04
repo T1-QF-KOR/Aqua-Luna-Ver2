@@ -21,6 +21,24 @@ for(const who of ['daeun','seojin']) {const s=initial();assert.ok(L.answer(s,who
 }
 for(const who of ['nari','daeun','seojin']){const s=initial();L.answer(s,who,'friend');check(s,`${who}-friend`);}
 {
+ const s=initial();L.answer(s,'daeun','accept');
+ let text=check(s,'daeun-love').lines.map(l=>l.text).join(' ');
+ assert.ok(!text.includes('겨울 합주 때'));assert.ok(!text.includes('맨 뒤에서 손 흔든'));
+ s.flags.backRowKept=true;text=check(s,'daeun-love').lines.map(l=>l.text).join(' ');
+ assert.ok(text.includes('맨 뒤에서 손 흔든'));assert.ok(!text.includes('겨울 합주 때'));
+ s.flags.daeunWinterSpace=true;text=check(s,'daeun-love').lines.map(l=>l.text).join(' ');
+ assert.ok(text.includes('겨울 합주 때'));assert.ok(!text.includes('맨 뒤에서 손 흔든'));
+}
+{
+ const s=initial();L.answer(s,'seojin','friend');
+ let text=check(s,'seojin-friend').lines.map(l=>l.text).join(' ');
+ assert.ok(!text.includes('주차장에서 5번 레인'));assert.ok(!text.includes('마감 음악 한 곡만'));
+ s.seen.push('seojinPlaylist');text=check(s,'seojin-friend').lines.map(l=>l.text).join(' ');
+ assert.ok(text.includes('마감 음악 한 곡만'));
+ s.flags.seojinPoolWaited=true;text=check(s,'seojin-friend').lines.map(l=>l.text).join(' ');
+ assert.ok(text.includes('주차장에서 5번 레인'));assert.ok(!text.includes('마감 음악 한 곡만'));
+}
+{
  const s=initial();L.answer(s,'nari','friend');
  let text=check(s,'nari-friend').lines.map(l=>l.text).join(' ');
  assert.ok(!text.includes('맨 앞줄에 있었잖아'));assert.ok(!text.includes('약속 아니고 초대'));
@@ -37,7 +55,13 @@ for(const who of ['nari','daeun','seojin']){const s=initial();L.answer(s,who,'fr
  assert.ok(text.includes('혼자 듣고 있었는데'));assert.ok(!text.includes('맨 앞줄에 있었잖아'));
 }
 {
- const s=initial();s.radio.anonymous=30;check(s,'reflection');
+ const s=initial();s.radio.anonymous=30;
+ let text=check(s,'reflection').lines.map(line=>line.text).join(' ');
+ assert.ok(text.includes('귀를 기울였다'));assert.ok(!text.includes('내 이야기를 보냈다'));
+ s.date='2026-04-06';s.slot=3;
+ assert.ok(C.AquaRadio.send(s,C.AquaRadio.draftFor(s,'고민','honest')).ok);
+ text=check(s,'reflection').lines.map(line=>line.text).join(' ');
+ assert.ok(text.includes('내 이야기를 보냈다'));assert.ok(!text.includes('귀를 기울였다'));
 }
 {
  const s=initial();s.bond.nari=0;check(s,'far');s.radio.anonymous=10;check(s,'solo');

@@ -41,9 +41,9 @@ const pendingChoice=C.AquaWinter.buildValentine(pending).lines.find(line=>line.c
 assert.ok(pendingChoice.lines.some(line=>line.text?.includes('오늘 답하라는 뜻은 아냐')));assert.equal(pending.romance.status.daeun,'pending');
 // January never assumes a job or relationship that the player did not establish.
 for (const [flags, expected, absent] of [
- [{}, '아직 지원한 건 아니야', '첫 수업 계획이야'],
+ [{}, '아직 지원한 건 아니야', '다음 수업 계획이야'],
  [{seojinApplied:true}, '연락 기다리는 중', '아직 지원한 건 아니야'],
- [{seojinApplied:true,seojinHired:true}, '첫 수업 계획이야', '연락 기다리는 중']
+ [{seojinApplied:true,seojinHired:true}, '다음 수업 계획이야', '연락 기다리는 중']
 ]) {
  const january=State.initial();january.date='2027-01-06';january.slot=1;january.met=['seojin'];january.bond.seojin=50;january.flags=flags;
  const text=Story.build('seojinJanuary',january).lines.map(line=>line.text||'').join(' ');

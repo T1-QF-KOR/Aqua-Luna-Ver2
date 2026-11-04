@@ -138,7 +138,7 @@
       },
       "messages": 40,
       "perWeek": 2.2222222222222223,
-      "invitations": 11,
+      "invitations": 12,
       "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
       "checks": {
         "dialogue": true,
@@ -178,8 +178,8 @@
         "seojin": 0
       },
       "dialogue": {
-        "samples": 211,
-        "unique": 129,
+        "samples": 213,
+        "unique": 130,
         "maxRepeat": 3,
         "mostRepeated": [
           [
@@ -432,7 +432,7 @@
       },
       "messages": 40,
       "perWeek": 2.2222222222222223,
-      "invitations": 11,
+      "invitations": 12,
       "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
       "checks": {
         "dialogue": null,
@@ -747,9 +747,9 @@
       "period": "2026-03-02–2026-06-30",
       "dates": 5,
       "peopleScenes": 5,
-      "approaches": 49,
+      "approaches": 50,
       "approachPersons": {
-        "nari": 49,
+        "nari": 50,
         "daeun": 0,
         "seojin": 0
       },
@@ -766,7 +766,7 @@
         "seojin": 0
       },
       "dialogue": {
-        "samples": 203,
+        "samples": 208,
         "unique": 130,
         "maxRepeat": 3,
         "mostRepeated": [
@@ -794,7 +794,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 4.555555555555555,
+        "average": 4.611111111111111,
         "empty": 0,
         "details": [
           {
@@ -859,7 +859,7 @@
           },
           {
             "week": "2026-06-15",
-            "scenes": 6
+            "scenes": 7
           },
           {
             "week": "2026-06-22",
@@ -1314,7 +1314,7 @@
       },
       "messages": 40,
       "perWeek": 2.2222222222222223,
-      "invitations": 11,
+      "invitations": 12,
       "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
       "checks": {
         "dialogue": true,
@@ -1334,10 +1334,10 @@
       "seed": 2026,
       "period": "2026-03-02–2026-06-30",
       "dates": 4,
-      "peopleScenes": 4,
-      "approaches": 46,
+      "peopleScenes": 5,
+      "approaches": 47,
       "approachPersons": {
-        "nari": 46,
+        "nari": 47,
         "daeun": 0,
         "seojin": 0
       },
@@ -1354,8 +1354,8 @@
         "seojin": 0
       },
       "dialogue": {
-        "samples": 178,
-        "unique": 123,
+        "samples": 181,
+        "unique": 125,
         "maxRepeat": 3,
         "mostRepeated": [
           [
@@ -1382,7 +1382,7 @@
       },
       "weeks": {
         "count": 18,
-        "average": 4.277777777777778,
+        "average": 4.388888888888889,
         "empty": 0,
         "details": [
           {
@@ -1447,7 +1447,7 @@
           },
           {
             "week": "2026-06-15",
-            "scenes": 4
+            "scenes": 6
           },
           {
             "week": "2026-06-22",
@@ -1608,7 +1608,7 @@
       },
       "messages": 40,
       "perWeek": 2.2222222222222223,
-      "invitations": 11,
+      "invitations": 12,
       "assumptions": "Production rule model, chosen encounters and scenes, one action per free slot; travel and conversations without time cost. Not game.js/browser automation. Automatic class and rest approximated; landscape flavor excluded.",
       "checks": {
         "dialogue": null,

@@ -26,16 +26,51 @@ export {C,root};
 const M=C.AquaMessages,ms=State.initial();ms.met=['daeun'];ms.bond.daeun=15;ms.date='2026-04-01';M.morning(ms);assert.equal(ms.messages.inbox.length,2);M.morning(ms);assert.equal(ms.messages.inbox.length,2);
 const msg=ms.messages.inbox[0];assert.ok(M.respond(ms,msg.id,'honest'));const b=ms.bond.daeun;assert.ok(!M.respond(ms,msg.id,'honest'));assert.equal(ms.bond.daeun,b);
 const ap=ms.messages.appointments[0];assert.ok(M.respond(ms,ap.id,'accept'));ms.date=W.addDays(ap.date,1);M.morning(ms);assert.equal(ap.status,'missed');const after=ms.bond.daeun;M.morning(ms);assert.equal(ms.bond.daeun,after);assert.ok(ms.social.missedGreeting.daeun);
+for (const [today, expected] of [['2026-04-18','2026-04-20'],['2026-05-19','2026-05-21'],['2026-06-18','2026-06-21']]) {
+ const s=State.initial();s.date=today;s.met=['daeun'];s.bond.daeun=30;M.morning(s);
+ assert.equal(s.messages.appointments[0].date,expected,`invitation conflict after ${today}`);
+}
+for (const [today, expected] of [['2026-07-15','2026-07-16'],['2026-09-23','2026-09-28'],['2026-10-27','2026-10-29'],['2026-12-23','2026-12-25'],['2027-02-12','2027-02-14']]) {
+ const s=State.initial();s.date=today;s.met=['daeun'];s.bond.daeun=30;M.morning(s);
+ assert.equal(s.messages.appointments[0]?.date,expected,`later invitation after ${today}`);
+ assert.ok(State.restore(JSON.parse(JSON.stringify(s))));
+}
+{
+ const s=State.initial();s.date='2027-02-25';s.met=['daeun'];s.bond.daeun=30;M.morning(s);
+ assert.equal(s.messages.appointments.length,0,'invitations must not extend past the last playable afternoon');
+}
+{
+ const s=State.initial();s.date='2026-10-09';s.met=['nari','daeun'];s.bond.nari=80;s.bond.daeun=80;
+ assert.ok(C.AquaRomance.answer(s,'nari','accept'));assert.ok(C.AquaRomance.answer(s,'daeun','disclose'));
+ const before=JSON.stringify(s.romance);M.morning(s);
+ assert.equal(s.messages.appointments.length,0,'an unresolved mandatory discussion must not create an overlapping date');
+ assert.equal(JSON.stringify(s.romance),before,'forecasting must not mutate the actual relationship');
+ s.date='2026-10-10';assert.ok(C.AquaRomance.agree(s));M.morning(s);
+ assert.equal(s.messages.appointments[0].date,'2026-10-11','invitations resume when the conflict is resolved');
+}
 assert.equal(M.hint(ms).join(),M.hint(ms).join());assert.ok(State.restore(JSON.parse(JSON.stringify(ms))));console.log('PASS messages: cadence, replies, invitation, missed promise, hint, save');
 const Music=C.AquaComposition,music=State.initial();for(let round=0;round<4;round++){assert.ok(Music.begin(music));for(let bar=0;bar<4;bar++)assert.ok(Music.choose(music,Music.cards(music)[0][0]));assert.ok(Music.settle(music));const saved=State.restore(JSON.parse(JSON.stringify(music)));assert.ok(saved);assert.ok(!Music.settle(music));assert.ok(Music.complete(music,'질문'));music.energy=100;}
 assert.equal(music.music.songs.length,1);music.met=['nari','daeun'];Music.share(music,music.music.songs[0].id,'nari');assert.ok(music.flags.nariHeardMelody);assert.ok(!music.music.songs[0].heard.daeun);const beforeShare=music.bond.nari;Music.share(music,music.music.songs[0].id,'nari');assert.equal(music.bond.nari,beforeShare);console.log('PASS composition: four bars, four fragments, resume, one reward per listener');
 for(const person of ['nari','daeun','seojin'])for(const destination of C.AquaSocial.destinations){const outing={person,destination:destination.id,variant:0};const scene=C.AquaOutings.build(State.initial(),outing);assert.equal(scene.lines.filter(x=>x.choice).length,4);assert.ok(scene.lines.length>=12);for(const step of scene.lines.filter(x=>x.choice).slice(1))assert.equal(step.choice.length,3);}
+for(const person of ['daeun','seojin'])for(const destination of ['river','cafe','concert','roof','karaoke']) {
+ const scene=C.AquaOutings.build(State.initial(),{person,destination,variant:0});
+ const activities=scene.lines.filter(line=>line.choice).slice(1);
+ const replies=activities.flatMap((step,stage)=>step.choice.map((option,index)=>{
+  assert.equal(option.effect.datePoints,C.AquaDateActivities.score(person,stage,index));
+  assert.equal(option.lines[0].speaker,person==='daeun'?'다은':'서진');return option.lines[0].text;
+ }));
+ assert.equal(new Set(replies).size,9,`${person}/${destination} responses should reflect the selected action`);
+}
+{
+ const scene=C.AquaOutings.build(State.initial(),{person:'nari',destination:'river',variant:0});
+ assert.equal(scene.lines.filter(line=>line.choice)[1].choice[0].lines[0].text,'…응. 그게 좋겠다.');
+}
 assert.equal(C.AquaDateActivities.result({points:8}),'good');assert.equal(C.AquaDateActivities.result({points:5}),'normal');assert.equal(C.AquaDateActivities.result({points:1}),'poor');console.log('PASS dates: 15 person/place combinations, four choices, three results');
 const Small=C.AquaSmallEvents;assert.equal(Small.observations.length,132);assert.ok(Small.observations.filter(x=>x.choice).length>=20);assert.equal(Object.keys(Small.places).length,11);
 const v=State.initial();v.met=['daeun'];v.date='2026-04-19';for(const place of Object.keys(Small.places)){assert.equal(Small.first(v,place).lines.length,3);assert.equal(Small.first(v,place),null);}for(const id of ['exam','party','vacation']){const x=Small.commonScene(v,id);assert.ok(x.lines.length>=9);assert.ok(x.lines.some(l=>l.speaker==='다은'));}
 let emitted=null;for(let seed=0;seed<200&&!emitted;seed++){v.encounters.seed=seed;emitted=Small.maybe(v,'library');}assert.ok(emitted);assert.ok(v.smallEvents.seen.includes(emitted.id));assert.ok(State.restore(JSON.parse(JSON.stringify(v))));console.log('PASS small events: 132, 110 choice events, 11 first visits, 3 met-aware common scenes');
 for(const ep of W.broadcasts.slice(0,12)){const radio=State.initial();radio.date=ep.date;radio.slot=3;const scene=C.AquaRadio.build(radio,ep);assert.ok(scene.lines.length>=8&&scene.lines.length<=12,`episode ${ep.number}: ${scene.lines.length}`);assert.ok(scene.lines.filter(l=>l.speaker==='루나').length>=5);}
-const costumes=State.initial();assert.ok(C.AquaWardrobe.source(costumes,'nari',{wardrobe:{nari:'campus'}},'smile').endsWith('nari-campus-v6.png'));C.AquaWardrobe.expressions.nari={campus:{smile:'nari/campus-smile.png'}};assert.ok(C.AquaWardrobe.source(costumes,'nari',{wardrobe:{nari:'campus'}},'smile').endsWith('/nari/campus-smile.png'));delete C.AquaWardrobe.expressions.nari;assert.ok(C.AquaWardrobe.source(costumes,'nari',{wardrobe:{nari:'campus'}},null).endsWith('nari-campus-v6.png'));
+const costumes=State.initial(),shipped=C.AquaWardrobe.expressions.nari;assert.ok(C.AquaWardrobe.source(costumes,'nari',{wardrobe:{nari:'campus'}},'unshipped').endsWith('nari-campus-v6.png'));C.AquaWardrobe.expressions.nari={campus:{smile:'nari/campus-smile.png'}};assert.ok(C.AquaWardrobe.source(costumes,'nari',{wardrobe:{nari:'campus'}},'smile').endsWith('/nari/campus-smile.png'));C.AquaWardrobe.expressions.nari=shipped;assert.ok(C.AquaWardrobe.source(costumes,'nari',{wardrobe:{nari:'campus'}},null).endsWith('nari-campus-v6.png'));
 assert.equal(Object.keys(C.AquaAudio.tracks).length,3);console.log('PASS radio length, expression fallback source, optional audio tracks');
 const seasons=State.initial();seasons.date='2026-04-01';seasons.slot=1;const sampled=[];for(let day=0;day<120;day++){seasons.date=W.addDays('2026-04-01',day%55);seasons.encounters.seed=day;const hit=Small.maybe(seasons,'library');if(hit)sampled.push(hit.id);}
 assert.ok(sampled.length>6);assert.equal(new Set(sampled.slice(0,6)).size,6);assert.equal(new Set(sampled.slice(6,12)).size,6);assert.ok(sampled.every(id=>id.includes('-spring-')));console.log('PASS small events respect season and exhaust local pool without early repeats');

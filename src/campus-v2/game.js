@@ -3,9 +3,10 @@
   'use strict';
   const W = window.AquaWorld, R = window.AquaRadio, Story = window.AquaStory, Social = window.AquaSocial;
   const $ = id => document.getElementById(id);
-  const SAVE_KEY = 'aqua-luna-campus-v2', PREF_KEY = `${SAVE_KEY}-prefs`;
+  const SAVE_KEY = 'aqua-luna-campus-v2', PREF_KEY = `${SAVE_KEY}-prefs`, GALLERY_KEY = `${SAVE_KEY}-endings`, ART_KEY = `${SAVE_KEY}-art`;
+  const GALLERY_TITLE = '추억 갤러리';
   const times = ['아침', '오후', '노을', '밤'];
-  const bg = { room: '../campus-v2/bg-v2/room.png', concert: '../campus-v2/bg-v2/concert.png',
+  const bg = { room: '../campus-v2/bg-v2/room.png', roomDay: '../campus-v2/bg-v2/roomDay.png', roomDayWinter: '../campus-v2/bg-v2/roomDayWinter.png', concert: '../campus-v2/bg-v2/concert.png',
     practice: '../campus-v2/bg-v2/practice.png', rooftop: '../campus-v2/bg-v2/rooftop.png', river: '../campus-v2/bg-v2/river.png',
     cafe: '../campus-v2/bg-v2/cafe.png', campus: '../campus-v2/bg-v2/campus-spring.png',
     campusSummer: '../campus-v2/bg-v2/campus-summer.png', campusAutumn: '../campus-v2/bg-v2/campus-autumn.png',
@@ -35,8 +36,10 @@
     seojinFirstSnow:{person:'seojin',flag:'sawSeojinFirstSnow',title:'손바닥 위의 첫눈',date:'2026-11-25',caption:'바로 녹아도, 털어 내지 않은 마음.',alt:'긴 흑갈색 머리의 서진이 차콜 코트와 블랙 하이넥 차림으로 첫눈을 손바닥에 받는 강변 장면'},
     daeunTermEnd:{person:'daeun',flag:'sawDaeunTermEnd',title:'숫자보다 먼저 본 얼굴',date:'2026-12-18',caption:'단톡방 밖에서, 너 한 사람에게.',alt:'겨울 강변 난간에서 주황색 더플코트를 입고 휴대폰을 내려둔 채 조용히 바라보는 다은'} };
   let s = null, toastTimer, typingTimer, autoTimer, fullText = '', ctx, mapSelection = null, voicePosition = null;
+  // While a gallery ending plays, s is a throwaway state and the real one waits here unsaved-over.
+  let gallery = null, galleryFrom = 'title';
   let prefs = { sfx: false, reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
-    textSpeed: 26, textSize: 24, autoDelay: 2.5, showBond: false, skipUnread:false, bgmVolume:0.5 }, auto = false;
+    textSpeed: 26, textSize: 24, autoDelay: 2.5, showBond: false, skipUnread:false, bgmVolume:0.5, voiceVolume:0.8 }, auto = false;
   try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREF_KEY) || '{}') }; } catch {}
 
   function esc(value) {
@@ -56,15 +59,18 @@
     try { return window.AquaState.restore(JSON.parse(localStorage.getItem(key))); } catch { return null; }
   }
   function saveAuto() {
-    if (!s) return false;
+    if (!s || gallery) return false;
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); $('save-warning').hidden = true; return true; }
     catch { $('save-warning').hidden = false; return false; }
   }
   function pauseText() { clearTimeout(typingTimer); typingTimer = null; clearTimeout(autoTimer); }
   function modal(title, html) {
     pauseText();
+    window.AquaAudio.pauseVoice();
     $('modal').classList.remove('calendar-modal');
     $('modal').classList.remove('illustration-modal');
+    $('modal').classList.remove('completed-illustration');
+    $('modal').classList.remove('settings-modal');
     if (s?.scene && !s.scene.queue[s.scene.index]?.choice) $('line').textContent = fullText;
     $('modal-title').textContent = title;
     $('modal-content').innerHTML = html;
@@ -72,6 +78,7 @@
   }
   function closeModal() {
     if ($('modal').open) $('modal').close();
+    if (!document.hidden) window.AquaAudio.resumeVoice();
     scheduleAuto();
   }
   function setBg(id) {
@@ -83,6 +90,8 @@
     }
     if (s && id === 'river' && s.date === '2026-11-25') id = 'riverSnow';
     if (s && (id === 'home' || (id === 'room' && window.AquaAutumn.away(s)))) id = (s.scene?.time ?? s.slot) === 3 ? 'homeNight' : 'home';
+    // The room's window shows the moon, so mornings, afternoons and dusk use its daylight version.
+    if (s && id === 'room' && (s.scene?.time ?? s.slot) < 3) id = /-(12|01|02)-/.test(s.date) ? 'roomDayWinter' : 'roomDay';
     const url = new URL(`assets/environment/${bg[id] || bg.campus}`, document.baseURI).href;
     if ($('backdrop').dataset.path !== url) {
       $('backdrop').style.backgroundImage = `url("${url}")`;
@@ -93,6 +102,7 @@
     document.body.classList.toggle('reduced', !!prefs.reduced);
     document.documentElement.style.setProperty('--reading-size', `${Math.max(20, Math.min(30, prefs.textSize))}px`);
     window.AquaAudio.setVolume(prefs.bgmVolume);
+    window.AquaAudio.setVoiceVolume(prefs.voiceVolume);
     try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch {}
   }
   function beep() {
@@ -169,6 +179,16 @@
     return reactions;
   }
 
+  // A season opens with a short title card over its first scene; it never blocks input.
+  const seasonCards = { entrance: ['SPRING', '봄', '첫 학기'], summerStart: ['SUMMER', '여름', '방학'],
+    autumnReturn: ['AUTUMN', '가을', '두 번째 학기'], januaryStart: ['WINTER', '겨울', '방학과 새해'] };
+  function seasonCard(id) {
+    const card = seasonCards[id]; if (!card || prefs.reduced) return;
+    document.querySelector?.('.season-card')?.remove();
+    const el = document.createElement('div'); el.className = 'season-card'; el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = `<small>${card[0]} · ${s.date.slice(0, 4)}</small><strong>${card[1]}</strong><span>${card[2]}</span>`;
+    document.body.append(el); setTimeout(() => el.remove?.(), 3200);
+  }
   function playScene(id, after, options = {}) {
     const data = options.data || Story.build(id, s);
     pauseText();
@@ -178,7 +198,8 @@
       returnPlace: options.returnPlace || null, radioEpisode: data.radioEpisode || null, replay: !!data.replay,
       presentation: data.presentation || null, outing: options.outing || null };
     s.scene.wardrobe = Object.fromEntries(Object.keys(W.people).map(person => [person, window.AquaWardrobe.pick(s, person, s.scene)]));
-    showScene();
+    if (options.wardrobe) Object.assign(s.scene.wardrobe, options.wardrobe);
+    showScene(); seasonCard(id);
   }
   function showScene() {
     if (!s.scene) return;
@@ -199,14 +220,25 @@
     $('scene-label').textContent = `${W.dateLabel(s.date)}  ·  ${sc.title}`;
     renderLine();
   }
+  // Warm every face of an outfit when its wearer appears, so the first change of expression does not flash.
+  const preloadedFaces = new Set();
+  function preloadFaces(id) {
+    if (typeof Image !== 'function') return;
+    for (const expr of ['smile', 'sad', 'surprised', 'blush']) {
+      const url = window.AquaWardrobe.source(s, id, s.scene || {}, expr);
+      if (!preloadedFaces.has(url)) { preloadedFaces.add(url); new Image().src = url; }
+    }
+  }
   function renderCast(ids, speaker, expr = null) {
     if (illustrations[s.scene?.illustration]) { $('cast').replaceChildren(); return; }
     const source = id => window.AquaWardrobe.source(s, id, s.scene || {}, speaker?.includes(W.people[id].short) ? expr : null);
-    const current = [...$('cast').children].map(img => `${img.dataset.actor}:${img.dataset.outfit}`);
-    if (current.join(',') !== ids.map(id => `${id}:${source(id)}`).join(',')) {
+    const actors = ids.filter(id => W.people[id]);
+    const current = [...$('cast').children].map(img => img.dataset.actor);
+    if (current.join(',') !== actors.join(',')) {
       $('cast').replaceChildren();
-      ids.filter(id => W.people[id]).forEach(id => {
+      actors.forEach(id => {
         const img = document.createElement('img');
+        preloadFaces(id);
         img.className = 'actor'; img.dataset.actor = id;
         img.src = source(id); img.dataset.outfit = source(id); img.alt = '';
         img.onerror = () => {
@@ -216,7 +248,18 @@
         $('cast').append(img);
       });
     }
-    [...$('cast').children].forEach(img => img.classList.toggle('active', !!speaker?.includes(W.people[img.dataset.actor].short)));
+    [...$('cast').children].forEach(img => {
+      const nextSource = source(img.dataset.actor);
+      if (img.dataset.outfit !== nextSource) {
+        delete img.dataset.fallback; img.hidden = false;
+        img.dataset.outfit = nextSource;
+        // Keep the current face on screen until the next one has loaded; a later change wins.
+        const swap = () => { if (img.dataset.outfit === nextSource) img.src = nextSource; };
+        if (typeof Image !== 'function') swap();
+        else { const next = new Image(); next.onload = next.onerror = swap; next.src = nextSource; if (next.complete) swap(); }
+      }
+      img.classList.toggle('active', !!speaker?.includes(W.people[img.dataset.actor].short));
+    });
     $('cast').dataset.count = String(ids.length);
   }
   function logLine(line) {
@@ -234,7 +277,7 @@
       }
       return;
     }
-    if (!auto || !s?.scene || $('modal').open || s.scene.queue[s.scene.index]?.choice || typingTimer || window.AquaAudio.isVoicePlaying()) return;
+    if (!auto || !s?.scene || document.hidden || $('modal').open || s.scene.queue[s.scene.index]?.choice || typingTimer || window.AquaAudio.isVoicePlaying()) return;
     autoTimer = setTimeout(advance, Math.max(1.2, prefs.autoDelay) * 1000);
   }
   function typeLine(text) {
@@ -263,6 +306,7 @@
     if (line?.title) { sc.title=line.title; $('scene-label').textContent=`${W.dateLabel(s.date)}  ·  ${sc.title}`; }
     if (line && Object.hasOwn(line, 'illustration')) sc.illustration = illustrations[line.illustration] ? line.illustration : null;
     const art = illustrations[sc.illustration];
+    if (art) recordArt(sc.illustration);
     document.body.classList.toggle('illustration-mode', !!art);
     $('scene-art').hidden = !art;
     if (art) window.AquaAudio.play(sc.time===3?'night':'campus');
@@ -308,7 +352,7 @@
       $('speaker').textContent = line.speaker === '나' ? s.name : line.speaker || '';
       $('scene-progress').textContent = sc.title;
       sc.lastCast = line.cast || [];
-      renderCast(sc.lastCast, line.speaker, line.expr); logLine(line); typeLine(line.text);
+      renderCast(sc.lastCast, line.speaker, window.AquaMoods.of(line)); logLine(line); typeLine(line.text);
     }
     saveAuto();
   }
@@ -349,14 +393,19 @@
     if (sc.outing) Social.finishDate(s, sc.outing);
     s.scene = null; $('cast').replaceChildren();
     $('intro').hidden = true; document.body.classList.remove('intro-mode');
-    if (sc.after === 'ending') { s.completed = true; showEndingComplete(); }
+    if (sc.after === 'gallery') leaveGallery();
+    else if (sc.after === 'ending') { s.completed = true; showEndingComplete(); }
     else if (sc.after === 'intro') { playScene('prologue', 'prologue'); }
     else if (sc.after === 'visit') { showMap(); const p = places.find(place=>place.id===sc.returnPlace); if(p) locationAction(p); }
     else if (sc.after === 'prologue') { s.date = '2026-03-03'; s.slot = 0; prepare(); }
     else if (sc.after === 'encounter') {
       showMap(); const p = places.find(place => place.id === sc.returnPlace);
       if (p) encounterMenu(p, W.presentAt(s, p.id));
-    } else if (sc.after === 'date') { s.slot = 3; prepare(); }
+    } else if (sc.after === 'date' || (sc.after === 'activity' && sc.outing?.appointmentId)) {
+      // Older saves used "activity" for message invitations. They still occupy
+      // the full afternoon, just like invitations started in the current build.
+      s.slot = mandatoryAt(2) ? 2 : 3; prepare();
+    }
     else if (sc.after === 'radio' || sc.after === 'replay') showMap();
     else if (sc.after === 'stay') { if (s.slot === 3) R.air(s); showMap(); }
     else step();
@@ -515,7 +564,7 @@
     $('preview-desc').textContent = window.AquaAutumn.away(s) && p.id === 'room' ? '예전에 쓰던 책상과 창문.\n나가 보면 이야기를 나눌 가족이 있다.' : descriptions[p.id];
     $('preview-details').hidden = false; $('preview-hint').hidden = true;
     const reason = canUse(p);
-    $('preview-cost').textContent = `${p.desc} · 시간 1칸\n${effectsLabel(p)}${reason ? `\n${reason}` : ''}`;
+    $('preview-cost').textContent = `기본 활동: ${p.desc} · 시간 1칸\n${effectsLabel(p)}${reason ? `\n기본 활동 안내: ${reason}` : ''}\n방문 후 상황에 따라 다른 선택이 열릴 수 있어요.`;
     $('preview-number').textContent = String(places.indexOf(p) + 1).padStart(2, '0');
     $('visit-label').textContent = `${p.name} 방문하기`;
     $('visit-place').onclick = () => { if (!$('modal').open && !s.scene && !$('map').hidden) locationAction(p); };
@@ -534,7 +583,7 @@
     const intro=window.AquaSmallEvents.first(s,p.id);
     if(intro){playScene('visit-'+p.id,'visit',{data:intro,returnPlace:p.id});return;}
     const appointment=window.AquaMessages.due(s,p.id);
-    if(appointment){const outing=window.AquaMessages.start(s,appointment.id);if(!outing){toast('약속에 필요한 기력이나 소지금이 부족해요.');return;}playScene('appointment-'+appointment.id,'activity',{data:window.AquaOutings.build(s,outing),outing});return;}
+    if(appointment){const outing=window.AquaMessages.start(s,appointment.id);if(!outing){toast('약속에 필요한 기력이나 소지금이 부족해요.');return;}playScene('appointment-'+appointment.id,'date',{data:window.AquaOutings.build(s,outing),outing});return;}
     const special = possibleScene(p.id);
     if (special) {
       if (special.work && canUse(p)) { toast(canUse(p)); return; }
@@ -701,15 +750,18 @@
     modal('함께 보낸 날들', `<p class="modal-text">사진보다 오래 남겨 두고 싶은 말.</p><div class="album-tabs"><button data-album="all" ${!person ? 'aria-pressed="true"' : ''}>모두</button>${s.met.map(id => `<button data-album="${id}" ${person === id ? 'aria-pressed="true"' : ''}>${W.people[id].short}</button>`).join('')}</div>${gallery}<div class="album-grid">${entries.map(a => {
       const d = Social.destinations.find(place => place.id === a.destination);
       return `<article class="album-entry" style="--person-color:${W.people[a.person].color}"><small>${esc(W.dateLabel(a.date))} · ${d.name}${a.result ? ` · ${{good:'좋았음',normal:'보통',poor:'아쉬움'}[a.result]}` : ''}</small><h3>${particle(W.people[a.person].name, '과', '와')} 보낸 오후</h3><p>“${esc(a.memory || '같이 보낸 시간을 기억해 두기로 했다.')}”</p><span>OUR DAYS · ${String(s.social.album.indexOf(a) + 1).padStart(2, '0')}</span></article>`;
-    }).join('') || '<p class="modal-text">아직 함께 보낸 오후가 없습니다. 친구가 되면 만났을 때 약속을 잡아 보세요.</p>'}</div>`);
+    }).join('') || '<p class="modal-text">아직 함께 보낸 오후가 없습니다. 친구가 되면 만났을 때 약속을 잡아 보세요.</p>'}</div>${s.completed ? '<button class="option-button" id="album-ending-back">결말 화면으로 돌아가기</button>' : ''}`);
     $('modal-content').querySelectorAll('[data-album]').forEach(button => button.onclick = () => albumMenu(button.dataset.album === 'all' ? null : button.dataset.album));
     $('modal-content').querySelectorAll('[data-art]').forEach(button => button.onclick = () => illustrationMenu(button.dataset.art));
+    if (s.completed) $('album-ending-back').onclick = showEndingComplete;
   }
 
   function illustrationMenu(id) {
     const art=illustrations[id]; if(!art || !s?.flags[art.flag])return;
-    modal(art.title, `<figure class="illustration-view"><img src="assets/environment/${bg[id]}" alt="${esc(art.alt)}"><figcaption>${art.caption}</figcaption></figure>`);
+    modal(art.title, `<figure class="illustration-view"><img src="assets/environment/${bg[id]}" alt="${esc(art.alt)}"><figcaption>${art.caption}</figcaption></figure>${s.completed && !s.scene ? '<button class="option-button" id="illustration-album-back">앨범으로 돌아가기</button>' : ''}`);
     $('modal').classList.add('illustration-modal');
+    $('modal').classList.toggle('completed-illustration', !!(s.completed && !s.scene));
+    if (s.completed && !s.scene) $('illustration-album-back').onclick = () => albumMenu(art.person);
   }
 
   function composeMenu() {
@@ -787,10 +839,11 @@
       const birthday = Object.keys(s.social.knownBirthdays).find(id => s.social.knownBirthdays[id] && s.met.includes(id) && Social.birthdays[id] === day.date.slice(5));
       const birthdayLabel = birthday ? `${W.people[birthday].short} 생일` : '';
       const appointments=window.AquaMessages.ensure(s).appointments.filter(a=>a.date===day.date&&s.met.includes(a.person)&&!['offered','declined'].includes(a.status));
+      const appointmentLabel = a => `${W.people[a.person].short} · ${Social.destinations.find(place=>place.id===a.place)?.name || '장소 미상'} · 오후 ${a.status==='missed'?'놓침':a.status==='done'?'완료':'약속'}`;
       const holidayPlans = day.date==='2026-12-24' ? Object.entries(window.AquaHolidays.ensure(s).invites).filter(([id,invite])=>s.met.includes(id)&&['accepted','group'].includes(invite.status)).map(([id,invite])=>`${W.people[id].short} · ${id==='nari'?'방송 뒤':'성탄 오후'}${invite.status==='group'?' · 함께':''}`) : [];
       const exam=window.AquaEncounters.exams(day.date)?'시험 기간':'';
-      const label = [exam,...appointments.map(a=>`${W.people[a.person].short} · 오후 약속${a.status==='missed'?' · 놓침':''}`),...holidayPlans,day.holiday, day.event, birthdayLabel, day.episode ? `아쿠아 루나 ${seenEpisode ? '· 청취 완료' : '· 23:00'}` : null].filter(Boolean).join(' · ');
-      return `<div class="calendar-day ${day.date === s.date ? 'today' : ''} ${day.holiday ? 'holiday' : ''}" aria-label="${esc(W.dateLabel(day.date) + (label ? ' · ' + label : ''))}"><b>${day.day}</b>${day.holiday ? `<small>${esc(day.holiday)}</small>` : ''}${day.event ? `<small>${esc(day.event)}</small>` : ''}${exam?`<small>${exam}</small>`:''}${appointments.map(a=>`<small>${W.people[a.person].short} · 오후${a.status==='missed'?' · 놓침':' 약속'}</small>`).join('')}${holidayPlans.map(plan=>`<small class="calendar-promise">${esc(plan)}</small>`).join('')}${birthdayLabel ? `<small class="calendar-birthday">✧ ${birthdayLabel}</small>` : ''}${day.episode ? `<span class="calendar-radio">☾ ${seenEpisode ? '들음' : '23:00'}</span>` : ''}</div>`;
+      const label = [exam,...appointments.map(appointmentLabel),...holidayPlans,day.holiday, day.event, birthdayLabel, day.episode ? `아쿠아 루나 ${seenEpisode ? '· 청취 완료' : '· 23:00'}` : null].filter(Boolean).join(' · ');
+      return `<div class="calendar-day ${day.date === s.date ? 'today' : ''} ${day.holiday ? 'holiday' : ''}" aria-label="${esc(W.dateLabel(day.date) + (label ? ' · ' + label : ''))}"><b>${day.day}</b>${day.holiday ? `<small>${esc(day.holiday)}</small>` : ''}${day.event ? `<small>${esc(day.event)}</small>` : ''}${exam?`<small>${exam}</small>`:''}${appointments.map(a=>`<small>${esc(appointmentLabel(a))}</small>`).join('')}${holidayPlans.map(plan=>`<small class="calendar-promise">${esc(plan)}</small>`).join('')}${birthdayLabel ? `<small class="calendar-birthday">✧ ${birthdayLabel}</small>` : ''}${day.episode ? `<span class="calendar-radio">☾ ${seenEpisode ? '들음' : '23:00'}</span>` : ''}</div>`;
     };
     modal('나의 달력', `<div class="calendar-nav"><button id="prev-month" aria-label="이전 달" ${year === 2026 && month === 3 ? 'disabled' : ''}>←</button><h3>${year}년 ${month}월</h3><button id="next-month" aria-label="다음 달" ${year === 2027 && month === 2 ? 'disabled' : ''}>→</button></div><div class="calendar-week">${['일', '월', '화', '수', '목', '금', '토'].map(d => `<span>${d}</span>`).join('')}</div><div class="calendar-grid">${'<div class="calendar-empty"></div>'.repeat(offset)}${days.map(cell).join('')}</div><p class="modal-text">학사 일정과 방송 편성표입니다. 인물의 비밀이나 아직 알지 못한 생일은 표시하지 않습니다.</p>`);
     $('prev-month').onclick = () => calendarMenu(month === 1 ? year - 1 : year, month === 1 ? 12 : month - 1);
@@ -815,12 +868,14 @@
 
   function phoneMenu() {
     if (!s) { toast('이야기를 시작하면 휴대폰이 열려요.'); return; }
+    if (gallery) { toast('결말을 다시 보는 동안에는 휴대폰을 열 수 없어요.'); return; }
     modal('나의 작은 일상', `<p class="phone-date">${esc(W.dateLabel(s.date))} · ${esc(times[s.slot])}</p><div class="phone-app-grid"><button data-app="messages"><span>☏</span>메시지</button><button data-app="songs"><span>♫</span>나의 곡</button><button data-app="notes"><span>✧</span>관계와 기억</button><button data-app="calendar"><span>▦</span>달력</button><button data-app="radio"><span>☾</span>아쿠아 루나</button><button data-app="letter"><span>✉</span>사연함</button><button data-app="shop"><span>♢</span>선물 가게</button><button data-app="album"><span>▧</span>함께 보낸 날</button><button data-app="save"><span>◇</span>저장</button><button data-app="settings"><span>⚙</span>설정</button></div>`);
     const actions = { songs: songMenu, messages: messagesMenu, notes: showNotes, calendar: calendarMenu, radio: radioMenu, letter: letterMenu, shop: shopMenu, album: albumMenu, save: slots, settings: settingsMenu };
     $('modal-content').querySelectorAll('[data-app]').forEach(button => button.onclick = () => actions[button.dataset.app]());
   }
 
   function showTitle() {
+    if (gallery) { s = gallery.state; gallery = null; }
     document.body.classList.remove('illustration-mode'); $('scene-art').hidden = true;
     pauseText(); window.AquaAudio.stopVoice(); voicePosition = null; auto = false;
     $('intro').hidden = true; document.body.classList.remove('intro-mode');
@@ -831,36 +886,145 @@
   function showEndingComplete() {
     pauseText(); $('map').hidden = true; $('scene').hidden = true; $('intro').hidden = true;
     $('status').hidden = true; $('title').hidden = true; $('cast').replaceChildren();
-    setBg('night');
-    modal('한여울의 첫해를 마치며', '<p class="modal-text">한 해의 이야기가 끝났습니다. 저장한 기록은 이어하기에서 다시 열 수 있습니다.</p><button class="option-button" id="ending-title">타이틀로 돌아가기</button>');
+    setBg('night'); recordEnding(s.endingId || window.AquaEndings.select(s));
+    modal('한여울의 첫해를 마치며', '<p class="modal-text">한 해의 이야기가 끝났습니다. 함께 보낸 기억을 다시 꺼내 볼 수 있습니다.</p><button class="option-button" id="ending-replay">결말 다시 보기</button><button class="option-button" id="ending-gallery">추억 갤러리</button><button class="option-button" id="ending-album">앨범 열기</button><button class="option-button" id="ending-title">타이틀로 돌아가기</button>');
+    $('ending-gallery').onclick = () => galleryMenu('ending');
+    $('ending-replay').onclick = () => {
+      const id = s.endingId || window.AquaEndings.select(s);
+      const data = window.AquaEndings.build(s, id);
+      closeModal(); playScene(`ending-${id}`, 'ending', { data });
+    };
+    $('ending-album').onclick = () => albumMenu();
     $('ending-title').onclick = () => { closeModal(); showTitle(); };
   }
+  // Endings live apart from saves, so starting over or loading an older slot keeps every one seen.
+  function readGallery() {
+    try { const book = JSON.parse(localStorage.getItem(GALLERY_KEY) || '{}'); return book && typeof book === 'object' && !Array.isArray(book) ? book : {}; }
+    catch { return {}; }
+  }
+  const galleryEntry = (book, id) => {
+    const entry = book[id];
+    return entry && Array.isArray(entry.data?.lines) && entry.data.lines.length && entry.data.lines.every(line => typeof line?.text === 'string') ? entry : null;
+  };
+  function readArt() {
+    try { const ids = JSON.parse(localStorage.getItem(ART_KEY) || '[]'); return Array.isArray(ids) ? ids.filter(id => illustrations[id]) : []; }
+    catch { return []; }
+  }
+  function recordArt(...ids) {
+    if (gallery) return;
+    const seen = readArt(), added = ids.filter(id => illustrations[id] && !seen.includes(id));
+    if (added.length) try { localStorage.setItem(ART_KEY, JSON.stringify([...seen, ...added])); } catch {}
+  }
+  function recordEnding(id) {
+    if (!s || gallery || !window.AquaEndings.titles[id]) return;
+    const book = readGallery(), data = window.AquaEndings.build(s, id), context = { id: `ending-${id}`, background: data.background };
+    const today = new Date(), first = galleryEntry(book, id)?.first || `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+    book[id] = { id, name: s.name, first, data, wardrobe: Object.fromEntries(Object.keys(W.people).map(person => [person, window.AquaWardrobe.pick(s, person, context)])) };
+    try { localStorage.setItem(GALLERY_KEY, JSON.stringify(book)); } catch {}
+  }
+  function galleryMenu(from = 'title') {
+    galleryFrom = from;
+    const book = readGallery(), ids = Object.keys(window.AquaEndings.titles), seen = ids.filter(id => galleryEntry(book, id)).length;
+    const cards = ids.map((id, i) => {
+      const entry = galleryEntry(book, id), no = `ENDING ${String(i + 1).padStart(2, '0')}`;
+      return entry ? `<button data-ending="${id}" class="ending-card"><small>${no} · ${esc(entry.first)}</small><strong>${esc(window.AquaEndings.titles[id])}</strong><em>${esc(particle(entry.name, '이', ''))}의 첫해 · 다시 보기 →</em></button>`
+        : `<div class="ending-card locked"><small>${no}</small><strong>？？？</strong><em>아직 보지 못한 결말</em></div>`;
+    }).join('');
+    const arts = readArt(), artCards = Object.entries(illustrations).map(([id, item]) => arts.includes(id)
+      ? `<button data-gallery-art="${id}" class="illustration-card"><img src="assets/environment/${bg[id]}" alt="${esc(item.alt)}"><span><small>${W.people[item.person].short}</small><strong>${item.title}</strong></span></button>`
+      : '<div class="illustration-card locked"><span><small>？？？</small><strong>아직 보지 못한 장면</strong></span></div>').join('');
+    modal(GALLERY_TITLE, `<p class="modal-text">본 장면과 결말은 새로 시작해도 이곳에 남습니다. 결말은 고르면 처음부터 다시 볼 수 있어요.</p><h3 class="gallery-heading">장면 일러스트 <span>${arts.length} / ${Object.keys(illustrations).length}</span></h3><div class="illustration-grid gallery-art">${artCards}</div><h3 class="gallery-heading">결말 <span>${seen} / ${ids.length}</span></h3><div class="ending-gallery">${cards}</div>${from === 'ending' ? '<button class="option-button" id="gallery-ending-back">결말 화면으로 돌아가기</button>' : ''}`);
+    $('modal-content').querySelectorAll('[data-ending]').forEach(button => button.onclick = () => replayGallery(button.dataset.ending));
+    $('modal-content').querySelectorAll('[data-gallery-art]').forEach(button => button.onclick = () => galleryArt(button.dataset.galleryArt));
+    if (from === 'ending') $('gallery-ending-back').onclick = showEndingComplete;
+  }
+  function galleryArt(id) {
+    const art = illustrations[id]; if (!art || !readArt().includes(id)) return;
+    modal(GALLERY_TITLE, `<figure class="illustration-view"><img src="assets/environment/${bg[id]}" alt="${esc(art.alt)}"><figcaption>${art.title} · ${art.caption}</figcaption></figure><button class="option-button" id="gallery-art-back">목록으로 돌아가기</button>`);
+    $('modal').classList.add('illustration-modal');
+    $('gallery-art-back').onclick = () => galleryMenu(galleryFrom);
+  }
+  function replayGallery(id) {
+    const entry = galleryEntry(readGallery(), id); if (!entry) return;
+    gallery = { state: s, from: galleryFrom };
+    s = window.AquaState.initial(entry.name, '물고기'); s.date = '2027-02-26'; s.completed = true;
+    closeModal(); playScene(`ending-${id}`, 'gallery', { data: structuredClone(entry.data), wardrobe: entry.wardrobe });
+  }
+  function leaveGallery() {
+    const from = gallery?.from;
+    showTitle();
+    if (from === 'ending' && s?.completed) showEndingComplete();
+    galleryMenu(from === 'ending' && s?.completed ? 'ending' : 'title');
+  }
+  function closeGallery() {
+    closeModal();
+    if (galleryFrom === 'ending' && s?.completed && !s.scene) showEndingComplete();
+  }
   function startForm() {
-    modal('내 이름', '<p class="modal-text">한여울대학교에서 보낼 새로운 한 해. 원하는 이름을 적어 주세요.</p><label for="player-name">이름 · 최대 6자</label><input class="modal-input" id="player-name" maxlength="6" placeholder="나"><label for="nickname">라디오 별명 · 최대 10자</label><input class="modal-input" id="nickname" maxlength="10" placeholder="물고기"><button class="option-button" id="begin">이야기 시작하기 →</button>');
-    $('begin').onclick = () => {
+    modal('내 이름', '<p class="modal-text">한여울대학교에서 보낼 새로운 한 해. 원하는 이름을 적어 주세요.</p><label for="player-name">이름 · 최대 6자</label><input class="modal-input" id="player-name" maxlength="6" placeholder="나"><label for="nickname">라디오 별명 · 최대 10자</label><input class="modal-input" id="nickname" maxlength="10" placeholder="물고기"><button class="option-button" id="begin">이야기 시작하기 →</button><div id="new-game-confirm" hidden><p class="modal-text" role="status">새로 시작하면 기존 자동 저장이 바뀝니다. 보관하려면 타이틀에서 이어하기를 선택한 뒤 저장 슬롯이나 파일로 저장해 주세요.</p><div class="modal-actions"><button class="option-button" id="new-game-cancel">돌아가기</button><button class="option-button" id="new-game-proceed">새로 시작하기</button></div></div>');
+    const begin = () => {
       s = window.AquaState.initial($('player-name').value.trim() || '나', $('nickname').value.trim() || '물고기');
       closeModal(); playScene('intro', 'intro');
     };
+    $('begin').onclick = () => {
+      let occupied = true;
+      try { occupied = localStorage.getItem(SAVE_KEY) !== null; } catch {}
+      if (!occupied) { begin(); return; }
+      $('begin').hidden = true; $('new-game-confirm').hidden = false;
+      $('new-game-cancel').focus?.();
+    };
+    $('new-game-cancel').onclick = () => { $('new-game-confirm').hidden = true; $('begin').hidden = false; $('begin').focus?.(); };
+    $('new-game-proceed').onclick = begin;
   }
   function resume(state) {
     s = state; closeModal();
+    recordArt(...Object.keys(illustrations).filter(id => s.flags?.[illustrations[id].flag]));
     if (s.scene) showScene(); else if (s.completed) showEndingComplete(); else prepare();
     saveAuto();
   }
-  function slots() {
-    const rows = [1, 2, 3].map(i => {
-      const value = readSave(`${SAVE_KEY}-slot-${i}`);
-      return `<div class="slot"><span>슬롯 ${i}<small>${value ? `${esc(W.dateLabel(value.date))} · ${esc(times[value.slot])}${value.scene ? ' · 장면 진행 중' : ''}` : '비어 있음'}</small></span><button data-save="${i}" ${s ? '' : 'disabled'}>저장</button><button data-load="${i}" ${value ? '' : 'disabled'}>불러오기</button></div>`;
+  function confirmLoad(state, successMessage) {
+    let occupied = true;
+    try { occupied = localStorage.getItem(SAVE_KEY) !== null; } catch {}
+    const load = () => { resume(state); toast(successMessage); };
+    if (!occupied && !s) { load(); return; }
+    modal('진행 불러오기', '<p class="modal-text">불러오면 현재 진행과 자동 저장이 선택한 기록으로 바뀝니다. 현재 진행을 보관하려면 먼저 슬롯에 저장하거나 파일로 내보내세요.</p><div class="modal-actions"><button class="option-button" id="load-cancel">돌아가기</button><button class="option-button" id="load-confirm">불러오기</button></div>');
+    $('load-cancel').onclick = () => slots();
+    $('load-confirm').onclick = load;
+    $('load-cancel').focus?.();
+  }
+  function slots(confirmOverwrite = null) {
+    if (gallery) { toast('결말을 다시 보는 동안에는 저장하거나 불러올 수 없어요.'); return; }
+    const rows = [1, 2, 3, 4, 5, 6].map(i => {
+      const key = `${SAVE_KEY}-slot-${i}`, value = readSave(key);
+      let occupied = true;
+      try { occupied = localStorage.getItem(key) !== null; } catch {}
+      const description = value ? `${esc(W.dateLabel(value.date))} · ${esc(times[value.slot])}</small><small>${esc(value.completed ? '결말을 본 기록' : value.scene?.title || '자유 시간')}${value.savedAt ? ` · ${esc(value.savedAt)}` : ''}` : occupied ? '읽을 수 없는 저장 기록' : '비어 있음';
+      const question = confirmOverwrite === i ? '<small role="status">이 슬롯을 덮어쓸까요?</small>' : '';
+      const actions = confirmOverwrite === i
+        ? `<button data-confirm-save="${i}">덮어쓰기</button><button data-cancel-save="${i}">취소</button>`
+        : `<button data-save="${i}" ${s ? '' : 'disabled'}>저장</button><button data-load="${i}" ${value ? '' : 'disabled'}>불러오기</button>`;
+      return `<div class="slot"><span>슬롯 ${i}<small>${description}</small>${question}</span>${actions}</div>`;
     }).join('');
-    modal('저장과 불러오기', `<p class="modal-text">대사와 선택지의 진행 위치까지 저장됩니다. 파일로 보관하면 다른 실행 환경에서도 가져올 수 있습니다.</p><div class="modal-grid">${rows}</div><div class="modal-actions"><button class="option-button" id="export-save" ${s ? '' : 'disabled'}>파일 내보내기</button><button class="option-button" id="import-save">파일 가져오기</button></div><input type="file" id="save-file" accept=".json,application/json" hidden>`);
-    $('modal-content').querySelectorAll('[data-save]').forEach(button => button.onclick = () => {
+    modal('저장과 불러오기', `<p class="modal-text">대사와 선택지의 진행 위치까지 저장됩니다. 파일로 보관하면 다른 실행 환경에서도 가져올 수 있습니다.</p><div class="modal-grid slot-grid">${rows}</div><div class="modal-actions"><button class="option-button" id="export-save" ${s ? '' : 'disabled'}>파일 내보내기</button><button class="option-button" id="import-save">파일 가져오기</button></div><input type="file" id="save-file" accept=".json,application/json" hidden>`);
+    const writeSlot = index => {
       if (!s) return;
-      try { localStorage.setItem(`${SAVE_KEY}-slot-${button.dataset.save}`, JSON.stringify(s)); slots(); toast('저장했습니다.'); }
+      const now = new Date(), savedAt = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      try { localStorage.setItem(`${SAVE_KEY}-slot-${index}`, JSON.stringify({ ...s, savedAt })); slots(); toast('저장했습니다.'); }
       catch { toast('저장 공간이 부족해요. 파일 내보내기로 보관해 주세요.'); }
+    };
+    $('modal-content').querySelectorAll('[data-save]').forEach(button => button.onclick = () => {
+      const index = Number(button.dataset.save);
+      try { if (localStorage.getItem(`${SAVE_KEY}-slot-${index}`) !== null) { slots(index); return; } }
+      catch { slots(index); return; }
+      writeSlot(index);
     });
+    $('modal-content').querySelectorAll('[data-confirm-save]').forEach(button => button.onclick = () => writeSlot(Number(button.dataset.confirmSave)));
+    $('modal-content').querySelectorAll('[data-cancel-save]').forEach(button => button.onclick = () => slots());
+    // Default keyboard focus to the non-destructive action after the row changes.
+    if (confirmOverwrite !== null) $('modal-content').querySelectorAll('[data-cancel-save]')[0]?.focus?.();
     $('modal-content').querySelectorAll('[data-load]').forEach(button => button.onclick = () => {
       const state = readSave(`${SAVE_KEY}-slot-${button.dataset.load}`);
-      if (state) { resume(state); toast('저장을 불러왔습니다.'); }
+      if (state) confirmLoad(state, '저장을 불러왔습니다.');
     });
     $('export-save').onclick = exportSave;
     $('import-save').onclick = () => $('save-file').click();
@@ -870,28 +1034,36 @@
       try {
         const state = window.AquaState.restore(JSON.parse(await file.text()));
         if (!state) throw Error('Invalid save');
-        resume(state); toast('파일의 진행을 불러왔습니다.');
+        confirmLoad(state, '파일의 진행을 불러왔습니다.');
       } catch { toast('이 빌드에서 읽을 수 있는 저장 파일이 아니에요.'); }
       finally { event.target.value = ''; }
     };
   }
   function exportSave() {
-    if (!s) return;
+    if (!s || gallery) return;
     const blob = new Blob([JSON.stringify(s, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob), anchor = document.createElement('a');
     anchor.href = url; anchor.download = `AquaLuna-${s.date}-${times[s.slot]}.json`;
     anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   function settingsMenu() {
-    modal('읽기와 연출', `<div class="form-row"><label for="text-size">대사 글자 크기</label><select id="text-size">${[20, 24, 28].map(v => `<option value="${v}" ${prefs.textSize === v ? 'selected' : ''}>${v}px</option>`).join('')}</select></div><div class="form-row"><label for="text-speed">대사가 나타나는 속도</label><select id="text-speed">${[[0, '바로 표시'], [26, '천천히'], [50, '빠르게']].map(([v, text]) => `<option value="${v}" ${prefs.textSpeed === v ? 'selected' : ''}>${text}</option>`).join('')}</select></div><div class="form-row"><label for="auto-delay">자동 진행 · 대사 표시 뒤 기다리는 시간</label><select id="auto-delay">${[1.5, 2.5, 4].map(v => `<option value="${v}" ${prefs.autoDelay === v ? 'selected' : ''}>${v}초</option>`).join('')}</select></div><div class="form-row"><label for="bgm-volume">배경 음악 음량</label><input id="bgm-volume" type="range" min="0" max="100" value="${Math.round(prefs.bgmVolume*100)}"></div><div class="modal-grid"><label class="check-row"><input id="skip-unread" type="checkbox" ${prefs.skipUnread ? 'checked' : ''}>읽지 않은 대사도 건너뛰기</label><label class="check-row"><input id="sfx-setting" type="checkbox" ${prefs.sfx ? 'checked' : ''}>선택 효과음</label><label class="check-row"><input id="motion-setting" type="checkbox" ${prefs.reduced ? 'checked' : ''}>움직임 줄이기 · 대사 바로 표시</label><label class="check-row"><input id="bond-setting" type="checkbox" ${prefs.showBond ? 'checked' : ''}>관계 노트에 마음 수치 표시</label><button id="apply-settings">설정 적용</button><button id="music-credits">음악 출처</button></div><p class="modal-text">Space / Enter · 대사 완성 또는 넘기기<br>숫자키 · 선택지 고르기 · Esc · 창 닫기</p>`);
+    const voiceControl = Object.keys(window.AquaAudio.voiceTracks).length ? `<div class="form-row"><label for="voice-volume">목소리 음량</label><input id="voice-volume" type="range" min="0" max="100" value="${Math.round(prefs.voiceVolume*100)}"></div>` : '';
+    modal('읽기와 연출', `<div class="settings-grid"><div class="form-row"><label for="text-size">대사 글자 크기</label><select id="text-size">${[20, 24, 28].map(v => `<option value="${v}" ${prefs.textSize === v ? 'selected' : ''}>${v}px</option>`).join('')}</select></div><div class="form-row"><label for="text-speed">대사가 나타나는 속도</label><select id="text-speed">${[[0, '바로 표시'], [26, '천천히'], [50, '빠르게']].map(([v, text]) => `<option value="${v}" ${prefs.textSpeed === v ? 'selected' : ''}>${text}</option>`).join('')}</select></div><div class="form-row"><label for="auto-delay">자동 진행 · 대사 표시 뒤 기다리는 시간</label><select id="auto-delay">${[1.5, 2.5, 4].map(v => `<option value="${v}" ${prefs.autoDelay === v ? 'selected' : ''}>${v}초</option>`).join('')}</select></div><div class="form-row"><label for="bgm-volume">배경 음악 음량</label><input id="bgm-volume" type="range" min="0" max="100" value="${Math.round(prefs.bgmVolume*100)}"></div>${voiceControl}</div><div class="modal-grid settings-checks"><label class="check-row"><input id="skip-unread" type="checkbox" ${prefs.skipUnread ? 'checked' : ''}>읽지 않은 대사도 건너뛰기</label><label class="check-row"><input id="sfx-setting" type="checkbox" ${prefs.sfx ? 'checked' : ''}>선택 효과음</label><label class="check-row"><input id="motion-setting" type="checkbox" ${prefs.reduced ? 'checked' : ''}>움직임 줄이기 · 대사 바로 표시</label><label class="check-row"><input id="bond-setting" type="checkbox" ${prefs.showBond ? 'checked' : ''}>관계 노트에 마음 수치 표시</label></div><div class="modal-actions settings-actions"><button class="option-button" id="apply-settings">설정 적용</button><button class="option-button" id="game-guide">게임 안내</button><button class="option-button" id="music-credits">음악 출처</button></div><p class="modal-text">Space / Enter · 대사 완성 또는 넘기기 · 숫자키 · 선택지<br>H 또는 오른쪽 클릭 · 대화창 숨기기 · Esc · 창 닫기</p>`);
+    $('modal').classList.add('settings-modal');
+    $('game-guide').onclick = gameGuide;
     $('music-credits').onclick = musicCredits;
     $('apply-settings').onclick = () => {
       prefs.textSize = Number($('text-size').value); prefs.textSpeed = Number($('text-speed').value);
       prefs.autoDelay = Number($('auto-delay').value); prefs.sfx = $('sfx-setting').checked;
       prefs.skipUnread = $('skip-unread').checked; prefs.bgmVolume = Number($('bgm-volume').value)/100;
+      if ($('voice-volume')) prefs.voiceVolume = Number($('voice-volume').value)/100;
       prefs.reduced = $('motion-setting').checked; prefs.showBond = $('bond-setting').checked;
       applyPrefs(); closeModal(); toast('읽기 설정을 적용했습니다.');
     };
+  }
+  function gameGuide() {
+    modal('한여울에서 보내는 하루', `<div class="modal-body"><p class="modal-text"><b>학교와 자유 시간</b><br>수업이 있는 날에는 학교 이야기를 먼저 봅니다. 이후 오른쪽에서 장소를 골라 풍경과 기본 활동을 살펴본 다음 방문할 수 있습니다. 주말과 방학은 일정이 다릅니다.</p><p class="modal-text"><b>우연한 만남</b><br>누구를 만날지는 날짜와 시간, 각자의 일정에 따라 달라집니다. 방문하기 전에는 만날 사람을 표시하지 않습니다.</p><p class="modal-text"><b>밤과 휴대폰</b><br>밤에는 라디오를 듣거나 사연을 보내고 하루를 마무리할 수 있습니다. 휴대폰에서 메시지, 달력, 추억과 저장을 열어 보세요.</p><p class="modal-text"><b>조작과 저장</b><br>클릭 또는 Enter·Space로 대사를 진행하고 숫자키로 선택합니다. AUTO는 자동 진행, SKIP은 기본 설정에서 읽은 대사를 건너뜁니다. 저장 메뉴에서 슬롯과 파일 백업을 사용할 수 있습니다.</p></div><button class="option-button" id="guide-back">설정으로 돌아가기</button>`);
+    $('guide-back').onclick = settingsMenu;
   }
   function musicCredits() {
     modal('음악 출처', `<p class="modal-text">Music by Tanner Helland · <a href="https://github.com/tannerhelland/free-music" target="_blank" rel="noopener noreferrer">원곡과 제작자</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></p><p class="modal-text">Familiar Roads · Leaving Millie (live piano) · A Memory Away</p><p class="modal-text">원본 음원의 파일명만 변경했으며 게임에서 반복 재생합니다. 상세 출처는 함께 제공되는 assets/audio/CREDITS.md에 있습니다.</p><button class="option-button" id="credits-back">설정으로 돌아가기</button>`);
@@ -903,6 +1075,7 @@
   }
   $('start').onclick = startForm;
   $('continue').onclick = () => { const state = readSave(SAVE_KEY); if (state) resume(state); };
+  $('gallery').onclick = () => galleryMenu('title');
   $('next').onclick = event => { event.stopPropagation(); advance(); };
   $('dialogue').onclick = advance;
   $('intro-next').onclick = advance;
@@ -919,23 +1092,39 @@
   }
   document.addEventListener('pointerdown', unlockAudio, {once:true});
   $('auto').onclick = event => { event.stopPropagation(); auto = !auto; $('auto').textContent = `AUTO ${auto ? 'ON' : 'OFF'}`; $('auto').setAttribute('aria-pressed', String(auto)); scheduleAuto(); };
-  $('close').onclick = () => { const ending = s?.completed && $('modal-title').textContent === '한여울의 첫해를 마치며'; closeModal(); if (ending) showTitle(); };
-  $('modal').addEventListener('cancel', event => { if (s?.completed && $('modal-title').textContent === '한여울의 첫해를 마치며') { event.preventDefault(); closeModal(); showTitle(); } else setTimeout(scheduleAuto, 0); });
+  $('close').onclick = () => { if ($('modal-title').textContent === GALLERY_TITLE) { closeGallery(); return; } const completed = s?.completed && !s.scene, ending = $('modal-title').textContent === '한여울의 첫해를 마치며'; closeModal(); if (completed) { if (ending) showTitle(); else showEndingComplete(); } };
+  $('modal').addEventListener('cancel', event => { if ($('modal-title').textContent === GALLERY_TITLE) { event.preventDefault(); closeGallery(); return; } if (s?.completed && !s.scene) { const ending = $('modal-title').textContent === '한여울의 첫해를 마치며'; event.preventDefault(); closeModal(); if (ending) showTitle(); else showEndingComplete(); } else setTimeout(() => { if (!document.hidden && !$('modal').open) window.AquaAudio.resumeVoice(); scheduleAuto(); }, 0); });
   $('home').onclick = () => { saveAuto(); closeModal(); showTitle(); };
   $('save').onclick = slots; $('history').onclick = historyMenu; $('settings').onclick = settingsMenu;
   $('phone').onclick = phoneMenu; $('end-day').onclick = finishDay;
   $('backup-now').onclick = exportSave;
+  // H or a right click hides the reading window to look at the scene; any click or key brings it back.
+  function hideUi(hidden) {
+    if (hidden && (!s?.scene || $('scene').hidden || $('modal').open)) return;
+    document.body.classList.toggle('ui-hidden', hidden);
+    if (hidden) { pauseText(); $('line').textContent = fullText; } else scheduleAuto();
+  }
+  document.addEventListener('click', event => {
+    if (!document.body.classList.contains('ui-hidden')) return;
+    event.stopPropagation(); event.preventDefault?.(); hideUi(false);
+  }, true);
+  $('scene').addEventListener('contextmenu', event => { event.preventDefault(); hideUi(!document.body.classList.contains('ui-hidden')); });
   document.addEventListener('keydown', event => {
     unlockAudio();
-    if ($('modal').open || !s?.scene || ($('scene').hidden && $('intro').hidden) || event.target.closest('input, select, textarea')) return;
+    if (document.body.classList.contains('ui-hidden')) { event.preventDefault(); hideUi(false); return; }
+    if ((event.key === 'h' || event.key === 'H') && !event.target.closest('input, select, textarea, [contenteditable="true"]')) { hideUi(true); return; }
+    if ($('modal').open || !s?.scene || ($('scene').hidden && $('intro').hidden) || event.target.closest('input, select, textarea, [contenteditable="true"]')) return;
     if (event.repeat) return;
+    // Let focused controls receive their native keyboard activation instead of
+    // treating Enter or Space as a request to advance the dialogue.
+    if ((event.key === 'Enter' || event.key === ' ') && event.target.closest('button, a, [role="button"]')) return;
     if (event.key === 'Control') { event.preventDefault(); skipRead(); }
     else if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); advance(); }
     else if (/^[1-6]$/.test(event.key)) { event.preventDefault(); choose(Number(event.key) - 1); }
   });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { pauseText(); if (s?.scene) $('line').textContent = fullText; saveAuto(); }
-    else scheduleAuto();
+    if (document.hidden) { pauseText(); window.AquaAudio.pauseVoice(); if (s?.scene) $('line').textContent = fullText; saveAuto(); }
+    else { if (!$('modal').open) window.AquaAudio.resumeVoice(); scheduleAuto(); }
   });
   applyPrefs(); showTitle();
 })();

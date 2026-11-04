@@ -11,7 +11,11 @@
   };
   // Register an expression only after its illustration ships. Missing variants
   // retain the selected clothes without speculative requests or image flicker.
-  const expressions = {};
+  const expressions = { nari: { campus: { smile: 'nari-campus-smile-v7.png', sad: 'nari-campus-sad-v7.png', surprised: 'nari-campus-surprised-v7.png', blush: 'nari-campus-blush-v7.png' } },
+    seojin: { work: { smile: 'seojin-work-smile-v6.png', sad: 'seojin-work-sad-v6.png', surprised: 'seojin-work-surprised-v6.png', blush: 'seojin-work-blush-v6.png' },
+      offduty: { smile: 'seojin-leather-smile-v6.png', sad: 'seojin-leather-sad-v6.png', surprised: 'seojin-leather-surprised-v6.png', blush: 'seojin-leather-blush-v6.png' } },
+    daeun: { campus: { happy: 'daeun-campus-happy-v8.png', smile: 'daeun-campus-happy-v8.png', sad: 'daeun-campus-sad-v8.png', surprised: 'daeun-campus-surprised-v8.png', blush: 'daeun-campus-blush-v8.png' },
+      winter: { smile: 'daeun-winter-smile-v8.png', sad: 'daeun-winter-sad-v8.png', surprised: 'daeun-winter-surprised-v8.png', blush: 'daeun-winter-blush-v8.png' } } };
   function pick(state, id, context = {}) {
     const gift = state.giftClothes?.[id], month = Number(state.date.slice(5, 7));
     const weatherFits = gift === 'coat' ? month >= 11 || month <= 2 : gift === 'quarter-bermuda' ? month >= 5 && month <= 9 : true;

@@ -1,0 +1,902 @@
+[
+  {
+    "t": 61,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 101,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 152,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 202,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 251,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 301,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 351,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 402,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 452,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 502,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 551,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 601,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 651,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 701,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 751,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 802,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 851,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 901,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 951,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1000,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1052,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1102,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1151,
+    "src": "assets/heroines/daeun-campus-v7.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-v7.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1201,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1251,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1301,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1351,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1400,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1452,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1501,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1552,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1601,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1652,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1702,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1752,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1801,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1852,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1902,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 1950,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2002,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2052,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2102,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2152,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2202,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2252,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2302,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2352,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2402,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "",
+    "complete": false,
+    "w": 0,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2452,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2502,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2552,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2602,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2652,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2701,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2751,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2800,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2851,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2901,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 2952,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3002,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3052,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3101,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3152,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3202,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3252,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3301,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3351,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3401,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3452,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3501,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3551,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3601,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3652,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3701,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3751,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3801,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3851,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3902,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 3952,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4002,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4052,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4102,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4152,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4202,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4252,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4302,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4352,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4400,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4451,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  },
+  {
+    "t": 4500,
+    "src": "assets/heroines/daeun-campus-happy-v8.png",
+    "currentSrc": "file:///Users/junmoyang/Documents/GitHub/Aqua-Luna-Demo/assets/heroines/daeun-campus-happy-v8.png",
+    "complete": true,
+    "w": 1024,
+    "opacity": "1",
+    "width": 398.40625,
+    "height": 597.609375
+  }
+]
