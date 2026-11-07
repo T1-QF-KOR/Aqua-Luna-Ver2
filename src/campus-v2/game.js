@@ -76,6 +76,7 @@
     catch { $('save-warning').hidden = false; return false; }
   }
   function pauseText() { clearTimeout(typingTimer); typingTimer = null; clearTimeout(autoTimer); }
+  const modalScroll = new Map();
   function modal(title, html) {
     pauseText();
     window.AquaAudio.pauseVoice();
@@ -84,11 +85,14 @@
     $('modal').classList.remove('completed-illustration');
     $('modal').classList.remove('settings-modal');
     if (s?.scene && !s.scene.queue[s.scene.index]?.choice) showFullLine();
-    // A different window starts at its top; re-rendering the same window keeps the reader's place.
-    const fresh = !$('modal').open || $('modal-title').textContent !== title;
+    // A new window starts at its top and re-rendering keeps the reader's place. Within one opening,
+    // returning to a list from its confirmation step (shop, save, messages) restores where the list was.
+    const shell = $('modal').querySelector('.modal-shell'), open = $('modal').open, previous = $('modal-title').textContent;
+    if (!open) modalScroll.clear();
+    else if (shell && previous !== title) modalScroll.set(previous, shell.scrollTop);
     $('modal-title').textContent = title;
     $('modal-content').innerHTML = html;
-    if (fresh) { const shell = $('modal').querySelector('.modal-shell'); if (shell) shell.scrollTop = 0; }
+    if (shell && (!open || previous !== title)) shell.scrollTop = open ? modalScroll.get(title) || 0 : 0;
     if (!$('modal').open) $('modal').showModal();
   }
   function closeModal() {
@@ -117,12 +121,19 @@
     if (sc) return bgUrl(state, illustrations[sc.illustration] ? sc.illustration : sc.background || window.AQUA_SCENES[sc.id]?.background || 'room');
     return bgUrl(state, state.slot === 3 || window.AquaAutumn.away(state) ? 'room' : 'campus');
   }
+  // dataset.path is the picture asked for; dataset.shown is the one on screen. The old picture stays
+  // until the new one has loaded and decoded, a failed load keeps it, and only the latest request paints.
+  const readyBg = new Set();
   function setBg(id) {
-    const url = bgUrl(s, id);
-    if ($('backdrop').dataset.path !== url) {
-      $('backdrop').style.backgroundImage = `url("${url}")`;
-      $('backdrop').dataset.path = url;
-    }
+    const url = bgUrl(s, id), back = $('backdrop');
+    if (back.dataset.path === url) return;
+    back.dataset.path = url;
+    const paint = () => { readyBg.add(url); if (back.dataset.path !== url) return; back.style.backgroundImage = `url("${url}")`; back.dataset.shown = url; };
+    if (typeof Image !== 'function' || readyBg.has(url)) { paint(); return; }
+    const next = new Image();
+    next.onload = () => { const decoded = typeof next.decode === 'function' ? next.decode().catch(() => {}) : null; decoded ? decoded.then(paint) : paint(); };
+    next.onerror = () => { if (back.dataset.path === url) back.dataset.path = back.dataset.shown || ''; };
+    next.src = url;
   }
   function applyPrefs() {
     document.body.classList.toggle('reduced', !!prefs.reduced);
@@ -252,7 +263,7 @@
     $('title').hidden = true; $('map').hidden = true; $('scene').hidden = isIntro;
     $('intro').hidden = !isIntro; $('status').hidden = isIntro;
     document.body.classList.toggle('intro-mode', isIntro);
-    setBg(sc.background); updateStatus();
+    setBg(sc.background); updateStatus(); preloadArt(sc);
     window.AquaAudio.play(sc.radioEpisode ? 'radio' : sc.time===3 ? 'night' : 'campus');
     // A gallery replay runs on a throwaway state, so its money, energy and phone stay out of view.
     document.body.classList.toggle('gallery-replay', !!gallery);
@@ -269,7 +280,16 @@
       if (!preloadedFaces.has(url)) { preloadedFaces.add(url); new Image().src = url; }
     }
   }
-  // Warm the picture behind each place on the map, so a first preview never shows the previous backdrop.
+  // Warm the scene's illustrations as it starts, so the picture is usually ready by the time its line arrives.
+  function preloadArt(sc) {
+    if (typeof Image !== 'function') return;
+    for (const line of sc.queue || []) {
+      if (!line?.illustration || !illustrations[line.illustration]) continue;
+      const url = bgUrl(s, line.illustration);
+      if (!preloadedFaces.has(url)) { preloadedFaces.add(url); new Image().src = url; }
+    }
+  }
+  // Warm the picture behind each place on the map, so a first preview is usually ready at once.
   function preloadPlaces() {
     if (typeof Image !== 'function') return;
     for (const place of places) {
