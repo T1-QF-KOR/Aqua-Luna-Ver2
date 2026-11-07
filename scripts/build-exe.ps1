@@ -4,6 +4,23 @@ param([string]$Output = (Join-Path $PSScriptRoot '..\dist\AquaLuna'))
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 
+# Keep the main-game build away from the separate demo and other folders.
+# This script deletes its output before rebuilding, so allow only its own default path.
+$allowedOutput = [System.IO.Path]::GetFullPath((Join-Path $root 'dist\AquaLuna')).TrimEnd('\', '/')
+$requestedOutput = [System.IO.Path]::GetFullPath($Output).TrimEnd('\', '/')
+if (-not [string]::Equals($requestedOutput, $allowedOutput, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw 'The main-game build output must be dist\AquaLuna inside this repository.'
+}
+foreach ($guardPath in @((Join-Path $root 'dist'), $allowedOutput)) {
+    if (Test-Path -LiteralPath $guardPath) {
+        $item = Get-Item -LiteralPath $guardPath -Force
+        if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+            throw "Build output must not use a symbolic link or junction: $guardPath"
+        }
+    }
+}
+$Output = $allowedOutput
+
 if (Test-Path -LiteralPath $Output) {
     if (-not (Test-Path -LiteralPath (Join-Path $Output 'AquaLuna.exe')) -and (Get-ChildItem -LiteralPath $Output -Force | Select-Object -First 1)) {
         throw "$Output is not an earlier Aqua Luna build; refusing to delete it."
