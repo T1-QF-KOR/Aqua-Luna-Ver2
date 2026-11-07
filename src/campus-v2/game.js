@@ -3,8 +3,8 @@
   'use strict';
   const W = window.AquaWorld, R = window.AquaRadio, Story = window.AquaStory, Social = window.AquaSocial;
   const $ = id => document.getElementById(id);
-  const SAVE_KEY = 'aqua-luna-campus-v2', PREF_KEY = `${SAVE_KEY}-prefs`, GALLERY_KEY = `${SAVE_KEY}-endings`, ART_KEY = `${SAVE_KEY}-art`;
-  const GALLERY_TITLE = '추억 갤러리';
+  const SAVE_KEY = 'aqua-luna-campus-v2', PREF_KEY = `${SAVE_KEY}-prefs`, GALLERY_KEY = `${SAVE_KEY}-endings`, ART_KEY = `${SAVE_KEY}-art`, QUICK_KEY = `${SAVE_KEY}-quick`, MEMORY_KEY = `${SAVE_KEY}-scenes`;
+  const GALLERY_TITLE = '추억 갤러리', HISTORY_TITLE = '대사 기록';
   const times = ['아침', '오후', '노을', '밤'];
   const bg = { room: '../campus-v2/bg-v2/room.png', roomDay: '../campus-v2/bg-v2/roomDay.png', roomDayWinter: '../campus-v2/bg-v2/roomDayWinter.png', concert: '../campus-v2/bg-v2/concert.png',
     practice: '../campus-v2/bg-v2/practice.png', rooftop: '../campus-v2/bg-v2/rooftop.png', river: '../campus-v2/bg-v2/river.png',
@@ -39,7 +39,7 @@
   // While a gallery ending plays, s is a throwaway state and the real one waits here unsaved-over.
   let gallery = null, galleryFrom = 'title';
   let prefs = { sfx: false, reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
-    textSpeed: 26, textSize: 24, autoDelay: 2.5, showBond: false, skipUnread:false, bgmVolume:0.5, voiceVolume:0.8 }, auto = false;
+    textSpeed: 26, textSize: 24, autoDelay: 2.5, showBond: false, skipUnread:false, bgmVolume:0.5, voiceVolume:0.8, windowAlpha: .93 }, auto = false;
   try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREF_KEY) || '{}') }; } catch {}
 
   function esc(value) {
@@ -58,7 +58,19 @@
   function readSave(key) {
     try { return window.AquaState.restore(JSON.parse(localStorage.getItem(key))); } catch { return null; }
   }
+  // Lines read and options picked in any playthrough, kept apart from saves so a new run can skip them.
+  const READ_KEY = `${SAVE_KEY}-read`;
+  const hash = text => { let h = 0x811c9dc5; for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 0x01000193); return (h >>> 0).toString(36); };
+  const seenEver = (() => { try { return new Set(JSON.parse(localStorage.getItem(READ_KEY)) || []); } catch { return new Set(); } })();
+  let seenDirty = false;
+  function markEver(text) { const h = hash(text); if (!seenEver.has(h)) { seenEver.add(h); seenDirty = true; } }
+  const readEver = text => seenEver.has(hash(text));
+  function storeEver() {
+    if (!seenDirty) return;
+    try { localStorage.setItem(READ_KEY, JSON.stringify([...seenEver])); seenDirty = false; } catch {}
+  }
   function saveAuto() {
+    storeEver();
     if (!s || gallery) return false;
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); $('save-warning').hidden = true; return true; }
     catch { $('save-warning').hidden = false; return false; }
@@ -71,9 +83,12 @@
     $('modal').classList.remove('illustration-modal');
     $('modal').classList.remove('completed-illustration');
     $('modal').classList.remove('settings-modal');
-    if (s?.scene && !s.scene.queue[s.scene.index]?.choice) $('line').textContent = fullText;
+    if (s?.scene && !s.scene.queue[s.scene.index]?.choice) showFullLine();
+    // A different window starts at its top; re-rendering the same window keeps the reader's place.
+    const fresh = !$('modal').open || $('modal-title').textContent !== title;
     $('modal-title').textContent = title;
     $('modal-content').innerHTML = html;
+    if (fresh) { const shell = $('modal').querySelector('.modal-shell'); if (shell) shell.scrollTop = 0; }
     if (!$('modal').open) $('modal').showModal();
   }
   function closeModal() {
@@ -81,18 +96,29 @@
     if (!document.hidden) window.AquaAudio.resumeVoice();
     scheduleAuto();
   }
-  function setBg(id) {
-    if (s && id === 'campus') {
-      const month = Number(s.date.slice(5, 7));
+  // The picture a state shows for a background id, following its season and time of day.
+  function bgUrl(state, id) {
+    if (state && id === 'campus') {
+      const month = Number(state.date.slice(5, 7));
       if (month >= 12 || month <= 2) id = 'campusWinter';
       else if (month >= 10 && month <= 11) id = 'campusAutumn';
-      else if (s.date >= '2026-05-15' && s.date <= '2026-09-30') id = 'campusSummer';
+      else if (state.date >= '2026-05-15' && state.date <= '2026-09-30') id = 'campusSummer';
     }
-    if (s && id === 'river' && s.date === '2026-11-25') id = 'riverSnow';
-    if (s && (id === 'home' || (id === 'room' && window.AquaAutumn.away(s)))) id = (s.scene?.time ?? s.slot) === 3 ? 'homeNight' : 'home';
+    if (state && id === 'river' && state.date === '2026-11-25') id = 'riverSnow';
+    if (state && (id === 'home' || (id === 'room' && window.AquaAutumn.away(state)))) id = (state.scene?.time ?? state.slot) === 3 ? 'homeNight' : 'home';
     // The room's window shows the moon, so mornings, afternoons and dusk use its daylight version.
-    if (s && id === 'room' && (s.scene?.time ?? s.slot) < 3) id = /-(12|01|02)-/.test(s.date) ? 'roomDayWinter' : 'roomDay';
-    const url = new URL(`assets/environment/${bg[id] || bg.campus}`, document.baseURI).href;
+    if (state && id === 'room' && (state.scene?.time ?? state.slot) < 3) id = /-(12|01|02)-/.test(state.date) ? 'roomDayWinter' : 'roomDay';
+    return new URL(`assets/environment/${bg[id] || bg.campus}`, document.baseURI).href;
+  }
+  // A save slot shows the picture that was on screen when it was saved.
+  function slotBg(state) {
+    const sc = state.scene;
+    if (state.completed && !sc) return bgUrl(state, 'night');
+    if (sc) return bgUrl(state, illustrations[sc.illustration] ? sc.illustration : sc.background || window.AQUA_SCENES[sc.id]?.background || 'room');
+    return bgUrl(state, state.slot === 3 || window.AquaAutumn.away(state) ? 'room' : 'campus');
+  }
+  function setBg(id) {
+    const url = bgUrl(s, id);
     if ($('backdrop').dataset.path !== url) {
       $('backdrop').style.backgroundImage = `url("${url}")`;
       $('backdrop').dataset.path = url;
@@ -101,6 +127,7 @@
   function applyPrefs() {
     document.body.classList.toggle('reduced', !!prefs.reduced);
     document.documentElement.style.setProperty('--reading-size', `${Math.max(20, Math.min(30, prefs.textSize))}px`);
+    document.documentElement.style.setProperty('--window-alpha', String(Math.max(.5, Math.min(1, Number(prefs.windowAlpha) || .93))));
     window.AquaAudio.setVolume(prefs.bgmVolume);
     window.AquaAudio.setVoiceVolume(prefs.voiceVolume);
     try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch {}
@@ -189,6 +216,14 @@
     el.innerHTML = `<small>${card[0]} · ${s.date.slice(0, 4)}</small><strong>${card[1]}</strong><span>${card[2]}</span>`;
     document.body.append(el); setTimeout(() => el.remove?.(), 3200);
   }
+  // A new scene rises out of a short dip to dark, so backgrounds and faces never swap in a single frame.
+  function sceneDip() {
+    if (prefs.reduced) return;
+    document.querySelector?.('.scene-dip')?.remove();
+    const el = document.createElement('div'); el.className = 'scene-dip'; el.setAttribute('aria-hidden', 'true');
+    el.addEventListener('animationend', () => el.remove?.());
+    $('game').append(el);
+  }
   function playScene(id, after, options = {}) {
     const data = options.data || Story.build(id, s);
     pauseText();
@@ -199,6 +234,8 @@
       presentation: data.presentation || null, outing: options.outing || null };
     s.scene.wardrobe = Object.fromEntries(Object.keys(W.people).map(person => [person, window.AquaWardrobe.pick(s, person, s.scene)]));
     if (options.wardrobe) Object.assign(s.scene.wardrobe, options.wardrobe);
+    recordMemory(id, data);
+    if (s.scene.presentation !== 'intro') sceneDip();
     showScene(); seasonCard(id);
   }
   function showScene() {
@@ -217,15 +254,26 @@
     document.body.classList.toggle('intro-mode', isIntro);
     setBg(sc.background); updateStatus();
     window.AquaAudio.play(sc.radioEpisode ? 'radio' : sc.time===3 ? 'night' : 'campus');
-    $('scene-label').textContent = `${W.dateLabel(s.date)}  ·  ${sc.title}`;
+    // A gallery replay runs on a throwaway state, so its money, energy and phone stay out of view.
+    document.body.classList.toggle('gallery-replay', !!gallery);
+    $('scene-label').textContent = `${gallery ? '다시 보기  ·  ' : ''}${W.dateLabel(s.date)}  ·  ${sc.title}`;
     renderLine();
   }
   // Warm every face of an outfit when its wearer appears, so the first change of expression does not flash.
+  // The same set remembers backdrops warmed for the map.
   const preloadedFaces = new Set();
   function preloadFaces(id) {
     if (typeof Image !== 'function') return;
     for (const expr of ['smile', 'sad', 'surprised', 'blush']) {
       const url = window.AquaWardrobe.source(s, id, s.scene || {}, expr);
+      if (!preloadedFaces.has(url)) { preloadedFaces.add(url); new Image().src = url; }
+    }
+  }
+  // Warm the picture behind each place on the map, so a first preview never shows the previous backdrop.
+  function preloadPlaces() {
+    if (typeof Image !== 'function') return;
+    for (const place of places) {
+      const url = bgUrl(s, place.bg);
       if (!preloadedFaces.has(url)) { preloadedFaces.add(url); new Image().src = url; }
     }
   }
@@ -280,16 +328,18 @@
     if (!auto || !s?.scene || document.hidden || $('modal').open || s.scene.queue[s.scene.index]?.choice || typingTimer || window.AquaAudio.isVoicePlaying()) return;
     autoTimer = setTimeout(advance, Math.max(1.2, prefs.autoDelay) * 1000);
   }
+  // The ◇ beside "계속 읽기" pulses once the whole line is on screen.
+  function showFullLine() { $('line').textContent = fullText; $('dialogue').classList.add('line-done'); }
   function typeLine(text) {
-    pauseText(); fullText = text;
-    if (!prefs.textSpeed || prefs.reduced) { $('line').textContent = text; scheduleAuto(); return; }
+    pauseText(); fullText = text; $('dialogue').classList.remove('line-done');
+    if (!prefs.textSpeed || prefs.reduced) { showFullLine(); scheduleAuto(); return; }
     const chars = Array.from(text); let index = 0;
     $('line').textContent = '';
     function tick() {
       index++;
       $('line').textContent = chars.slice(0, index).join('');
       if (index < chars.length) typingTimer = setTimeout(tick, 1000 / Math.max(12, prefs.textSpeed));
-      else { typingTimer = null; scheduleAuto(); }
+      else { typingTimer = null; $('dialogue').classList.add('line-done'); scheduleAuto(); }
     }
     typingTimer = setTimeout(tick, 0);
   }
@@ -303,7 +353,7 @@
     }
     if (line?.time !== undefined) sc.time = line.time;
     if (line?.background) sc.background = line.background;
-    if (line?.title) { sc.title=line.title; $('scene-label').textContent=`${W.dateLabel(s.date)}  ·  ${sc.title}`; }
+    if (line?.title) { sc.title=line.title; $('scene-label').textContent=`${gallery ? '다시 보기  ·  ' : ''}${W.dateLabel(s.date)}  ·  ${sc.title}`; }
     if (line && Object.hasOwn(line, 'illustration')) sc.illustration = illustrations[line.illustration] ? line.illustration : null;
     const art = illustrations[sc.illustration];
     if (art) recordArt(sc.illustration);
@@ -342,8 +392,9 @@
       renderCast(sc.lastCast || [], null);
       line.choice.forEach((option, i) => {
         const button = document.createElement('button');
-        const disabled = !Story.allowed(s, option.requires);
-        button.innerHTML = `<span>0${i + 1}</span>${esc(option.label)}${disabled ? `<small>${esc(option.reason || '아직 고를 수 없는 선택입니다.')}</small>` : ''}`;
+        const disabled = !gallery && !Story.allowed(s, option.requires), picked = readEver(`choice:${sc.id}:${option.label}`);
+        button.classList.toggle('picked', picked);
+        button.innerHTML = `<span>0${i + 1}</span>${esc(option.label)}${picked ? '<i class="picked-mark" title="전에 고른 선택">✓</i>' : ''}${disabled ? `<small>${esc(option.reason || '아직 고를 수 없는 선택입니다.')}</small>` : ''}`;
         button.disabled = disabled; button.onclick = () => choose(i); $('choices').append(button);
       });
       $('scene-progress').textContent = 'CHOICE';
@@ -359,8 +410,9 @@
   function choose(index) {
     if (!s?.scene || $('modal').open || $('scene').hidden) return;
     const sc = s.scene, option = sc.queue[sc.index]?.choice?.[index];
-    if (!option || !Story.allowed(s, option.requires)) return;
-    beep();
+    // A gallery replay keeps nothing, so every choice in it is open.
+    if (!option || (!gallery && !Story.allowed(s, option.requires))) return;
+    beep(); markEver(`choice:${sc.id}:${option.label}`);
     s.history.push({ speaker: '선택', text: option.label });
     const reactions = apply(option.effect) || [];
     sc.queue.splice(sc.index + 1, 0, ...reactions, ...(option.lines || []));
@@ -371,14 +423,14 @@
     if(!s?.scene || $('modal').open)return;
     let scene=s.scene; let guard=0;
     while(s.scene===scene && guard++<1000){const line=scene.queue[scene.index];if(!line||line.choice)break;
-      if(!prefs.skipUnread && !s.readLines?.[lineKey(scene,line)])break;
-      pauseText(); $('line').textContent=fullText; advance();
+      if(!prefs.skipUnread && !s.readLines?.[lineKey(scene,line)] && !readEver(lineKey(scene,line)))break;
+      pauseText(); showFullLine(); advance();
     }
   }
   function advance() {
     if (!s?.scene || $('modal').open || s.scene.queue[s.scene.index]?.choice) return;
-    if (typingTimer) { pauseText(); $('line').textContent = fullText; scheduleAuto(); return; }
-    const line=s.scene.queue[s.scene.index]; s.readLines ||= {}; s.readLines[lineKey(s.scene,line)]=true;
+    if (typingTimer) { pauseText(); showFullLine(); scheduleAuto(); return; }
+    const line=s.scene.queue[s.scene.index], key=lineKey(s.scene,line); s.readLines ||= {}; s.readLines[key]=true; markEver(key);
     beep(); s.scene.index++; renderLine();
   }
   function finishScene() {
@@ -394,7 +446,10 @@
     s.scene = null; $('cast').replaceChildren();
     $('intro').hidden = true; document.body.classList.remove('intro-mode');
     if (sc.after === 'gallery') leaveGallery();
-    else if (sc.after === 'ending') { s.completed = true; showEndingComplete(); }
+    else if (sc.after === 'ending') {
+      s.completed = true;
+      if (s.flags.endRoll) showEndingComplete(); else { s.flags.endRoll = true; saveAuto(); endRoll(showEndingComplete); }
+    }
     else if (sc.after === 'intro') { playScene('prologue', 'prologue'); }
     else if (sc.after === 'visit') { showMap(); const p = places.find(place=>place.id===sc.returnPlace); if(p) locationAction(p); }
     else if (sc.after === 'prologue') { s.date = '2026-03-03'; s.slot = 0; prepare(); }
@@ -484,7 +539,7 @@
   }
   function canUse(p) {
     if (window.AquaAutumn.away(s) && p.id !== 'room') return '고향에 머무는 동안에는 캠퍼스로 갈 수 없어요';
-    if (p.id === 'cafe' && s.workDays.includes(s.date)) return '오늘 근무는 끝났어.';
+    if (p.id === 'cafe' && s.workDays.includes(s.date)) return '오늘 근무는 끝났어요.';
     if (p.id === 'cafe' && ![1, 2].includes(s.slot)) return '오후 또는 노을에 근무할 수 있어요';
     if (p.id === 'cafe' && s.date < '2026-03-11') return '첫 출근은 3월 11일부터예요';
     if (p.id === 'cafe' && ![3, 5, 6].includes(W.weekday(s.date))) return '수·금·토에 근무할 수 있어요';
@@ -506,7 +561,7 @@
     $('map').dataset.weather = window.AquaEncounters.weather(s);
     $('status').hidden = false; $('cast').replaceChildren();
     const away = window.AquaAutumn.away(s);
-    setBg(s.slot === 3 || away ? 'room' : 'campus'); updateStatus(); window.AquaAudio.play(s.slot===3?'night':'campus');
+    setBg(s.slot === 3 || away ? 'room' : 'campus'); updateStatus(); preloadPlaces(); window.AquaAudio.play(s.slot===3?'night':'campus');
     const afterSchool=s.slot===1&&W.hasClass(s.date);
     $('map-title').textContent = s.slot === 3 ? '하루의 끝' : away ? '고향에서 보내는 연휴' : afterSchool?'수업이 끝나고, 어디로 갈까?':`${times[s.slot]}, 어디로 갈까?`;
     $('map-desc').textContent = away ? '9월 26일까지 고향에 머무릅니다.' : s.slot === 3 ? '내 방에서 보내는 작은 시간.' : afterSchool?'오후와 노을, 장소를 먼저 둘러보고 오늘의 시간을 고르자.':'오늘의 남은 시간을 골라 보자.';
@@ -876,12 +931,36 @@
 
   function showTitle() {
     if (gallery) { s = gallery.state; gallery = null; }
+    document.body.classList.remove('gallery-replay');
     document.body.classList.remove('illustration-mode'); $('scene-art').hidden = true;
     pauseText(); window.AquaAudio.stopVoice(); voicePosition = null; auto = false;
     $('intro').hidden = true; document.body.classList.remove('intro-mode');
     document.body.classList.remove('map-mode'); mapSelection = null;
     $('title').hidden = false; $('map').hidden = true; $('scene').hidden = true; $('status').hidden = true;
-    $('cast').replaceChildren(); setBg('night'); $('continue').disabled = !readSave(SAVE_KEY);
+    $('cast').replaceChildren(); setBg('night');
+    // "이어하기" names the day and scene it will return to.
+    const saved = readSave(SAVE_KEY), where = saved && (saved.completed && !saved.scene ? '결말을 본 기록' : saved.scene?.title || times[saved.scene?.time ?? saved.slot]);
+    $('continue').disabled = !saved;
+    $('continue').innerHTML = `<span>이어하기${saved ? `<small class="continue-note">${esc(W.dateLabel(saved.date))} · ${esc(where)}</small>` : ''}</span><span>→</span>`;
+    // Once an ending is seen, the title keeps count of what this player has collected.
+    const book = readGallery(), endings = Object.keys(window.AquaEndings.titles), seenEndings = endings.filter(id => galleryEntry(book, id)).length;
+    const scenes = readMemories(), seenScenes = memories.filter(id => scenes[id]?.data?.lines).length;
+    if ($('build-note') && seenEndings) $('build-note').textContent = `THE FIRST YEAR · 결말 ${seenEndings} / ${endings.length} · 명장면 ${seenScenes} / ${memories.length} · 일러스트 ${readArt().length} / ${Object.keys(illustrations).length}`;
+  }
+  // The first time a run reaches its ending, the credits roll before the closing screen.
+  let endRollFinish = null;
+  function endRoll(done) {
+    $('scene').hidden = true; $('map').hidden = true; $('status').hidden = true; setBg('night');
+    window.AquaAudio.play('night'); recordEnding(s.endingId || window.AquaEndings.select(s));
+    const cast = [...Object.values(W.people).map(person => person.name), '민재', '강이현'];
+    const el = document.createElement('div');
+    el.className = 'end-roll'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', '엔딩 크레딧');
+    el.innerHTML = `<div class="end-roll-track"><section><h2>AQUA <em>LUNA</em></h2><p class="roll-sub">한여울의 첫해</p><p class="roll-ending">${esc(window.AquaEndings.titles[s.endingId] || '')}</p></section><section><small>등장인물</small>${cast.map(name => `<p>${esc(name)}</p>`).join('')}</section><section><small>음악</small><p>Tanner Helland</p><p class="roll-note">Familiar Roads · Leaving Millie (live piano) · A Memory Away</p><p class="roll-note">CC BY 4.0</p></section><section><small>글꼴</small><p>Pretendard · Gowun Batang</p><p class="roll-note">SIL Open Font License</p></section><section><small>그리고</small><p class="roll-player">${esc(s.name)}</p></section><section class="roll-last"><p>이 한 해를 함께 보내 주셔서 고맙습니다.</p></section></div><button class="end-roll-skip">계속 →</button>`;
+    const finish = () => { if (endRollFinish !== finish) return; endRollFinish = null; el.remove?.(); done(); };
+    endRollFinish = finish;
+    el.addEventListener('click', finish);
+    el.addEventListener('animationend', event => { if (event.animationName === 'end-roll') finish(); });
+    $('game').append(el);
   }
   function showEndingComplete() {
     pauseText(); $('map').hidden = true; $('scene').hidden = true; $('intro').hidden = true;
@@ -922,6 +1001,25 @@
     book[id] = { id, name: s.name, first, data, wardrobe: Object.fromEntries(Object.keys(W.people).map(person => [person, window.AquaWardrobe.pick(s, person, context)])) };
     try { localStorage.setItem(GALLERY_KEY, JSON.stringify(book)); } catch {}
   }
+  // Story moments that can be watched again from the gallery once seen in any run, in calendar order.
+  const memories = ['entrance', 'daeunMeet', 'seojinMeet', 'firstRadio', 'festival', 'seojinPool', 'daeunBirthday', 'nariVoice', 'nariBirthday',
+    'autumnFestival', 'nariRecord', 'seojinConfess', 'daeunConfess', 'holidayXmasNight', 'nariNewYear', 'winterShowcase', 'lastBroadcast'];
+  function readMemories() {
+    try { const book = JSON.parse(localStorage.getItem(MEMORY_KEY) || '{}'); return book && typeof book === 'object' && !Array.isArray(book) ? book : {}; }
+    catch { return {}; }
+  }
+  function recordMemory(id, data) {
+    if (!s || gallery || data.replay || !memories.includes(id)) return;
+    const book = readMemories(); if (book[id]?.data?.lines) return;
+    book[id] = { name: s.name, date: s.date, time: s.scene.time, data: structuredClone(data), wardrobe: { ...s.scene.wardrobe } };
+    try { localStorage.setItem(MEMORY_KEY, JSON.stringify(book)); } catch {}
+  }
+  function replayMemory(id) {
+    const entry = readMemories()[id]; if (!entry?.data?.lines) return;
+    gallery = { state: s, from: galleryFrom };
+    s = window.AquaState.initial(entry.name, '물고기'); s.date = entry.date; s.slot = entry.time ?? 1;
+    closeModal(); playScene(id, 'gallery', { data: structuredClone(entry.data), wardrobe: entry.wardrobe });
+  }
   function galleryMenu(from = 'title') {
     galleryFrom = from;
     const book = readGallery(), ids = Object.keys(window.AquaEndings.titles), seen = ids.filter(id => galleryEntry(book, id)).length;
@@ -930,11 +1028,18 @@
       return entry ? `<button data-ending="${id}" class="ending-card"><small>${no} · ${esc(entry.first)}</small><strong>${esc(window.AquaEndings.titles[id])}</strong><em>${esc(particle(entry.name, '이', ''))}의 첫해 · 다시 보기 →</em></button>`
         : `<div class="ending-card locked"><small>${no}</small><strong>？？？</strong><em>아직 보지 못한 결말</em></div>`;
     }).join('');
+    const scenes = readMemories(), seenScenes = memories.filter(id => scenes[id]?.data?.lines).length;
+    const sceneCards = memories.map((id, i) => {
+      const entry = scenes[id], no = `SCENE ${String(i + 1).padStart(2, '0')}`;
+      return entry?.data?.lines ? `<button data-memory="${id}" class="ending-card"><small>${no} · ${esc(W.dateLabel(entry.date))}</small><strong>${esc(entry.data.title || '')}</strong><em>다시 보기 →</em></button>`
+        : `<div class="ending-card locked"><small>${no}</small><strong>？？？</strong><em>아직 보지 못한 장면</em></div>`;
+    }).join('');
     const arts = readArt(), artCards = Object.entries(illustrations).map(([id, item]) => arts.includes(id)
       ? `<button data-gallery-art="${id}" class="illustration-card"><img src="assets/environment/${bg[id]}" alt="${esc(item.alt)}"><span><small>${W.people[item.person].short}</small><strong>${item.title}</strong></span></button>`
       : '<div class="illustration-card locked"><span><small>？？？</small><strong>아직 보지 못한 장면</strong></span></div>').join('');
-    modal(GALLERY_TITLE, `<p class="modal-text">본 장면과 결말은 새로 시작해도 이곳에 남습니다. 결말은 고르면 처음부터 다시 볼 수 있어요.</p><h3 class="gallery-heading">장면 일러스트 <span>${arts.length} / ${Object.keys(illustrations).length}</span></h3><div class="illustration-grid gallery-art">${artCards}</div><h3 class="gallery-heading">결말 <span>${seen} / ${ids.length}</span></h3><div class="ending-gallery">${cards}</div>${from === 'ending' ? '<button class="option-button" id="gallery-ending-back">결말 화면으로 돌아가기</button>' : ''}`);
+    modal(GALLERY_TITLE, `<p class="modal-text">본 장면과 결말은 새로 시작해도 이곳에 남습니다. 명장면과 결말은 고르면 처음부터 다시 볼 수 있어요.</p><h3 class="gallery-heading">장면 일러스트 <span>${arts.length} / ${Object.keys(illustrations).length}</span></h3><div class="illustration-grid gallery-art">${artCards}</div><h3 class="gallery-heading">명장면 <span>${seenScenes} / ${memories.length}</span></h3><div class="ending-gallery">${sceneCards}</div><h3 class="gallery-heading">결말 <span>${seen} / ${ids.length}</span></h3><div class="ending-gallery">${cards}</div>${from === 'ending' ? '<button class="option-button" id="gallery-ending-back">결말 화면으로 돌아가기</button>' : ''}`);
     $('modal-content').querySelectorAll('[data-ending]').forEach(button => button.onclick = () => replayGallery(button.dataset.ending));
+    $('modal-content').querySelectorAll('[data-memory]').forEach(button => button.onclick = () => replayMemory(button.dataset.memory));
     $('modal-content').querySelectorAll('[data-gallery-art]').forEach(button => button.onclick = () => galleryArt(button.dataset.galleryArt));
     if (from === 'ending') $('gallery-ending-back').onclick = showEndingComplete;
   }
@@ -994,22 +1099,26 @@
   }
   function slots(confirmOverwrite = null) {
     if (gallery) { toast('결말을 다시 보는 동안에는 저장하거나 불러올 수 없어요.'); return; }
-    const rows = [1, 2, 3, 4, 5, 6].map(i => {
-      const key = `${SAVE_KEY}-slot-${i}`, value = readSave(key);
+    const describe = (key, value) => {
       let occupied = true;
       try { occupied = localStorage.getItem(key) !== null; } catch {}
-      const description = value ? `${esc(W.dateLabel(value.date))} · ${esc(times[value.slot])}</small><small>${esc(value.completed ? '결말을 본 기록' : value.scene?.title || '자유 시간')}${value.savedAt ? ` · ${esc(value.savedAt)}` : ''}` : occupied ? '읽을 수 없는 저장 기록' : '비어 있음';
+      return value ? `${esc(W.dateLabel(value.date))} · ${esc(times[value.scene?.time ?? value.slot])}</small><small>${esc(value.completed ? '결말을 본 기록' : value.scene?.title || '자유 시간')}${value.savedAt ? ` · ${esc(value.savedAt)}` : ''}` : occupied ? '읽을 수 없는 저장 기록' : '비어 있음';
+    };
+    const quick = readSave(QUICK_KEY);
+    const thumb = value => value ? ` has-thumb" style="--thumb:url(&quot;${esc(slotBg(value))}&quot;)` : '';
+    const quickRow = `<div class="slot quick-slot${thumb(quick)}"><span>빠른 저장 · F5 저장 · F9 불러오기<small>${describe(QUICK_KEY, quick)}</small></span><button data-load="quick" ${quick ? '' : 'disabled'}>불러오기</button></div>`;
+    const rows = quickRow + [1, 2, 3, 4, 5, 6].map(i => {
+      const key = `${SAVE_KEY}-slot-${i}`, value = readSave(key), description = describe(key, value);
       const question = confirmOverwrite === i ? '<small role="status">이 슬롯을 덮어쓸까요?</small>' : '';
       const actions = confirmOverwrite === i
         ? `<button data-confirm-save="${i}">덮어쓰기</button><button data-cancel-save="${i}">취소</button>`
         : `<button data-save="${i}" ${s ? '' : 'disabled'}>저장</button><button data-load="${i}" ${value ? '' : 'disabled'}>불러오기</button>`;
-      return `<div class="slot"><span>슬롯 ${i}<small>${description}</small>${question}</span>${actions}</div>`;
+      return `<div class="slot${thumb(value)}"><span>슬롯 ${i}<small>${description}</small>${question}</span>${actions}</div>`;
     }).join('');
     modal('저장과 불러오기', `<p class="modal-text">대사와 선택지의 진행 위치까지 저장됩니다. 파일로 보관하면 다른 실행 환경에서도 가져올 수 있습니다.</p><div class="modal-grid slot-grid">${rows}</div><div class="modal-actions"><button class="option-button" id="export-save" ${s ? '' : 'disabled'}>파일 내보내기</button><button class="option-button" id="import-save">파일 가져오기</button></div><input type="file" id="save-file" accept=".json,application/json" hidden>`);
     const writeSlot = index => {
       if (!s) return;
-      const now = new Date(), savedAt = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-      try { localStorage.setItem(`${SAVE_KEY}-slot-${index}`, JSON.stringify({ ...s, savedAt })); slots(); toast('저장했습니다.'); }
+      try { localStorage.setItem(`${SAVE_KEY}-slot-${index}`, JSON.stringify({ ...s, savedAt: savedAt() })); slots(); toast('저장했습니다.'); }
       catch { toast('저장 공간이 부족해요. 파일 내보내기로 보관해 주세요.'); }
     };
     $('modal-content').querySelectorAll('[data-save]').forEach(button => button.onclick = () => {
@@ -1023,7 +1132,7 @@
     // Default keyboard focus to the non-destructive action after the row changes.
     if (confirmOverwrite !== null) $('modal-content').querySelectorAll('[data-cancel-save]')[0]?.focus?.();
     $('modal-content').querySelectorAll('[data-load]').forEach(button => button.onclick = () => {
-      const state = readSave(`${SAVE_KEY}-slot-${button.dataset.load}`);
+      const state = readSave(button.dataset.load === 'quick' ? QUICK_KEY : `${SAVE_KEY}-slot-${button.dataset.load}`);
       if (state) confirmLoad(state, '저장을 불러왔습니다.');
     });
     $('export-save').onclick = exportSave;
@@ -1039,6 +1148,21 @@
       finally { event.target.value = ''; }
     };
   }
+  function savedAt() {
+    const now = new Date();
+    return `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  }
+  // F5 keeps one quick save beside the six slots; F9 asks before replacing the current run with it.
+  function quickSave() {
+    if (!s || gallery) return;
+    try { localStorage.setItem(QUICK_KEY, JSON.stringify({ ...s, savedAt: savedAt() })); toast('빠르게 저장했어요. F9로 불러올 수 있어요.'); }
+    catch { toast('저장 공간이 부족해요. 파일 내보내기로 보관해 주세요.'); }
+  }
+  function quickLoad() {
+    if (gallery) { toast('결말을 다시 보는 동안에는 저장하거나 불러올 수 없어요.'); return; }
+    const state = readSave(QUICK_KEY);
+    if (state) confirmLoad(state, '빠른 저장을 불러왔습니다.'); else toast('빠른 저장 기록이 없어요. F5로 저장할 수 있어요.');
+  }
   function exportSave() {
     if (!s || gallery) return;
     const blob = new Blob([JSON.stringify(s, null, 2)], { type: 'application/json' });
@@ -1048,13 +1172,13 @@
   }
   function settingsMenu() {
     const voiceControl = Object.keys(window.AquaAudio.voiceTracks).length ? `<div class="form-row"><label for="voice-volume">목소리 음량</label><input id="voice-volume" type="range" min="0" max="100" value="${Math.round(prefs.voiceVolume*100)}"></div>` : '';
-    modal('읽기와 연출', `<div class="settings-grid"><div class="form-row"><label for="text-size">대사 글자 크기</label><select id="text-size">${[20, 24, 28].map(v => `<option value="${v}" ${prefs.textSize === v ? 'selected' : ''}>${v}px</option>`).join('')}</select></div><div class="form-row"><label for="text-speed">대사가 나타나는 속도</label><select id="text-speed">${[[0, '바로 표시'], [26, '천천히'], [50, '빠르게']].map(([v, text]) => `<option value="${v}" ${prefs.textSpeed === v ? 'selected' : ''}>${text}</option>`).join('')}</select></div><div class="form-row"><label for="auto-delay">자동 진행 · 대사 표시 뒤 기다리는 시간</label><select id="auto-delay">${[1.5, 2.5, 4].map(v => `<option value="${v}" ${prefs.autoDelay === v ? 'selected' : ''}>${v}초</option>`).join('')}</select></div><div class="form-row"><label for="bgm-volume">배경 음악 음량</label><input id="bgm-volume" type="range" min="0" max="100" value="${Math.round(prefs.bgmVolume*100)}"></div>${voiceControl}</div><div class="modal-grid settings-checks"><label class="check-row"><input id="skip-unread" type="checkbox" ${prefs.skipUnread ? 'checked' : ''}>읽지 않은 대사도 건너뛰기</label><label class="check-row"><input id="sfx-setting" type="checkbox" ${prefs.sfx ? 'checked' : ''}>선택 효과음</label><label class="check-row"><input id="motion-setting" type="checkbox" ${prefs.reduced ? 'checked' : ''}>움직임 줄이기 · 대사 바로 표시</label><label class="check-row"><input id="bond-setting" type="checkbox" ${prefs.showBond ? 'checked' : ''}>관계 노트에 마음 수치 표시</label></div><div class="modal-actions settings-actions"><button class="option-button" id="apply-settings">설정 적용</button><button class="option-button" id="game-guide">게임 안내</button><button class="option-button" id="music-credits">음악 출처</button></div><p class="modal-text">Space / Enter · 대사 완성 또는 넘기기 · 숫자키 · 선택지<br>H 또는 오른쪽 클릭 · 대화창 숨기기 · Esc · 창 닫기</p>`);
+    modal('읽기와 연출', `<div class="settings-grid"><div class="form-row"><label for="text-size">대사 글자 크기</label><select id="text-size">${[20, 24, 28].map(v => `<option value="${v}" ${prefs.textSize === v ? 'selected' : ''}>${v}px</option>`).join('')}</select></div><div class="form-row"><label for="text-speed">대사가 나타나는 속도</label><select id="text-speed">${[[0, '바로 표시'], [26, '천천히'], [50, '빠르게']].map(([v, text]) => `<option value="${v}" ${prefs.textSpeed === v ? 'selected' : ''}>${text}</option>`).join('')}</select></div><div class="form-row"><label for="auto-delay">자동 진행 · 대사 표시 뒤 기다리는 시간</label><select id="auto-delay">${[1.5, 2.5, 4].map(v => `<option value="${v}" ${prefs.autoDelay === v ? 'selected' : ''}>${v}초</option>`).join('')}</select></div><div class="form-row"><label for="window-alpha">대화창 진하기</label><select id="window-alpha">${[[.93, '진하게 · 기본'], [.8, '중간'], [.62, '옅게 · 배경이 잘 보임']].map(([v, text]) => `<option value="${v}" ${prefs.windowAlpha === v ? 'selected' : ''}>${text}</option>`).join('')}</select></div><div class="form-row"><label for="bgm-volume">배경 음악 음량</label><input id="bgm-volume" type="range" min="0" max="100" value="${Math.round(prefs.bgmVolume*100)}"></div>${voiceControl}</div><div class="modal-grid settings-checks"><label class="check-row"><input id="skip-unread" type="checkbox" ${prefs.skipUnread ? 'checked' : ''}>읽지 않은 대사도 건너뛰기</label><label class="check-row"><input id="sfx-setting" type="checkbox" ${prefs.sfx ? 'checked' : ''}>선택 효과음</label><label class="check-row"><input id="motion-setting" type="checkbox" ${prefs.reduced ? 'checked' : ''}>움직임 줄이기 · 대사 바로 표시</label><label class="check-row"><input id="bond-setting" type="checkbox" ${prefs.showBond ? 'checked' : ''}>관계 노트에 마음 수치 표시</label></div><div class="modal-actions settings-actions"><button class="option-button" id="apply-settings">설정 적용</button><button class="option-button" id="game-guide">게임 안내</button><button class="option-button" id="music-credits">음악 출처</button></div><p class="modal-text">Space / Enter · 대사 완성 또는 넘기기 · 숫자키 · 선택지<br>마우스 휠 위 · 대사 기록 · 휠 아래 · 넘기기<br>H 또는 오른쪽 클릭 · 대화창 숨기기 · F5 빠른 저장 · F9 빠른 불러오기 · Esc · 창 닫기</p>`);
     $('modal').classList.add('settings-modal');
     $('game-guide').onclick = gameGuide;
     $('music-credits').onclick = musicCredits;
     $('apply-settings').onclick = () => {
       prefs.textSize = Number($('text-size').value); prefs.textSpeed = Number($('text-speed').value);
-      prefs.autoDelay = Number($('auto-delay').value); prefs.sfx = $('sfx-setting').checked;
+      prefs.autoDelay = Number($('auto-delay').value); prefs.sfx = $('sfx-setting').checked; prefs.windowAlpha = Number($('window-alpha').value);
       prefs.skipUnread = $('skip-unread').checked; prefs.bgmVolume = Number($('bgm-volume').value)/100;
       if ($('voice-volume')) prefs.voiceVolume = Number($('voice-volume').value)/100;
       prefs.reduced = $('motion-setting').checked; prefs.showBond = $('bond-setting').checked;
@@ -1062,7 +1186,7 @@
     };
   }
   function gameGuide() {
-    modal('한여울에서 보내는 하루', `<div class="modal-body"><p class="modal-text"><b>학교와 자유 시간</b><br>수업이 있는 날에는 학교 이야기를 먼저 봅니다. 이후 오른쪽에서 장소를 골라 풍경과 기본 활동을 살펴본 다음 방문할 수 있습니다. 주말과 방학은 일정이 다릅니다.</p><p class="modal-text"><b>우연한 만남</b><br>누구를 만날지는 날짜와 시간, 각자의 일정에 따라 달라집니다. 방문하기 전에는 만날 사람을 표시하지 않습니다.</p><p class="modal-text"><b>밤과 휴대폰</b><br>밤에는 라디오를 듣거나 사연을 보내고 하루를 마무리할 수 있습니다. 휴대폰에서 메시지, 달력, 추억과 저장을 열어 보세요.</p><p class="modal-text"><b>조작과 저장</b><br>클릭 또는 Enter·Space로 대사를 진행하고 숫자키로 선택합니다. AUTO는 자동 진행, SKIP은 기본 설정에서 읽은 대사를 건너뜁니다. 저장 메뉴에서 슬롯과 파일 백업을 사용할 수 있습니다.</p></div><button class="option-button" id="guide-back">설정으로 돌아가기</button>`);
+    modal('한여울에서 보내는 하루', `<div class="modal-body"><p class="modal-text"><b>학교와 자유 시간</b><br>수업이 있는 날에는 학교 이야기를 먼저 봅니다. 이후 오른쪽에서 장소를 골라 풍경과 기본 활동을 살펴본 다음 방문할 수 있습니다. 주말과 방학은 일정이 다릅니다.</p><p class="modal-text"><b>우연한 만남</b><br>누구를 만날지는 날짜와 시간, 각자의 일정에 따라 달라집니다. 방문하기 전에는 만날 사람을 표시하지 않습니다.</p><p class="modal-text"><b>밤과 휴대폰</b><br>밤에는 라디오를 듣거나 사연을 보내고 하루를 마무리할 수 있습니다. 휴대폰에서 메시지, 달력, 추억과 저장을 열어 보세요.</p><p class="modal-text"><b>조작과 저장</b><br>클릭 또는 Enter·Space로 대사를 진행하고 숫자키로 선택합니다. 마우스 휠을 위로 굴리면 지난 대사를 다시 볼 수 있습니다. AUTO는 자동 진행, SKIP은 기본 설정에서 읽은 대사를 건너뜁니다. 저장 메뉴에서 슬롯과 파일 백업을 사용할 수 있고, F5로 빠르게 저장한 뒤 F9로 불러올 수 있습니다.</p></div><button class="option-button" id="guide-back">설정으로 돌아가기</button>`);
     $('guide-back').onclick = settingsMenu;
   }
   function musicCredits() {
@@ -1071,7 +1195,10 @@
   }
   function historyMenu() {
     if (!s) { toast('아직 읽은 대사가 없어요.'); return; }
-    modal('대사 기록', `<div class="modal-body">${s.history.map(line => `<div class="history-line"><b>${esc(line.speaker)}</b>${esc(line.text)}</div>`).join('') || '아직 읽은 대사가 없습니다.'}</div>`);
+    modal(HISTORY_TITLE, `<div class="modal-body">${s.history.map(line => `<div class="history-line${line.speaker === '선택' ? ' history-choice' : ''}"><b>${esc(line.speaker)}</b>${esc(line.text)}</div>`).join('') || '아직 읽은 대사가 없습니다.'}</div>`);
+    // Open on the latest line, the one the player just read.
+    const shell = $('modal').querySelector('.modal-shell');
+    if (shell) shell.scrollTop = shell.scrollHeight;
   }
   $('start').onclick = startForm;
   $('continue').onclick = () => { const state = readSave(SAVE_KEY); if (state) resume(state); };
@@ -1102,17 +1229,38 @@
   function hideUi(hidden) {
     if (hidden && (!s?.scene || $('scene').hidden || $('modal').open)) return;
     document.body.classList.toggle('ui-hidden', hidden);
-    if (hidden) { pauseText(); $('line').textContent = fullText; } else scheduleAuto();
+    if (hidden) { pauseText(); showFullLine(); } else scheduleAuto();
   }
   document.addEventListener('click', event => {
     if (!document.body.classList.contains('ui-hidden')) return;
     event.stopPropagation(); event.preventDefault?.(); hideUi(false);
   }, true);
+  // Mouse wheel: up opens the backlog and down reads on, once per gesture. A gesture ends when the
+  // wheel rests for 250ms, so a long scroll or trackpad momentum never acts twice. At the bottom of
+  // the backlog a new downward gesture closes it.
+  let wheelAt = 0;
+  document.addEventListener('wheel', event => {
+    const now = Date.now(), fresh = now - wheelAt > 250;
+    wheelAt = now;
+    if (!fresh || !event.deltaY) return;
+    if ($('modal').open) {
+      const shell = $('modal').querySelector('.modal-shell');
+      if ($('modal-title').textContent === HISTORY_TITLE && event.deltaY > 0 && shell && shell.scrollTop + shell.clientHeight >= shell.scrollHeight - 2) closeModal();
+      return;
+    }
+    if (!s?.scene || $('scene').hidden || document.body.classList.contains('ui-hidden')) return;
+    if (event.deltaY < 0) historyMenu(); else advance();
+  }, { passive: true });
   $('scene').addEventListener('contextmenu', event => { event.preventDefault(); hideUi(!document.body.classList.contains('ui-hidden')); });
   document.addEventListener('keydown', event => {
     unlockAudio();
+    if (endRollFinish) { if ([' ', 'Enter', 'Escape'].includes(event.key)) { event.preventDefault(); endRollFinish(); } return; }
     if (document.body.classList.contains('ui-hidden')) { event.preventDefault(); hideUi(false); return; }
     if ((event.key === 'h' || event.key === 'H') && !event.target.closest('input, select, textarea, [contenteditable="true"]')) { hideUi(true); return; }
+    if ((event.key === 'F5' || event.key === 'F9') && !$('modal').open && !event.repeat) {
+      if (event.key === 'F9') { event.preventDefault(); quickLoad(); return; }
+      if (s && $('title').hidden) { event.preventDefault(); quickSave(); return; }
+    }
     if ($('modal').open || !s?.scene || ($('scene').hidden && $('intro').hidden) || event.target.closest('input, select, textarea, [contenteditable="true"]')) return;
     if (event.repeat) return;
     // Let focused controls receive their native keyboard activation instead of
@@ -1123,7 +1271,7 @@
     else if (/^[1-6]$/.test(event.key)) { event.preventDefault(); choose(Number(event.key) - 1); }
   });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { pauseText(); window.AquaAudio.pauseVoice(); if (s?.scene) $('line').textContent = fullText; saveAuto(); }
+    if (document.hidden) { pauseText(); window.AquaAudio.pauseVoice(); if (s?.scene) showFullLine(); saveAuto(); }
     else { if (!$('modal').open) window.AquaAudio.resumeVoice(); scheduleAuto(); }
   });
   applyPrefs(); showTitle();

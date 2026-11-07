@@ -12,12 +12,12 @@ for(const who of ['daeun','seojin']) {const s=initial();assert.ok(L.answer(s,who
  const s=initial();L.answer(s,'nari','accept');check(s,'nari-love');
  Object.assign(s.flags,{nariSelfChoice:3,nariIdentityShared:true});s.cards=['가사 없는 악보','멘트 수첩','관객 한 명','두 장의 종이'];
  let lines=check(s,'nari-true').lines.map(line=>line.text).join(' ');
- assert.ok(!lines.includes('내가 고른 다음 얘기도 들어 준다고 했잖아'));assert.ok(lines.includes('이번에는 완성되기 전에'));
+ assert.ok(!lines.includes('내가 고른 얘기, 끝까지 들어 준다고 했잖아'));assert.ok(lines.includes('이번에는 완성되기 전에'));
  assert.ok(!lines.includes('어젯밤 방송, 끝까지 들어 줘서'));assert.ok(lines.includes('먼저 네 얼굴 보고 말하고 싶었어'));
  s.radio.listened.push('radio-2027-02-25');lines=check(s,'nari-true').lines.map(line=>line.text).join(' ');
  assert.ok(lines.includes('어젯밤 방송, 끝까지 들어 줘서'));assert.ok(!lines.includes('먼저 네 얼굴 보고 말하고 싶었어'));
  s.flags.nariDecisionTrusted=true;lines=check(s,'nari-true').lines.map(line=>line.text).join(' ');
- assert.ok(lines.includes('내가 고른 다음 얘기도 들어 준다고 했잖아'));assert.ok(!lines.includes('이번에는 완성되기 전에'));
+ assert.ok(lines.includes('내가 고른 얘기, 끝까지 들어 준다고 했잖아'));assert.ok(!lines.includes('이번에는 완성되기 전에'));
 }
 for(const who of ['nari','daeun','seojin']){const s=initial();L.answer(s,who,'friend');check(s,`${who}-friend`);}
 {

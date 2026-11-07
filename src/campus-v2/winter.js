@@ -102,7 +102,7 @@
       n('연습실 문틈으로 짧은 음이 새어 나왔다. 나리는 악보 위에 휴대폰을 올려두고 있었다.', ['nari']),
       say('나리', '회사에서 다시 연락 왔어. 이번엔 내가 쓰는 곡을 어떻게 할 건지 물어보려고.'),
       say('나리', '그때 명함 뒤에 적었던 질문, 아직 가지고 있어.', undefined, { when: { flag: 'nariAskedOwnSongs' } }),
-      say('나리', '네가 고른 다음 얘기도 듣겠다고 했잖아. 아직 고르기 전인데도 얘기해도 돼?', undefined, { when: { flag: 'nariDecisionTrusted' } }),
+      say('나리', '내가 고른 얘기, 끝까지 들어 준다고 했잖아. 아직 고르기 전인데도 얘기해도 돼?', undefined, { when: { flag: 'nariDecisionTrusted' } }),
       say('나리', '지난번에 내 대답 들었지. 오늘은 노래 얘기부터 할래.', undefined, { when: { lover: 'nari' } }),
       say('나리', '계약서를 받는다고 바로 사인하는 건 아니잖아. 내가 확인할 수 있는 것부터 적고 있어.'),
       choose(

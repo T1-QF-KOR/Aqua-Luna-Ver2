@@ -6,7 +6,7 @@ const html=await fs.readFile(new URL('index.html',root),'utf8');
 for(const [,path]of html.matchAll(/<script defer src="([^"]+)">/g))if(!path.endsWith('/game.js'))vm.runInContext(await fs.readFile(new URL(path,root),'utf8'),C);
 const {AquaState:State,AquaWorld:W,AquaEconomy:E,AquaRelationships:B,AquaStory:Story}=C;
 const s=State.initial();s.date='2026-05-27';s.slot=1;s.met=['nari','daeun','seojin'];
-assert.equal(E.workReason(s),'');s.workDays.push(s.date);assert.equal(E.workReason(s),'오늘 근무는 끝났어.');
+assert.equal(E.workReason(s),'');s.workDays.push(s.date);assert.equal(E.workReason(s),'오늘 근무는 끝났어요.');
 s.slot=0;s.workDays=[];assert.ok(E.workReason(s));
 s.flags.crossRainDate=s.date;s.seen.push('crossRain');s.bond.seojin=54;B.ensure(s).pending.seojin='seojinRain';s.knowledge=15;
 assert.ok(!Story.eligible(s,'cafe').some(r=>r.id==='seojinRain'));

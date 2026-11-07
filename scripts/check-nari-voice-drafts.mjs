@@ -123,7 +123,7 @@ for (const answer of ['accept', 'decline', 'consider']) {
   checkHoliday(H.buildInvite(s, 'nari').lines, 'Christmas invitation');
   checkHoliday(H.apply(s, { action: 'invite', person: 'nari', answer }), `invitation ${answer}`);
 }
-for (const answer of ['first', 'friend', 'defer']) {
+for (const answer of ['first', 'answer', 'friend', 'defer']) {
   const s = holidayState();
   if (answer === 'defer') { L.answer(s, 'daeun', 'pending'); L.answer(s, 'seojin', 'pending'); }
   checkHoliday(H.apply(s, { action: 'meetNari' }), 'Christmas meeting');
@@ -137,6 +137,29 @@ for (const config of [{}, { knowsLuna: true }, { knowsLuna: true, boothPeeked: t
   spokenLines(H.apply(s, { action: 'meetNari' }), pilotHolidayLines);
   spokenLines(H.apply(s, { action: 'listenNari' }), pilotHolidayLines);
   spokenLines(H.apply(s, { action: 'nariAnswer', answer: 'first' }), pilotHolidayLines);
+}
+// Answering Nari's own confession must not repeat her "나도 좋아해" back to her.
+for (const together of [false, true]) {
+  const s = holidayState();
+  if (together) {
+    // Two disclosed lovers who both agreed to a group Christmas, as in the holiday tests.
+    Object.assign(s.bond, { daeun: 85, seojin: 85 });
+    s.date = '2026-11-25'; L.answer(s, 'seojin', 'accept');
+    s.date = '2026-12-18'; L.answer(s, 'daeun', 'disclose');
+    s.date = '2026-12-19'; L.agree(s);
+    s.date = '2026-12-21';
+    for (const id of ['daeun', 'seojin', 'nari']) {
+      H.apply(s, { action: 'offer', person: id }); H.apply(s, { action: 'invite', person: id, answer: 'group' });
+    }
+    s.date = '2026-12-24'; H.morning(s);
+  }
+  spokenLines(H.apply(s, { action: 'meetNari' }), pilotHolidayLines);
+  spokenLines(H.apply(s, { action: 'listenNari' }), pilotHolidayLines);
+  const lines = H.apply(s, { action: 'nariAnswer', answer: 'answer' });
+  assert.ok(!spokenLines(lines).has('나도 좋아해. 이제 떨려도 되지? 무대 아니니까.'), 'Nari repeated the player reply');
+  assert.ok([...spokenLines(lines)].some(text => text.startsWith('…다행이다. ')), `answer reply missing together=${together}`);
+  checkHoliday(lines, `Christmas reply to Nari together=${together}`);
+  spokenLines(lines, pilotHolidayLines);
 }
 {
   const s = holidayState(); H.apply(s, { action: 'meetNari' });
@@ -187,7 +210,7 @@ for (const ending of ['nari-true', 'nari-love', 'nari-friend']) {
 const pilotSpecs = [
   { file: '15_한나리_녹음_1차_파일럿.md', expected: 22, pick: number =>
     number <= 5 ? 'entrance' : number <= 9 ? 'nariClass' : number <= 12 ? 'nariRoof' : number <= 17 ? 'nariShake' : 'nariVolume' },
-  { file: '16_한나리_녹음_2차_감정장면.md', expected: 26, pick: number =>
+  { file: '16_한나리_녹음_2차_감정장면.md', expected: 27, pick: number =>
     number <= 6 ? 'nariFright' : number <= 17 ? 'nariFight' : 'holiday' }
 ];
 const pilotRows = new Map();
@@ -232,7 +255,7 @@ if (missing.length) {
   process.exitCode = 1;
 } else {
   console.log(`PASS ${checked} scene, radio and sampled relationship lines appear in the voice review drafts.`);
-  console.log('PASS 48 pilot lines exactly match their assigned scene or sampled holiday outcomes.');
+  console.log('PASS 49 pilot lines exactly match their assigned scene or sampled holiday outcomes.');
   console.log(`PASS ${radioRows.length} broadcast pilot rows match the radio review draft.`);
   console.log(`PASS ${pilotManifest.entries.length} provisional recording mappings point to their exact production lines.`);
   console.log('Not exhaustive: other dynamic branches and speaker attribution within prose require separate review.');

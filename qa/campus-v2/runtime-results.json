@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-04",
+  "date": "2026-11-07",
   "passed": true,
   "checks": [
     "Manual saves protect occupied and unreadable slots until overwrite is confirmed",
@@ -7,7 +7,10 @@
     "Soundtrack attribution opens from settings and returns without changing progress",
     "The in-game guide explains the daily loop and returns without changing progress",
     "Voice volume appears only with a registered voice and persists independently of music",
+    "The dialogue window opacity setting persists and reopens selected",
     "Keyboard interaction unlocks soundtrack without requiring a mouse",
+    "The mouse wheel acts once per gesture: reads on, opens the backlog at its latest line, and closes it only by a fresh flick at the bottom",
+    "Lines read and options picked in an earlier run can be skipped and are marked in a new run",
     "Enter and Space activate focused controls without advancing the scene globally",
     "Registered voice follows the displayed line and automatic reading waits until it finishes",
     "A new game opens with a dated intro, then enters the original move-in prologue without spending a day",
@@ -18,6 +21,7 @@
     "An approaching heroine begins a scene once and returns to the encounter without affection gain",
     "An actual heroine conversation returns to the same time and consumes its daily opportunity once",
     "Ending daytime visits the mandatory festival first, and the unchosen heroine receives no invented reward",
+    "F5 keeps one quick save and F9 restores it after confirmation without touching the six slots",
     "Canceling a paid activity keeps resources unchanged; manual slots restore a prior time and resources",
     "The last broadcast proceeds into an ending that stays complete after reload",
     "Seen endings accumulate in a gallery that survives new games and replays without touching the autosave",
@@ -25,6 +29,7 @@
     "H hides the reading window without advancing, and the next key only brings it back",
     "An earned illustration stays in the gallery after starting over and opens from the title",
     "A save finished before the gallery existed registers its ending when continued",
+    "A story moment seen once replays from the gallery with every choice open and leaves the autosave alone",
     "Completed game opens an earned illustration and returns through its album",
     "An old January checkpoint continues into the new winter story and preserves the choice after reload",
     "The prior checkpoint opens a winter chapter that remembers January and survives reload",

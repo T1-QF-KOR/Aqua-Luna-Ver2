@@ -28,7 +28,7 @@
     s.money-=item.price; s.equipment.push(id); return true;
   }
   function workReason(s) {
-    if(s.workDays.includes(s.date)) return '오늘 근무는 끝났어.';
+    if(s.workDays.includes(s.date)) return '오늘 근무는 끝났어요.';
     if(s.date<'2026-03-11' || ![3,5,6].includes(W.weekday(s.date)) || ![1,2].includes(s.slot)) return '수·금·토 오후 또는 노을에 근무할 수 있어요.';
     return '';
   }

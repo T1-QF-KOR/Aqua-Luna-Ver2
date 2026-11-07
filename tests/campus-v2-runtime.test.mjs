@@ -47,6 +47,7 @@ function mount(saved = new Map()) {
     showModal() { this.open = true; }
     close() { this.open = false; }
     closest() { return null; }
+    querySelector(selector) { return selector === '.modal-shell' ? (this.shell ||= { scrollTop: 0, clientHeight: 300, scrollHeight: 900 }) : null; }
     click() { if (!this.disabled) this.onclick?.({ stopPropagation() {} }); }
     focus() { document.activeElement = this; }
     querySelectorAll(selector) {
@@ -90,7 +91,8 @@ function mount(saved = new Map()) {
       target:{closest(selector){return focusedControl && selector.includes('button, a') ? {} : null;}}});
     return prevented;
   };
-  return { context, document, ids, saved, click, snapshot, preview, location, choose, finishScene, runTimer, hasTimer, visibility, key };
+  const wheel = deltaY => listeners.get('wheel')({ deltaY });
+  return { context, document, ids, saved, click, snapshot, preview, location, choose, finishScene, runTimer, hasTimer, visibility, key, wheel };
 }
 function seed(change, requirements = {}) {
   const env = mount(), state = env.context.AquaState.initial('테스트', '물고기');
@@ -184,10 +186,52 @@ test('Voice volume appears only with a registered voice and persists independent
   const prefs=JSON.parse(env.saved.get(`${KEY}-prefs`));assert.equal(prefs.voiceVolume,.25);assert.equal(prefs.bgmVolume,.35);assert.equal(voiceVolume,.25);
   env.click('settings');assert.equal(env.ids.get('voice-volume').value,'25');
 });
+test('The dialogue window opacity setting persists and reopens selected', () => {
+  const env=seed({date:'2026-04-06',slot:1});
+  env.click('settings');assert.equal(env.ids.get('window-alpha').value,'0.93');
+  env.ids.get('window-alpha').value='0.62';env.click('apply-settings');
+  assert.equal(JSON.parse(env.saved.get(`${KEY}-prefs`)).windowAlpha,.62);
+  env.click('settings');assert.equal(env.ids.get('window-alpha').value,'0.62');
+});
 test('Keyboard interaction unlocks soundtrack without requiring a mouse', () => {
   const env=seed({date:'2026-04-06',slot:1});let unlocks=0;
   env.context.AquaAudio.unlock=()=>{unlocks++;};env.context.AquaAudio.play=()=>{};
   env.key('Tab');env.key('Tab');assert.equal(unlocks,1);
+});
+test('The mouse wheel acts once per gesture: reads on, opens the backlog at its latest line, and closes it only by a fresh flick at the bottom', () => {
+  const setup = mount(), state = setup.context.AquaState.initial('테스트', '물고기');
+  state.date = '2026-04-06'; state.slot = 1;
+  state.scene = { id:'wheel-check', title:'휠', background:'campus', time:1, after:'event', index:0,
+    queue:[{text:'첫 문장'}, {text:'다음 문장'}, {text:'셋째 문장'}, {text:'마지막 문장'}, {text:'남은 문장'}], applied:[], logged:[] };
+  const env = mount(new Map([[KEY, JSON.stringify(state)]])); env.click('continue');
+  let now = 10000; env.context.Date = class extends Date { static now() { return now; } };
+  const modal = env.ids.get('modal'), shell = modal.querySelector('.modal-shell'), index = () => env.snapshot().scene.index;
+  env.wheel(1); assert.equal(index(), 1);
+  now += 100; env.wheel(1); assert.equal(index(), 1, 'one gesture advances once');
+  now += 500; env.wheel(-1); assert.equal(modal.open, true); assert.equal(env.ids.get('modal-title').textContent, '대사 기록');
+  assert.equal(shell.scrollTop, shell.scrollHeight); assert.match(env.ids.get('modal-content').innerHTML, /첫 문장/);
+  now += 100; env.wheel(1); assert.equal(modal.open, true, 'momentum from the opening gesture keeps the backlog');
+  shell.scrollTop = 0; now += 500; env.wheel(1); assert.equal(modal.open, true, 'scrolling above the bottom keeps the backlog');
+  shell.scrollTop = 600; now += 500; env.wheel(1); assert.equal(modal.open, false); assert.equal(index(), 1);
+  now += 500; env.wheel(1); assert.equal(index(), 2);
+  for (let i = 0; i < 16; i++) { now += i ? 50 : 500; env.wheel(7); }
+  assert.equal(index(), 3, 'a long continuous scroll is one gesture');
+});
+test('Lines read and options picked in an earlier run can be skipped and are marked in a new run', () => {
+  const fresh = () => { const setup = mount(), state = setup.context.AquaState.initial('테스트', '물고기');
+    state.date = '2026-04-06'; state.slot = 1;
+    state.scene = { id:'replay-check', title:'다시', background:'campus', time:1, after:'event', index:0,
+      queue:[{text:'첫 문장'}, {text:'둘째 문장'}, {choice:[{label:'솔직하게 말한다'}, {label:'웃어넘긴다'}]}, {text:'끝 문장'}], applied:[], logged:[] };
+    return JSON.stringify(state); };
+  const first = mount(new Map([[KEY, fresh()]])); first.click('continue'); first.click('next'); first.click('next'); first.choose(0);
+  const read = first.saved.get(`${KEY}-read`); assert.ok(read);
+  const control = mount(new Map([[KEY, fresh()]])); control.click('continue'); control.click('skip'); assert.equal(control.snapshot().scene.index, 0, 'a first run stops at unread lines');
+  const second = mount(new Map([[KEY, fresh()], [`${KEY}-read`, read]])); second.click('continue');
+  assert.deepEqual(second.snapshot().readLines || {}, {}, 'the new save starts without its own read marks');
+  second.click('skip'); assert.equal(second.snapshot().scene.index, 2, 'lines read in any run are skipped');
+  const options = second.ids.get('choices').children;
+  assert.equal(options[0].classList.contains('picked'), true); assert.match(options[0].innerHTML, /picked-mark/);
+  assert.equal(options[1].classList.contains('picked'), false);
 });
 test('Enter and Space activate focused controls without advancing the scene globally', () => {
   const setup = mount(), state = setup.context.AquaState.initial('테스트', '물고기');
@@ -321,15 +365,25 @@ test('Ending daytime visits the mandatory festival first, and the unchosen heroi
   assert.equal(env.snapshot().date, '2026-05-20'); assert.equal(env.snapshot().slot, 3);
   assert.equal(env.snapshot().money, 150000);
 });
+test('F5 keeps one quick save and F9 restores it after confirmation without touching the six slots', () => {
+  const env = seed({ date: '2026-04-07', slot: 1, met: [] });
+  assert.equal(env.key('F9'), true); assert.equal(env.ids.get('modal').open, false, 'no quick save yet');
+  assert.equal(env.key('F5'), true); const quick = JSON.parse(env.saved.get(`${KEY}-quick`)); assert.equal(quick.slot, 1); assert.ok(quick.savedAt);
+  env.location('library'); env.click('activity-confirm'); if (env.snapshot().scene) env.finishScene(1); assert.equal(env.snapshot().slot, 2);
+  assert.equal(env.key('F9'), true); env.click('load-confirm'); assert.equal(env.snapshot().slot, 1); assert.equal(env.snapshot().energy, 100);
+  env.click('save'); assert.equal(env.ids.get('modal-content').querySelectorAll('[data-load]').find(b => b.dataset.load === 'quick').disabled, false);
+  assert.ok([1, 2, 3, 4, 5, 6].every(i => !env.saved.has(`${KEY}-slot-${i}`)));
+  assert.equal(env.key('F5'), false, 'F5 does nothing while a window is open');
+});
 test('Canceling a paid activity keeps resources unchanged; manual slots restore a prior time and resources', () => {
   const env = seed({ date: '2026-04-07', slot: 1, met: [] });
   env.location('library'); env.click('activity-cancel'); assert.equal(env.snapshot().energy, 100);
   env.click('save'); env.ids.get('modal-content').querySelectorAll('[data-save]')[0].click(); env.click('close');
   env.location('library'); env.click('activity-confirm'); if(env.snapshot().scene) env.finishScene(1); assert.equal(env.snapshot().energy, 88); assert.equal(env.snapshot().slot, 2);
-  env.click('save'); env.ids.get('modal-content').querySelectorAll('[data-load]')[0].click();
+  env.click('save'); env.ids.get('modal-content').querySelectorAll('[data-load]').find(b=>b.dataset.load==='1').click();
   assert.equal(env.snapshot().slot, 2); assert.equal(env.document.activeElement, env.ids.get('load-cancel'));
   env.click('load-cancel'); assert.equal(env.snapshot().slot, 2);
-  env.ids.get('modal-content').querySelectorAll('[data-load]')[0].click(); env.click('load-confirm');
+  env.ids.get('modal-content').querySelectorAll('[data-load]').find(b=>b.dataset.load==='1').click(); env.click('load-confirm');
   assert.equal(env.snapshot().slot, 1); assert.equal(env.snapshot().energy, 100); assert.equal(env.snapshot().knowledge, 20);
 });
 {
@@ -347,7 +401,10 @@ test('The last broadcast proceeds into an ending that stays complete after reloa
   env.click('end-day');assert.equal(env.snapshot().date,'2027-02-26');assert.equal(env.snapshot().scene.id,'ending-far');
   env.click('next');env=mount(env.saved);env.click('continue');assert.equal(env.snapshot().scene.id,'ending-far');
   env.finishScene();assert.equal(env.snapshot().completed,true);assert.ok(env.snapshot().seen.includes('ending-far'));
-  assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
+  const roll=env.ids.get('game').children.at(-1);assert.equal(roll.className,'end-roll');assert.match(roll.innerHTML,/테스트/);
+  assert.equal(env.ids.get('modal').open,false,'the credits roll before the closing screen');assert.equal(env.snapshot().flags.endRoll,true);
+  assert.equal(env.key('Enter'),true);assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
+  assert.equal(env.key('Enter'),false,'a finished roll no longer takes keys');
   env=mount(env.saved);env.click('continue');assert.equal(env.snapshot().completed,true);assert.equal(env.snapshot().scene,null);
   assert.equal(env.ids.get('modal-title').textContent,'한여울의 첫해를 마치며');
   env.click('ending-album');assert.equal(env.ids.get('modal-title').textContent,'함께 보낸 날들');
@@ -362,14 +419,16 @@ test('Seen endings accumulate in a gallery that survives new games and replays w
   const GALLERY=`${KEY}-endings`, title=env=>env.ids.get('modal-title').textContent;
   const cards=env=>env.ids.get('modal-content').querySelectorAll('[data-ending]').map(b=>b.dataset.ending);
   let env=seed({date:'2027-02-25',slot:3,seen:['lastBroadcast'],met:[],bond:{nari:0,daeun:0,seojin:0}});
-  env.click('end-day');env.finishScene();assert.deepEqual(Object.keys(JSON.parse(env.saved.get(GALLERY))),['far']);
+  env.click('end-day');env.finishScene();env.key('Escape');assert.deepEqual(Object.keys(JSON.parse(env.saved.get(GALLERY))),['far']);
   env.click('ending-gallery');assert.equal(title(env),'추억 갤러리');assert.deepEqual(cards(env),['far']);
   assert.ok(env.ids.get('modal-content').innerHTML.includes('1 / 16'));assert.ok(env.ids.get('modal-content').innerHTML.includes('아직 보지 못한 결말'));
   env.click('gallery-ending-back');assert.equal(title(env),'한여울의 첫해를 마치며');
+  env.click('close');assert.match(env.ids.get('build-note').textContent,/결말 1 \/ 16/);
+  assert.match(env.ids.get('continue').innerHTML,/2월 26일.*결말을 본 기록/);
   const book=env.saved.get(GALLERY);
   env=seed({date:'2027-02-25',slot:3,seen:['lastBroadcast'],met:['nari'],bond:{nari:30,daeun:0,seojin:0}});env.saved.set(GALLERY,book);
   env.click('end-day');const second=env.snapshot().endingId;assert.notEqual(second,'far');env.finishScene();
-  assert.deepEqual(Object.keys(JSON.parse(env.saved.get(GALLERY))).sort(),['far',second].sort());
+  assert.deepEqual(Object.keys(JSON.parse(env.saved.get(GALLERY))).sort(),['far',second].sort(),'the ending is kept as soon as the credits start');env.key('Escape');
   env.click('ending-title');env.click('start');env.click('begin');env.click('new-game-proceed');assert.equal(env.snapshot().scene.id,'intro');
   env.click('home');const autosave=env.saved.get(KEY);
   env=mount(env.saved);env.click('gallery');assert.deepEqual(cards(env).sort(),['far',second].sort());
@@ -408,6 +467,21 @@ test('A save finished before the gallery existed registers its ending when conti
   const setup=mount(),state=setup.context.AquaState.initial('예전');state.date='2027-02-26';state.completed=true;state.endingId='solo';
   const env=mount(new Map([[KEY,JSON.stringify(state)]]));env.click('continue');
   const entry=JSON.parse(env.saved.get(`${KEY}-endings`)).solo;assert.equal(entry.name,'예전');assert.equal(entry.data.id,'solo');
+});
+test('A story moment seen once replays from the gallery with every choice open and leaves the autosave alone', () => {
+  const env = seed({ date: '2026-05-20', slot: 1 });
+  env.click('end-day'); assert.equal(env.snapshot().scene.id, 'festival');
+  const book = JSON.parse(env.saved.get(`${KEY}-scenes`)); assert.ok(book.festival.data.lines.length); assert.equal(book.festival.name, '테스트');
+  env.finishScene(1); env.click('home'); const autosave = env.saved.get(KEY);
+  env.click('gallery'); assert.match(env.ids.get('modal-content').innerHTML, /명장면 <span>1 \/ 17/);
+  dataButton(env, 'memory', 'festival').click(); assert.equal(env.ids.get('modal').open, false); assert.equal(env.ids.get('scene').hidden, false);
+  assert.ok(env.document.body.classList.contains('gallery-replay')); assert.match(env.ids.get('scene-label').textContent, /^다시 보기/);
+  let choices = 0;
+  for (let i = 0; i < 200 && !env.ids.get('modal').open; i++) {
+    if (!env.ids.get('choices').hidden) { choices++; assert.ok(env.ids.get('choices').children.every(b => !b.disabled)); env.choose(0); } else env.click('next');
+  }
+  assert.ok(choices > 0); assert.equal(env.ids.get('modal-title').textContent, '추억 갤러리'); assert.ok(!env.document.body.classList.contains('gallery-replay')); assert.equal(env.saved.get(KEY), autosave);
+  assert.equal(Object.keys(JSON.parse(env.saved.get(`${KEY}-scenes`))).length, 1, 'a replay does not record itself again');
 });
 test('Completed game opens an earned illustration and returns through its album', () => {
   const setup=mount(),state=setup.context.AquaState.initial();state.date='2027-02-26';state.slot=0;

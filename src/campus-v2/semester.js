@@ -57,7 +57,7 @@
       { text: '빠르게 나간 그녀의 기타 케이스가 계단 벽에 한 번 부딪혔다.', effect: { clue: 'sameHabit' } },
       { choice: [
         { label: '흔한 말이라고 넘긴다', effect: { bond: { nari: 2 } }, lines: [n('흔한 말이었다. 아마도.')] },
-        { label: '지난 방송의 마지막 문장을 다시 듣는다', effect: { anonymous: 1, clue: 'sameBreath' }, lines: [n('“오늘은 그냥 끝내요.” 같은 문장. 같은 숨. 무대의 나리와는 다른데, 방금 마이크 앞의 작은 목소리와는.')] }
+        { label: '지난 방송의 마지막 문장을 다시 듣는다', effect: { anonymous: 1, clue: 'sameBreath' }, lines: [n('“오늘은 그냥 끝내요.” 같은 문장. 같은 숨. 무대 위의 나리와는 다른데, 아까 동아리방에서 들은 작은 목소리와는 닮아 있었다.')] }
       ] }
     ] },
     nariLyrics: { title: '첫 줄에서 막힌 가사', background: 'rooftop', lines: [
@@ -222,7 +222,7 @@
         n('부스 뒤를 지나가는데, 나리가 혼자 쭈그려 앉아 있었다. 마이크를 쥔 손이 떨리고 있었다.', ['nari']),
         say('나리', '…어? 신입생? 미안, 잠깐만. 무대 끝나면 늘 이래. 선배라고 하지 마. 나리라고 불러.'),
         { choice: [
-          { label: '물을 건네고 옆에 같이 앉는다', effect: { meet: 'nari', bond: { nari: 4 }, card: '떨리는 손의 피크' }, lines: [say('나리', '…고마워. 떨리는 거 보여 준 거, 비밀로 해 줘.'), say('나리', '이 피크 너 가져. 오늘 거니까.')] },
+          { label: '물을 건네고 옆에 같이 앉는다', effect: { meet: 'nari', bond: { nari: 4 }, card: '떨리는 손의 피크' }, lines: [say('나리', '…고마워. 떨리는 거 보여 준 거, 비밀로 해 줘.'), say('나리', '이 피크 너 가져. 오늘 무대에서 쓴 거야.')] },
           { label: '“아까 무대 진짜 멋있었어.”', effect: { meet: 'nari', bond: { nari: 2 } }, lines: [say('나리', '그치! …아, 지금 이 모습은 잊어 줘. 무대 위의 나만 기억해.')] }
         ] });
       delete data.lines[data.lines.length - 1].effect;

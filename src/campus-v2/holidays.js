@@ -166,7 +166,7 @@
   function identityLines(s,shared) {
     const lines=[];
     if(L.lovers(s).length>1||L.ensure(s).talk)lines.push(n('잠깐 떨어진 곳에서 나리가 목소리를 낮췄다. 다른 사람에게는 들리지 않는 거리였다.',['nari']));
-    if(!s.flags.knowsLuna)lines.push(say('nari','그리고 하나만. …아까 그 방송, 나야. 계속 나였어.'));
+    if(!s.flags.knowsLuna)lines.push(say('nari','하나만 먼저 말할게. …아까 그 방송, 나야. 계속 나였어.'));
     else if(s.flags.boothPeeked || s.flags.questionedRadio) lines.push(say('nari','그때 일, 나도 기억해. 그래도 오늘은 내가 말할게. 루나는 나야.'));
     else lines.push(say('nari','너도 알고 있지. …루나는 나야. 오늘은 내가 직접 말하고 싶었어.'));
     s.flags.knowsLuna=true;if(shared)s.flags.nariIdentityShared=true;
@@ -185,7 +185,7 @@
     const lines=answer==='first'?[say('나','좋아해. 무대 위의 너도, 계단의 너도. 오늘 내 앞에 있는 너도.',['nari'])]:[];
     if(result==='accepted'){
       const together=L.lovers(s).length>0;L.answer(s,'nari',together?'disclose':'accept');if(together)h.nariOutcome='proposed';
-      lines.push(...identityLines(s,true),say('nari',together?'나도 좋아해. 새해에 다 같이 다시 얘기하자. 모두의 대답도 듣고 싶어.':'나도 좋아해. 이제 떨려도 되지? 무대 아니니까.'),n(together?'나리는 약속한 날짜를 직접 확인했다. 마음에 대답한 것과 모두의 관계가 정해지는 것은 별개였다.':'나리가 내 손을 잡았다. 조금 떨렸지만 이번에는 숨기지 않았다.',['nari']));
+      lines.push(...identityLines(s,true),say('nari',(answer==='answer'?'…다행이다. ':'나도 좋아해. ')+(together?'새해에 다 같이 다시 얘기하자. 모두의 대답도 듣고 싶어.':'이제 떨려도 되지? 무대 아니니까.')),n(together?'나리는 약속한 날짜를 직접 확인했다. 마음에 대답한 것과 모두의 관계가 정해지는 것은 별개였다.':'나리가 내 손을 잡았다. 조금 떨렸지만 이번에는 숨기지 않았다.',['nari']));
     }else if(result==='pending'){
       L.answer(s,'nari','pending');L.ensure(s).delayedUntil.nari=s.date;h.nariReplyDate='2027-01-01';h.nariDeferredBy='nari';
       lines.push(say('nari','일주일만. 새해 첫날까지만 기다려 줄래? 너무 많은 걸 고르고 있어서, 이것까지 대충 정하고 싶지 않아.'));
@@ -199,13 +199,13 @@
     const context=s.radio.aired[episode.id]?.christmas||broadcastContext(s);
     const lunar=text=>({speaker:'루나',text,onAir:true,cast:[]}),personal=context.personal,lines=[n(replay?'보관해 둔 성탄 방송을 다시 틀었다.':'목요일 밤 열한 시. 성탄 특집 알림이 켜졌다.'),lunar('안녕하세요, 아쿠아 루나의 루나예요. 메리 크리스마스. 오늘 하루, 잘 끝내고 계신가요.')];
     if(personal){
-      lines.push(lunar('오늘은 대본이 있었는데요. 방금 접어 뒀어요. 오늘 할 말은 제 말로 하고 싶어서요.'));
+      lines.push(lunar('원래는 대본이 있었는데요. 방금 접어 뒀어요. 오늘 할 말은 제 말로 하고 싶어서요.'));
       if(context.summer)lines.push(lunar('올해 처음으로 무대 아닌 데서 노래했어요. 관객이 한 명이었는데, 그게 제일 떨렸어요.'));
       if(context.first==='class')lines.push(lunar('처음엔 가사 없는 악보를 봤어요. 빈칸을 급히 채우지 않는 사람이 있더라고요.'));
       else if(context.first==='roof')lines.push(lunar('외운 말을 연습하다가 누군가에게 들킨 적이 있어요. 그날은 말을 틀려도 괜찮았어요.'));
       else if(context.first==='river')lines.push(lunar('강변에서 혼잣말을 연습한 적이 있어요. 들은 걸 함부로 다른 데 꺼내지 않는 사람이 있었고요.'));
       else lines.push(lunar('올해는 내려온 무대 옆에서도 인사를 나눴어요. 짧게 말해도 끝까지 들어 주는 사람이 있었어요.'));
-      lines.push(lunar('오늘은 클로징 대신 제가 고른 노래를 조금 부를게요. 잘하는 것 말고, 하고 싶은 걸로요.'));
+      lines.push(lunar('오늘은 클로징 대신 제가 고른 노래를 조금 부를게요. 잘 부르는 노래 말고, 부르고 싶은 노래로요.'));
       lines.push(n(context.melody?'내가 들려줬던 멜로디였다. 질문처럼 남겨 두었던 끝에 처음 듣는 가사가 붙었다.':'기타와 목소리만 남았다. 누가 시켜서 고른 것 같지 않은, 작고 또렷한 노래였다.'));
     }else lines.push(lunar('오늘 누군가를 기다리는 분, 누군가의 옆에 있는 분, 혼자 듣는 분. 모두 메리 크리스마스.'),lunar('특별한 날이라고 하루가 전부 특별할 필요는 없겠죠.'),lunar('따뜻한 물을 마신 일, 안부를 한 번 물은 일도 오늘의 기억에 남았으면 좋겠어요.'),lunar('얼굴을 모르는 분들과 같은 시간을 보내는 게, 올해는 제게 제일 특별했어요.'));
     lines.push(lunar('오늘은 그냥 끝내요. 메리 크리스마스.'));return{title:'아쿠아 루나 · 성탄 특집',background:'room',radioEpisode:episode.id,replay,lines};
@@ -224,8 +224,8 @@
     const h=ensure(s);if(h.nariOutcome!=='pending'||h.nariDeferredBy!=='nari'||L.ensure(s).status.nari!=='pending')return[];
     const yes=nariMayTalk(s)&&s.bond.nari>=70&&['knowledge','fitness','sensitivity'].every(stat=>s[stat]>=35);
     if(yes){const together=L.lovers(s).length>0;L.resolvePending(s,'nari',together?'disclose':'accept');h.nariOutcome=together?'proposed':'accepted';
-      return[...identityLines(s,true),say('nari','일주일 동안 생각했어. 계약 말고, 너. 어려운 건 다른 거고. 좋아해.'),n('나리는 목도리를 고쳐 감았다. 고른 다음에도 할 이야기가 남아 있었다.',['nari'])];}
-    L.resolvePending(s,'nari','friend');h.nariOutcome='friend';return[say('nari','미안. 지금은 안 될 것 같아. 내 말을 내 말로 하는 것도 아직 어렵다. 그래도 기다리게 한 말은 오늘 해야 할 것 같았어.'),n('나는 알겠다고 말했다. 새해의 첫 대답도, 내가 듣고 싶었던 대답만으로 채워지지는 않았다.',['nari'])];
+      return[...identityLines(s,true),say('nari','일주일 동안 생각했어. 계약 말고, 너에 대해서. 복잡한 건 그거대로 남았지만… 좋아해.'),n('나리는 목도리를 고쳐 감았다. 고른 다음에도 할 이야기가 남아 있었다.',['nari'])];}
+    L.resolvePending(s,'nari','friend');h.nariOutcome='friend';return[say('nari','미안. 지금은 안 될 것 같아. 내 마음을 내 말로 하는 것도 아직 어려워. 그래도 기다리게 한 대답은 오늘 해야 할 것 같았어.'),n('나는 알겠다고 말했다. 새해의 첫 대답도, 내가 듣고 싶었던 대답만으로 채워지지는 않았다.',['nari'])];
   }
   function apply(s,e) {
     const h=ensure(s);

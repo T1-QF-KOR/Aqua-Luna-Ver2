@@ -28,7 +28,7 @@ window.AQUA_SCENES = {
   {text:'공연이 끝나고 길을 잘못 들어 무대 옆 철문을 열었다. 좁은 계단에 방금 그 사람이 쭈그려 앉아 있었다.'},
   {text:'마이크를 쥐었던 손이 무릎 위에서 떨리고 있었다. 손가락 사이에는 분홍 피크가 끼워져 있었다.',cast:['nari']},
   {speaker:'나리',text:'…어. 여기 화장실 아니야.',cast:['nari']},
-  {choice:[{label:'아무 말 없이 문을 닫고 나간다',lines:[{text:'문이 닫히기 직전, 아주 작은 목소리가 들렸다. “…고마워.”'}]},{label:'“괜찮아요? 물 드릴까요?”',effect:{meet:'nari',bond:{nari:2},card:'떨리는 손의 피크'},lines:[{speaker:'나리',text:'…선배라고 존댓말 하지 마. 나리라고 불러.',cast:['nari']},{speaker:'나리',text:'무대 끝나면 늘 이래. 비밀로 해 줘.',cast:['nari']},{text:'그녀가 분홍 피크를 내 손바닥에 올렸다. 아직 조금 따뜻했다.',cast:['nari']},{speaker:'나리',text:'이거 너 가져. 오늘 거니까. …입막음이야.',cast:['nari']}]}]}
+  {choice:[{label:'아무 말 없이 문을 닫고 나간다',lines:[{text:'문이 닫히기 직전, 아주 작은 목소리가 들렸다. “…고마워.”'}]},{label:'“괜찮아요? 물 드릴까요?”',effect:{meet:'nari',bond:{nari:2},card:'떨리는 손의 피크'},lines:[{speaker:'나리',text:'…선배라고 존댓말 하지 마. 나리라고 불러.',cast:['nari']},{speaker:'나리',text:'무대 끝나면 늘 이래. 비밀로 해 줘.',cast:['nari']},{text:'그녀가 분홍 피크를 내 손바닥에 올렸다. 아직 조금 따뜻했다.',cast:['nari']},{speaker:'나리',text:'이거 너 가져. 오늘 무대에서 쓴 거야. …입막음이야.',cast:['nari']}]}]}
  ]},
  nariClass:{title:'가사 없는 악보',background:'classroom',lines:[
   {text:'앙상블 실습이 끝난 강의실. 내 악보 한 장이 바닥에 떨어졌다. 줍기 전에 다른 손이 먼저 집었다.',cast:['nari']},

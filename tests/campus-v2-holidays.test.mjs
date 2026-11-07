@@ -77,6 +77,15 @@ test('Every existing lover must agree to the group Christmas; Nari remains a pro
  assert.ok(lines.find(line=>line.text.includes('아까 그 방송')).cast.every(id=>id==='nari'));restore(s);
  s.date='2027-01-02';assert.ok(L.agree(s));assert.equal(L.lovers(s).length,3);restore(s);
 });
+test('Replying to Nari’s own confession does not make her repeat “나도 좋아해” back',()=>{
+ const s=base();meet(s);
+ const confession=H.apply(s,{action:'listenNari'});assert.ok(confession.some(line=>line.text?.includes('…좋아해.')));
+ const lines=H.apply(s,{action:'nariAnswer',answer:'answer'}).filter(line=>line.speaker==='나리').map(line=>line.text);
+ assert.equal(s.romance.status.nari,'lover');assert.ok(lines.includes('…다행이다. 이제 떨려도 되지? 무대 아니니까.'));
+ assert.ok(!lines.some(text=>text.startsWith('나도 좋아해')));
+ const first=base();meet(first);
+ assert.ok(H.apply(first,{action:'nariAnswer',answer:'first'}).some(line=>line.text==='나도 좋아해. 이제 떨려도 되지? 무대 아니니까.'));
+});
 test('A hidden relationship reaches Christmas’s real clash without requiring a fabricated witness',()=>{
  const s=base();s.date='2026-11-25';s.bond.seojin=s.bond.daeun=85;L.answer(s,'seojin','accept');s.date='2026-12-18';L.answer(s,'daeun','hide');s.date='2026-12-24';H.morning(s);
  assert.ok(s.romance.clashDue);const data=H.buildDay(s);assert.equal(data.time,2);assert.ok(data.lines[0].text.includes('서로에게 처음 알게'));

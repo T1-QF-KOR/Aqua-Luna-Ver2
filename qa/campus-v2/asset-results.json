@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-04",
+  "date": "2026-11-07",
   "passed": true,
   "missing": [],
   "resourceCount": 104,
@@ -37,7 +37,7 @@
   "entrypointsMatch": true,
   "paths": [
     "assets/ui/moon.svg",
-    "src/campus-v2/game.css?v=ff97969f9ebf",
+    "src/campus-v2/game.css?v=a64ab3210d93",
     "src/campus-v2/world.js",
     "src/campus-v2/encounters.js",
     "src/campus-v2/wardrobe.js",
